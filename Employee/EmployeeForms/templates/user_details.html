@@ -1,0 +1,74 @@
+
+<head>
+  <title> Details form</title>
+</head>
+
+<h1>Welcome {{ user }}</h1>
+
+<h2>Start filling your details</h2>
+
+
+<form action ="/myansrsource/user_details" method="post">
+  {% csrf_token %}
+  <table>
+  <tr><td>Employee : {{ form.employee }}</td></tr>
+  <tr><td>First Name : {{form.first_name}}</td></tr>
+  <tr><td>Last Name : {{form.last_name}}</td></tr>
+  <tr><td>Middle Name : {{form.middle_name}}</td></tr>
+  <tr><td>Nationality : {{form.nationality}}</td></tr>
+  <tr><td>Maritial Status : {{form.marital_status}}</td></tr>
+  <tr><td>Wedding Date : {{form.wedding_date}}</td></tr>
+  <!-- <tr><td>Date of Birth : {{form.date_of_birth}}</td></tr> -->
+  <tr><td>Blood Group : {{form.blood_group}}</td></tr>
+  <tr><td>Land Phone : {{form.land_phone}}</td></tr>
+  <tr><td>Emergency Phone : {{form.emergency_phone}}</td></tr>
+  <tr><td>Mobile Number : {{form.mobile_phone}}</td></tr>
+  <tr><td>Personal Email : {{form.personal_email}}</td></tr>
+  <tr><td>Gender : {{form.gender}}</td></tr>
+</table>
+<input type = "submit" value="save"/><br/>
+</form>
+
+<form action ="/myansrsource/user_details" method="post">
+  {% csrf_token %}
+  <h1>Education Details</h1>
+  <table>
+  <tr><td>Employee : {{education_form.employee}}</td></tr>
+  <tr><td>Qualification : {{education_form.qualification}}</td></tr>
+  <tr><td>Specialization : {{education_form.specialization}}</td></tr>
+  <tr><td>From Date : {{education_form.from_date}}</td></tr>
+  <tr><td>To Date : {{education_form.to_date}}</td></tr>
+  <tr><td>Institution : {{education_form.institution}}</td></tr>
+  <tr><td>Overall Marks : {{education_form.overall_marks}}</td></tr>
+  </table>
+<input type = "submit" value="save"/><br/>
+</form>
+
+<form action ="/myansrsource/user_details" method="post">
+{% csrf_token %}
+<h1> Previous Employment</h1>
+<table>
+<tr><td>Company Name : {{previous_employment_form.company_name}}</td></tr>
+<tr><td>Employed From : {{previous_employment_form.employed_from}}</td></tr>
+<tr><td>Employed To : {{previous_employment_form.employed_to}}</td></tr>
+<tr><td>Last CTC : {{previous_employment_form.last_ctc}}</td></tr>
+<tr><td>Reason for Exit : {{previous_employment_form.reason_for_exit}}</td></tr>
+</table>
+<input type = "submit" value="save"/><br/>
+</form>
+
+<form action ="/myansrsource/user_details/proof" method="post">
+  {% csrf_token %}
+  <h1> ID proofs</h1>
+  <table>
+  <tr><td>PAN Card Number : {{ proof_form.pan }}</td></tr>
+  <tr><td>Aadhar Card Number : {{ proof_form.aadhar_card }}</td></tr>
+  <tr><td>Driving License Number : {{ proof_form.dl }}</td></tr>
+  <tr><td>Passport Number : {{ proof_form.passport }}</td></tr>
+  <tr><td>Voter ID Number : {{ proof_form.voter_id }}</td></tr>
+  </table>
+<input type = "submit" value="save"/><br/>
+</form>
+
+
+<p> Click <a href="/myansrsource/logout">here</a> to logout</p>

@@ -1,0 +1,14 @@
+<head>
+  <title>Register User</title>
+</head>
+<h1>Register</h1>
+
+
+<form action ="/myansrsource/register" method="post">
+  {% csrf_token %}
+
+  {{form.as_p}}
+
+<input type = "submit" value="Register"/>
+
+</form>

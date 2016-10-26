@@ -1,0 +1,23 @@
+<head>
+  <title>Login</title>
+</head>
+
+<h1>Login</h1>
+
+{% if form.errors %}
+  <p class="error">Username and password incorrect</p>
+{% endif %}
+
+
+<form method='POST' action="/myansrsource/auth">{% csrf_token %}
+
+<label for="username">Username</label>
+<input type="text" name="username" value ="" id="username"><br/>
+<label for="password">Password</label>
+<input type="password" name="password" value ="" id="password"><br/>
+
+
+<input type="submit" value="login">
+
+
+</form>
