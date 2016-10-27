@@ -170,14 +170,14 @@
                                                                                                                     <!-- Start of the tabs -->
 
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="#tab1" data-toggle="tab">Personal</a></li>
-                    <li class=""><a href="#tab2" data-toggle="tab">Role and Job</a></li>
-                    <li class=""><a href="#tab3" data-toggle="tab">Financial & ID</a></li>
+                    <li class="active"><a href="#tab1" data-toggle="tab">Education Details</a></li>
+                    <li class=""><a href="#tab2" data-toggle="tab">Previous Employment</a></li>
+<!--                     <li class=""><a href="#tab3" data-toggle="tab">Financial & ID</a></li>
                     <li class=""><a href="#tab4" data-toggle="tab">Key Dates</a></li>
                     <li class=""><a href="#tab5" data-toggle="tab">Adresses</a></li>
                     <li class=""><a href="#tab6" data-toggle="tab">Qualification</a></li>
                     <li class=""><a href="#tab7" data-toggle="tab">Family Members</a></li>
-                    <li class=""><a href="#tab8" data-toggle="tab">Previous Employment</a></li>
+                    <li class=""><a href="#tab8" data-toggle="tab">Previous Employment</a></li> -->
                 </ul><!-- ./tab -->
 
 
@@ -186,94 +186,177 @@
                     <div class="tab-pane clearfix active" id="tab1">
 
 
-                        <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-sm-6">
 
 
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Icon Trigger</label>
-                                <div class="col-sm-7 controls">
-                                  <div class="input-group width-70">
-                                    <input type="text" placeholder="Date" id="datepicker-icon" class="input-sm form-control" >
-                                    <span class="input-group-addon" id="datepicker-icon-trigger" data-datepicker="#datepicker-icon"><i class="fa fa-calendar"></i></span> </div>
-                                    <span class="help-inline">Enter his/her name</span>
-                                    <div class="help-block with-errors"></div>
-                                </div>
-                            </div>
+                                <div class="form-group">
 
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Blood Group<span class="mandatory-field"> *</span></label>
-                                <div class="col-sm-7 controls">
-                                    <select class="input-sm form-control width-70" >
-                                        <option>O+ve</option>
-                                        <option>B+ve</option>
-                                        <option>Z+ve</option>
-                                        <option>C+ve</option>
-                                    </select>
-                                    <span class="help-inline">Enter his/her name</span>
-                                    <div class="help-block with-errors"></div>
+                                    <label class="col-sm-4 control-label">Qualification<span class="mandatory-field"> *</span></label>
+                                    <div class="col-sm-7 controls">
+                                        <input class="input-sm form-control width-70" data-error="Please enter candidate name" maxlength="50" name="candidate_name" required="" type="text">
+                                        <span class="help-inline">Enter his/her name</span>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Nationality<span class="mandatory-field"> *</span></label>
-                                <div class="col-sm-7 controls">
-                                    <select class="input-sm form-control width-70" >
-                                        <option>Options</option>
-                                        <option>Lorem</option>
-                                        <option>Ipsum</option>
-                                        <option>Dolor</option>
-                                    </select>
-                                    <span class="help-inline">Enter his/her name</span>
-                                    <div class="help-block with-errors"></div>
-                                </div>
-                            </div>
-                            <div class="form-group">
+                                <div class="form-group">
 
-                                <label class="col-sm-4 control-label">First Name<span class="mandatory-field"> *</span></label>
-                                <div class="col-sm-7 controls">
-                                    <input class="input-sm form-control width-70" data-error="Please enter candidate name" maxlength="50" name="candidate_name" required="" type="text">
-                                    <span class="help-inline">Enter his/her name</span>
-                                    <div class="help-block with-errors"></div>
+                                    <label class="col-sm-4 control-label">Specialization<span class="mandatory-field"> *</span></label>
+                                    <div class="col-sm-7 controls">
+                                        <input class="input-sm form-control width-70" data-error="Please enter candidate name" maxlength="50" name="candidate_name" required="" type="text">
+                                        <span class="help-inline">Enter his/her name</span>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
 
-                                <label class="col-sm-4 control-label">Last Name Name<span class="mandatory-field"> *</span></label>
-                                <div class="col-sm-7 controls">
-                                    <input class="input-sm form-control width-70" data-error="Please enter candidate name" maxlength="50" name="candidate_name" required="" type="text">
-                                    <span class="help-inline">Enter his/her name</span>
-                                    <div class="help-block with-errors"></div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Team Member ID<span class="mandatory-field"> *</span></label>
-                                <div class="col-sm-7 controls">
-                                    <input class="input-sm form-control width-70" data-error="Please enter candidate name" maxlength="50" name="candidate_name" required="" type="text">
-                                    <span class="help-inline">Enter his/her name</span>
-                                    <div class="help-block with-errors"></div>
-                                </div>
-                            </div>
-                        </div><!-- ./first col-sm -->
 
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">From Date</label>
+                                    <div class="col-sm-7 controls">
+                                      <div class="input-group width-70">
+                                        <input type="text" placeholder="Date" id="datepicker-icon" class="input-sm form-control" >
+                                        <span class="input-group-addon" id="datepicker-icon-trigger" data-datepicker="#datepicker-icon"><i class="fa fa-calendar"></i></span> </div>
+                                        <span class="help-inline">Enter From Date</span>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">To Date</label>
+                                    <div class="col-sm-7 controls">
+                                      <div class="input-group width-70">
+                                        <input type="text" placeholder="Date" id="datepicker-icon" class="input-sm form-control" >
+                                        <span class="input-group-addon" id="datepicker-icon-trigger" data-datepicker="#datepicker-icon"><i class="fa fa-calendar"></i></span> </div>
+                                        <span class="help-inline">Enter To Date</span>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Institution<span class="mandatory-field"> *</span></label>
+                                    <div class="col-sm-7 controls">
+                                        <input class="input-sm form-control width-70" data-error="Please enter candidate name" maxlength="50" name="candidate_name" required="" type="text">
+                                        <span class="help-inline">Enter his/her name</span>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Overall Marks<span class="mandatory-field"> *</span></label>
+                                    <div class="col-sm-7 controls">
+                                        <input class="input-sm form-control width-70" data-error="Please enter candidate name" maxlength="50" name="candidate_name" required="" type="text">
+                                        <span class="help-inline">Enter his/her name</span>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>                     
+
+
+
+
+                            </div><!-- ./first col-sm -->
+                        </div><!-- ./row -->
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                        <input class="btn btn-success pull-right" value="Save"  type="Submit">
+                                </div>         
+                            </div>                    
+                        </div>
 
 
                     </div><!-- ./tab 1 -->
 
 
-                    <div class="tab-pane clearfix" id="tab2"></div><!-- ./tab -->
-
-                    <div class="tab-pane clearfix" id="tab3"></div><!-- ./tab -->
 
 
-                    <div class="tab-pane clearfix" id="tab4"></div><!-- ./tab -->
-                    <div class="tab-pane clearfix" id="tab5"></div><!-- ./tab -->
 
 
-                    <div class="tab-pane clearfix" id="tab6"></div><!-- ./tab -->
-
-                    <div class="tab-pane clearfix" id="tab7"></div><!-- ./tab -->
 
 
-                    <div class="tab-pane clearfix" id="tab8"></div><!-- ./tab -->
+
+
+
+
+
+                    <div class="tab-pane clearfix" id="tab2">
+
+                        <div class="row">
+                            <div class="col-sm-6">
+
+
+                                <div class="form-group">
+
+                                    <label class="col-sm-4 control-label">Company Name<span class="mandatory-field"> *</span></label>
+                                    <div class="col-sm-7 controls">
+                                        <input class="input-sm form-control width-70" data-error="Please enter candidate name" maxlength="50" name="candidate_name" required="" type="text">
+                                        <span class="help-inline">Enter his/her name</span>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Employed From</label>
+                                    <div class="col-sm-7 controls">
+                                      <div class="input-group width-70">
+                                        <input type="text" placeholder="Date" id="datepicker-icon" class="input-sm form-control" >
+                                        <span class="input-group-addon" id="datepicker-icon-trigger" data-datepicker="#datepicker-icon"><i class="fa fa-calendar"></i></span> </div>
+                                        <span class="help-inline">Enter From Date</span>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Employed To</label>
+                                    <div class="col-sm-7 controls">
+                                      <div class="input-group width-70">
+                                        <input type="text" placeholder="Date" id="datepicker-icon" class="input-sm form-control" >
+                                        <span class="input-group-addon" id="datepicker-icon-trigger" data-datepicker="#datepicker-icon"><i class="fa fa-calendar"></i></span> </div>
+                                        <span class="help-inline">Enter To Date</span>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Last CTC<span class="mandatory-field"> *</span></label>
+                                    <div class="col-sm-7 controls">
+                                        <input class="input-sm form-control width-70" data-error="Please enter candidate name" maxlength="50" name="candidate_name" required="" type="text">
+                                        <span class="help-inline">Enter his/her name</span>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Reason For Exit<span class="mandatory-field"> *</span></label>
+                                    <div class="col-sm-7 controls">
+                                        <input class="input-sm form-control width-70" data-error="Please enter candidate name" maxlength="50" name="candidate_name" required="" type="text">
+                                        <span class="help-inline">Enter his/her name</span>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>                     
+
+
+
+
+                            </div><!-- ./first col-sm -->
+                        </div><!-- ./row -->
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                        <input class="btn btn-success pull-right" value="Save"  type="Submit">
+                                </div>         
+                            </div>                    
+                        </div>                        
+                    </div><!-- ./tab 2 -->
+
+
+
+
+
+
+
 
                 </div><!-- ./ .tab-content -->
 
