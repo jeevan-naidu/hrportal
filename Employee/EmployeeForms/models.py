@@ -96,7 +96,7 @@ class PreviousEmployment(models.Model):
 
 	employee = models.ForeignKey(User)
 	company_name = models.CharField("Company Name", max_length=150)
-	company_address = models.ForeignKey(Address)
+	#company_address = models.ForeignKey(Address)
 	employed_from = models.DateField(verbose_name="Start Date", null=False)
 	employed_upto = models.DateField(verbose_name="End Date", null=False)
 	pf_number = models.CharField("PF Number",max_length=15,null=True,blank=True)
@@ -118,7 +118,7 @@ class Education(models.Model):
 	specialization = models.CharField(verbose_name='Specialization',max_length=30,blank=True,null=True)
 	from_date = models.DateField("From Date", blank=False)
 	to_date = models.DateField("To Date", blank=False)
-	institute = models.CharField("Institution", max_length=50, blank=False)
+	institution = models.CharField("Institution", max_length=50, blank=False)
 	overall_marks = models.IntegerField("Total Score/GPA",validators=[MaxValueValidator(100)],blank=False)
 
 	def __unicode__(self):
