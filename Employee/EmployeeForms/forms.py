@@ -28,15 +28,11 @@ class UserRegistrationForm(UserCreationForm):
 
 class UserDetailsForm(forms.ModelForm):
 
-	employee = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control',
-		'required': 'True', 'data-error': 'Please enter your name'}))
-	first_name = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control',
-		'required': 'True', 'data-error': 'Please enter your first name'}))
-	last_name = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control',
-		'required': 'True', 'data-error': 'Please enter your last name'}))
-	middle_name = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control',
-		'required': 'False', 'data-error': 'Please enter your middle name'}))
-	nationality = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control','required': 'True'}))
+	employee = forms.CharField(max_length=50)
+	first_name = forms.CharField(max_length=50)
+	last_name = forms.CharField(max_length=50)
+	middle_name = forms.CharField(max_length=50)
+	nationality = forms.CharField(max_length=50)
 	marital_status = forms.ChoiceField(choices=MARITAL_CHOICES)
 	wedding_date = forms.DateField(widget=DateTimePicker(options=dateTimeOption),)
 	wedding_date.widget.attrs = {'class': 'input-sm form-control filter_class', 'required': 'false'}

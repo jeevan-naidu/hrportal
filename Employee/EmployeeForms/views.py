@@ -121,49 +121,54 @@ def user_details(request):
 @csrf_protect
 @login_required
 def user_update_details(request):
-    import ipdb; ipdb.set_trace()
+    #import ipdb; ipdb.set_trace()
     # user Update form
 
     context = {"form": ""}
-    username = None
-    if request.method == 'GET':
-        form = UserUpdateForm(request.POST)
+    employee = None
     # if request.user.is_authenticated():
     #     username = request.user.username
-    if request.method == 'POST':
-        form = UserUpdateForm(request.POST)
+    if request.method == 'GET':
+        form = UserUpdateForm(request.GET)
         user = request.user
-        if form.is_valid():
-            employee = UserDetails.objects.filter(user=user)
-            first_name = employee.first_name
-            last_name = user.last_name
-            middle_name = employee.middle_name
-            nationality = form.cleaned_data['nationality']
-            marital_status = form.cleaned_data['marital_status']
-            wedding_date = form.cleaned_data['wedding_date']
-            blood_group = form.cleaned_data['blood_group']
-            land_phone = form.cleaned_data['land_phone']
-            emergency_phone = form.cleaned_data['emergency_phone']
-            mobile_phone = form.cleaned_data['mobile_phone']
-            personal_email = form.cleaned_data['personal_email']
-            gender = form.cleaned_data['gender']
+        employee = UserDetails.objects.get(employee=user.id)
 
-            UserDetails(employee = employee,
-            middle_name=middle_name,
-            nationality=nationality,
-            marital_status=marital_status,
-            wedding_date=wedding_date,
-            blood_group=blood_group,
-            land_phone=land_phone,
-            emergency_phone=emergency_phone,
-            mobile_phone=mobile_phone,
-            personal_email=personal_email).save()
+        #employee = UserDetails.objects.filter(user=user)
+        #employee = request.user.username
+        first_name = request.user.first_name
+        last_name = request.user.last_name
+        if employee:
+            middle_name = employee.middle_name
+            nationality = employee.nationality
+            marital_status = employee.marital_status
+            wedding_date = employee.wedding_date
+            blood_group = employee.blood_group
+            land_phone = employee.land_phone
+            emergency_phone = employee.emergency_phone
+            mobile_phone = employee.mobile_phone
+            personal_email = employee.personal_email
+            gender = employee.gender
+
+        context = {
+        'first_name':first_name,
+        'last_name':last_name,
+        'middle_name':middle_name,
+        'nationality':nationality,
+        'marital_status':marital_status,
+        'wedding_date':wedding_date,
+        'blood_group':blood_group,
+        'land_phone':land_phone,
+        'emergency_phone':emergency_phone,
+        'mobile_phone':mobile_phone,
+        'personal_email':personal_email,
+        'gender':gender
+        }
 
 
     context.update(csrf(request))
-    context['form'] = form
+    #context = {'form':form}
 
-    return render_to_response('update.html',context)
+    return render(request, 'update.html',context)
 
 @csrf_protect
 @login_required

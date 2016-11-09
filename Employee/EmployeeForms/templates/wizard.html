@@ -1998,23 +1998,36 @@
                             <div class="row">
                               <div class="col-sm-4">
                                 <div class="form-label">First Name</div>
-                                <input type="text" class="mgbt-xs-20 mgbt-sm-0">
+                                {{form.first_name}}
+
                               </div>
                               <div class="col-sm-4">
                                 <div class="form-label">Last Name</div>
-                                <input type="text"  class="">
+                                {{form.last_name}}
                               </div>
                             </div>
                             <div class="row">
                               <div class="col-sm-2">
                                 <div class="form-label">User Name</div>
-                                <input type="text"  class="mgbt-xs-20  mgbt-sm-0">
+                                {{form.employee}}
                               </div>
                               <div class="col-sm-6">
                                 <div class="form-label">Email</div>
-                                <input type="email"  class="">
+                                {{form.personal_email}}
                               </div>
                             </div>
+
+                            <div class="row">
+                              <div class="col-sm-2">
+                                <div class="form-label">Nationality</div>
+                                {{form.nationality}}
+                              </div>
+                              <div class="col-sm-6">
+                                <div class="form-label">Land Phone</div>
+                                {{form.land_phone}}
+                              </div>
+                            </div>
+
                             <div class="row">
                               <div class="col-sm-4">
                                 <div class="form-label">Password</div>
@@ -2123,25 +2136,25 @@
                             <div class="form-group">
                               <label class="col-sm-2 control-label">First Name</label>
                               <div class="col-sm-5 controls">
-                                <div class="control-value"> John </div>
+                                <div class="control-value"> {{ request.user.first_name }} </div>
                               </div>
                             </div>
                             <div class="form-group">
                               <label class="col-sm-2 control-label">Last Name</label>
                               <div class="col-sm-10 controls">
-                                <div class="control-value"> Doe </div>
+                                <div class="control-value"> {{ request.user.last_name }} </div>
                               </div>
                             </div>
                             <div class="form-group">
-                              <label class="col-sm-2 control-label">Address</label>
+                              <label class="col-sm-2 control-label">Email</label>
                               <div class="col-sm-10 controls">
-                                <div class="control-value"> Address Examples Here </div>
+                                <div class="control-value"> {{ request.user.email }} </div>
                               </div>
                             </div>
                             <div class="form-group">
-                              <label class="col-sm-2 control-label">City</label>
+                              <label class="col-sm-2 control-label">Nationality</label>
                               <div class="col-sm-10 controls">
-                                <div class="control-value"> Los Angeles </div>
+                                <div class="control-value"> {{ employee.nationality }} </div>
                               </div>
                             </div>
                             <div class="form-group">
