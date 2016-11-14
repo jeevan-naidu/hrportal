@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.context_processors import csrf
 from django.views.generic import View
 from django.views.generic import CreateView
+from formtools.wizard.views import SessionWizardView
 from django.views.decorators.csrf import csrf_protect
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -71,19 +72,110 @@ def register(request):
 def register_success(request):
 	return render_to_response('register_success.html')
 
+# # class UserDetailsWizard(SessionWizardView):
+#     template_name = "wizard.html"
+#
+#
+#     def get_form(self, step=None, data=None, files=None):
+#         form = super(UserDetailsWizard, self).get_form(step,data,files)
+#         step = step if step else self.steps.current
+#         if step == 'User Profile':
+#
+#
+#         return
+#
+#     def get_form_initial(self,step):
+#
+#
+#
+#     def done(self, form_list, **kwargs):
+#         if request.method == 'POST':
+#             form = UserDetailsForm(request.POST)
+#
+#             if form.is_valid():
+#                 employee = User.objects.get(username=request.user)
+#                 first_name = form.cleaned_data['first_name']
+#                 last_name = form.cleaned_data['last_name']
+#                 middle_name = form.cleaned_data['middle_name']
+#                 nationality = form.cleaned_data['nationality']
+#                 marital_status = form.cleaned_data['marital_status']
+#                 wedding_date = form.cleaned_data['wedding_date']
+#                 blood_group = form.cleaned_data['blood_group']
+#                 land_phone = form.cleaned_data['land_phone']
+#                 emergency_phone = form.cleaned_data['emergency_phone']
+#                 mobile_phone = form.cleaned_data['mobile_phone']
+#                 personal_email = form.cleaned_data['personal_email']
+#                 gender = form.cleaned_data['gender']
+#
+#                 UserDetails(employee = employee,
+#                 middle_name=middle_name,
+#                 nationality=nationality,
+#                 marital_status=marital_status,
+#                 wedding_date=wedding_date,
+#                 blood_group=blood_group,
+#                 land_phone=land_phone,
+#                 emergency_phone=emergency_phone,
+#                 mobile_phone=mobile_phone,
+#                 personal_email=personal_email).save()
+#
+#         context.update(csrf(request))
+#
+#         context['form'] = form
+#
+#         return render(request, 'wizard.html',context)
+
+
 @csrf_protect
 @login_required
 def user_details(request):
     #import ipdb; ipdb.set_trace()
     # user details form
 
-    context = {"form": ""}
-    username = None
+
     if request.method == 'GET':
-        form = UserDetailsForm(request.POST)
+        context = {'add':True, 'record_added':False, 'form':None}
+        form = UserDetailsForm()
     # if request.user.is_authenticated():
     #     username = request.user.username
+        user = request.user
+
+        employee = UserDetails.objects.get(employee=user.id)
+        first_name = user.first_name
+        last_name = user.last_name
+        middle_name = employee.middle_name
+        nationality = employee.nationality
+        marital_status = employee.marital_status
+        wedding_date = employee.wedding_date
+        blood_group = employee.blood_group
+        land_phone = employee.land_phone
+        emergency_phone = employee.emergency_phone
+        mobile_phone = employee.mobile_phone
+        personal_email = employee.personal_email
+        gender = employee.gender
+
+        context = {
+        'employee':employee,
+        'first_name':first_name,
+        'last_name':last_name,
+        'middle_name':middle_name,
+        'nationality':nationality,
+        'marital_status':marital_status,
+        'wedding_date':wedding_date,
+        'blood_group':blood_group,
+        'land_phone':land_phone,
+        'emergency_phone':emergency_phone,
+        'mobile_phone':mobile_phone,
+        'personal_email':personal_email,
+        'gender':gender,
+        }
+
+    context.update(csrf(request))
+    #ontext = {'form':form}
+
+    # return render(request, 'wizard.html',context)
+
     if request.method == 'POST':
+        context =  {'add' : True, 'record_added' : False, 'form' : None, 'success_msg' : None, 'errors' : [] }
         form = UserDetailsForm(request.POST)
 
         if form.is_valid():
@@ -112,19 +204,14 @@ def user_details(request):
             mobile_phone=mobile_phone,
             personal_email=personal_email).save()
 
-            # user = User.objects.get(user = employee)
-            #
-            # user.first_name = first_name
-            # user.last_name = last_name
-            # user.save()
-
-            # return HttpResponseRedirect('/myansrsource/user_details')
+            context['success_msg'] = "Details added successsfully."
+            template = render(request, 'wizard.html', context)
 
     context.update(csrf(request))
 
     context['form'] = form
 
-    return render(request, 'user_details.html',context)
+    return render(request, 'wizard.html',context)
 
 @csrf_protect
 @login_required

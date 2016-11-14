@@ -16,4 +16,5 @@ urlpatterns = [
                        url(r'^/user_details/education$', views.education),
                        url(r'^/user_details/proof$', views.proof),
                        url(r'^/user_details/previous_employment$', views.previous_employment),
+                       
                        ]
