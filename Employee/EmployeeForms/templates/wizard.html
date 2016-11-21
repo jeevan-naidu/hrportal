@@ -53,6 +53,9 @@
 
 	<!-- Specific CSS -->
 
+    <link href="http://blueimp.github.io/Gallery/css/blueimp-gallery.min.css" rel="stylesheet" type="text/css">
+    <link href="http://vendroid.venmond.com/plugins/jquery-file-upload/css/jquery.fileupload.css" rel="stylesheet" type="text/css">
+    <link href="http://vendroid.venmond.com/plugins/jquery-file-upload/css/jquery.fileupload-ui.css" rel="stylesheet" type="text/css"> 
 
     <!-- Theme CSS -->
     <link href="/static/css/theme.min.css" rel="stylesheet" type="text/css">
@@ -1250,6 +1253,16 @@
                                     <!-- <div class="control-value"> USA </div> -->
                                   </div>
                                 </div>
+
+                                <div class="form-group">
+                                  <label class="col-sm-2 control-label">Personal Email</label>
+                                  <div class="col-sm-10 controls">
+                                    {{personal_email}}
+                                    <!-- <div class="control-value"> USA </div> -->
+                                  </div>
+                                </div>  
+                                
+
                             </form>
 
                           </div><!-- ./tab-pane -->
@@ -1419,6 +1432,40 @@
 <!-- Specific Page Scripts Put Here -->
 
 <script type="text/javascript" src='/static/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js'></script>
+
+<!-- file upload scripts -->
+
+
+
+
+<!-- Jquery UI -->
+<script type="text/javascript" src='http://vendroid.venmond.com/plugins/jquery-ui/jquery-ui.custom.min.js'></script>
+<!-- The Templates plugin is included to render the upload/download listings -->
+<script src="http://blueimp.github.io/JavaScript-Templates/js/tmpl.min.js"></script>
+<!-- The Load Image plugin is included for the preview images and image resizing functionality -->
+<script src="http://blueimp.github.io/JavaScript-Load-Image/js/load-image.min.js"></script>
+<!-- The Canvas to Blob plugin is included for image resizing functionality -->
+<script src="http://blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js"></script>
+<!-- blueimp Gallery script -->
+<script src="http://blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
+<!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
+<script src="http://vendroid.venmond.com/plugins/jquery-file-upload/js/jquery.iframe-transport.js"></script>
+<!-- The basic File Upload plugin -->
+<script src="http://vendroid.venmond.com/plugins/jquery-file-upload/js/jquery.fileupload.js"></script>
+<!-- The File Upload processing plugin -->
+<script src="http://vendroid.venmond.com/plugins/jquery-file-upload/js/jquery.fileupload-process.js"></script>
+<!-- The File Upload image preview & resize plugin -->
+<script src="http://vendroid.venmond.com/plugins/jquery-file-upload/js/jquery.fileupload-image.js"></script>
+<!-- The File Upload audio preview plugin -->
+<script src="http://vendroid.venmond.com/plugins/jquery-file-upload/js/jquery.fileupload-audio.js"></script>
+<!-- The File Upload video preview plugin -->
+<script src="http://vendroid.venmond.com/plugins/jquery-file-upload/js/jquery.fileupload-video.js"></script>
+<!-- The File Upload validation plugin -->
+<script src="http://vendroid.venmond.com/plugins/jquery-file-upload/js/jquery.fileupload-validate.js"></script>
+<!-- The File Upload user interface plugin -->
+<script src="http://vendroid.venmond.com/plugins/jquery-file-upload/js/jquery.fileupload-ui.js"></script>
+<!-- The main application script -->
+
 
 
 <script type="text/javascript">
@@ -1695,6 +1742,110 @@ var formData = new FormData(this[0]);
 
   /* Date Picker */
 </script>
+
+
+
+
+<!-- File upload script -->
+
+
+
+<script>
+/*
+ * jQuery File Upload Plugin JS Example 8.9.0
+ * https://github.com/blueimp/jQuery-File-Upload
+ *
+ * Copyright 2010, Sebastian Tschan
+ * https://blueimp.net
+ *
+ * Licensed under the MIT license:
+ * http://www.opensource.org/licenses/MIT
+ */
+
+/* global $, window */
+
+$(function () {
+    'use strict';
+
+    // Initialize the jQuery File Upload widget:
+    $('#fileupload').fileupload({
+        // Uncomment the following to send cross-domain cookies:
+        //xhrFields: {withCredentials: true},
+        url: 'plugins/jquery-file-upload/server/php/'
+    });
+
+    // Enable iframe cross-domain access via redirect option:
+    $('#fileupload').fileupload(
+        'option',
+        'redirect',
+        window.location.href.replace(
+            /\/[^\/]*$/,
+            'plugins/jquery-file-upload/cors/result.html?%s'
+        )
+    );
+
+    if (window.location.hostname === 'blueimp.github.io') {
+        // Demo settings:
+        $('#fileupload').fileupload('option', {
+            url: '//jquery-file-upload.appspot.com/',
+            // Enable image resizing, except for Android and Opera,
+            // which actually support image resizing, but fail to
+            // send Blob objects via XHR requests:
+            disableImageResize: /Android(?!.*Chrome)|Opera/
+                .test(window.navigator.userAgent),
+            maxFileSize: 5000000,
+            acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i
+        });
+        // Upload server status check for browsers with CORS support:
+        if ($.support.cors) {
+            $.ajax({
+                url: '//jquery-file-upload.appspot.com/',
+                type: 'HEAD'
+            }).fail(function () {
+                $('<div class="alert alert-danger"/>')
+                    .text('Upload server currently unavailable - ' +
+                            new Date())
+                    .appendTo('#fileupload');
+            });
+        }
+    } else {
+        // Load existing files:
+        $('#fileupload').addClass('fileupload-processing');
+        $.ajax({
+            // Uncomment the following to send cross-domain cookies:
+            //xhrFields: {withCredentials: true},
+            url: $('#fileupload').fileupload('option', 'url'),
+            dataType: 'json',
+            context: $('#fileupload')[0]
+        }).always(function () {
+            $(this).removeClass('fileupload-processing');
+        }).done(function (result) {
+            $(this).fileupload('option', 'done')
+                .call(this, $.Event('done'), {result: result});
+        });
+    }
+
+});
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!-- Specific Page Scripts END -->
 
 
