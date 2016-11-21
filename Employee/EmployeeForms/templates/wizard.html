@@ -888,7 +888,7 @@
 
 
 <!-- ~~~~sanjay~~~~ -->
-                        <form id="user_details_form" method="post" enctype="multipart/form-data">
+                        <form id="user_details_form" method="post" class="form-horizontal" enctype="multipart/form-data">
 
                         {% csrf_token %}
 
@@ -994,7 +994,9 @@
                                 {{form.personal_email}}
                               </div>
                             </div>
-                             <h3 class="text-center"><input type="submit" id="submit" class="btn btn-danger" value="Submit"/></h3>
+                            <div class="form-group">
+                                <input type="submit" id="submit" class="btn btn-danger" value="Submit"/>
+                            </div>
                         </form>
 
 <!-- ~~~~sanjay~~~~ -->
@@ -1013,7 +1015,7 @@
 
                           <div class="tab-pane" id="tab2">
 
-                            <form id="education_form" method="post" enctype="multipart/form-data">
+                            <form id="education_form" method="post" class="form-horizontal" enctype="multipart/form-data">
 
                             {% csrf_token %}
                             <div class="form-group">
@@ -1071,7 +1073,9 @@
 
                               </div>
                             </div>
-                            <h3 class="text-center"><input type="submit" id="submit1" class="btn btn-danger" value="Submit1"/></h3>
+                            <div class="form-group">
+                                <input type="submit" id="submit1" class="btn btn-danger" value="Submit"/>
+                            </div>
                        </form>
 
 
@@ -1086,7 +1090,7 @@
 
                           <div class="tab-pane" id="tab3">
 
-                            <form id="previous_employment_form" method="post" enctype="multipart/form-data">
+                            <form id="previous_employment_form" method="post" class="form-horizontal" enctype="multipart/form-data">
 
                             {% csrf_token %}
                             <div class="form-group">
@@ -1134,7 +1138,9 @@
 
                               </div>
                             </div>
-                            <h3 class="text-center"><input type="submit" id="submit2" class="btn btn-danger" value="Submit"/></h3>
+                            <div class="form-group">
+                                <input type="submit" id="submit2" class="btn btn-danger" value="Submit"/>
+                            </div>
                        </form>
                      </div><!-- ./tab-pane -->
 
@@ -1142,7 +1148,7 @@
 
 
                           <div class="tab-pane" id="tab4">
-                            <form id="proof_form" method="post" enctype="multipart/form-data">
+                            <form id="proof_form" method="post" class="form-horizontal" enctype="multipart/form-data">
 
                             {% csrf_token %}
                             <div class="form-group">
@@ -1176,71 +1182,80 @@
                                 {{proof_form.voter_id}}
                               </div>
                             </div>
-                            <h3 class="text-center"><input type="submit" id="submit3" class="btn btn-danger" value="Submit"/></h3>
+                            <div class="form-group">
+                                <input type="submit" id="submit3" class="btn btn-danger" value="Submit"/>
+                            </div>
                        </form>
                           </div><!-- ./tab-pane -->
 
 
+
                           <div class="tab-pane" id="tab5">
-                            <div class="form-group">
-                              <label class="col-sm-2 control-label">First Name</label>
-                              <div class="col-sm-5 controls">
-                              {{first_name}}
-                              </div>
-                            </div>
-                            <div class="form-group">
-                              <label class="col-sm-2 control-label">Last Name</label>
-                              <div class="col-sm-10 controls">
-                                {{last_name}}
-                                <!-- <div class="control-value"> Doe </div> -->
-                              </div>
-                            </div>
-                            <div class="form-group">
-                              <label class="col-sm-2 control-label">Gender</label>
-                              <div class="col-sm-10 controls">
-                                {{gender}}
-                              </div>
-                            </div>
-                            <div class="form-group">
-                              <label class="col-sm-2 control-label">Nationality</label>
-                              <div class="col-sm-10 controls">
-                                {{nationality}}
-                                <!-- <div class="control-value"> Los Angeles </div> -->
-                              </div>
-                            </div>
-                            <div class="form-group">
-                              <label class="col-sm-2 control-label">Blood Group</label>
-                              <div class="col-sm-10 controls">
-                                {{blood_group}}
-                                <!-- <div class="control-value"> USA </div> -->
-                              </div>
-                            </div>
 
-                            <div class="form-group">
-                              <label class="col-sm-2 control-label">Mobile Phone</label>
-                              <div class="col-sm-10 controls">
-                                {{mobile_phone}}
-                                <!-- <div class="control-value"> USA </div> -->
-                              </div>
-                            </div>
+                            <form class="form-horizontal" role="form">
+                                <div class="form-group">
+                                  <label class="col-sm-2 control-label">First Name</label>
+                                  <div class="col-sm-5 controls">
+                                  {{first_name}}
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label class="col-sm-2 control-label">Last Name</label>
+                                  <div class="col-sm-10 controls">
+                                    {{last_name}}
+                                    <!-- <div class="control-value"> Doe </div> -->
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label class="col-sm-2 control-label">Gender</label>
+                                  <div class="col-sm-10 controls">
+                                    {{gender}}
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label class="col-sm-2 control-label">Nationality</label>
+                                  <div class="col-sm-10 controls">
+                                    {{nationality}}
+                                    <!-- <div class="control-value"> Los Angeles </div> -->
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label class="col-sm-2 control-label">Blood Group</label>
+                                  <div class="col-sm-10 controls">
+                                    {{blood_group}}
+                                    <!-- <div class="control-value"> USA </div> -->
+                                  </div>
+                                </div>
 
-                            <div class="form-group">
-                              <label class="col-sm-2 control-label">Emergency Phone</label>
-                              <div class="col-sm-10 controls">
-                                {{emergency_phone}}
-                                <!-- <div class="control-value"> USA </div> -->
-                              </div>
-                            </div>
+                                <div class="form-group">
+                                  <label class="col-sm-2 control-label">Mobile Phone</label>
+                                  <div class="col-sm-10 controls">
+                                    {{mobile_phone}}
+                                    <!-- <div class="control-value"> USA </div> -->
+                                  </div>
+                                </div>
 
-                            <div class="form-group">
-                              <label class="col-sm-2 control-label">Personal Email</label>
-                              <div class="col-sm-10 controls">
-                                {{personal_email}}
-                                <!-- <div class="control-value"> USA </div> -->
-                              </div>
-                            </div>
+                                <div class="form-group">
+                                  <label class="col-sm-2 control-label">Emergency Phone</label>
+                                  <div class="col-sm-10 controls">
+                                    {{emergency_phone}}
+                                    <!-- <div class="control-value"> USA </div> -->
+                                  </div>
+                                </div>
+
+                                <div class="form-group">
+                                  <label class="col-sm-2 control-label">Personal Email</label>
+                                  <div class="col-sm-10 controls">
+                                    {{personal_email}}
+                                    <!-- <div class="control-value"> USA </div> -->
+                                  </div>
+                                </div>
+                            </form>
 
                           </div><!-- ./tab-pane -->
+
+
+
 
                           <div class="form-actions-condensed wizard"> 
                               <a class="btn vd_btn prev" href="javascript:void(0);">
