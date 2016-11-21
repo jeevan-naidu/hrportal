@@ -331,7 +331,7 @@ def confirm(request):
     #previous_employment form
 
     if request.method == 'GET':
-        import ipdb; ipdb.set_trace()
+        #import ipdb; ipdb.set_trace()
         context = {'add':True, 'record_added':False, 'form':None}
         form = UserDetailsForm()
         # if request.user.is_authenticated():

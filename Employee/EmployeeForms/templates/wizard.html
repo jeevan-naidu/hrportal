@@ -860,8 +860,8 @@
                     <h3 class="panel-title"> <span class="menu-icon"> <i class="fa fa-magic"></i> </span> Wizard Basic </h3>
                   </div>
                   <div class="panel-body">
-                    <!-- <form class="form-horizontal" action="#" role="form"> -->
-                      <!-- <div id="wizard-1" class="form-wizard"> -->
+
+                      <div id="wizard-1" class="form-wizard">
                         <ul>
                           <li><a href="#tab1" data-toggle="tab">
                             <div class="menu-icon"> 1 </div>
@@ -884,11 +884,11 @@
 
                           <div class="tab-pane" id="tab1">
 
-                        <div id="ajax_loader_user_details_form" class="ajax_bck"><div class="ajax_load_image"></div></div>
+                        <!-- <div id="ajax_loader_user_details_form" class="ajax_bck"><div class="ajax_load_image"></div></div> -->
 
 
 <!-- ~~~~sanjay~~~~ -->
-                        <form id="user_details_form" method="post" enctype="multipart/form-data">
+                        <form id="user_details_form" method="post" class="form-horizontal" enctype="multipart/form-data">
 
                         {% csrf_token %}
 
@@ -994,7 +994,9 @@
                                 {{form.personal_email}}
                               </div>
                             </div>
-                             <h3 class="text-center"><input type="submit" id="submit" class="btn btn-danger" value="Submit"/></h3>
+                            <div class="form-group">
+                                <input type="submit" id="submit" class="btn btn-danger" value="Submit"/>
+                            </div>
                         </form>
 
 <!-- ~~~~sanjay~~~~ -->
@@ -1013,7 +1015,7 @@
 
                           <div class="tab-pane" id="tab2">
 
-                            <form id="education_form" method="post" enctype="multipart/form-data">
+                            <form id="education_form" method="post" class="form-horizontal" enctype="multipart/form-data">
 
                             {% csrf_token %}
                             <div class="form-group">
@@ -1071,7 +1073,9 @@
 
                               </div>
                             </div>
-                            <h3 class="text-center"><input type="submit" id="submit1" class="btn btn-danger" value="Submit1"/></h3>
+                            <div class="form-group">
+                                <input type="submit" id="submit1" class="btn btn-danger" value="Submit"/>
+                            </div>
                        </form>
 
 
@@ -1086,7 +1090,7 @@
 
                           <div class="tab-pane" id="tab3">
 
-                            <form id="previous_employment_form" method="post" enctype="multipart/form-data">
+                            <form id="previous_employment_form" method="post" class="form-horizontal" enctype="multipart/form-data">
 
                             {% csrf_token %}
                             <div class="form-group">
@@ -1134,7 +1138,9 @@
 
                               </div>
                             </div>
-                            <h3 class="text-center"><input type="submit" id="submit2" class="btn btn-danger" value="Submit"/></h3>
+                            <div class="form-group">
+                                <input type="submit" id="submit2" class="btn btn-danger" value="Submit"/>
+                            </div>
                        </form>
                      </div><!-- ./tab-pane -->
 
@@ -1142,7 +1148,7 @@
 
 
                           <div class="tab-pane" id="tab4">
-                            <form id="proof_form" method="post" enctype="multipart/form-data">
+                            <form id="proof_form" method="post" class="form-horizontal" enctype="multipart/form-data">
 
                             {% csrf_token %}
                             <div class="form-group">
@@ -1176,80 +1182,107 @@
                                 {{proof_form.voter_id}}
                               </div>
                             </div>
-                            <h3 class="text-center"><input type="submit" id="submit3" class="btn btn-danger" value="Submit"/></h3>
+                            <div class="form-group">
+                                <input type="submit" id="submit3" class="btn btn-danger" value="Submit"/>
+                            </div>
                        </form>
                           </div><!-- ./tab-pane -->
 
 
+
                           <div class="tab-pane" id="tab5">
-                            <div class="form-group">
-                              <label class="col-sm-2 control-label">First Name</label>
-                              <div class="col-sm-5 controls">
-                              {{first_name}}
-                              </div>
-                            </div>
-                            <div class="form-group">
-                              <label class="col-sm-2 control-label">Last Name</label>
-                              <div class="col-sm-10 controls">
-                                {{last_name}}
-                                <!-- <div class="control-value"> Doe </div> -->
-                              </div>
-                            </div>
-                            <div class="form-group">
-                              <label class="col-sm-2 control-label">Gender</label>
-                              <div class="col-sm-10 controls">
-                                {{gender}}
-                              </div>
-                            </div>
-                            <div class="form-group">
-                              <label class="col-sm-2 control-label">Nationality</label>
-                              <div class="col-sm-10 controls">
-                                {{nationality}}
-                                <!-- <div class="control-value"> Los Angeles </div> -->
-                              </div>
-                            </div>
-                            <div class="form-group">
-                              <label class="col-sm-2 control-label">Blood Group</label>
-                              <div class="col-sm-10 controls">
-                                {{blood_group}}
-                                <!-- <div class="control-value"> USA </div> -->
-                              </div>
-                            </div>
 
-                            <div class="form-group">
-                              <label class="col-sm-2 control-label">Mobile Phone</label>
-                              <div class="col-sm-10 controls">
-                                {{mobile_phone}}
-                                <!-- <div class="control-value"> USA </div> -->
-                              </div>
-                            </div>
+                            <form class="form-horizontal" role="form">
+                                <div class="form-group">
+                                  <label class="col-sm-2 control-label">First Name</label>
+                                  <div class="col-sm-5 controls">
+                                  {{first_name}}
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label class="col-sm-2 control-label">Last Name</label>
+                                  <div class="col-sm-10 controls">
+                                    {{last_name}}
+                                    <!-- <div class="control-value"> Doe </div> -->
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label class="col-sm-2 control-label">Gender</label>
+                                  <div class="col-sm-10 controls">
+                                    {{gender}}
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label class="col-sm-2 control-label">Nationality</label>
+                                  <div class="col-sm-10 controls">
+                                    {{nationality}}
+                                    <!-- <div class="control-value"> Los Angeles </div> -->
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label class="col-sm-2 control-label">Blood Group</label>
+                                  <div class="col-sm-10 controls">
+                                    {{blood_group}}
+                                    <!-- <div class="control-value"> USA </div> -->
+                                  </div>
+                                </div>
 
-                            <div class="form-group">
-                              <label class="col-sm-2 control-label">Emergency Phone</label>
-                              <div class="col-sm-10 controls">
-                                {{emergency_phone}}
-                                <!-- <div class="control-value"> USA </div> -->
-                              </div>
-                            </div>
+                                <div class="form-group">
+                                  <label class="col-sm-2 control-label">Mobile Phone</label>
+                                  <div class="col-sm-10 controls">
+                                    {{mobile_phone}}
+                                    <!-- <div class="control-value"> USA </div> -->
+                                  </div>
+                                </div>
 
-                            <div class="form-group">
-                              <label class="col-sm-2 control-label">Personal Email</label>
-                              <div class="col-sm-10 controls">
-                                {{personal_email}}
-                                <!-- <div class="control-value"> USA </div> -->
-                              </div>
-                            </div>
+                                <div class="form-group">
+                                  <label class="col-sm-2 control-label">Emergency Phone</label>
+                                  <div class="col-sm-10 controls">
+                                    {{emergency_phone}}
+                                    <!-- <div class="control-value"> USA </div> -->
+                                  </div>
+                                </div>
 
+                                <div class="form-group">
+                                  <label class="col-sm-2 control-label">Personal Email</label>
+                                  <div class="col-sm-10 controls">
+                                    {{personal_email}}
+                                    <!-- <div class="control-value"> USA </div> -->
+                                  </div>
+                                </div>
+                            </form>
+
+                          </div><!-- ./tab-pane -->
+
+
+
+
+                          <div class="form-actions-condensed wizard">
+                              <a class="btn vd_btn prev" href="javascript:void(0);">
+                                  <span class="menu-icon">
+                                    <i class="fa fa-fw fa-chevron-circle-left"></i>
+                                  </span> Previous
+                              </a>
+                              <a class="btn vd_btn next" href="javascript:void(0);">Next
+                                  <span class="menu-icon">
+                                    <i class="fa fa-fw fa-chevron-circle-right"></i>
+                                  </span>
+                              </a>
+                              <a class="btn vd_btn vd_bg-green finish" href="javascript:void(0);">
+                                  <span class="menu-icon">
+                                    <i class="fa fa-fw fa-check"></i>
+                                  </span> Finish
+                              </a>
                           </div>
-                          <div class="form-actions-condensed wizard"> <a class="btn vd_btn prev" href="javascript:void(0);"><span class="menu-icon"><i class="fa fa-fw fa-chevron-circle-left"></i></span> Previous</a> <a class="btn vd_btn next" href="javascript:void(0);">Next <span class="menu-icon"><i class="fa fa-fw fa-chevron-circle-right"></i></span></a> <a class="btn vd_btn vd_bg-green finish" href="javascript:void(0);"><span class="menu-icon"><i class="fa fa-fw fa-check"></i></span> Finish</a> </div>
                         </div><!-- ./tab-content -->
 
 
 
 
-                      <!-- </div><!-- ./wizard1 ~~~--> -->
-                    <!-- </form> -->
+                       </div><!-- ./wizard1 ~~~ -->
+
                   </div>
+                  <!-- Panel Body -->
                 </div>
                 <!-- Panel Widget -->
               </div>
@@ -1391,12 +1424,10 @@
 <script type="text/javascript">
 // $(document).ready(function() {
 	// "use strict";
-
   $('#user_details_form').submit(function(){ console.log("submit");
     var form = $('#user_details_form'); //console.log(form.html());
   var formData = new FormData(this[0]);
 console.log("inituser"+ formData);
-
   // var form = $('#user_details_form')
   // formData = new FormData(form[0]);
   //       //  var form = $('#user_details_form'),
@@ -1413,34 +1444,25 @@ console.log("inituser"+ formData);
                   success : function(data){ console.log("success");
                   console.log(data);
                       $("#modal_body").html("<h5 style='color:green;'>" + data.success_msg + "</h5>");
-
                     },
-
-
                 //  HideAjaxLoader($('#ajax_loader_user_details_form'));
                 //  reloadJS();
-
                     error: function(XMLHttpRequest, textStatus, errorThrown) {
                       $("#modal_body").html("<p style='color:red'>Oops! Something went wrong on the server. The details are below: "
                       + "<br>Status : "+ textStatus + "<br>Exception : " + errorThrown + "<br><br> Please take a screenshot of this message and send it to <a href='mailto:myansrsourceHelpDesk@ansrsource.com'> MyAnsrSource Help Desk</a></p>");
-
                     },
                   cache: false,
                   contentType: false,
                   processData: false
              });
 });
-
   $('#education_form').click(function(){
     debugger;
   // var form = document.querySelector('ssform')
   // var form = document.querySelector('form')
-
-
   var education_form = $('#education_form')
 var formData = new FormData(this[0]);
 // console.log("init11"+ ssformData);
-
 // var form = $('#user_details_form')
 // formData = new FormData(form[0]);
 //       //  var form = $('#user_details_form'),
@@ -1457,24 +1479,18 @@ var formData = new FormData(this[0]);
                 success : function(data){
                 console.log(data);
                     $("#modal_body").html("<h5 style='color:green;'>" + data.success_msg + "</h5>");
-
                   },
-
-
               //  HideAjaxLoader($('#ajax_loader_user_details_form'));
               //  reloadJS();
-
                   error: function(XMLHttpRequest, textStatus, errorThrown) {
                     $("#modal_body").html("<p style='color:red'>Oops! Something went wrong on the server. The details are below: "
                     + "<br>Status : "+ textStatus + "<br>Exception : " + errorThrown + "<br><br> Please take a screenshot of this message and send it to <a href='mailto:myansrsourceHelpDesk@ansrsource.com'> MyAnsrSource Help Desk</a></p>");
-
                   },
                 cache: false,
                 contentType: false,
                 processData: false
            });
 });
-
 // });
   </script>
 
@@ -1492,10 +1508,8 @@ var formData = new FormData(this[0]);
 			}
 		},
 		'onNext': function(){
-
       // console.log(new FormData(this))
       // console.log("jdujdjhjh");
-
 			scrollTo('#wizard-1',-100);
 		},
 		'onPrevious': function(){
@@ -1658,8 +1672,6 @@ var formData = new FormData(this[0]);
 			scrollTo('#wizard-5',-100);
 		}
 	});
-
-
   /* Date Picker */
 </script>
 <!-- Specific Page Scripts END -->
@@ -1670,7 +1682,6 @@ var formData = new FormData(this[0]);
 <!-- Google Analytics: Change UA-XXXXX-X to be your site's ID. Go to http://www.google.com/analytics/ for more information. -->
 <!-- <script>
 $("form#user_details_form").submit(function(){
-
        var formData = new FormData($('#user_details_form')[0]);
       // var formData = new FormData($(this)[0]);
       //  form_id = $('user_details_form')[0].id;
@@ -1681,12 +1692,10 @@ $.ajax({
                url : '/myansrsource/user_details/',
                data :formData,
                success : function(data)
-
                {
                 if (data.record_added) {
                            $("#modal_body").html("<h5 style='color:green;'>" + data.success_msg + "</h5>");
                           //  window.location.reload();
-
                }
                else{
                           $("#modal_body").html(data);
@@ -1699,7 +1708,6 @@ $.ajax({
                     + "<br>Status : "+ textStatus + "<br>Exception : " + errorThrown + "<br><br> Please take a screenshot of this message and send it to <a href='mailto:myansrsourceHelpDesk@ansrsource.com'> MyAnsrSource Help Desk</a>.");
                   HideAjaxLoader(ajax_loader_element);
                 },
-
            });
 });
 </script> -->
@@ -1707,7 +1715,6 @@ $.ajax({
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-XXXXX-X']);
     _gaq.push(['_trackPageview']);
-
     (function() {
         var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
         ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
