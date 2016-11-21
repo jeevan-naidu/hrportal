@@ -9,6 +9,8 @@ from formtools.wizard.views import SessionWizardView
 from django.views.decorators.csrf import csrf_protect
 from django.conf import settings
 from django.contrib.auth.models import User
+
+import json
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from models import Address, UserDetails, Education, PreviousEmployment, Proof
 from forms import UserDetailsForm, EducationForm, PreviousEmploymentForm, ProofForm, UserRegistrationForm
@@ -124,53 +126,6 @@ def register_success(request):
 #
 #         return render(request, 'wizard.html',context)
 
-from django.views.decorators.csrf import csrf_exempt
-@csrf_exempt
-def user_details(request):
-
-    # user details form
-
-    if request.method == 'GET':
-        context = {"form":""}
-        form = UserDetailsForm(request.GET)
-
-    if request.method == 'POST':
-        #import ipdb; ipdb.set_trace()
-        print request.POST
-        context = {"form":""}
-        form = UserDetailsForm(request.POST)
-
-        if form.is_valid():
-            employee = User.objects.get(username=request.user)
-            first_name = form.cleaned_data['first_name']
-            last_name = form.cleaned_data['last_name']
-            middle_name = form.cleaned_data['middle_name']
-            nationality = form.cleaned_data['nationality']
-            marital_status = form.cleaned_data['marital_status']
-            wedding_date = form.cleaned_data['wedding_date']
-            blood_group = form.cleaned_data['blood_group']
-            land_phone = form.cleaned_data['land_phone']
-            emergency_phone = form.cleaned_data['emergency_phone']
-            mobile_phone = form.cleaned_data['mobile_phone']
-            personal_email = form.cleaned_data['personal_email']
-            gender = form.cleaned_data['gender']
-
-            UserDetails(employee = employee,
-            middle_name=middle_name,
-            nationality=nationality,
-            marital_status=marital_status,
-            wedding_date=wedding_date,
-            blood_group=blood_group,
-            land_phone=land_phone,
-            emergency_phone=emergency_phone,
-            mobile_phone=mobile_phone,
-            personal_email=personal_email).save()
-
-
-    context['form'] = form
-
-    return render(request, 'wizard.html',context)
-
 def update(request):
 
     if request.method == 'GET':
@@ -215,70 +170,205 @@ def update(request):
 
         return render(request, 'wizard.html',context)
 
+from django.views.decorators.csrf import csrf_exempt
+@csrf_exempt
+@login_required
+def user_details(request):
 
-@csrf_protect
+    # user details form
+
+    if request.method == 'GET':
+        #import ipdb; ipdb.set_trace()
+        context = {"form":""}
+        form = UserDetailsForm(request.GET)
+
+    if request.method == 'POST':
+        import ipdb; ipdb.set_trace()
+
+        context = {"form":""}
+        form = UserDetailsForm(request.POST)
+
+        if form.is_valid():
+            employee = User.objects.get(username=request.user)
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            middle_name = form.cleaned_data['middle_name']
+            nationality = form.cleaned_data['nationality']
+            marital_status = form.cleaned_data['marital_status']
+            wedding_date = form.cleaned_data['wedding_date']
+            blood_group = form.cleaned_data['blood_group']
+            land_phone = form.cleaned_data['land_phone']
+            emergency_phone = form.cleaned_data['emergency_phone']
+            mobile_phone = form.cleaned_data['mobile_phone']
+            personal_email = form.cleaned_data['personal_email']
+            gender = form.cleaned_data['gender']
+
+            UserDetails(employee = employee,
+            middle_name=middle_name,
+            nationality=nationality,
+            marital_status=marital_status,
+            wedding_date=wedding_date,
+            blood_group=blood_group,
+            land_phone=land_phone,
+            emergency_phone=emergency_phone,
+            mobile_phone=mobile_phone,
+            personal_email=personal_email).save()
+
+
+    context['form'] = form
+
+    return render(request, 'wizard.html',context)
+
+@csrf_exempt
 @login_required
 def education(request):
     #education form
-    context = {"education_form": ""}
-    username = None
+    #import ipdb; ipdb.set_trace()
     if request.method == 'GET':
-        education_form = EducationForm(request.POST, prefix="education_form")
+        context_data = {"education_form":""}
+        education_form = EducationForm(request.GET, prefix = 'education_form')
+        print request.GET
+
+
 
     if request.method == 'POST':
-        education_form = EducationForm(request.POST, prefix="education_form")
+        # import ipdb; ipdb.set_trace()
+        print request.POST
+        context_data = {"education_form":""}
+        education_form = EducationForm(request.POST, prefix = 'education_form')
         if education_form.is_valid():
             employee = User.objects.get(username=request.user)
-            qualification = form.cleaned_data['qualification']
-            specialization = form.cleaned_data['specialization']
-            from_date = form.cleaned_data['from_date']
-            to_date = form.cleaned_data['to_date']
-            institution = form.cleaned_data['institution']
-            overall_marks = form.cleaned_data['overall_marks']
+            print employee
+            qualification = education_form.cleaned_data['qualification']
+            specialization = education_form.cleaned_data['specialization']
+            from_date = education_form.cleaned_data['from_date']
+            to_date = education_form.cleaned_data['to_date']
+            institute = education_form.cleaned_data['institute']
+            overall_marks = education_form.cleaned_data['overall_marks']
 
-    context = {}
-    context.update(csrf(request))
+            Education(employee=employee,
+            qualification=qualification,
+            specialization=specialization,
+            from_date=from_date,
+            to_date=to_date,
+            institute=institute,
+            overall_marks=overall_marks).save()
 
-    context['education_form'] = education_form
+    context_data['education_form'] = education_form
 
-    return render_to_response('user_details.html',context)
+    return render(request, 'wizard.html',context_data)
 
-@csrf_protect
+    r#eturn redirect('education')
+
+@csrf_exempt
+@login_required
 def proof(request):
     #proof form
-    context = {"proof_form": ""}
+    # context = {"proof_form": ""}
     if request.method == 'GET':
+        context = {"proof_form":""}
         proof_form = ProofForm(request.GET, prefix="proof_form")
+
     if request.method == 'POST':
+        import ipdb; ipdb.set_trace()
+        context = {"proof_form":""}
         proof_form = ProofForm(request.POST, prefix="proof_form")
         if proof_form.is_valid():
-            proof_form.save()
-            return HttpResponseRedirect('/myansrsource/user_details/proof')
-        else:
-            proof_form = ProofForm
+            employee = User.objects.get(username=request.user)
+            pan = proof_form.cleaned_data['pan']
+            aadhar_card = proof_form.cleaned_data['aadhar_card']
+            dl = proof_form.cleaned_data['dl']
+            passport = proof_form.cleaned_data['passport']
+            voter_id = proof_form.cleaned_data['voter_id']
 
-    context = {}
-    context.update(csrf(request))
+            Proof(employee=employee,
+            pan=pan,
+            aadhar_card=aadhar_card,
+            dl=dl,
+            passport=passport,
+            voter_id=voter_id).save()
 
     context['proof_form'] = proof_form
 
-    return render_to_response('user_details.html',context)
+    return render(request,'wizard.html',context)
 
-@csrf_protect
+@csrf_exempt
+@login_required
 def previous_employment(request):
     #previous_employment form
-    context = {"previous_employment_form": ""}
+
     if request.method == 'GET':
+        context = {"previous_employment_form": ""}
         previous_employment_form = PreviousEmploymentForm(request.GET, prefix="previous_employment_form")
+    #import ipdb; ipdb.set_trace()
+
     if request.method == 'POST':
+        # import ipdb; ipdb.set_trace()
+        context = {"previous_employment_form":""}
         previous_employment_form = PreviousEmploymentForm(request.POST, prefix="previous_employment_form")
         if previous_employment_form.is_valid():
-            previous_employment_form.save()
-            return HttpResponseRedirect('/myansrsource/user_details/previous_employment')
+            employee = User.objects.get(username=request.user)
+            company_name = previous_employment_form.cleaned_data['company_name']
+            employed_from = previous_employment_form.cleaned_data['employed_from']
+            employed_upto = previous_employment_form.cleaned_data['employed_upto']
+            last_ctc = previous_employment_form.cleaned_data['last_ctc']
+            reason_for_exit = previous_employment_form.cleaned_data['reason_for_exit']
 
-    context = {}
-    context.update(csrf(request))
+            PreviousEmployment(employee=employee,
+            company_name=company_name,
+            employed_from=employed_from,
+            employed_upto=employed_upto,
+            last_ctc=last_ctc,
+            reason_for_exit=reason_for_exit).save()
 
     context['previous_employment_form'] = previous_employment_form
 
-    return render_to_response('user_details.html',context)
+    return render(request, 'wizard.html',context)
+
+@csrf_exempt
+@login_required
+def confirm(request):
+    #previous_employment form
+
+    if request.method == 'GET':
+        import ipdb; ipdb.set_trace()
+        context = {'add':True, 'record_added':False, 'form':None}
+        form = UserDetailsForm()
+        # if request.user.is_authenticated():
+        #     username = request.user.username
+        user = request.user
+
+        employee = UserDetails.objects.get(employee=user)
+        first_name = user.first_name
+        last_name = user.last_name
+        middle_name = employee.middle_name
+        nationality = employee.nationality
+        marital_status = employee.marital_status
+        wedding_date = employee.wedding_date
+        blood_group = employee.blood_group
+        land_phone = employee.land_phone
+        emergency_phone = employee.emergency_phone
+        mobile_phone = employee.mobile_phone
+        personal_email = employee.personal_email
+        gender = employee.gender
+
+        context = {
+        'employee':employee,
+        'first_name':first_name,
+        'last_name':last_name,
+        'middle_name':middle_name,
+        'nationality':nationality,
+        'marital_status':marital_status,
+        'wedding_date':wedding_date,
+        'blood_group':blood_group,
+        'land_phone':land_phone,
+        'emergency_phone':emergency_phone,
+        'mobile_phone':mobile_phone,
+        'personal_email':personal_email,
+        'gender':gender,
+        }
+
+        context.update(csrf(request))
+#ontext = {'form':form}
+
+        return render(request, 'wizard.html',context)

@@ -46,22 +46,24 @@ ADDRESSTYPE_CHOICES = (
 
 class Address(models.Model):
 
-	# employee = models.ForeignKey(User)
-	address_id = models.CharField(max_length=4)
-	address_type = models.CharField('Address Type',max_length=2,choices=ADDRESSTYPE_CHOICES,default='TM')
-	address1 = models.CharField(verbose_name="Address 1",max_length=100,blank=False)
-	address2 = models.CharField(verbose_name="Address 2",max_length=100,blank=False)
-	city = models.CharField("City", max_length=30, blank=False)
-	state = models.CharField("State", max_length=30, blank=False)
-	zipcode = models.CharField("Zip Code", max_length=10, blank=False)
-	is_active = models.BooleanField("Current address is permanent address")
+    class Meta:
+        verbose_name_plural = 'Addresses'
 
-	def __unicode__(self):
-		return u'{0}'.format(
-			self.address_id,
+    employee = models.ForeignKey(User, default=True)
+    address_type = models.CharField('Address Type',max_length=2,choices=ADDRESSTYPE_CHOICES,default='TM')
+    address1 = models.CharField(verbose_name="Address 1",max_length=100,blank=False)
+    address2 = models.CharField(verbose_name="Address 2",max_length=100,blank=False)
+    city = models.CharField("City", max_length=30, blank=False)
+    state = models.CharField("State", max_length=30, blank=False)
+    zipcode = models.CharField("Zip Code", max_length=10, blank=False)
 
-			)
-
+    def __unicode__(self):
+        return u'{0}, {1}, {2}, {3}, {4}'.format(
+            self.address1,
+            self.address2,
+            self.city,
+            self.state,
+            self.zipcode)
 # class UserAddress(models.Model):
 
 # 	employee = models.ForeignKey(User)
@@ -96,7 +98,7 @@ class PreviousEmployment(models.Model):
 
 	employee = models.ForeignKey(User)
 	company_name = models.CharField("Company Name", max_length=150)
-	company_address = models.ForeignKey(Address)
+	company_address = models.CharField("Company Address",max_length=500, null=True)
 	employed_from = models.DateField(verbose_name="Start Date", null=False)
 	employed_upto = models.DateField(verbose_name="End Date", null=False)
 	pf_number = models.CharField("PF Number",max_length=15,null=True,blank=True)

@@ -63,9 +63,10 @@ class UserDetailsForm(forms.ModelForm):
 
 	class Meta:
 		model = UserDetails
-		exclude = ['employee']
+
 		fields = ['first_name','last_name','middle_name','nationality','marital_status','wedding_date',
 		'blood_group','land_phone','emergency_phone','mobile_phone','gender']
+		exclude = ['employee']
 
 class EducationForm(forms.ModelForm):
 
@@ -76,7 +77,7 @@ class EducationForm(forms.ModelForm):
 		'required': 'True'}))
 	from_date = forms.DateField(widget=DateTimePicker(),)
 	to_date = forms.DateField(widget=DateTimePicker(),)
-	institution = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control',
+	institute = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control',
 		'required': 'True'}))
 	overall_marks = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control',
 		'required': 'True'}))
@@ -84,7 +85,7 @@ class EducationForm(forms.ModelForm):
 
 	class Meta:
 		model = Education
-		fields = ['qualification', 'specialization', 'from_date', 'to_date', 'institution', 'overall_marks']
+		fields = ['qualification', 'specialization', 'from_date', 'to_date', 'institute', 'overall_marks']
 		exclude = ['employee']
 
 class PreviousEmploymentForm(forms.ModelForm):
@@ -94,7 +95,7 @@ class PreviousEmploymentForm(forms.ModelForm):
 	#company_address = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control',
 		#'required': 'True'}))
 	employed_from = forms.DateField(widget=DateTimePicker())
-	employed_to = forms.DateField(widget=DateTimePicker())
+	employed_upto = forms.DateField(widget=DateTimePicker())
 	last_ctc = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control',
 		'required': 'True'}))
 	reason_for_exit = forms.CharField(max_length=200, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control',
@@ -102,7 +103,7 @@ class PreviousEmploymentForm(forms.ModelForm):
 
 	class Meta:
 		model = PreviousEmployment
-		fields = ['company_name',  'employed_from', 'employed_to', 'employed_to', 'last_ctc','reason_for_exit']
+		fields = ['company_name',  'employed_from', 'employed_upto', 'last_ctc','reason_for_exit']
 		exclude = ['employee']
 
 class ProofForm(forms.ModelForm):

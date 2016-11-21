@@ -1,0 +1,22 @@
+
+<form action ="/myansrsource/user_details/update" method="post">
+  {% csrf_token %}
+  <table>
+  <tr><td>Employee : {{ request.user.username }}</td></tr>
+  <tr><td>First Name : {{first_name}}</td></tr>
+  <tr><td>Last Name : {{last_name}}</td></tr>
+  <!-- <tr><td>Middle Name : {{form.middle_name}}</td></tr> -->
+  <tr><td>Gender : {{gender}}</td></tr>
+  <tr><td>Nationality : {{nationality}}</td></tr>
+  <tr><td>Maritial Status : {{marital_status}}</td></tr>
+  <tr><td>Wedding Date : {{wedding_date}}</td></tr>
+  <!-- <tr><td>Date of Birth : {{form.date_of_birth}}</td></tr> -->
+  <tr><td>Blood Group : {{blood_group}}</td></tr>
+  <tr><td>Land Phone : {{land_phone}}</td></tr>
+  <tr><td>Emergency Phone : {{emergency_phone}}</td></tr>
+  <tr><td>Mobile Number : {{mobile_phone}}</td></tr>
+  <tr><td>Personal Email : {{personal_email}}</td></tr>
+
+</table>
+<input type = "submit" value="save"/><br/>
+</form>
