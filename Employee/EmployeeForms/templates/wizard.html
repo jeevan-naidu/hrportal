@@ -832,13 +832,13 @@
                               </div>
                             </div>
 
-                            <div class="form-group">
+<!--                             <div class="form-group">
                               <label class="col-sm-2 control-label">Wedding Date</label>
                               <div class="col-sm-7 controls">
                                 {{form.wedding_date}}
 
                               </div>
-                            </div>
+                            </div> -->
 
                             <div class="form-group">
                               <label class="col-sm-2 control-label">Blood Group</label>
@@ -878,6 +878,20 @@
                                 {{form.personal_email}}
                               </div>
                             </div>
+
+
+
+                      <div class="form-group">
+                        <label class="col-sm-2 control-label">Icon Trigger</label>
+                        <div class="col-sm-3 controls">
+                          <div class="input-group">
+                            <input type="text" placeholder="Date" id="datepicker-icon">
+                            <span class="input-group-addon" id="datepicker-icon-trigger" data-datepicker="#datepicker-icon"><i class="fa fa-calendar"></i></span> </div>
+                        </div>
+                      </div>
+
+
+
                             <div class="form-group">
                                 <input type="submit" id="submit" class="btn btn-danger" value="Submit"/>
                             </div>
@@ -1472,6 +1486,16 @@ var formData = new FormData(this[0]);
 		}
 	});
   /* Date Picker */
+
+
+$( "#datepicker-icon" ).datepicker({ dateFormat: 'dd M yy'});
+    $( '[data-datepicker]' ).click(function(e){ 
+        var data=$(this).data('datepicker');
+        $(data).focus();
+    });
+
+
+
 </script>
 
 
