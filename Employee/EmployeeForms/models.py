@@ -50,7 +50,7 @@ class Address(models.Model):
         verbose_name_plural = 'Addresses'
 
     employee = models.ForeignKey(User, default=True)
-    address_type = models.CharField('Address Type',max_length=2,choices=ADDRESSTYPE_CHOICES,default='TM')
+    address_type = models.CharField('Address Type',max_length=2,choices=ADDRESSTYPE_CHOICES,default='PR')
     address1 = models.CharField(verbose_name="Address 1",max_length=100,blank=False)
     address2 = models.CharField(verbose_name="Address 2",max_length=100,blank=False)
     city = models.CharField("City", max_length=30, blank=False)
@@ -64,17 +64,11 @@ class Address(models.Model):
             self.city,
             self.state,
             self.zipcode)
-# class UserAddress(models.Model):
-
-# 	employee = models.ForeignKey(User)
-# 	address = models.ForeignKey(Address)
 
 class UserDetails(models.Model):
 
 	employee = models.ForeignKey(User)
-	# first_name = models.CharField("First Name", max_length=15, blank=True)
 	middle_name = models.CharField("Middle Name", max_length=15, blank=True, null=True)
-	# last_name = models.CharField("Last Name", max_length=15, blank=True)
 	gender = models.CharField("Gender", max_length=2,choices=GENDER_CHOICES,blank=False)
 	nationality = models.CharField("Nationality", max_length=30, blank=False)
 	marital_status = models.CharField("Marital Status",max_length=10,choices=MARITAL_CHOICES,blank=True, null=True)
@@ -85,9 +79,6 @@ class UserDetails(models.Model):
 	emergency_phone = models.CharField("Emergency Contact Number",max_length=15,unique=True,blank=False)
 	personal_email = models.EmailField("Personal E-mail",max_length=250,blank=False,unique=True)
 	address = models.ManyToManyField(Address, verbose_name='User Address')
-
-	#current_address = models.ForeignKey(Address)
-
 
 	def __unicode__(self):
 		return u'{0}'.format(

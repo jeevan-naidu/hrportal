@@ -9,11 +9,11 @@ from formtools.wizard.views import SessionWizardView
 from django.views.decorators.csrf import csrf_protect
 from django.conf import settings
 from django.contrib.auth.models import User
-
-import json
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from models import Address, UserDetails, Education, PreviousEmployment, Proof
 from forms import UserDetailsForm, EducationForm, PreviousEmploymentForm, ProofForm, UserRegistrationForm
+
+AllowedFileTypes = ['jpg', 'csv','png', 'pdf', 'xlsx', 'xls', 'docx', 'doc', 'jpeg', 'eml']
 
 # Create your views here.
 def EmployeeWelcome(request):
@@ -73,58 +73,6 @@ def register(request):
 
 def register_success(request):
 	return render_to_response('register_success.html')
-
-# # class UserDetailsWizard(SessionWizardView):
-#     template_name = "wizard.html"
-#
-#
-#     def get_form(self, step=None, data=None, files=None):
-#         form = super(UserDetailsWizard, self).get_form(step,data,files)
-#         step = step if step else self.steps.current
-#         if step == 'User Profile':
-#
-#
-#         return
-#
-#     def get_form_initial(self,step):
-#
-#
-#
-#     def done(self, form_list, **kwargs):
-#         if request.method == 'POST':
-#             form = UserDetailsForm(request.POST)
-#
-#             if form.is_valid():
-#                 employee = User.objects.get(username=request.user)
-#                 first_name = form.cleaned_data['first_name']
-#                 last_name = form.cleaned_data['last_name']
-#                 middle_name = form.cleaned_data['middle_name']
-#                 nationality = form.cleaned_data['nationality']
-#                 marital_status = form.cleaned_data['marital_status']
-#                 wedding_date = form.cleaned_data['wedding_date']
-#                 blood_group = form.cleaned_data['blood_group']
-#                 land_phone = form.cleaned_data['land_phone']
-#                 emergency_phone = form.cleaned_data['emergency_phone']
-#                 mobile_phone = form.cleaned_data['mobile_phone']
-#                 personal_email = form.cleaned_data['personal_email']
-#                 gender = form.cleaned_data['gender']
-#
-#                 UserDetails(employee = employee,
-#                 middle_name=middle_name,
-#                 nationality=nationality,
-#                 marital_status=marital_status,
-#                 wedding_date=wedding_date,
-#                 blood_group=blood_group,
-#                 land_phone=land_phone,
-#                 emergency_phone=emergency_phone,
-#                 mobile_phone=mobile_phone,
-#                 personal_email=personal_email).save()
-#
-#         context.update(csrf(request))
-#
-#         context['form'] = form
-#
-#         return render(request, 'wizard.html',context)
 
 def update(request):
 
@@ -257,8 +205,6 @@ def education(request):
     context_data['education_form'] = education_form
 
     return render(request, 'wizard.html',context_data)
-
-    r#eturn redirect('education')
 
 @csrf_exempt
 @login_required
