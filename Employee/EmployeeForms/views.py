@@ -10,11 +10,10 @@ from django.views.decorators.csrf import csrf_protect
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
-from models import Address, UserDetails, Education, PreviousEmployment, Proof
-from forms import UserDetailsForm, EducationForm, PreviousEmploymentForm, ProofForm, UserRegistrationForm
+from models import Address, UserDetails, Education, PreviousEmployment, Proof, FileUpload
+from forms import UserDetailsForm, EducationForm, PreviousEmploymentForm, ProofForm, UserRegistrationForm, FileUploadForm
 
 AllowedFileTypes = ['jpg', 'csv','png', 'pdf', 'xlsx', 'xls', 'docx', 'doc', 'jpeg', 'eml']
-
 # Create your views here.
 def EmployeeWelcome(request):
     return render(request, 'welcome.html',{})
@@ -131,7 +130,7 @@ def user_details(request):
         form = UserDetailsForm(request.GET)
 
     if request.method == 'POST':
-        import ipdb; ipdb.set_trace()
+        #import ipdb; ipdb.set_trace()
 
         context = {"form":""}
         form = UserDetailsForm(request.POST)
@@ -161,11 +160,12 @@ def user_details(request):
             emergency_phone=emergency_phone,
             mobile_phone=mobile_phone,
             personal_email=personal_email).save()
-
+            context['form'] = form
+            return HttpResponseRedirect("/myansrsource/user_details/education")
 
     context['form'] = form
-
     return render(request, 'wizard.html',context)
+
 
 @csrf_exempt
 @login_required
@@ -175,13 +175,13 @@ def education(request):
     if request.method == 'GET':
         context_data = {"education_form":""}
         education_form = EducationForm(request.GET, prefix = 'education_form')
-        print request.GET
+        # print request.GET
 
 
 
     if request.method == 'POST':
         # import ipdb; ipdb.set_trace()
-        print request.POST
+        # print request.POST
         context_data = {"education_form":""}
         education_form = EducationForm(request.POST, prefix = 'education_form')
         if education_form.is_valid():
@@ -201,10 +201,12 @@ def education(request):
             to_date=to_date,
             institute=institute,
             overall_marks=overall_marks).save()
+            context_data['education_form'] = education_form
+            return HttpResponseRedirect("/myansrsource/user_details/previous_employment")
+
 
     context_data['education_form'] = education_form
-
-    return render(request, 'wizard.html',context_data)
+    return render(request, 'education.html',context_data)
 
 @csrf_exempt
 @login_required
@@ -216,7 +218,7 @@ def proof(request):
         proof_form = ProofForm(request.GET, prefix="proof_form")
 
     if request.method == 'POST':
-        import ipdb; ipdb.set_trace()
+        #import ipdb; ipdb.set_trace()
         context = {"proof_form":""}
         proof_form = ProofForm(request.POST, prefix="proof_form")
         if proof_form.is_valid():
@@ -233,10 +235,11 @@ def proof(request):
             dl=dl,
             passport=passport,
             voter_id=voter_id).save()
+            context['proof_form'] = proof_form
+            return HttpResponseRedirect("/myansrsource/user_details/confirm")
 
     context['proof_form'] = proof_form
-
-    return render(request,'wizard.html',context)
+    return render(request,'proof.html',context)
 
 @csrf_exempt
 @login_required
@@ -266,10 +269,12 @@ def previous_employment(request):
             employed_upto=employed_upto,
             last_ctc=last_ctc,
             reason_for_exit=reason_for_exit).save()
+            context['previous_employment_form'] = previous_employment_form
+            return HttpResponseRedirect("/myansrsource/user_details/proof")
+
 
     context['previous_employment_form'] = previous_employment_form
-
-    return render(request, 'wizard.html',context)
+    return render(request, 'previous.html',context)
 
 @csrf_exempt
 @login_required
@@ -317,4 +322,36 @@ def confirm(request):
         context.update(csrf(request))
 #ontext = {'form':form}
 
-        return render(request, 'wizard.html',context)
+        return render(request, 'confirm.html',context)
+
+
+@csrf_exempt
+@login_required
+def file(request):
+    #proof form
+    # context = {"proof_form": ""}
+    if request.method == 'GET':
+        context = {"form":""}
+        form = FileUploadForm(request.GET)
+
+    if request.method == 'POST':
+        #import ipdb; ipdb.set_trace()
+
+        form = FileUploadForm(request.POST, request.FILES)
+        context = {"form":""}
+        attachment = request.FILES.get('attachment', "")
+
+        if form.is_valid():
+            employee = User.objects.get(username=request.user)
+            title = form.cleaned_data['title']
+            attachment = form.cleaned_data['attachment']
+            if request.FILES.get('attachment', ""):
+                form.attachment = request.FILES['attachment']
+
+            FileUpload(employee=employee,
+            title=title,
+            attachment=attachment).save()
+
+    context['form'] = form
+
+    return render(request,'file.html',context)

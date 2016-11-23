@@ -5,7 +5,8 @@ from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator
 from django.core.exceptions import ObjectDoesNotExist
 import datetime, os
-# fs = FileSystemStorage(location='EmployeeForms/emp_photo')
+from django.core.files.storage import FileSystemStorage
+
 # Create your models here.
 
 GENDER_CHOICES = (
@@ -32,6 +33,14 @@ MARITAL_CHOICES = (
     ('SG', 'Single'),
     )
 
+JOB_TYPE = (
+    ('FT', 'Full Time'),
+    ('PT', 'Part Time'),
+    ('CN', 'Contract'),
+    ('IN', 'Intern'),
+    )
+
+
 QUALIFICATION = (
 	('SSC', 'Senior Secondary'),
 	('HSC', 'Higher Secondary'),
@@ -43,6 +52,23 @@ ADDRESSTYPE_CHOICES = (
     ('PR', 'Permanent'),
     ('TM', 'Temporary'),
     )
+
+def content_file_name(instance, filename):
+
+    import random
+    import string
+
+    # random_str length will be 16 which will be combination of (4 digits + 4 characters + 4 digits + 4 characters)
+    random_str =  "".join([random.choice(string.uppercase) for i in range(0,4)]) + "".join([random.choice(string.digits) for i in range(0,4)]) + \
+                    "".join([random.choice(string.lowercase) for i in range(0,4)]) + "".join([random.choice(string.digits) for i in range(0,4)])
+
+    # return string seperated by hyphen eg:
+    random_str =  random_str[:4] + "-" + random_str[4:8] + "-" + random_str[8:12] + "-" + random_str[12:]
+    filetype = filename.split(".")[-1].lower()
+    filename = random_str +"." +  filetype
+    path = "EmployeeForms/uploads/" + str(datetime.datetime.now().year) + "/" + str(datetime.datetime.now().month) + "/" + str(datetime.datetime.now().day) + "/"
+    os_path = os.path.join(path, filename)
+    return os_path
 
 class Address(models.Model):
 
@@ -87,20 +113,19 @@ class UserDetails(models.Model):
 
 class PreviousEmployment(models.Model):
 
-	employee = models.ForeignKey(User)
-	company_name = models.CharField("Company Name", max_length=150)
-	company_address = models.CharField("Company Address",max_length=500, null=True)
-	employed_from = models.DateField(verbose_name="Start Date", null=False)
-	employed_upto = models.DateField(verbose_name="End Date", null=False)
-	pf_number = models.CharField("PF Number",max_length=15,null=True,blank=True)
-	last_ctc = models.DecimalField("Last CTC",max_digits=15,decimal_places=2)
-	reason_for_exit = models.CharField(verbose_name="Reason for Exit",max_length=50)
-	createdon = models.DateTimeField(verbose_name="created Date",auto_now_add=True)
-	updatedon = models.DateTimeField(verbose_name="Updated Date",auto_now=True)
-
-	def __unicode__(self):
-		return self.company_name + ':' + \
-		str(self.employed_from) + ' ~ ' + str(self.employed_upto)
+    employee = models.ForeignKey(User)
+    company_name = models.CharField("Company Name", max_length=150)
+    company_address = models.CharField("Company Address",max_length=500, null=True)
+    employed_from = models.DateField(verbose_name="Start Date", null=False)
+    employed_upto = models.DateField(verbose_name="End Date", null=False)
+    last_ctc = models.DecimalField("Last CTC",max_digits=15,decimal_places=2)
+    reason_for_exit = models.CharField(verbose_name="Reason for Exit",max_length=50)
+    job_type = models.CharField('Job Type', choices = JOB_TYPE, max_length = 5, default="PT")
+    createdon = models.DateTimeField(verbose_name="created Date",auto_now_add=True)
+    updatedon = models.DateTimeField(verbose_name="Updated Date",auto_now=True)
+    def __unicode__(self):
+        return self.company_name + ':' + \
+        str(self.employed_from) + ' ~ ' + str(self.employed_upto)
 
 
 
@@ -120,14 +145,27 @@ class Education(models.Model):
 			self.employee)
 
 class Proof(models.Model):
+    employee = models.ForeignKey(User)
+    pan = models.CharField("PAN Number",max_length=10,blank=False,unique=True)
+    pan_attachment = models.FileField(upload_to=content_file_name,blank=True, null=True, verbose_name="Pan Attachment")
+    aadhar_card = models.CharField("Aadhar Card",max_length=12,blank=True,unique=True)
+    aadhar_attachment = models.FileField(upload_to=content_file_name,blank=True, null=True, verbose_name="Aadhar Card Attachment")
+    dl = models.CharField("Driving License", max_length=10,blank=True,unique=True)
+    dl_attachment = models.FileField(upload_to=content_file_name,blank=True, null=True, verbose_name="DL Attachment")
+    passport = models.CharField("Passport", max_length=10,blank=True,unique=True)
+    passport_attachment = models.FileField(upload_to=content_file_name,blank=True, null=True, verbose_name="Passport Attachment")
+    voter_id = models.CharField("Voter ID", max_length=10,blank=True,unique=True)
+    voter_attachment = models.FileField(upload_to=content_file_name,blank=True, null=True, verbose_name="Voter ID Attachment")
+    def __unicode__(self):
+        return u'{0}'.format(
+        self.employee)
 
-	employee = models.ForeignKey(User)
-	pan = models.CharField("PAN Number",max_length=10,blank=False,unique=True)
-	aadhar_card = models.CharField("Aadhar Card",max_length=12,blank=True,unique=True)
-	dl = models.CharField("Driving License", max_length=10,blank=True,unique=True)
-	passport = models.CharField("Passport", max_length=10,blank=True,unique=True)
-	voter_id = models.CharField("Voter ID", max_length=10,blank=True,unique=True)
+class FileUpload(models.Model):
 
-	def __unicode__(self):
+    employee = models.ForeignKey(User)
+    title = models.CharField("Title",max_length=50,blank=False,unique=True)
+    attachment = models.FileField(upload_to=content_file_name, blank=True, null=True, verbose_name="Attachment")
+
+    def __unicode__(self):
 		return u'{0}'.format(
 			self.employee)

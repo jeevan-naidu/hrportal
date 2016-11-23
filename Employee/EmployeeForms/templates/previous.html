@@ -1,0 +1,127 @@
+{% extends 'master.html' %}
+
+{%block content %}
+
+<div class="vd_content-section clearfix">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel widget">
+        <div class="panel-heading vd_bg-grey">
+          <h3 class="panel-title"> <span class="menu-icon"> <i class="fa fa-magic"></i> </span> Wizard Basic </h3>
+        </div>
+        <div class="panel-body">
+
+            <div id="wizard-2" class="form-wizard">
+              <ul>
+                <li><a href="#tab1" data-toggle="tab">
+                  <div class="menu-icon"> 1 </div>
+                  User Profile </a></li>
+                <li><a href="#tab2" data-toggle="tab">
+                  <div class="menu-icon"> 2 </div>
+                  Education </a></li>
+                <li><a href="#tab3" data-toggle="tab">
+                  <div class="menu-icon"> 3 </div>
+                  Previous Employment </a></li>
+                <li><a href="#tab4" data-toggle="tab">
+                  <div class="menu-icon"> 4 </div>
+                  Proof </a></li>
+                <li><a href="#tab5" data-toggle="tab">
+                  <div class="menu-icon"> 5 </div>
+                  Confirm </a></li>
+              </ul>
+
+
+              <div class="progress progress-striped active">
+                <div class="progress-bar progress-bar-info" > </div>
+              </div>
+
+
+
+
+              <div class="tab-pane" id="tab3">
+
+                <form id="previous_employment_form" method="post" class="form-horizontal" enctype="multipart/form-data">
+
+                {% csrf_token %}
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">Company Name</label>
+                  <div class="col-sm-7 controls">
+                    {{previous_employment_form.company_name}}
+
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">Company Address</label>
+                  <div class="col-sm-7 controls">
+                    {{previous_employment_form.company_address}}
+
+                  </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">Job Type</label>
+                      <div class="col-sm-7 controls">
+                        {{previous_employment_form.job_type}}
+
+                      </div>
+                        </div>
+
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">Employed From</label>
+                  <div class="col-sm-7 controls">
+                    {{previous_employment_form.employed_from}}
+
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">Employed To</label>
+                  <div class="col-sm-7 controls">
+                    {{previous_employment_form.employed_upto}}
+
+                  </div>
+                </div>
+
+
+
+              
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">Last CTC</label>
+                  <div class="col-sm-7 controls">
+                    {{previous_employment_form.last_ctc}}
+
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">Reason For Exit</label>
+                  <div class="col-sm-7 controls">
+                    {{previous_employment_form.reason_for_exit}}
+
+                  </div>
+                </div>
+                <div class="form-group">
+                    <input type="submit" id="submit2" class="btn btn-danger" value="Submit"/>
+                </div>
+           </form>
+         </div><!-- ./tab-content -->
+
+
+
+                                </div><!-- ./wizard1 ~~~ -->
+
+                           </div>
+                           <!-- Panel Body -->
+                         </div>
+                         <!-- Panel Widget -->
+                       </div>
+                       <!-- col-md-12 -->
+                     </div>
+                     <!-- row -->
+
+                   </div>
+                   <!-- .vd_content-section -->
+
+
+         <!-- End here -->
+
+{% endblock %}

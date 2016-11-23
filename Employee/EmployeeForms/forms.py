@@ -5,7 +5,8 @@ import calendar
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from bootstrap3_datetime.widgets import DateTimePicker
-from models import Address, UserDetails, Education, PreviousEmployment, Proof,GENDER_CHOICES,BLOOD_GROUP_CHOICES,MARITAL_CHOICES,QUALIFICATION,ADDRESSTYPE_CHOICES
+from django.utils.safestring import mark_safe
+from models import Address, UserDetails, Education, PreviousEmployment, Proof, FileUpload,GENDER_CHOICES,BLOOD_GROUP_CHOICES,MARITAL_CHOICES,QUALIFICATION,ADDRESSTYPE_CHOICES, JOB_TYPE
 dateTimeOption = {"format": "YYYY-MM-DD", "pickTime": False}
 
 class UserRegistrationForm(UserCreationForm):
@@ -92,8 +93,9 @@ class PreviousEmploymentForm(forms.ModelForm):
 
 	company_name = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control',
 		'required': 'True'}))
-	#company_address = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control',
-		#'required': 'True'}))
+	company_address = forms.CharField(max_length=500, widget=forms.TextInput(attrs={'class': 'width-500 input-sm form-control',
+		'required': 'True'}))
+	job_type = forms.ChoiceField(choices=JOB_TYPE)
 	employed_from = forms.DateField(widget=DateTimePicker())
 	employed_upto = forms.DateField(widget=DateTimePicker())
 	last_ctc = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control',
@@ -103,23 +105,53 @@ class PreviousEmploymentForm(forms.ModelForm):
 
 	class Meta:
 		model = PreviousEmployment
-		fields = ['company_name',  'employed_from', 'employed_upto', 'last_ctc','reason_for_exit']
+		fields = ['company_name', 'company_address', 'job_type',  'employed_from', 'employed_upto', 'last_ctc','reason_for_exit']
 		exclude = ['employee']
 
 class ProofForm(forms.ModelForm):
 
 	pan = forms.CharField(max_length=10, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control',
 		'required': 'True'}))
+	pan_attachment = forms.FileField(label='PAN Attachment')
+	# Add Bootstrap widgets
+	#pan_attachment.widget.attrs = {'class':'filestyle', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
 	aadhar_card = forms.CharField(max_length=12, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control',
 		'required': 'True'}))
+	aadhar_attachment = forms.FileField(label='Aadhar Card Attachment', required=False)
+    # Add Bootstrap widgets
+	#aadhar_attachment.widget.attrs = {'class':'filestyle', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
 	dl = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control',
 		'required': 'False'}))
+	dl_attachment = forms.FileField(label='DL Attachment', required=False, help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"))
+    # Add Bootstrap widgets
+	dl_attachment.widget.attrs = {'class':'filestyle', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
 	passport = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control',
 		'required': 'False'}))
+	passport_attachment = forms.FileField(label='Passport Attachment', required=False, help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"))
+    # Add Bootstrap widgets
+	passport_attachment.widget.attrs = {'class':'filestyle', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
 	voter_id = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control',
 		'required': 'False'}))
+	voter_attachment = forms.FileField(label='Voter Attachment', required=False, help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"))
+    # Add Bootstrap widgets
+	voter_attachment.widget.attrs = {'class':'filestyle', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
 
 	class Meta:
 		model = Proof
-		fields = ['pan', 'aadhar_card', 'dl', 'passport', 'voter_id']
+		fields = ['pan','pan_attachment', 'aadhar_card','aadhar_attachment', 'dl','dl_attachment', 'passport','passport_attachment', 'voter_id','voter_attachment']
+		exclude = ['employee']
+
+class FileUploadForm(forms.ModelForm):
+
+
+	attachment = forms.FileField(label='Attachment', required=False, help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"))
+    # Add Bootstrap widgets
+	attachment.widget.attrs = {'class':'filestyle', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
+	title = forms.CharField(max_length=10, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control',
+		'required': 'True'}))
+
+
+	class Meta:
+		model = FileUpload
+		fields = ['title','attachment']
 		exclude = ['employee']

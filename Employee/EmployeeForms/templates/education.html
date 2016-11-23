@@ -1,67 +1,126 @@
+{% extends 'master.html' %}
 
-                          <div class="tab-pane" id="tab2">
+{%block content %}
 
-                            <form id="education_form" method="post" enctype="multipart/form-data">
+<div class="vd_content-section clearfix">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel widget">
+        <div class="panel-heading vd_bg-grey">
+          <h3 class="panel-title"> <span class="menu-icon"> <i class="fa fa-magic"></i> </span> Wizard Basic </h3>
+        </div>
+        <div class="panel-body">
 
-                            {% csrf_token %}
-                            <div class="form-group">
-                              <label class="col-sm-2 control-label">Employee</label>
-                              <div class="col-sm-7 controls">
-                                {{education_form.employee}}
-                                <!-- <input type="text" class="input-sm"> -->
-                              </div>
-                            </div>
-                            <div class="form-group">
-                              <label class="col-sm-2 control-label">Specialization</label>
-                              <div class="col-sm-7 controls">
-                                {{education_form.specialization}}
-                                <!-- <input type="text" class="input-sm"> -->
-                              </div>
-                            </div>
-                            <div class="form-group">
-                              <label class="col-sm-2 control-label">Qualification</label>
-                              <div class="col-sm-7 controls">
-                                {{education_form.qualification}}
-                                <!-- <input type="text" class="input-sm"> -->
-                              </div>
-                            </div>
+            <div id="wizard-2" class="form-wizard">
+              <ul>
+                <li><a href="#tab1" data-toggle="tab">
+                  <div class="menu-icon"> 1 </div>
+                  User Profile </a></li>
+                <li><a href="#tab2" data-toggle="tab">
+                  <div class="menu-icon"> 2 </div>
+                  Education </a></li>
+                <li><a href="#tab3" data-toggle="tab">
+                  <div class="menu-icon"> 3 </div>
+                  Previous Employment </a></li>
+                <li><a href="#tab4" data-toggle="tab">
+                  <div class="menu-icon"> 4 </div>
+                  Proof </a></li>
+                <li><a href="#tab5" data-toggle="tab">
+                  <div class="menu-icon"> 5 </div>
+                  Confirm </a></li>
+              </ul>
 
 
-                            <div class="form-group">
-                              <label class="col-sm-2 control-label">From Date</label>
-                              <div class="col-sm-3 controls">
-                                <div class="input-group">
-                                  {{education_form.from_date}}
-                                  <!-- <input type="text" placeholder="Date" id="datepicker-icon" class="hasDatepicker"> -->
-                                  <span class="input-group-addon" id="datepicker-icon-trigger" data-datepicker="#datepicker-icon"><i class="fa fa-calendar"></i></span> </div>
-                              </div>
-                            </div>
-                            <div class="form-group">
-                              <label class="col-sm-2 control-label">To Date</label>
-                              <div class="col-sm-3 controls">
-                                <div class="input-group">
-                                  {{education_form.to_date}}
-                                  <!-- <input type="text" placeholder="Date" id="datepicker-icon" class="hasDatepicker"> -->
-                                  <span class="input-group-addon" id="datepicker-icon-trigger" data-datepicker="#datepicker-icon"><i class="fa fa-calendar"></i></span> </div>
-                              </div>
-                            </div>
-                            <div class="form-group">
-                              <label class="col-sm-2 control-label">Institution</label>
-                              <div class="col-sm-7 controls">
-                                {{education_form.institute}}
-                                <!-- <input type="text" class="input-sm"> -->
-                              </div>
-                            </div>
-                            <div class="form-group">
-                              <label class="col-sm-2 control-label">Overall Marks</label>
-                              <div class="col-sm-7 controls">
-                                {{education_form.overall_marks}}
-                                <!-- <input type="text" class="input-sm"> -->
-                              </div>
-                            </div>
-                            <h3 class="text-center"><input type="submit" id="submit1" class="btn btn-danger" value="Submit1"/></h3>
-                       </form>
+              <div class="progress progress-striped active">
+                <div class="progress-bar progress-bar-info" > </div>
+              </div>
 
 
 
-                          </div><!-- ./tab-pane -->
+<div class="tab-pane" id="tab2">
+
+  <form id="education_form" method="post" class="form-horizontal" enctype="multipart/form-data">
+
+  {% csrf_token %}
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Employee</label>
+    <div class="col-sm-7 controls">
+      {{education_form.employee}}
+
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Specialization</label>
+    <div class="col-sm-7 controls">
+      {{education_form.specialization}}
+
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Qualification</label>
+    <div class="col-sm-7 controls">
+      {{education_form.qualification}}
+
+    </div>
+  </div>
+
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label">From Date</label>
+    <div class="col-sm-3 controls">
+      <div class="input-group">
+        {{education_form.from_date}}
+
+        <span class="input-group-addon" id="datepicker-icon-trigger" data-datepicker="#datepicker-icon"><i class="fa fa-calendar"></i></span> </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">To Date</label>
+    <div class="col-sm-3 controls">
+      <div class="input-group">
+        {{education_form.to_date}}
+
+        <span class="input-group-addon" id="datepicker-icon-trigger" data-datepicker="#datepicker-icon"><i class="fa fa-calendar"></i></span> </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Institution</label>
+    <div class="col-sm-7 controls">
+      {{education_form.institute}}
+
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Overall Marks</label>
+    <div class="col-sm-7 controls">
+      {{education_form.overall_marks}}
+
+    </div>
+  </div>
+  <div class="form-group">
+      <input type="submit" id="submit1" class="btn btn-danger" value="Submit"/>
+  </div>
+</form>
+
+</div><!-- ./tab-content -->
+
+
+
+                       </div><!-- ./wizard1 ~~~ -->
+
+                  </div>
+                  <!-- Panel Body -->
+                </div>
+                <!-- Panel Widget -->
+              </div>
+              <!-- col-md-12 -->
+            </div>
+            <!-- row -->
+
+          </div>
+          <!-- .vd_content-section -->
+
+
+<!-- End here -->
+
+{% endblock %}

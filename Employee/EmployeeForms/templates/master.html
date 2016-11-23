@@ -739,7 +739,8 @@
 
 
 
-{%block content %}{% endblock %}
+{% block content %}{% endblock %}
+
 
 
 
@@ -850,7 +851,8 @@
           // $(document).ready(function() {
           	// "use strict";
             $('#user_details_form').submit(function(){ console.log("submit");
-              var form = $('#user_details_form'); //console.log(form.html());
+              var form
+               = $('#user_details_form'); //console.log(form.html());
             var formData = new FormData(this[0]);
           console.log("inituser"+ formData);
             // var form = $('#user_details_form')
@@ -861,32 +863,32 @@
             //       // var formData = new FormData($(this)[0]);
             //       //  form_id = $('user_details_form')[0].id;
             //       //  form_element = $('user_details_form');
-                  $.ajax({
-                            url : "/myansrsource/user_details",
-                            type : 'POST',
-                            data : formData,
-                            beforeSend :function(data){ console.log("before"+ data); },
-                            success : function(data){ console.log("success");
-                            console.log(data);
-                                $("#modal_body").html("<h5 style='color:green;'>" + data.success_msg + "</h5>");
-                              },
-                          //  HideAjaxLoader($('#ajax_loader_user_details_form'));
-                          //  reloadJS();
-                              error: function(XMLHttpRequest, textStatus, errorThrown) {
-                                $("#modal_body").html("<p style='color:red'>Oops! Something went wrong on the server. The details are below: "
-                                + "<br>Status : "+ textStatus + "<br>Exception : " + errorThrown + "<br><br> Please take a screenshot of this message and send it to <a href='mailto:myansrsourceHelpDesk@ansrsource.com'> MyAnsrSource Help Desk</a></p>");
-                              },
-                            cache: false,
-                            contentType: false,
-                            processData: false
-                       });
+                  // $.ajax({
+                  //           url : "/myansrsource/user_details",
+                  //           type : 'POST',
+                  //           data : formData,
+                  //           beforeSend :function(data){ console.log("before"+ data); },
+                  //           success : function(data){ console.log("success");
+                  //           console.log(data);
+                  //               $("#modal_body").html("<h5 style='color:green;'>" + data.success_msg + "</h5>");
+                  //             },
+                  //         //  HideAjaxLoader($('#ajax_loader_user_details_form'));
+                  //         //  reloadJS();
+                  //             error: function(XMLHttpRequest, textStatus, errorThrown) {
+                  //               $("#modal_body").html("<p style='color:red'>Oops! Something went wrong on the server. The details are below: "
+                  //               + "<br>Status : "+ textStatus + "<br>Exception : " + errorThrown + "<br><br> Please take a screenshot of this message and send it to <a href='mailto:myansrsourceHelpDesk@ansrsource.com'> MyAnsrSource Help Desk</a></p>");
+                  //             },
+                  //           cache: false,
+                  //           contentType: false,
+                  //           processData: false
+                  //      });
           });
-            $('#education_form').click(function(){
-              debugger;
-            // var form = document.querySelector('ssform')
-            // var form = document.querySelector('form')
-            var education_form = $('#education_form')
-          var formData = new FormData(this[0]);
+          //   $('#education_form').click(function(){
+          //     debugger;
+          //   // var form = document.querySelector('ssform')
+          //   // var form = document.querySelector('form')
+          //   var education_form = $('#education_form')
+          // var formData = new FormData(this[0]);
           // console.log("init11"+ ssformData);
           // var form = $('#user_details_form')
           // formData = new FormData(form[0]);
@@ -896,25 +898,25 @@
           //       // var formData = new FormData($(this)[0]);
           //       //  form_id = $('user_details_form')[0].id;
           //       //  form_element = $('user_details_form');
-                $.ajax({
-                          url : "/myansrsource/user_details/education",
-                          type : 'POST',
-                          data : formData,
-                          beforeSend :function(data){ console.log("before11"+ data); },
-                          success : function(data){
-                          console.log(data);
-                              $("#modal_body").html("<h5 style='color:green;'>" + data.success_msg + "</h5>");
-                            },
-                        //  HideAjaxLoader($('#ajax_loader_user_details_form'));
-                        //  reloadJS();
-                            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                              $("#modal_body").html("<p style='color:red'>Oops! Something went wrong on the server. The details are below: "
-                              + "<br>Status : "+ textStatus + "<br>Exception : " + errorThrown + "<br><br> Please take a screenshot of this message and send it to <a href='mailto:myansrsourceHelpDesk@ansrsource.com'> MyAnsrSource Help Desk</a></p>");
-                            },
-                          cache: false,
-                          contentType: false,
-                          processData: false
-                     });
+                // $.ajax({
+                //           url : "/myansrsource/user_details/education",
+                //           type : 'POST',
+                //           data : formData,
+                //           beforeSend :function(data){ console.log("before11"+ data); },
+                //           success : function(data){
+                //           console.log(data);
+                //               $("#modal_body").html("<h5 style='color:green;'>" + data.success_msg + "</h5>");
+                //             },
+                //         //  HideAjaxLoader($('#ajax_loader_user_details_form'));
+                //         //  reloadJS();
+                //             error: function(XMLHttpRequest, textStatus, errorThrown) {
+                //               $("#modal_body").html("<p style='color:red'>Oops! Something went wrong on the server. The details are below: "
+                //               + "<br>Status : "+ textStatus + "<br>Exception : " + errorThrown + "<br><br> Please take a screenshot of this message and send it to <a href='mailto:myansrsourceHelpDesk@ansrsource.com'> MyAnsrSource Help Desk</a></p>");
+                //             },
+                //           cache: false,
+                //           contentType: false,
+                //           processData: false
+                //      });
           });
           // });
             </script>
@@ -1041,80 +1043,6 @@
 
 
 
-          <!-- File upload script -->
 
-
-
-          <script>
-          /*
-           * jQuery File Upload Plugin JS Example 8.9.0
-           * https://github.com/blueimp/jQuery-File-Upload
-           *
-           * Copyright 2010, Sebastian Tschan
-           * https://blueimp.net
-           *
-           * Licensed under the MIT license:
-           * http://www.opensource.org/licenses/MIT
-           */
-          /* global $, window */
-          $(function () {
-              'use strict';
-              // Initialize the jQuery File Upload widget:
-              $('#fileupload').fileupload({
-                  // Uncomment the following to send cross-domain cookies:
-                  //xhrFields: {withCredentials: true},
-                  url: 'plugins/jquery-file-upload/server/php/'
-              });
-              // Enable iframe cross-domain access via redirect option:
-              $('#fileupload').fileupload(
-                  'option',
-                  'redirect',
-                  window.location.href.replace(
-                      /\/[^\/]*$/,
-                      'plugins/jquery-file-upload/cors/result.html?%s'
-                  )
-              );
-              if (window.location.hostname === 'blueimp.github.io') {
-                  // Demo settings:
-                  $('#fileupload').fileupload('option', {
-                      url: '//jquery-file-upload.appspot.com/',
-                      // Enable image resizing, except for Android and Opera,
-                      // which actually support image resizing, but fail to
-                      // send Blob objects via XHR requests:
-                      disableImageResize: /Android(?!.*Chrome)|Opera/
-                          .test(window.navigator.userAgent),
-                      maxFileSize: 5000000,
-                      acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i
-                  });
-                  // Upload server status check for browsers with CORS support:
-                  if ($.support.cors) {
-                      $.ajax({
-                          url: '//jquery-file-upload.appspot.com/',
-                          type: 'HEAD'
-                      }).fail(function () {
-                          $('<div class="alert alert-danger"/>')
-                              .text('Upload server currently unavailable - ' +
-                                      new Date())
-                              .appendTo('#fileupload');
-                      });
-                  }
-              } else {
-                  // Load existing files:
-                  $('#fileupload').addClass('fileupload-processing');
-                  $.ajax({
-                      // Uncomment the following to send cross-domain cookies:
-                      //xhrFields: {withCredentials: true},
-                      url: $('#fileupload').fileupload('option', 'url'),
-                      dataType: 'json',
-                      context: $('#fileupload')[0]
-                  }).always(function () {
-                      $(this).removeClass('fileupload-processing');
-                  }).done(function (result) {
-                      $(this).fileupload('option', 'done')
-                          .call(this, $.Event('done'), {result: result});
-                  });
-              }
-          });
-          </script>
         </body>
         </html>
