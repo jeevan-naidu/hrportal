@@ -1,23 +1,261 @@
-<head>
-  <title>Login</title>
-</head>
-
-<h1>Login</h1>
-
-{% if form.errors %}
-  <p class="error">Username and password incorrect</p>
-{% endif %}
 
 
-<form method='POST' action="/myansrsource/auth">{% csrf_token %}
-
-<label for="username">Username</label>
-<input type="text" name="username" value ="" id="username"><br/>
-<label for="password">Password</label>
-<input type="password" name="password" value ="" id="password"><br/>
 
 
-<input type="submit" value="login">
 
 
-</form>
+
+ <link href="/static/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="/static/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <script type="text/javascript" src="/static/js/jquery.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+
+
+
+
+
+
+
+<link href="/static/css/font-entypo.css" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Theme CSS -->
+    <link href="/static/css/theme.min.css" rel="stylesheet" type="text/css">
+    <!--[if IE]> <link href="css/ie.css" rel="stylesheet" > <![endif]-->
+    <link href="/static/css/chrome.css" rel="stylesheet" type="text/chrome"> <!-- chrome only css -->   
+
+            <link href="/static/css/theme-responsive.min.css" rel="stylesheet" type="text/css"> 
+
+            
+
+
+
+
+<body id="pages" class="full-layout no-nav-left no-nav-right  nav-top-fixed background-login     responsive remove-navbar login-layout   clearfix" data-active="pages "  data-smooth-scrolling="1">     
+<div class="vd_body">
+<!-- Header Start -->
+
+<!-- Header Ends --> 
+<div class="content">
+  <div class="container"> 
+    
+    <!-- Middle Content Start -->
+    
+    <div class="vd_content-wrapper">
+      <div class="vd_container">
+        <div class="vd_content clearfix">
+          <div class="vd_content-section clearfix">
+            <div class="vd_login-page">
+              <div class="heading clearfix">
+                <div class="logo">
+                  <h2 class="mgbt-xs-5"><img src="/static/img/ansrlogo.png" alt="logo"></h2>
+                </div>
+                <!-- <h4 class="text-center font-semibold vd_grey">LOGIN TO YOUR ACCOUNT</h4> -->
+              </div>
+              <div class="panel widget">
+                <div class="panel-body">
+                  <div class="login-icon entypo-icon"> <i class="icon-key" style="margin-top: 25px;display: block;"></i> </div>
+
+
+                  
+
+
+                  <form action="/myansrsource/auth" method="POST" enctype="multipart/form-data" class="form-horizontal" role="form">
+                  {% csrf_token %}
+                  <!-- <input type='hidden' name='csrfmiddlewaretoken' value='5MNerPBauRsItT3iSIJdEaYF5pKUOvUQ' /> -->
+                  <div class="alert alert-danger vd_hidden">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-cross"></i></button>
+                    <span class="vd_alert-icon"><i class="fa fa-exclamation-circle vd_red"></i></span><strong>Oh snap!</strong> Change a few things up and try submitting again. </div>
+                  <div class="alert alert-success vd_hidden">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-cross"></i></button>
+                    <span class="vd_alert-icon"><i class="fa fa-check-circle vd_green"></i></span><strong>Well done!</strong>. </div>                  
+                    <div class="form-group  mgbt-xs-20">
+
+
+
+
+                      <div class="col-md-12">
+
+                        <div class="label-wrapper sr-only">
+                          <label class="control-label sr-only" for="id_userid">Userid</label>
+                        </div>
+                        <div class="vd_input-wrapper" id="email-input-wrapper"> <span class="menu-icon"> <i class="fa fa-envelope"></i> </span>
+                      <input autofocus="autofocus" class="" id="username" maxlength="30" name="username" placeholder="Userid" required="required" title="" type="text">
+                        </div>
+
+
+
+
+
+                        <div class="label-wrapper">
+                          <label class="control-label sr-only" for="id_password">Password</label>
+                        </div>
+                        <div class="vd_input-wrapper" id="password-input-wrapper" > <span class="menu-icon"> <i class="fa fa-lock"></i> </span>
+                          <input type="password" placeholder="Password" id="password" name="password" class="required" required>
+                        </div>
+
+                      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    </div>
+					{% if form.errors %}
+                    <div id="vd_login-error" class="alert alert-danger hidden"><i class="fa fa-exclamation-circle fa-fw"></i> Please fill the necessary field </div>
+					{% endif %}
+                    <div class="form-group">
+                      <div class="col-md-12 text-center mgbt-xs-5">
+                        <button class="btn vd_bg-green vd_white width-100" type="submit" value="login">Login</button>
+                      </div>
+<!--                       <div class="col-md-12">
+                        <div class="row">
+                          <div class="col-xs-6">
+                            <div class="vd_checkbox">
+                              <input type="checkbox" id="checkbox-1" value="1">
+                              <label for="checkbox-1"> Remember me</label>
+                            </div>
+                          </div>
+                          <div class="col-xs-6 text-right">
+                            <div class=""> <a href="pages-forget-password.php">Forget Password? </a> </div>
+                          </div>
+                        </div>
+                      </div> -->
+
+                      
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <!-- Panel Widget -->
+              <!-- <div class="register-panel text-center font-semibold"> <a href="pages-register.php">CREATE AN ACCOUNT<span class="menu-icon"><i class="fa fa-angle-double-right fa-fw"></i></span></a> </div> -->
+            </div>
+            <!-- vd_login-page --> 
+            
+          </div>
+          <!-- .vd_content-section --> 
+          
+        </div>
+        <!-- .vd_content --> 
+      </div>
+      <!-- .vd_container --> 
+    </div>
+    <!-- .vd_content-wrapper --> 
+    
+    <!-- Middle Content End --> 
+    
+  </div>
+  <!-- .container --> 
+</div>
+<!-- .content -->
+
+<!-- Footer Start -->
+  <footer class="footer-2"  id="footer">      
+    <div class="vd_bottom ">
+        <div class="container">
+            <div class="row">
+              <div class=" col-xs-12">
+                <div class="copyright text-center">
+                    Copyright &copy;2014 Venmond Inc. All Rights Reserved 
+                </div>
+              </div>
+            </div><!-- row -->
+        </div><!-- container -->
+    </div>
+  </footer>
+<!-- Footer END -->
+
+
+
+
+
+
+
+
+<style type="text/css">
+.vd_input-wrapper .menu-icon{top:13px;}
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
