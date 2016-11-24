@@ -92,27 +92,24 @@ class Address(models.Model):
             self.zipcode)
 
 class UserDetails(models.Model):
-
-	employee = models.ForeignKey(User)
-	middle_name = models.CharField("Middle Name", max_length=15, blank=True, null=True)
-	gender = models.CharField("Gender", max_length=2,choices=GENDER_CHOICES,blank=False)
-	nationality = models.CharField("Nationality", max_length=30, blank=False)
-	marital_status = models.CharField("Marital Status",max_length=10,choices=MARITAL_CHOICES,blank=True, null=True)
-	wedding_date = models.DateField(verbose_name='Wedding Date',null=True,blank=True)
-	blood_group = models.CharField("Blood Group",max_length=3,choices=BLOOD_GROUP_CHOICES,blank=True)
-	mobile_phone = models.CharField("Mobile Phone",max_length=15,unique=True,blank=False)
-	land_phone = models.CharField("Landline Number",max_length=15, blank=True)
-	emergency_phone = models.CharField("Emergency Contact Number",max_length=15,unique=True,blank=False)
-	personal_email = models.EmailField("Personal E-mail",max_length=250,blank=False,unique=True)
-	address = models.ManyToManyField(Address, verbose_name='User Address')
-
-	def __unicode__(self):
-		return u'{0}'.format(
-
-			self.employee)
+    employee = models.ForeignKey(User)
+    middle_name = models.CharField("Middle Name", max_length=15, blank=True, null=True)
+    gender = models.CharField("Gender", max_length=2,choices=GENDER_CHOICES,blank=False)
+    nationality = models.CharField("Nationality", max_length=30, blank=False)
+    marital_status = models.CharField("Marital Status",max_length=10,choices=MARITAL_CHOICES,blank=True, null=True)
+    wedding_date = models.DateField(verbose_name='Wedding Date',null=True,blank=True)
+    blood_group = models.CharField("Blood Group",max_length=3,choices=BLOOD_GROUP_CHOICES,blank=True)
+    mobile_phone = models.CharField("Mobile Phone",max_length=15,unique=True,blank=False)
+    date_of_birth = models.CharField("Data of Birth",max_length=10, null=True, blank=True)
+    land_phone = models.CharField("Landline Number",max_length=15, blank=True)
+    emergency_phone = models.CharField("Emergency Contact Number",max_length=15,unique=True,blank=False)
+    personal_email = models.EmailField("Personal E-mail",max_length=250,blank=False,unique=True)
+    address = models.ManyToManyField(Address, verbose_name='User Address')
+    def __unicode__(self):
+        return u'{0}'.format(
+            self.employee)
 
 class PreviousEmployment(models.Model):
-
     employee = models.ForeignKey(User)
     company_name = models.CharField("Company Name", max_length=150)
     company_address = models.CharField("Company Address",max_length=500, null=True)
@@ -121,6 +118,8 @@ class PreviousEmployment(models.Model):
     last_ctc = models.DecimalField("Last CTC",max_digits=15,decimal_places=2)
     reason_for_exit = models.CharField(verbose_name="Reason for Exit",max_length=50)
     job_type = models.CharField('Job Type', choices = JOB_TYPE, max_length = 5, default="PT")
+    ps_attachment = models.FileField(upload_to=content_file_name,blank=True, null=True, verbose_name="Pay Slip Attachment")
+    rl_attachment = models.FileField(upload_to=content_file_name,blank=True, null=True, verbose_name="Relieving letter Attachment")
     createdon = models.DateTimeField(verbose_name="created Date",auto_now_add=True)
     updatedon = models.DateTimeField(verbose_name="Updated Date",auto_now=True)
     def __unicode__(self):
@@ -130,19 +129,18 @@ class PreviousEmployment(models.Model):
 
 
 class Education(models.Model):
-
-	employee = models.ForeignKey(User)
-	qualification = models.CharField('Qualification', choices = QUALIFICATION, max_length = 5)
-	specialization = models.CharField(verbose_name='Specialization',max_length=30,blank=True,null=True)
-	from_date = models.DateField("From Date", blank=False)
-	to_date = models.DateField("To Date", blank=False)
-	institute = models.CharField("Institution", max_length=50, blank=False)
-	overall_marks = models.IntegerField("Total Score/GPA",validators=[MaxValueValidator(100)],blank=False)
-
-	def __unicode__(self):
-		return u'{0}'.format(
-			self.qualification,
-			self.employee)
+    employee = models.ForeignKey(User)
+    qualification = models.CharField('Qualification', choices = QUALIFICATION, max_length = 5)
+    specialization = models.CharField(verbose_name='Specialization',max_length=30,blank=True,null=True)
+    from_date = models.DateField("From Date", blank=False)
+    to_date = models.DateField("To Date", blank=False)
+    institute = models.CharField("Institution", max_length=50, blank=False)
+    overall_marks = models.IntegerField("Total Score/GPA",validators=[MaxValueValidator(100)],blank=False)
+    marks_card_attachment = models.FileField(upload_to=content_file_name,blank=True, null=True, verbose_name="Marks card Attachment")
+    def __unicode__(self):
+        return u'{0}'.format(
+            self.qualification,
+            self.employee)
 
 class Proof(models.Model):
     employee = models.ForeignKey(User)
