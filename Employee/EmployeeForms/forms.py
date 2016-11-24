@@ -82,11 +82,12 @@ class EducationForm(forms.ModelForm):
 		'required': 'True'}))
 	overall_marks = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control',
 		'required': 'True'}))
+	marks_card_attachment = forms.FileField(label='Marks Card Attachment')
 
 
 	class Meta:
 		model = Education
-		fields = ['qualification', 'specialization', 'from_date', 'to_date', 'institute', 'overall_marks']
+		fields = ['qualification', 'specialization', 'from_date', 'to_date', 'institute', 'overall_marks', 'marks_card_attachment']
 		exclude = ['employee']
 
 class PreviousEmploymentForm(forms.ModelForm):
@@ -102,10 +103,12 @@ class PreviousEmploymentForm(forms.ModelForm):
 		'required': 'True'}))
 	reason_for_exit = forms.CharField(max_length=200, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control',
 		'required': 'False'}))
+	ps_attachment = forms.FileField(label='Pay slips Attachment')
+	rl_attachment = forms.FileField(label='Relieving Letter Attachment')
 
 	class Meta:
 		model = PreviousEmployment
-		fields = ['company_name', 'company_address', 'job_type',  'employed_from', 'employed_upto', 'last_ctc','reason_for_exit']
+		fields = ['company_name', 'company_address', 'job_type',  'employed_from', 'employed_upto', 'last_ctc','reason_for_exit', 'ps_attachment', 'rl_attachment']
 		exclude = ['employee']
 
 class ProofForm(forms.ModelForm):
