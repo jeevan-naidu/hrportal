@@ -40,7 +40,6 @@ JOB_TYPE = (
     ('IN', 'Intern'),
     )
 
-
 QUALIFICATION = (
 	('SSC', 'Senior Secondary'),
 	('HSC', 'Higher Secondary'),
