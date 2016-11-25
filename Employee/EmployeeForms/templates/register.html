@@ -1,14 +1,28 @@
-<head>
-  <title>Register User</title>
-</head>
-<h1>Register</h1>
+{% extends 'master.html' %}
+
+{% block content %}
 
 
-<form action ="/myansrsource/register" method="post">
-  {% csrf_token %}
+            <div class="row">
+              <div class="col-md-12">
 
-  {{form.as_p}}
 
-<input type = "submit" value="Register"/>
+				<h1>Register</h1>
 
-</form>
+
+				<form action ="/myansrsource/register" method="post" class="form-horizontal">
+				  {% csrf_token %}
+
+				  {{form.as_p}}
+
+				<input class="btn btn-primary" type="submit" value="Register"/>
+
+				</form>
+
+
+
+					</div>
+				</div>
+
+
+{% endblock %}
