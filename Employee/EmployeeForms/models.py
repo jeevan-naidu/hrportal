@@ -92,7 +92,7 @@ class Address(models.Model):
             self.zipcode)
 
 class UserDetails(models.Model):
-    employee = models.ForeignKey(User)
+    employee = models.ForeignKey(User, blank=True, null=True)
     middle_name = models.CharField("Middle Name", max_length=15, blank=True, null=True)
     gender = models.CharField("Gender", max_length=2,choices=GENDER_CHOICES,blank=False)
     nationality = models.CharField("Nationality", max_length=30, blank=False)
@@ -110,7 +110,7 @@ class UserDetails(models.Model):
             self.employee)
 
 class PreviousEmployment(models.Model):
-    employee = models.ForeignKey(User)
+    employee = models.ForeignKey(User, blank=True, null=True)
     company_name = models.CharField("Company Name", max_length=150)
     company_address = models.CharField("Company Address",max_length=500, null=True)
     employed_from = models.DateField(verbose_name="Start Date", null=False)
@@ -129,7 +129,7 @@ class PreviousEmployment(models.Model):
 
 
 class Education(models.Model):
-    employee = models.ForeignKey(User)
+    employee = models.ForeignKey(User, blank=True, null=True)
     qualification = models.CharField('Qualification', choices = QUALIFICATION, max_length = 5)
     specialization = models.CharField(verbose_name='Specialization',max_length=30,blank=True,null=True)
     from_date = models.DateField("From Date", blank=False)
@@ -143,14 +143,14 @@ class Education(models.Model):
             self.employee)
 
 class Proof(models.Model):
-    employee = models.ForeignKey(User)
-    pan = models.CharField("PAN Number",max_length=10,blank=False,unique=True)
+    employee = models.ForeignKey(User, blank=True, null=True)
+    pan = models.CharField("PAN Number",max_length=10,blank=False)
     pan_attachment = models.FileField(upload_to=content_file_name,blank=True, null=True, verbose_name="Pan Attachment")
-    aadhar_card = models.CharField("Aadhar Card",max_length=12,blank=True,unique=True)
+    aadhar_card = models.CharField("Aadhar Card",max_length=12,blank=True)
     aadhar_attachment = models.FileField(upload_to=content_file_name,blank=True, null=True, verbose_name="Aadhar Card Attachment")
-    dl = models.CharField("Driving License", max_length=10,blank=True,unique=True)
+    dl = models.CharField("Driving License", max_length=10,blank=True, null=True)
     dl_attachment = models.FileField(upload_to=content_file_name,blank=True, null=True, verbose_name="DL Attachment")
-    passport = models.CharField("Passport", max_length=10,blank=True,unique=True)
+    passport = models.CharField("Passport", max_length=10,blank=True,null=True)
     passport_attachment = models.FileField(upload_to=content_file_name,blank=True, null=True, verbose_name="Passport Attachment")
     voter_id = models.CharField("Voter ID", max_length=10,blank=True,unique=True)
     voter_attachment = models.FileField(upload_to=content_file_name,blank=True, null=True, verbose_name="Voter ID Attachment")
@@ -158,12 +158,12 @@ class Proof(models.Model):
         return u'{0}'.format(
         self.employee)
 
-class FileUpload(models.Model):
-
-    employee = models.ForeignKey(User)
-    title = models.CharField("Title",max_length=50,blank=False,unique=True)
-    attachment = models.FileField(upload_to=content_file_name, blank=True, null=True, verbose_name="Attachment")
-
-    def __unicode__(self):
-		return u'{0}'.format(
-			self.employee)
+# class FileUpload(models.Model):
+#
+#     employee = models.ForeignKey(User)
+#     title = models.CharField("Title",max_length=50,blank=False,unique=True)
+#     attachment = models.FileField(upload_to=content_file_name, blank=True, null=True, verbose_name="Attachment")
+#
+#     def __unicode__(self):
+# 		return u'{0}'.format(
+# 			self.employee)

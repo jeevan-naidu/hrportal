@@ -100,13 +100,21 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">Attachments for pay slips and relieving letter</label>
+                  <label class="col-sm-2 control-label">Attachments for pay slips</label>
                   <div class="col-sm-7 controls">
                     {{previous_employment_form.ps_attachment}}
-                    {{previous_employment_form.rl_attachment}}
+
 
                   </div>
                 </div>
+
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">Attachments for Relieving Letter</label>
+                  <div class="col-sm-7 controls">
+                      {{previous_employment_form.rl_attachment}}
+                  </div>
+                </div>
+
                 <div class="form-group">
                     <input type="submit" id="submit2" class="btn btn-danger" value="Submit"/>
                 </div>

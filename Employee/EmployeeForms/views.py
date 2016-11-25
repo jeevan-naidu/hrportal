@@ -10,8 +10,8 @@ from django.views.decorators.csrf import csrf_protect
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
-from models import Address, UserDetails, Education, PreviousEmployment, Proof, FileUpload
-from forms import UserDetailsForm, EducationForm, PreviousEmploymentForm, ProofForm, UserRegistrationForm, FileUploadForm
+from models import Address, UserDetails, Education, PreviousEmployment, Proof
+from forms import UserDetailsForm, EducationForm, PreviousEmploymentForm, ProofForm, UserRegistrationForm
 
 AllowedFileTypes = ['jpg', 'csv','png', 'pdf', 'xlsx', 'xls', 'docx', 'doc', 'jpeg', 'eml']
 # Create your views here.
@@ -159,7 +159,8 @@ def user_details(request):
             land_phone=land_phone,
             emergency_phone=emergency_phone,
             mobile_phone=mobile_phone,
-            personal_email=personal_email).save()
+            personal_email=personal_email,
+            gender=gender).save()
             context['form'] = form
             return HttpResponseRedirect("/myansrsource/user_details/education")
 
@@ -180,19 +181,22 @@ def education(request):
 
 
     if request.method == 'POST':
-        # import ipdb; ipdb.set_trace()
+        #import ipdb; ipdb.set_trace()
         # print request.POST
         context_data = {"education_form":""}
-        education_form = EducationForm(request.POST, prefix = 'education_form')
+        education_form = EducationForm(request.POST, request.FILES, prefix = 'education_form')
         if education_form.is_valid():
             employee = User.objects.get(username=request.user)
-            print employee
             qualification = education_form.cleaned_data['qualification']
             specialization = education_form.cleaned_data['specialization']
             from_date = education_form.cleaned_data['from_date']
             to_date = education_form.cleaned_data['to_date']
             institute = education_form.cleaned_data['institute']
             overall_marks = education_form.cleaned_data['overall_marks']
+            marks_card_attachment = education_form.cleaned_data['marks_card_attachment']
+            if request.FILES.get('marks_card_attachment', ""):
+                education_form.marks_card_attachment = request.FILES['marks_card_attachment']
+
 
             Education(employee=employee,
             qualification=qualification,
@@ -200,7 +204,8 @@ def education(request):
             from_date=from_date,
             to_date=to_date,
             institute=institute,
-            overall_marks=overall_marks).save()
+            overall_marks=overall_marks,
+            marks_card_attachment=marks_card_attachment).save()
             context_data['education_form'] = education_form
             return HttpResponseRedirect("/myansrsource/user_details/previous_employment")
 
@@ -224,17 +229,37 @@ def proof(request):
         if proof_form.is_valid():
             employee = User.objects.get(username=request.user)
             pan = proof_form.cleaned_data['pan']
+            pan_attachment = proof_form.cleaned_data['pan_attachment']
+            if request.FILES.get('pan_attachment', ""):
+                proof_form.pan_attachment = request.FILES['pan_attachment']
             aadhar_card = proof_form.cleaned_data['aadhar_card']
+            aadhar_attachment = proof_form.cleaned_data['aadhar_attachment']
+            if request.FILES.get('aadhar_attachment', ""):
+                proof_form.aadhar_attachment = request.FILES['aadhar_attachment']
             dl = proof_form.cleaned_data['dl']
+            dl_attachment = proof_form.cleaned_data['dl_attachment']
+            if request.FILES.get('dl_attachment', ""):
+                proof_form.dl_attachment = request.FILES['dl_attachment']
             passport = proof_form.cleaned_data['passport']
+            passport_attachment = proof_form.cleaned_data['passport_attachment']
+            if request.FILES.get('passport_attachment', ""):
+                proof_form.passport_attachment = request.FILES['passport_attachment']
             voter_id = proof_form.cleaned_data['voter_id']
+            voter_attachment = proof_form.cleaned_data['voter_attachment']
+            if request.FILES.get('voter_attachment', ""):
+                proof_form.voter_attachment = request.FILES['voter_attachment']
 
             Proof(employee=employee,
             pan=pan,
+            pan_attachment=pan_attachment,
             aadhar_card=aadhar_card,
+            aadhar_attachment=aadhar_attachment,
             dl=dl,
+            dl_attachment=dl_attachment,
             passport=passport,
-            voter_id=voter_id).save()
+            passport_attachment=passport_attachment,
+            voter_id=voter_id,
+            voter_attachment=voter_attachment).save()
             context['proof_form'] = proof_form
             return HttpResponseRedirect("/myansrsource/user_details/confirm")
 
@@ -252,7 +277,7 @@ def previous_employment(request):
     #import ipdb; ipdb.set_trace()
 
     if request.method == 'POST':
-        # import ipdb; ipdb.set_trace()
+        #import ipdb; ipdb.set_trace()
         context = {"previous_employment_form":""}
         previous_employment_form = PreviousEmploymentForm(request.POST, prefix="previous_employment_form")
         if previous_employment_form.is_valid():
@@ -262,13 +287,21 @@ def previous_employment(request):
             employed_upto = previous_employment_form.cleaned_data['employed_upto']
             last_ctc = previous_employment_form.cleaned_data['last_ctc']
             reason_for_exit = previous_employment_form.cleaned_data['reason_for_exit']
+            ps_attachment = previous_employment_form.cleaned_data['ps_attachment']
+            if request.FILES.get('ps_attachment', ""):
+                education_form.ps_attachment = request.FILES['ps_attachment']
+            rl_attachment = previous_employment_form.cleaned_data['rl_attachment']
+            if request.FILES.get('rl_attachment', ""):
+                previous_employment_form.rl_attachment = request.FILES['rl_attachment']
 
             PreviousEmployment(employee=employee,
             company_name=company_name,
             employed_from=employed_from,
             employed_upto=employed_upto,
             last_ctc=last_ctc,
-            reason_for_exit=reason_for_exit).save()
+            reason_for_exit=reason_for_exit,
+            ps_attachment=ps_attachment,
+            rl_attachment=rl_attachment).save()
             context['previous_employment_form'] = previous_employment_form
             return HttpResponseRedirect("/myansrsource/user_details/proof")
 

@@ -21,13 +21,8 @@ class PreviousEmploymentAdmin(admin.ModelAdmin):
 class AddressAdmin(admin.ModelAdmin):
 	list_display = [ 'address_type']
 
-class FileUploadAdmin(admin.ModelAdmin):
-	list_display = [ 'employee', 'title', 'attachment']
-	search_fields = ['user']
-
 admin.site.register(UserDetails, UserDetailsAdmin)
 admin.site.register(Education, EducationAdmin)
 admin.site.register(Proof, ProofAdmin)
 admin.site.register(PreviousEmployment, PreviousEmploymentAdmin)
 admin.site.register(Address, AddressAdmin)
-admin.site.register(FileUpload, FileUploadAdmin)
