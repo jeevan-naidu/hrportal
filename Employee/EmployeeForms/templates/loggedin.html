@@ -1,11 +1,17 @@
+
+{% extends 'master.html' %}
+
+{% block content %}
 <head>
   <title>Logged in</title>
 </head>
 
-<h2>Hi {{user}} you are now logged in</h2>
+<!-- <h2>Hi {{user}} you are now logged in</h2> -->
 
 <h3> Go through the guidelines before filling the forms</h3>
 
-<h4>Click <a href="/myansrsource/user_details">here</a> to start filling the details</h4>
-<p> Click <a href="/myansrsource/logout">here</a> to logout</p>
+<a href="/myansrsource/user_details" class="btn btn-primary">Enter Details</a>
+<a href="/myansrsource/logout" class="btn btn-primary">Logout</a>
 <!-- <p> Click <a href="/myansrsource/password_change">here</a> to change password</p> -->
+
+{% endblock %}
