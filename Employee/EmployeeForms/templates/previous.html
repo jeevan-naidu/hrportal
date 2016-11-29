@@ -116,8 +116,14 @@
                 </div>
 
                 <div class="form-group">
-                    <input type="submit" id="submit2" class="btn btn-danger" value="Submit"/>
+                  <input type="hidden" id="hidden_url" value=""/>
+                    <h3 class="text-center"><input type="button" id="submit" class="btn btn-danger" value="Save"/></h3>
                 </div>
+
+                <!-- <div class="form-group">
+                    <h3 class="text-center"><input type="submit" id="submit1" onclick="myFunction()" class="btn btn-danger" onclick="form.action='/myansrsource/user_details/previous_employment';" value="Save-addmore"/></h3>
+                </div> -->
+
            </form>
          </div><!-- ./tab-content -->
 
@@ -136,7 +142,41 @@
 
 
 
+                     <script type="text/javascript">
+                     $("#submit").click(function (e) {
+                           e.preventDefault();
+                           swal({   title: "Do you want to add again?",
+               							text: "If you want to add another eduaction detail press yes else click no!",
+               							type: "warning",
+               							showCancelButton: true,
+               							confirmButtonColor: "#DD6B55",
+               							confirmButtonText: "Save and fill again!",
+               							cancelButtonText: "Save and continue to next tab",
+               							closeOnConfirm: true,
+               							closeOnCancel: true
+               							},
+                             function(isConfirm) {
+                               if (isConfirm) {
+                                 $.ajax( {
+                                   type: "POST",
+                                   url: '/myansrsource/user_details/previous_employment',
+                                   data: $("#previous_employment_form").serialize(),
+                                   success: function( response ) {
+                                      window.location='/myansrsource/user_details/previous_employment'
+                                   }
+                                 });
+                               }else{
+                                   $.ajax( {
+                                     type: "POST",
+                                     url: '/myansrsource/user_details/previous_employment',
+                                     data: $("#previous_employment_form").serialize(),
+                                     success: function( response ) {
+                                        window.location='/myansrsource/user_details/proof'
+                                 }
+                               });}});
+                             });
 
+                     </script>
          <!-- End here -->
 
 {% endblock %}
