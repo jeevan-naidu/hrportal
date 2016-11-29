@@ -3,6 +3,14 @@
 .navbar-tabs-menu{display: none;}
 .vd_panel-menu{visibility: hidden;} /* This includes resize options for the content area */
 
+/* forms section */
+
+input[type="file"].bare{
+    border: 0px !important;
+    width: auto !important;	
+}
+
+
 /* Download forms sections */
 
 .the-form img{
