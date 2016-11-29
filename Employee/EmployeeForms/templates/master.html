@@ -287,7 +287,7 @@
     <li>
     	<a href="javascript:void(0);" data-action="click-trigger">
         	<!-- <span class="menu-icon"><i class="fa fa-dashboard"></i></span> -->
-            <span class="menu-text">Pages</span>
+            <span class="menu-text">User Details</span>
             <span class="menu-badge"><span class="badge vd_bg-black-30"><i class="fa fa-angle-down"></i></span></span>
        	</a>
      	<div class="child-menu"  data-action="click-target">
@@ -321,6 +321,17 @@
             </ul>
       	</div>
     </li>
+
+    <li>
+        <a href="/myansrsource/download_form">
+            <!-- <span class="menu-icon"><i class="fa fa-envelope"></i></span> --> 
+            <span class="menu-text">Download Forms</span>  
+            <!-- <span class="menu-badge"><span class="badge vd_bg-red">78</span></span> -->
+        </a> 
+    </li>
+
+
+
 
 </ul>
 <!-- Head menu search form ends -->         </div>
@@ -366,8 +377,8 @@
 
           <div class="vd_title-section clearfix">
             <div class="vd_panel-header">
-              <h1>Form Wizard</h1>
-              <small class="subtitle">Form wizard with multiple files</small> </div>
+              <h1>{% block pageTitle %}Placeholder{% endblock %}</h1>
+              <small class="subtitle">{% block pageSubTitle %}Placeholder Subtitle{% endblock %}</small> </div>
           </div>
 
 

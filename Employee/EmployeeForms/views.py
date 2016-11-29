@@ -388,3 +388,6 @@ def file(request):
     context['form'] = form
 
     return render(request,'file.html',context)
+
+def download_form(request):
+    return render(request, 'download_forms.html',{})

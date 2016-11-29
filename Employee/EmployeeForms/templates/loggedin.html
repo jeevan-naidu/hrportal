@@ -1,6 +1,7 @@
 
 {% extends 'master.html' %}
-
+{% block pageTitle %}Start Page{% endblock %}
+{% block pageSubTitle %}Go through the guidelines before filling the forms{% endblock %}
 {% block content %}
 <head>
   <title>Logged in</title>
@@ -8,7 +9,7 @@
 
 <!-- <h2>Hi {{user}} you are now logged in</h2> -->
 
-<h3> Go through the guidelines before filling the forms</h3>
+<!-- <h3> </h3> -->
 
 <a href="/myansrsource/user_details" class="btn btn-primary">Enter Details</a>
 <a href="/myansrsource/logout" class="btn btn-primary">Logout</a>
