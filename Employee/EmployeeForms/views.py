@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect, render_to_response
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.contrib import auth
+import popup_forms
 from django.contrib.auth.decorators import login_required
 from django.core.context_processors import csrf
 from django.views.generic import View
+from django.contrib import messages
 from django.views.generic import CreateView
 from formtools.wizard.views import SessionWizardView
 from django.views.decorators.csrf import csrf_protect
@@ -34,19 +36,6 @@ def auth_view(request):
 	else:
 		return HttpResponseRedirect('/myansrsource/invalid')
 
-# def password_change(request):
-#     if request.method == 'POST':
-# 		form = PasswordChangeForm(request.POST)
-# 		if form.is_valid():
-# 			form.save()
-# 			return HttpResponseRedirect('/myansrsource/password_change')
-#
-#     context = {}
-#     context.update(csrf(request))
-#
-#     context['form'] = PasswordChangeForm()
-#     return render_to_response(request, 'password_change.html', context)
-
 def logout(request):
 	auth.logout(request)
 	return render_to_response('logout.html')
@@ -68,54 +57,11 @@ def register(request):
     context.update(csrf(request))
 
     context['form'] = UserRegistrationForm()
+
     return render_to_response('register.html', context)
 
 def register_success(request):
-	return render_to_response('register_success.html')
-
-def update(request):
-
-    if request.method == 'GET':
-        context = {'add':True, 'record_added':False, 'form':None}
-        form = UserDetailsForm()
-        # if request.user.is_authenticated():
-        #     username = request.user.username
-        user = request.user
-
-        employee = UserDetails.objects.get(employee=user.id)
-        first_name = user.first_name
-        last_name = user.last_name
-        middle_name = employee.middle_name
-        nationality = employee.nationality
-        marital_status = employee.marital_status
-        wedding_date = employee.wedding_date
-        blood_group = employee.blood_group
-        land_phone = employee.land_phone
-        emergency_phone = employee.emergency_phone
-        mobile_phone = employee.mobile_phone
-        personal_email = employee.personal_email
-        gender = employee.gender
-
-        context = {
-        'employee':employee,
-        'first_name':first_name,
-        'last_name':last_name,
-        'middle_name':middle_name,
-        'nationality':nationality,
-        'marital_status':marital_status,
-        'wedding_date':wedding_date,
-        'blood_group':blood_group,
-        'land_phone':land_phone,
-        'emergency_phone':emergency_phone,
-        'mobile_phone':mobile_phone,
-        'personal_email':personal_email,
-        'gender':gender,
-        }
-
-        context.update(csrf(request))
-#ontext = {'form':form}
-
-        return render(request, 'wizard.html',context)
+	return HttpResponseRedirect("/myansrsource/login")
 
 from django.views.decorators.csrf import csrf_exempt
 @csrf_exempt
@@ -168,6 +114,7 @@ def user_details(request):
     return render(request, 'wizard.html',context)
 
 
+
 @csrf_exempt
 @login_required
 def education(request):
@@ -178,13 +125,13 @@ def education(request):
         education_form = EducationForm(request.GET, prefix = 'education_form')
         # print request.GET
 
-
-
     if request.method == 'POST':
-        #import ipdb; ipdb.set_trace()
-        # print request.POST
-        context_data = {"education_form":""}
+        # import ipdb; ipdb.set_trace()
+        print request.POST
         education_form = EducationForm(request.POST, request.FILES, prefix = 'education_form')
+        context_data = {"education_form":""}
+        marks_card_attachment = request.FILES.get('marks_card_attachment',"")
+
         if education_form.is_valid():
             employee = User.objects.get(username=request.user)
             qualification = education_form.cleaned_data['qualification']
@@ -207,7 +154,7 @@ def education(request):
             overall_marks=overall_marks,
             marks_card_attachment=marks_card_attachment).save()
             context_data['education_form'] = education_form
-            return HttpResponseRedirect("/myansrsource/user_details/previous_employment")
+            return render(request, 'education.html',context_data)
 
 
     context_data['education_form'] = education_form
@@ -215,17 +162,19 @@ def education(request):
 
 @csrf_exempt
 @login_required
+
 def proof(request):
     #proof form
     # context = {"proof_form": ""}
     if request.method == 'GET':
+        #import ipdb; ipdb.set_trace()
         context = {"proof_form":""}
         proof_form = ProofForm(request.GET, prefix="proof_form")
 
     if request.method == 'POST':
         #import ipdb; ipdb.set_trace()
         context = {"proof_form":""}
-        proof_form = ProofForm(request.POST, prefix="proof_form")
+        proof_form = ProofForm(request.POST, request.FILES, prefix="proof_form")
         if proof_form.is_valid():
             employee = User.objects.get(username=request.user)
             pan = proof_form.cleaned_data['pan']
@@ -261,6 +210,7 @@ def proof(request):
             voter_id=voter_id,
             voter_attachment=voter_attachment).save()
             context['proof_form'] = proof_form
+
             return HttpResponseRedirect("/myansrsource/user_details/confirm")
 
     context['proof_form'] = proof_form
@@ -272,122 +222,134 @@ def previous_employment(request):
     #previous_employment form
 
     if request.method == 'GET':
-        context = {"previous_employment_form": ""}
-        previous_employment_form = PreviousEmploymentForm(request.GET, prefix="previous_employment_form")
+        context = {"form": ""}
+        form = PreviousEmploymentForm(request.GET)
     #import ipdb; ipdb.set_trace()
 
     if request.method == 'POST':
-        #import ipdb; ipdb.set_trace()
-        context = {"previous_employment_form":""}
-        previous_employment_form = PreviousEmploymentForm(request.POST, prefix="previous_employment_form")
-        if previous_employment_form.is_valid():
+        # import ipdb; ipdb.set_trace()
+
+        form = PreviousEmploymentForm(request.POST, request.FILES)
+        context = {"form":""}
+        ps_attachment = request.FILES.get('ps_attachment',"")
+        #rl_attachment = request.FILES.get('rl_attachment',"")
+
+        if form.is_valid():
             employee = User.objects.get(username=request.user)
-            company_name = previous_employment_form.cleaned_data['company_name']
-            employed_from = previous_employment_form.cleaned_data['employed_from']
-            employed_upto = previous_employment_form.cleaned_data['employed_upto']
-            last_ctc = previous_employment_form.cleaned_data['last_ctc']
-            reason_for_exit = previous_employment_form.cleaned_data['reason_for_exit']
-            ps_attachment = previous_employment_form.cleaned_data['ps_attachment']
+            company_name = form.cleaned_data['company_name']
+            company_address = form.cleaned_data['company_address']
+            job_type = form.cleaned_data['job_type']
+            employed_from = form.cleaned_data['employed_from']
+            employed_upto = form.cleaned_data['employed_upto']
+            last_ctc = form.cleaned_data['last_ctc']
+            reason_for_exit = form.cleaned_data['reason_for_exit']
+            ps_attachment = form.cleaned_data['ps_attachment']
             if request.FILES.get('ps_attachment', ""):
-                education_form.ps_attachment = request.FILES['ps_attachment']
-            rl_attachment = previous_employment_form.cleaned_data['rl_attachment']
+                form.ps_attachment = request.FILES['ps_attachment']
+            rl_attachment = form.cleaned_data['rl_attachment']
             if request.FILES.get('rl_attachment', ""):
-                previous_employment_form.rl_attachment = request.FILES['rl_attachment']
+                form.rl_attachment = request.FILES['rl_attachment']
 
             PreviousEmployment(employee=employee,
             company_name=company_name,
+            company_address=company_address,
+            job_type=job_type,
             employed_from=employed_from,
             employed_upto=employed_upto,
             last_ctc=last_ctc,
             reason_for_exit=reason_for_exit,
             ps_attachment=ps_attachment,
             rl_attachment=rl_attachment).save()
-            context['previous_employment_form'] = previous_employment_form
-            return HttpResponseRedirect("/myansrsource/user_details/proof")
+            context['form'] = form
+            return render(request, 'previous.html',context)
 
-
-    context['previous_employment_form'] = previous_employment_form
+    context['form'] = form
     return render(request, 'previous.html',context)
 
 @csrf_exempt
 @login_required
 def confirm(request):
     #previous_employment form
+    if request.user.is_authenticated:
 
-    if request.method == 'GET':
+        if request.method == 'GET':
         #import ipdb; ipdb.set_trace()
-        context = {'add':True, 'record_added':False, 'form':None}
-        form = UserDetailsForm()
-        # if request.user.is_authenticated():
-        #     username = request.user.username
-        user = request.user
+            context = {'add':True, 'record_added':False, 'form':None}
+            form = UserDetailsForm()
+            # if request.user.is_authenticated():
+            #     username = request.user.username
+            user = request.user
 
-        employee = UserDetails.objects.get(employee=user)
-        first_name = user.first_name
-        last_name = user.last_name
-        middle_name = employee.middle_name
-        nationality = employee.nationality
-        marital_status = employee.marital_status
-        wedding_date = employee.wedding_date
-        blood_group = employee.blood_group
-        land_phone = employee.land_phone
-        emergency_phone = employee.emergency_phone
-        mobile_phone = employee.mobile_phone
-        personal_email = employee.personal_email
-        gender = employee.gender
+            employee = UserDetails.objects.get(employee=user)
+            first_name = user.first_name
+            last_name = user.last_name
+            middle_name = employee.middle_name
+            nationality = employee.nationality
+            marital_status = employee.marital_status
+            wedding_date = employee.wedding_date
+            blood_group = employee.blood_group
+            land_phone = employee.land_phone
+            emergency_phone = employee.emergency_phone
+            mobile_phone = employee.mobile_phone
+            personal_email = employee.personal_email
+            gender = employee.gender
 
-        context = {
-        'employee':employee,
-        'first_name':first_name,
-        'last_name':last_name,
-        'middle_name':middle_name,
-        'nationality':nationality,
-        'marital_status':marital_status,
-        'wedding_date':wedding_date,
-        'blood_group':blood_group,
-        'land_phone':land_phone,
-        'emergency_phone':emergency_phone,
-        'mobile_phone':mobile_phone,
-        'personal_email':personal_email,
-        'gender':gender,
-        }
+            context = {
+            'employee':employee,
+            'first_name':first_name,
+            'last_name':last_name,
+            'middle_name':middle_name,
+            'nationality':nationality,
+            'marital_status':marital_status,
+            'wedding_date':wedding_date,
+            'blood_group':blood_group,
+            'land_phone':land_phone,
+            'emergency_phone':emergency_phone,
+            'mobile_phone':mobile_phone,
+            'personal_email':personal_email,
+            'gender':gender,
+            }
 
-        context.update(csrf(request))
-#ontext = {'form':form}
+            context.update(csrf(request))
+    #ontext = {'form':form}
 
-        return render(request, 'confirm.html',context)
+            return render(request, 'confirm.html',context)
+    else:
+        return HttpResponseRedirect('/myansrsource/login')
 
-
-@csrf_exempt
-@login_required
-def file(request):
-    #proof form
-    # context = {"proof_form": ""}
-    if request.method == 'GET':
-        context = {"form":""}
-        form = FileUploadForm(request.GET)
-
-    if request.method == 'POST':
-        #import ipdb; ipdb.set_trace()
-
-        form = FileUploadForm(request.POST, request.FILES)
-        context = {"form":""}
-        attachment = request.FILES.get('attachment', "")
-
-        if form.is_valid():
-            employee = User.objects.get(username=request.user)
-            title = form.cleaned_data['title']
-            attachment = form.cleaned_data['attachment']
-            if request.FILES.get('attachment', ""):
-                form.attachment = request.FILES['attachment']
-
-            FileUpload(employee=employee,
-            title=title,
-            attachment=attachment).save()
-
-    context['form'] = form
-
-    return render(request,'file.html',context)
+# @csrf_exempt
+# @login_required
+# def file(request):
+#     # proof form
+#     # context = {"proof_form": ""}
+#     if request.method == 'GET':
+#         context = {"form":""}
+#         form = FileUploadForm(request.GET)
+#
+#     if request.method == 'POST':
+#         import ipdb; ipdb.set_trace()
+#
+#         form = FileUploadForm(request.POST, request.FILES)
+#         context = {"form":""}
+#         attachment = request.FILES.get('attachment', "")
+#
+#         if form.is_valid():
+#             employee = User.objects.get(username=request.user)
+#             title = form.cleaned_data['title']
+#             attachment = form.cleaned_data['attachment']
+#             if request.FILES.get('attachment', ""):
+#                 form.attachment = request.FILES['attachment']
+#
+#             FileUpload(employee=employee,
+#             title=title,
+#             attachment=attachment).save()
+#             context['form'] = form
+#
+#             return render(request,'file.html',context)
+#
+#     context['form'] = form
+#
+#     return render(request,'file.html',context)
 
 def download_form(request):
     return render(request, 'download_forms.html',{})

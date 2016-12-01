@@ -108,7 +108,7 @@
           <div class="vd_top-nav vd_nav-width  ">
           <div class="vd_panel-header">
           	<div class="logo">
-            	<a href="index.html"><img alt="logo" src="/static/img/ansrlogo.png"></a>
+            	<a href="/myansrsource/loggedin"><img alt="logo" src="/static/img/ansrlogo.png"></a>
             </div>
             <!-- logo -->
             <div class="vd_panel-menu  hidden-sm hidden-xs" data-intro="<strong>Minimize Left Navigation</strong><br/>Toggle navigation size to medium or small size. You can set both button or one button only. See full option at documentation." data-step=1>
@@ -360,7 +360,7 @@
           <div class="vd_head-section clearfix">
             <div class="vd_panel-header">
               <ul class="breadcrumb">
-                <li><a href="index.html">Home</a> </li>
+                <li><a href="/myansrsource/loggedin">Home</a> </li>
                 <li><a href="forms-elements.html">Forms</a> </li>
                 <li class="active">Form Wizard</li>
               </ul>
@@ -499,79 +499,7 @@
 
 
 
-          <script type="text/javascript">
-          // $(document).ready(function() {
-          	// "use strict";
-            $('#user_details_form').submit(function(){ console.log("submit");
-              var form
-               = $('#user_details_form'); //console.log(form.html());
-            var formData = new FormData(this[0]);
-          console.log("inituser"+ formData);
-            // var form = $('#user_details_form')
-            // formData = new FormData(form[0]);
-            //       //  var form = $('#user_details_form'),
-            //       //  formData = new FormData(form[0]);
-            //       //  var formData = new FormData($('#user_details_form')[0]);
-            //       // var formData = new FormData($(this)[0]);
-            //       //  form_id = $('user_details_form')[0].id;
-            //       //  form_element = $('user_details_form');
-                  // $.ajax({
-                  //           url : "/myansrsource/user_details",
-                  //           type : 'POST',
-                  //           data : formData,
-                  //           beforeSend :function(data){ console.log("before"+ data); },
-                  //           success : function(data){ console.log("success");
-                  //           console.log(data);
-                  //               $("#modal_body").html("<h5 style='color:green;'>" + data.success_msg + "</h5>");
-                  //             },
-                  //         //  HideAjaxLoader($('#ajax_loader_user_details_form'));
-                  //         //  reloadJS();
-                  //             error: function(XMLHttpRequest, textStatus, errorThrown) {
-                  //               $("#modal_body").html("<p style='color:red'>Oops! Something went wrong on the server. The details are below: "
-                  //               + "<br>Status : "+ textStatus + "<br>Exception : " + errorThrown + "<br><br> Please take a screenshot of this message and send it to <a href='mailto:myansrsourceHelpDesk@ansrsource.com'> MyAnsrSource Help Desk</a></p>");
-                  //             },
-                  //           cache: false,
-                  //           contentType: false,
-                  //           processData: false
-                  //      });
-          // });
-          //   $('#education_form').click(function(){
 
-          //   // var form = document.querySelector('ssform')
-          //   // var form = document.querySelector('form')
-          //   var education_form = $('#education_form')
-          // var formData = new FormData(this[0]);
-          // console.log("init11"+ ssformData);
-          // var form = $('#user_details_form')
-          // formData = new FormData(form[0]);
-          //       //  var form = $('#user_details_form'),
-          //       //  formData = new FormData(form[0]);
-          //       //  var formData = new FormData($('#user_details_form')[0]);
-          //       // var formData = new FormData($(this)[0]);
-          //       //  form_id = $('user_details_form')[0].id;
-          //       //  form_element = $('user_details_form');
-                // $.ajax({
-                //           url : "/myansrsource/user_details/education",
-                //           type : 'POST',
-                //           data : formData,
-                //           beforeSend :function(data){ console.log("before11"+ data); },
-                //           success : function(data){
-                //           console.log(data);
-                //               $("#modal_body").html("<h5 style='color:green;'>" + data.success_msg + "</h5>");
-                //             },
-                //         //  HideAjaxLoader($('#ajax_loader_user_details_form'));
-                //         //  reloadJS();
-                //             error: function(XMLHttpRequest, textStatus, errorThrown) {
-                //               $("#modal_body").html("<p style='color:red'>Oops! Something went wrong on the server. The details are below: "
-                //               + "<br>Status : "+ textStatus + "<br>Exception : " + errorThrown + "<br><br> Please take a screenshot of this message and send it to <a href='mailto:myansrsourceHelpDesk@ansrsource.com'> MyAnsrSource Help Desk</a></p>");
-                //             },
-                //           cache: false,
-                //           contentType: false,
-                //           processData: false
-                //      });
-          });
-          // });
-            </script>
 
           <script type="text/javascript">
           	$('#wizard-1').bootstrapWizard({
@@ -587,8 +515,6 @@
           			}
           		},
           		'onNext': function(){
-                // console.log(new FormData(this))
-                // console.log("jdujdjhjh");
           			scrollTo('#wizard-1',-100);
           		},
           		'onPrevious': function(){

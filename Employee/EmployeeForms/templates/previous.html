@@ -1,6 +1,6 @@
 {% extends 'master.html' %}
 {% block pageTitle %}Previous Employment Details{% endblock %}
-{% block pageSubTitle %}Start entering your previous employment details here{% endblock %}
+{% block pageSubTitle %}Start entering your work details here{% endblock %}
 {%block content %}
 
 
@@ -47,7 +47,7 @@
                 <div class="form-group">
                   <label class="col-sm-2 control-label">Company Name</label>
                   <div class="col-sm-7 controls">
-                    {{previous_employment_form.company_name}}
+                    {{form.company_name}}
 
                   </div>
                 </div>
@@ -55,7 +55,7 @@
                 <div class="form-group">
                   <label class="col-sm-2 control-label">Company Address</label>
                   <div class="col-sm-7 controls">
-                    {{previous_employment_form.company_address}}
+                    {{form.company_address}}
 
                   </div>
                     </div>
@@ -63,7 +63,7 @@
                     <div class="form-group">
                       <label class="col-sm-2 control-label">Job Type</label>
                       <div class="col-sm-7 controls">
-                        {{previous_employment_form.job_type}}
+                        {{form.job_type}}
 
                       </div>
                         </div>
@@ -71,14 +71,14 @@
                 <div class="form-group">
                   <label class="col-sm-2 control-label">Employed From</label>
                   <div class="col-sm-7 controls">
-                    {{previous_employment_form.employed_from}}
+                    {{form.employed_from}}
 
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label">Employed To</label>
                   <div class="col-sm-7 controls">
-                    {{previous_employment_form.employed_upto}}
+                    {{form.employed_upto}}
 
                   </div>
                 </div>
@@ -89,21 +89,23 @@
                 <div class="form-group">
                   <label class="col-sm-2 control-label">Last CTC</label>
                   <div class="col-sm-7 controls">
-                    {{previous_employment_form.last_ctc}}
+                    {{form.last_ctc}}
 
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label">Reason For Exit</label>
                   <div class="col-sm-7 controls">
-                    {{previous_employment_form.reason_for_exit}}
+                    {{form.reason_for_exit}}
 
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">Attachments for pay slips</label>
+                  <label class="col-sm-2 control-label">Attachments for pay slips<br/></label>
+
                   <div class="col-sm-7 controls">
-                    {{previous_employment_form.ps_attachment}}
+
+                    {{form.ps_attachment}}
 
 
                   </div>
@@ -112,17 +114,18 @@
                 <div class="form-group">
                   <label class="col-sm-2 control-label">Attachments for Relieving Letter</label>
                   <div class="col-sm-7 controls">
-                      {{previous_employment_form.rl_attachment}}
+                      {{form.rl_attachment}}
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <input type="hidden" id="hidden_url" value=""/>
-                  
-                    <h3 class="col-sm-12 text-right"><input type="button" id="submit" class="btn btn-danger" value="Save"/></h3>
-                    
+
+                    <h3 class="col-sm-12 text-right"><input type="submit" id="submit" class="btn btn-danger" value="Save"/></h3>
                 </div>
 
+                <!-- <div class="form-group">
+                    <h3 class="text-center"><input type="submit" id="submit1" onclick="myFunction()" class="btn btn-danger" onclick="form.action='/myansrsource/user_details/previous_employment';" value="Save-addmore"/></h3>
+                </div> -->
 
            </form>
          </div><!-- ./tab-content -->
@@ -145,6 +148,7 @@
                      <script type="text/javascript">
                      $("#previous_employment_form").submit(function (e) {
                            e.preventDefault();
+                           var data = new FormData($('form').get(0));
                            swal({   title: "Do you want to add again?",
                							text: "If you want to add another eduaction detail press yes else click no!",
                							type: "warning",
@@ -160,10 +164,14 @@
                                  $.ajax( {
                                    type: "POST",
                                    url: '/myansrsource/user_details/previous_employment',
-                                   data: $("#previous_employment_form").serialize(),
+                                   data: data,
+                                   cache: false,
+                                   processData: false,
+                                   contentType: false,
                                    success: function( response ) {
                                       window.location='/myansrsource/user_details/previous_employment'
                                    }
+
                                  });
                                }else{
                                    $.ajax( {

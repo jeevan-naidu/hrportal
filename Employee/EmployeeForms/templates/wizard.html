@@ -8,7 +8,7 @@
               <div class="col-md-12">
                 <div class="panel widget">
                   <div class="panel-heading vd_bg-grey">
-                    <h3 class="panel-title"> <span class="menu-icon"> <i class="fa fa-magic"></i> </span> Wizard Basic </h3>
+                    <h3 class="panel-title"> <span class="menu-icon"> <i class="fa fa-magic"></i> </span> {{ request.user.username }} </h3>
                   </div>
                   <div class="panel-body">
 
@@ -46,7 +46,7 @@
 
 
 <!-- ~~~~sanjay~~~~ -->
-                        <form id="user_details_form" method="post" class="form-horizontal" enctype="multipart/form-data" novalidate="novalidate">
+                        <form id="user_details_form" method="post" class="form-horizontal" enctype="multipart/form-data">
 
                         {% csrf_token %}
 
@@ -178,25 +178,6 @@
 
 
 
-<!--                           <div class="form-actions-condensed wizard">
-                              <a class="btn vd_btn prev" href="javascript:void(0);">
-                                  <span class="menu-icon">
-                                    <i class="fa fa-fw fa-chevron-circle-left"></i>
-                                  </span> Previous
-                              </a>
-                              <a class="btn vd_btn next" href="javascript:void(0);">Next
-                                  <span class="menu-icon">
-                                    <i class="fa fa-fw fa-chevron-circle-right"></i>
-                                  </span>
-                              </a>
-                              <a class="btn vd_btn vd_bg-green finish" href="javascript:void(0);">
-                                  <span class="menu-icon">
-                                    <i class="fa fa-fw fa-check"></i>
-                                  </span> Finish
-                              </a>
-                          </div>
-                        </div> --><!-- ./tab-content -->
-
 
 
 
@@ -211,7 +192,33 @@
             </div>
             <!-- row -->
 
+            <script type="text/javascript">
+            $("#user_details_form").submit(function (e) {
+                  e.preventDefault();
+                  swal({   title: "Thank you for filling the details",
+                    text: "If you want to add another eduaction detail press yes else click no!",
+                    type: "success",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Next Tab",
+                    closeOnConfirm: true,
+                    closeOnCancel: true
+                    },
+                    function(isConfirm) {
+                      if (isConfirm) {
+                        $.ajax( {
+                          type: "POST",
+                          url: '/myansrsource/user_details',
+                          data: $("#user_details_form").serialize(),
+                          success: function( response ) {
+                             window.location='/myansrsource/user_details/education'
+                          }
+                        });
+                      }else{
+                          swal("There was some problem with your data")
+                        }});
+                    });
 
+            </script>
 
-<!-- End here -->
 {% endblock %}

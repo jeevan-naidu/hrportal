@@ -53,6 +53,8 @@ ADDRESSTYPE_CHOICES = (
     )
 
 def content_file_name(instance, filename):
+    ''' This function generates a random string of length 16 which will be a combination of (4 digits + 4
+    characters(lowercase) + 4 digits + 4 characters(uppercase)) seperated 4 characters by hyphen(-) '''
 
     import random
     import string
@@ -65,7 +67,7 @@ def content_file_name(instance, filename):
     random_str =  random_str[:4] + "-" + random_str[4:8] + "-" + random_str[8:12] + "-" + random_str[12:]
     filetype = filename.split(".")[-1].lower()
     filename = random_str +"." +  filetype
-    path = "EmployeeForms/uploads/" + str(datetime.datetime.now().year) + "/" + str(datetime.datetime.now().month) + "/" + str(datetime.datetime.now().day) + "/"
+    path = "uploads/" + str(instance.employee)
     os_path = os.path.join(path, filename)
     return os_path
 
@@ -101,7 +103,7 @@ class UserDetails(models.Model):
     mobile_phone = models.CharField("Mobile Phone",max_length=15,unique=True,blank=False)
     date_of_birth = models.CharField("Data of Birth",max_length=10, null=True, blank=True)
     land_phone = models.CharField("Landline Number",max_length=15, blank=True)
-    emergency_phone = models.CharField("Emergency Contact Number",max_length=15,unique=True,blank=False)
+    emergency_phone = models.CharField("Emergency Contact Number",max_length=15,unique=True,blank=True,null=True)
     personal_email = models.EmailField("Personal E-mail",max_length=250,blank=False,unique=True)
     address = models.ManyToManyField(Address, verbose_name='User Address')
     def __unicode__(self):
@@ -151,18 +153,15 @@ class Proof(models.Model):
     dl_attachment = models.FileField(upload_to=content_file_name,blank=True, null=True, verbose_name="DL Attachment")
     passport = models.CharField("Passport", max_length=10,blank=True,null=True)
     passport_attachment = models.FileField(upload_to=content_file_name,blank=True, null=True, verbose_name="Passport Attachment")
-    voter_id = models.CharField("Voter ID", max_length=10,blank=True,unique=True)
+    voter_id = models.CharField("Voter ID", max_length=10,blank=True, null=True, unique=True)
     voter_attachment = models.FileField(upload_to=content_file_name,blank=True, null=True, verbose_name="Voter ID Attachment")
     def __unicode__(self):
         return u'{0}'.format(
         self.employee)
 
 # class FileUpload(models.Model):
-#
 #     employee = models.ForeignKey(User)
 #     title = models.CharField("Title",max_length=50,blank=False,unique=True)
 #     attachment = models.FileField(upload_to=content_file_name, blank=True, null=True, verbose_name="Attachment")
-#
 #     def __unicode__(self):
-# 		return u'{0}'.format(
-# 			self.employee)
+#         return u'{0}'.format(self.employee)

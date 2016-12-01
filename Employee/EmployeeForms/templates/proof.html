@@ -68,7 +68,9 @@
                   <label class="col-sm-2 control-label">Passport Number</label>
                   <div class="col-sm-7 controls">
                     {{proof_form.passport}}
+
                     {{proof_form.passport_attachment}}
+
                   </div>
                 </div>
                 <div class="form-group">
@@ -98,7 +100,41 @@
  <!-- col-md-12 -->
 </div>
 <!-- row -->
+                <script type="text/javascript">
+                $("#proof_form").submit(function (e) {
+                      e.preventDefault();
+                      var data = new FormData($('form').get(0));
+                      console.log("swal");
+                      swal({   title: "Thank you for filling the details",
+                        text: "If you want to add another eduaction detail press yes else click no!",
+                        type: "success",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "Next Tab",
+                        closeOnConfirm: true,
+                        closeOnCancel: true
+                        },
 
+                        function(isConfirm) {
+                          if (isConfirm) {
+                            $.ajax( {
+                              type: "POST",
+                              url: '/myansrsource/user_details/proof',
+                              data: data,
+                              cache: false,
+                              processData: false,
+                              contentType: false,
+                              success: function( response ) {
+                                 window.location='/myansrsource/user_details/confirm'
+                              }
+
+                            });
+                          }else{
+                              swal("There was some problem with your data")
+                            }});
+                        });
+
+                </script>
 
 
 <!-- End here -->
