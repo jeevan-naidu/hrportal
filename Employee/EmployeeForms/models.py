@@ -131,7 +131,7 @@ class PreviousEmployment(models.Model):
 
 class Education(models.Model):
     employee = models.ForeignKey(User, blank=True, null=True)
-    qualification = models.CharField('Qualification', choices = QUALIFICATION, max_length = 5)
+    qualification = models.CharField('Qualification', choices = QUALIFICATION, max_length = 5, unique = True)
     specialization = models.CharField(verbose_name='Specialization',max_length=30,blank=True,null=True)
     from_date = models.DateField("From Date", blank=False)
     to_date = models.DateField("To Date", blank=False)

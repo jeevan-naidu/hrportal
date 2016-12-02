@@ -39,45 +39,45 @@
 
 
               <div class="tab-pane" id="tab4">
-                <form id="proof_form" method="post" class="form-horizontal" enctype="multipart/form-data">
+                <form id="form" method="post" class="form-horizontal" enctype="multipart/form-data">
 
                 {% csrf_token %}
                 <div class="form-group">
                   <label class="col-sm-2 control-label">PAN Card Number</label>
                   <div class="col-sm-7 controls">
-                    {{proof_form.pan}}
-                    {{proof_form.pan_attachment}}
+                    {{form.pan}}
+                    {{form.pan_attachment}}
                   </div>
 
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label">Aadhar Card Number</label>
                   <div class="col-sm-7 controls">
-                    {{proof_form.aadhar_card}}
-                    {{proof_form.aadhar_attachment}}
+                    {{form.aadhar_card}}
+                    {{form.aadhar_attachment}}
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label">Driving License Number</label>
                   <div class="col-sm-7 controls">
-                  {{proof_form.dl}}
-                  {{proof_form.dl_attachment}}
+                  {{form.dl}}
+                  {{form.dl_attachment}}
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label">Passport Number</label>
                   <div class="col-sm-7 controls">
-                    {{proof_form.passport}}
+                    {{form.passport}}
 
-                    {{proof_form.passport_attachment}}
+                    {{form.passport_attachment}}
 
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label">Voter's ID Number</label>
                   <div class="col-sm-7 controls">
-                    {{proof_form.voter_id}}
-                    {{proof_form.voter_attachment}}
+                    {{form.voter_id}}
+                    {{form.voter_attachment}}
                   </div>
                 </div>
 

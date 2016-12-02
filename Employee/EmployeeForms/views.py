@@ -36,6 +36,19 @@ def auth_view(request):
 	else:
 		return HttpResponseRedirect('/myansrsource/invalid')
 
+# def password_change(request):
+#     if request.method == 'POST':
+# 		form = PasswordChangeForm(request.POST)
+# 		if form.is_valid():
+# 			form.save()
+# 			return HttpResponseRedirect('/myansrsource/password_change')
+#
+#     context = {}
+#     context.update(csrf(request))
+#
+#     context['form'] = PasswordChangeForm()
+#     return render_to_response(request, 'password_change.html', context)
+
 def logout(request):
 	auth.logout(request)
 	return render_to_response('logout.html')
@@ -47,12 +60,14 @@ def invalid_login(request):
 	return render_to_response('invalid.html')
 
 def register(request):
+    # import ipdb; ipdb.set_trace()
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect('/myansrsource/register_success')
-
+        else:
+            print form.errors
     context = {}
     context.update(csrf(request))
 
@@ -69,15 +84,41 @@ from django.views.decorators.csrf import csrf_exempt
 def user_details(request):
 
     # user details form
-
     if request.method == 'GET':
-        #import ipdb; ipdb.set_trace()
         context = {"form":""}
-        form = UserDetailsForm(request.GET)
+        form = UserDetailsForm()
+        context["form"] = form
+        #import ipdb; ipdb.set_trace()
+        user = request.user
+        try:
+            employee = UserDetails.objects.get(employee=request.user)
+        except UserDetails.DoesNotExist:
+            context = {"form":""}
+            form = UserDetailsForm()
+            context["form"] = form
+            return render(request, "wizard.html", context)
+        first_name = user.first_name
+        last_name = user.last_name
+        middle_name = employee.middle_name
+        nationality = employee.nationality
+        marital_status = employee.marital_status
+        wedding_date = employee.wedding_date
+        blood_group = employee.blood_group
+        land_phone = employee.land_phone
+        emergency_phone = employee.emergency_phone
+        mobile_phone = employee.mobile_phone
+        personal_email = employee.personal_email
+        gender = employee.gender
+        form = UserDetailsForm(initial = {'first_name':request.user.first_name,'last_name':request.user.last_name,'middle_name':employee.middle_name,
+        'nationality':employee.nationality,'marital_status':employee.marital_status,'blood_group':employee.blood_group,
+        'land_phone':employee.land_phone,'emergency_phone':employee.emergency_phone,'mobile_phone':employee.mobile_phone,
+        'personal_email':employee.personal_email,'gender':employee.gender})
+
+        context["form"] = form
+        return render(request, "wizard.html", context)
 
     if request.method == 'POST':
         #import ipdb; ipdb.set_trace()
-
         context = {"form":""}
         form = UserDetailsForm(request.POST)
 
@@ -110,23 +151,45 @@ def user_details(request):
             context['form'] = form
             return HttpResponseRedirect("/myansrsource/user_details/education")
 
-    context['form'] = form
-    return render(request, 'wizard.html',context)
-
-
-
 @csrf_exempt
 @login_required
 def education(request):
     #education form
-    #import ipdb; ipdb.set_trace()
+    # import ipdb; ipdb.set_trace()
     if request.method == 'GET':
         context_data = {"education_form":""}
-        education_form = EducationForm(request.GET, prefix = 'education_form')
+        education_form = EducationForm()
+        context_data["education_form"] = education_form
+        #import ipdb; ipdb.set_trace()
+        user = request.user
+        try:
+            employee = Education.objects.get(employee=request.user)
+        except Education.DoesNotExist:
+            context_data = {"education_form":""}
+            education_form = EducationForm(prefix = 'education_form')
+            context_data["education_form"] = education_form
+            return render(request, "education.html", context_data)
+        # education_form = EducationForm(request.GET, prefix = 'education_form')
         # print request.GET
+        if request.user.is_authenticated:
+            user = request.user
+            employee = Education.objects.get(employee=request.user)
+            qualification = employee.qualification
+            specialization = employee.specialization
+            from_date = employee.from_date
+            to_date = employee.to_date
+            institute = employee.institute
+            overall_marks = employee.overall_marks
+            marks_card_attachment = employee.marks_card_attachment
+            education_form = EducationForm(initial = {'from_date':employee.from_date,'qualification':employee.qualification,'specialization':employee.specialization,
+            'from_date':employee.from_date,'to_date':employee.to_date,'institute':employee.institute,
+            'overall_marks':employee.overall_marks,'marks_card_attachment':employee.marks_card_attachment})
+
+            context_data["education_form"] = education_form
+            return render(request, "education.html", context_data)
 
     if request.method == 'POST':
-        # import ipdb; ipdb.set_trace()
+        import ipdb; ipdb.set_trace()
         print request.POST
         education_form = EducationForm(request.POST, request.FILES, prefix = 'education_form')
         context_data = {"education_form":""}
@@ -144,7 +207,6 @@ def education(request):
             if request.FILES.get('marks_card_attachment', ""):
                 education_form.marks_card_attachment = request.FILES['marks_card_attachment']
 
-
             Education(employee=employee,
             qualification=qualification,
             specialization=specialization,
@@ -156,7 +218,6 @@ def education(request):
             context_data['education_form'] = education_form
             return render(request, 'education.html',context_data)
 
-
     context_data['education_form'] = education_form
     return render(request, 'education.html',context_data)
 
@@ -165,38 +226,66 @@ def education(request):
 
 def proof(request):
     #proof form
-    # context = {"proof_form": ""}
+    # context = {"form": ""}
     if request.method == 'GET':
-        #import ipdb; ipdb.set_trace()
-        context = {"proof_form":""}
-        proof_form = ProofForm(request.GET, prefix="proof_form")
+        context = {"form":""}
+        form = ProofForm()
+        context["form"] = form
+        # import ipdb; ipdb.set_trace()
+        user = request.user
+        try:
+            employee = Proof.objects.get(employee=request.user)
+        except Proof.DoesNotExist:
+            context = {"form":""}
+            form = ProofForm()
+            context["form"] = form
+            return render(request, "proof.html", context)
+
+        pan = employee.pan
+        pan_attachment = employee.pan_attachment
+        aadhar_card = employee.aadhar_card
+        aadhar_attachment = employee.aadhar_attachment
+        dl = employee.dl
+        dl_attachment = employee.dl_attachment
+        passport = employee.passport
+        passport_attachment = employee.passport_attachment
+        voter_id = employee.voter_id
+        voter_attachment = employee.voter_attachment
+
+        form = ProofForm(initial = {'pan':employee.pan,'pan_attachment':employee.pan_attachment,
+        'aadhar_card':employee.aadhar_card,'aadhar_attachment':employee.aadhar_attachment,'dl':employee.dl,
+        'dl_attachment':employee.dl_attachment,'passport':employee.passport,'passport_attachment':employee.passport_attachment,
+        'voter_id':employee.voter_id, 'voter_attachment':employee.voter_attachment})
+
+        context["form"] = form
+        return render(request, "proof.html", context)
 
     if request.method == 'POST':
         #import ipdb; ipdb.set_trace()
-        context = {"proof_form":""}
-        proof_form = ProofForm(request.POST, request.FILES, prefix="proof_form")
-        if proof_form.is_valid():
+        context = {"form":""}
+        form = ProofForm(request.POST, request.FILES)
+        if form.is_valid():
             employee = User.objects.get(username=request.user)
-            pan = proof_form.cleaned_data['pan']
-            pan_attachment = proof_form.cleaned_data['pan_attachment']
+            pan = form.cleaned_data['pan']
+            pan_attachment = form.cleaned_data['pan_attachment']
             if request.FILES.get('pan_attachment', ""):
-                proof_form.pan_attachment = request.FILES['pan_attachment']
-            aadhar_card = proof_form.cleaned_data['aadhar_card']
-            aadhar_attachment = proof_form.cleaned_data['aadhar_attachment']
+                form.pan_attachment = request.FILES['pan_attachment']
+            aadhar_card = form.cleaned_data['aadhar_card']
+            aadhar_attachment = form.cleaned_data['aadhar_attachment']
             if request.FILES.get('aadhar_attachment', ""):
-                proof_form.aadhar_attachment = request.FILES['aadhar_attachment']
-            dl = proof_form.cleaned_data['dl']
-            dl_attachment = proof_form.cleaned_data['dl_attachment']
+                form.aadhar_attachment = request.FILES['aadhar_attachment']
+            dl = form.cleaned_data['dl']
+            dl_attachment = form.cleaned_data['dl_attachment']
             if request.FILES.get('dl_attachment', ""):
-                proof_form.dl_attachment = request.FILES['dl_attachment']
-            passport = proof_form.cleaned_data['passport']
-            passport_attachment = proof_form.cleaned_data['passport_attachment']
+                form.dl_attachment = request.FILES['dl_attachment']
+            passport = form.cleaned_data['passport']
+            passport_attachment = form.cleaned_data['passport_attachment']
             if request.FILES.get('passport_attachment', ""):
-                proof_form.passport_attachment = request.FILES['passport_attachment']
-            voter_id = proof_form.cleaned_data['voter_id']
-            voter_attachment = proof_form.cleaned_data['voter_attachment']
+                form.passport_attachment = request.FILES['passport_attachment']
+            voter_id = form.cleaned_data['voter_id']
+            voter_attachment = form.cleaned_data['voter_attachment']
             if request.FILES.get('voter_attachment', ""):
-                proof_form.voter_attachment = request.FILES['voter_attachment']
+                form.voter_attachment = request.FILES['voter_attachment']
 
             Proof(employee=employee,
             pan=pan,
@@ -209,11 +298,11 @@ def proof(request):
             passport_attachment=passport_attachment,
             voter_id=voter_id,
             voter_attachment=voter_attachment).save()
-            context['proof_form'] = proof_form
+            context['form'] = form
 
             return HttpResponseRedirect("/myansrsource/user_details/confirm")
 
-    context['proof_form'] = proof_form
+    context['form'] = form
     return render(request,'proof.html',context)
 
 @csrf_exempt
@@ -222,8 +311,18 @@ def previous_employment(request):
     #previous_employment form
 
     if request.method == 'GET':
-        context = {"form": ""}
-        form = PreviousEmploymentForm(request.GET)
+        context = {"form":""}
+        form = PreviousEmploymentForm()
+        context["form"] = form
+        #import ipdb; ipdb.set_trace()
+        user = request.user
+        try:
+            employee = PreviousEmployment.objects.get(employee=request.user)
+        except PreviousEmployment.DoesNotExist:
+            context = {"form":""}
+            form = PreviousEmploymentForm()
+            context["form"] = form
+            return render(request, "previous.html", context)
     #import ipdb; ipdb.set_trace()
 
     if request.method == 'POST':
@@ -273,7 +372,7 @@ def confirm(request):
     if request.user.is_authenticated:
 
         if request.method == 'GET':
-        #import ipdb; ipdb.set_trace()
+            import ipdb; ipdb.set_trace()
             context = {'add':True, 'record_added':False, 'form':None}
             form = UserDetailsForm()
             # if request.user.is_authenticated():
@@ -321,7 +420,7 @@ def confirm(request):
 # @login_required
 # def file(request):
 #     # proof form
-#     # context = {"proof_form": ""}
+#     # context = {"form": ""}
 #     if request.method == 'GET':
 #         context = {"form":""}
 #         form = FileUploadForm(request.GET)

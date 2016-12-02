@@ -10,9 +10,12 @@ from models import Address, UserDetails, Education, PreviousEmployment, Proof, G
 dateTimeOption = {"format": "YYYY-MM-DD", "pickTime": False}
 
 class UserRegistrationForm(UserCreationForm):
-	email = forms.EmailField(required=True)
-	first_name = forms.CharField(required=True)
-	last_name = forms.CharField(required=True)
+	username = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control','required': 'True'}))
+	first_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control','required': 'True'}))
+	last_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control','required': 'True'}))
+	email = forms.EmailField(required=True, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control','required': 'True','data-error': 'User with this email id exists'}))
+	password1 = forms.CharField(required=True, widget=forms.PasswordInput(attrs={'class': 'width-50 input-sm form-control','required': 'True'}))
+	password2 = forms.CharField(required=True, widget=forms.PasswordInput(attrs={'class': 'width-50 input-sm form-control','required': 'True'}))
 
 	class Meta:
 		model = User
@@ -25,6 +28,15 @@ class UserRegistrationForm(UserCreationForm):
 		if commit:
 			user.save()
 		return user
+
+	def clean_email(self):
+        # Check that email is not duplicate
+		username = self.cleaned_data["username"]
+		email = self.cleaned_data["email"]
+		users = User.objects.filter(email__iexact=email).exclude(username__iexact=username)
+		if users:
+			raise forms.ValidationError('A user with that email already exists.')
+		return email.lower()
 
 class UserDetailsForm(forms.ModelForm):
 

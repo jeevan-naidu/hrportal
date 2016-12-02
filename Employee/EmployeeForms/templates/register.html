@@ -8,22 +8,112 @@
               <div class="col-md-12">
 
 
-				<h1>Register</h1>
+
 
 
 				<form id="register" action ="/myansrsource/register" method="post" class="form-horizontal">
 				  {% csrf_token %}
 
-				  {{form.as_p}}
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Username</label>
+            <div class="col-sm-7 controls">
+              {{form.username}}
 
-				<h3 class="text-center"><input type="submit" id="submit" class="btn btn-danger" value="Register"/></h3>
+            </div>
+
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">First Name</label>
+            <div class="col-sm-7 controls">
+              {{form.first_name}}
+
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Last Name</label>
+            <div class="col-sm-7 controls">
+            {{form.last_name}}
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Email</label>
+            <div class="col-sm-7 controls">
+              {{form.email}}
+              {% if form.errors %}
+              {% for email in form %}
+              {% for error in email.errors %}
+                  <p> {{ errors }} </p>
+              {% endfor %}
+              {% endfor %}
+              {% for error in email.non_field_errors %}
+              <p> {{ error }} </p>
+              {% endfor %}
+              {% endif %}
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Password</label>
+            <div class="col-sm-7 controls">
+              {{form.password1}}
+              The password should be atleast 8 characters.<br/>
+              The password should not be numeric completely.<br/>
+              It should contain one special character atleast.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Password Confirmation</label>
+            <div class="col-sm-7 controls">
+              {{form.password2}}
+              This password should match the password given above.
+            </div>
+            </div>
+
+
+
+
+				<h3 class="text-right"><input type="submit" id="submit" class="btn btn-danger" value="Register"/></h3>
 
 				</form>
+
 
 
 
 					</div>
 				</div>
 
+        <script type="text/javascript">
+        $("#register").submit(function (e) {
+              e.preventDefault();
+              var data = new FormData($('form').get(0));
+              swal({   title: "Thank you for registrating",
+                text: "Check your email and go to the link!",
+                type: "success",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "OK",
+                closeOnConfirm: true,
+                closeOnCancel: true
+                },
 
+                function(isConfirm) {
+                  if (isConfirm) {
+                    $.ajax( {
+                      type: "POST",
+                      url: '/myansrsource/register',
+                      data: data,
+                      cache: false,
+                      processData: false,
+                      contentType: false,
+                      success: function( response ) {
+                         window.location='/myansrsource/register'
+                      }
+
+                    });
+                  }else{
+                      swal("There was some problem with your data")
+                    }});
+                });
+
+        </script>
 {% endblock %}
