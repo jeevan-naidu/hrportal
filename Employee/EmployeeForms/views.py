@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect, render_to_response
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.contrib import auth
-import popup_forms
 from django.contrib.auth.decorators import login_required
 from django.core.context_processors import csrf
 from django.views.generic import View

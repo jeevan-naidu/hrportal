@@ -21,7 +21,6 @@ class PreviousEmploymentAdmin(admin.ModelAdmin):
 class AddressAdmin(admin.ModelAdmin):
 	list_display = [ 'address_type']
 
-
 admin.site.register(UserDetails, UserDetailsAdmin)
 admin.site.register(Education, EducationAdmin)
 admin.site.register(Proof, ProofAdmin)

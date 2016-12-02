@@ -3,6 +3,13 @@
 .navbar-tabs-menu{display: none;}
 .vd_panel-menu{visibility: hidden;} /* This includes resize options for the content area */
 
+.form-group span.mandatory-field{
+    color: red;
+    font-size: 11px;
+    position: relative;
+    top: -4px;
+}
+
 /* forms section */
 
 input[type="file"].bare{

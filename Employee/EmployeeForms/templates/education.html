@@ -14,27 +14,27 @@
 
             <div id="wizard-2" class="form-wizard">
               <ul>
-                <li><a href="#tab1" data-toggle="tab">
+                <li><a href="/myansrsource/user_details">
                   <div class="menu-icon"> 1 </div>
                   User Profile </a></li>
                 <li class="active"><a href="#tab2" data-toggle="tab">
                   <div class="menu-icon"> 2 </div>
                   Education </a></li>
-                <li><a href="#tab3" data-toggle="tab">
+                <li><a href="/myansrsource/user_details/previous_employment">
                   <div class="menu-icon"> 3 </div>
                   Previous Employment </a></li>
-                <li><a href="#tab4" data-toggle="tab">
+                <li><a href="/myansrsource/user_details/proof">
                   <div class="menu-icon"> 4 </div>
                   Proof </a></li>
-                <li><a href="#tab5" data-toggle="tab">
+                <li><a href="/myansrsource/user_details/confirm">
                   <div class="menu-icon"> 5 </div>
                   Confirm </a></li>
               </ul>
+<hr>
 
-
-              <div class="progress progress-striped active">
+<!--               <div class="progress progress-striped active">
                 <div class="progress-bar progress-bar-info" > </div>
-              </div>
+              </div> -->
 
 
 
@@ -52,7 +52,7 @@
   </div> -->
 
   <div class="form-group">
-    <label class="col-sm-2 control-label">Qualification</label>
+    <label class="col-sm-2 control-label">Qualification<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
       {{education_form.qualification}}
 
@@ -60,7 +60,7 @@
   </div>
 
   <div class="form-group">
-    <label class="col-sm-2 control-label">Specialization</label>
+    <label class="col-sm-2 control-label">Specialization<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
       {{education_form.specialization}}
 
@@ -70,7 +70,7 @@
 
 
   <div class="form-group">
-    <label class="col-sm-2 control-label">From Date</label>
+    <label class="col-sm-2 control-label">From Date<span class="mandatory-field"> *</span></label>
     <div class="col-sm-3 controls">
       <div class="input-group">
         {{education_form.from_date}}
@@ -79,7 +79,7 @@
     </div>
   </div>
   <div class="form-group">
-    <label class="col-sm-2 control-label">To Date</label>
+    <label class="col-sm-2 control-label">To Date<span class="mandatory-field"> *</span></label>
     <div class="col-sm-3 controls">
       <div class="input-group">
         {{education_form.to_date}}
@@ -88,14 +88,14 @@
     </div>
   </div>
   <div class="form-group">
-    <label class="col-sm-2 control-label">Institution</label>
+    <label class="col-sm-2 control-label">Institution<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
       {{education_form.institute}}
 
     </div>
   </div>
   <div class="form-group">
-    <label class="col-sm-2 control-label">Overall Marks</label>
+    <label class="col-sm-2 control-label">Overall Marks<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
       {{education_form.overall_marks}}
       {{education_form.marks_card_attachment}}

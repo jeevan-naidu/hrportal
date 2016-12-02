@@ -1,5 +1,5 @@
-# Remove pyc file in this folder
-migrations/*pyc
+# Remove pyc file
+*pyc
 
 # Distribution / packaging
 .Python
