@@ -17,16 +17,16 @@
                           <li><a href="#tab1" data-toggle="tab">
                             <div class="menu-icon"> 1 </div>
                             User Profile </a></li>
-                          <li><a href="#tab2" data-toggle="tab">
+                          <li><a href="/myansrsource/user_details/education">
                             <div class="menu-icon"> 2 </div>
                             Education </a></li>
-                          <li><a href="#tab3" data-toggle="tab">
+                          <li><a href="/myansrsource/user_details/previous_employment">
                             <div class="menu-icon"> 3 </div>
                             Previous Employment </a></li>
-                          <li><a href="#tab4" data-toggle="tab">
+                          <li><a href="/myansrsource/user_details/proof">
                             <div class="menu-icon"> 4 </div>
                             Proof </a></li>
-                          <li><a href="#tab5" data-toggle="tab">
+                          <li><a href="/myansrsource/user_details/confirm">
                             <div class="menu-icon"> 5 </div>
                             Confirm </a></li>
                         </ul>
@@ -59,7 +59,7 @@
                         </div> -->
 
                             <div class="form-group">
-                              <label class="col-sm-2 control-label">First Name</label>
+                              <label class="col-sm-2 control-label">First Name<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-7 controls">
                                 {{form.first_name}}
 
@@ -67,7 +67,7 @@
                             </div>
 
                           <div class="form-group">
-                              <label class="col-sm-2 control-label">Last Name</label>
+                              <label class="col-sm-2 control-label">Last Name<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-7 controls">
                                 {{form.last_name}}
 
@@ -75,7 +75,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">Middle Name</label>
+                                <label class="col-sm-2 control-label">Middle Name<span class="mandatory-field"> *</span></label>
                                 <div class="col-sm-7 controls">
                                   {{form.middle_name}}
 
@@ -83,7 +83,7 @@
                               </div>
 
                             <div class="form-group">
-                              <label class="col-sm-2 control-label">Gender</label>
+                              <label class="col-sm-2 control-label">Gender<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-2 controls">
                                 {{form.gender}}
 
@@ -91,7 +91,7 @@
                             </div>
 
                             <div class="form-group">
-                              <label class="col-sm-2 control-label">Nationality</label>
+                              <label class="col-sm-2 control-label">Nationality<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-7 controls">
                                 {{form.nationality}}
 
@@ -99,7 +99,7 @@
                             </div>
 
                             <div class="form-group">
-                              <label class="col-sm-2 control-label">Marital Status</label>
+                              <label class="col-sm-2 control-label">Marital Status<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-7 controls">
                                 {{form.marital_status}}
 
@@ -107,7 +107,7 @@
                             </div>
 
                             <div class="form-group">
-                              <label class="col-sm-2 control-label">Wedding Date</label>
+                              <label class="col-sm-2 control-label">Wedding Date<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-7 controls">
                                 {{form.wedding_date}}
 
@@ -115,7 +115,7 @@
                             </div>
 
                             <div class="form-group">
-                              <label class="col-sm-2 control-label">Blood Group</label>
+                              <label class="col-sm-2 control-label">Blood Group<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-2 controls">
                                 {{form.blood_group}}
 
@@ -123,7 +123,7 @@
                             </div>
 
                             <div class="form-group">
-                              <label class="col-sm-2 control-label">Land Phone</label>
+                              <label class="col-sm-2 control-label">Land Phone<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-7 controls">
                                 {{form.land_phone}}
 
@@ -131,7 +131,7 @@
                             </div>
 
                             <div class="form-group">
-                              <label class="col-sm-2 control-label">Emergency Phone</label>
+                              <label class="col-sm-2 control-label">Emergency Phone<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-7 controls">
                                 {{form.emergency_phone}}
 
@@ -139,7 +139,7 @@
                             </div>
 
                             <div class="form-group">
-                              <label class="col-sm-2 control-label">Mobile Number</label>
+                              <label class="col-sm-2 control-label">Mobile Number<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-7 controls">
                                 {{form.mobile_phone}}
 
@@ -147,22 +147,13 @@
                             </div>
 
                             <div class="form-group">
-                              <label class="col-sm-2 control-label">Personal Email</label>
+                              <label class="col-sm-2 control-label">Personal Email<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-7 controls">
                                 {{form.personal_email}}
                               </div>
                             </div>
 
 
-
-                      <div class="form-group">
-                        <label class="col-sm-2 control-label">Icon Trigger</label>
-                        <div class="col-sm-3 controls">
-                          <div class="input-group">
-                            <input type="text" placeholder="Date" id="datepicker-icon">
-                            <span class="input-group-addon" id="datepicker-icon-trigger" data-datepicker="#datepicker-icon"><i class="fa fa-calendar"></i></span> </div>
-                        </div>
-                      </div>
 
 
 
