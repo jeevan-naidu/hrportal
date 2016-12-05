@@ -28,7 +28,7 @@ class UserRegistrationForm(UserCreationForm):
 		users = User.objects.filter(email__iexact=email).exclude(username__iexact=username)
 		if users:
 			raise forms.ValidationError('A user with that email already exists.')
-		return email.lower()
+		return email
 
 	def save(self, commit=True):
 		user = super(UserRegistrationForm, self).save(commit=False)

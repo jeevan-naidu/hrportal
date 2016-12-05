@@ -67,15 +67,18 @@ def register(request):
             form.save()
             return HttpResponseRedirect('/myansrsource/register_success')
         else:
-            form = UserRegistrationForm()
-            data = {'form':form}
-            return render(request, 'register.html', data)
+            print form.is_valid()
+            print form['email'].errors
+            print form['username'].errors
+            print form['password1'].errors
+            print form['password2'].errors
+    else:
+        form = UserRegistrationForm()
+
     context = {}
     context.update(csrf(request))
 
-    context['form'] = UserRegistrationForm()
-
-    return render_to_response('register.html', context)
+    return render(request,'register.html', {'form':form})
 
 def register_success(request):
 	return HttpResponseRedirect("/myansrsource/login")
@@ -90,8 +93,11 @@ def user_details(request):
         context = {"form":""}
         form = UserDetailsForm()
         context["form"] = form
-        #import ipdb; ipdb.set_trace()
+        import ipdb; ipdb.set_trace()
         user = request.user
+        first_name = user.first_name
+        last_name = user.last_name
+        email=user.email
         try:
             employee = UserDetails.objects.get(employee=request.user)
         except UserDetails.DoesNotExist:
@@ -99,8 +105,7 @@ def user_details(request):
             form = UserDetailsForm()
             context["form"] = form
             return render(request, "wizard.html", context)
-        first_name = user.first_name
-        last_name = user.last_name
+
         middle_name = employee.middle_name
         nationality = employee.nationality
         marital_status = employee.marital_status

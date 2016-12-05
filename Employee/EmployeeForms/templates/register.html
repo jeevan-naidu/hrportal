@@ -104,6 +104,7 @@
                         </div>
                         <div class="vd_input-wrapper" id="first-name-input-wrapper">
                           {{form.first_name}}
+                          {{form.first_name.errors}}
                         </div>
                       </div>
 
@@ -113,6 +114,7 @@
                         </div>
                         <div class="vd_input-wrapper" id="last-name-input-wrapper">
                           {{form.last_name}}
+                          {{form.last_name.errors}}
                         </div>
                       </div>
                     </div>
@@ -124,7 +126,7 @@
                         </div>
                         <div class="vd_input-wrapper" id="email-input-wrapper">
                           {{form.email}}
-                          {{form.errors}}
+                          {{form.email.errors}}
                         </div>
                       </div>
                     </div>
@@ -136,6 +138,7 @@
                         </div>
                         <div class="vd_input-wrapper" id="password-input-wrapper">
                           {{form.password1}}
+                          {{form.password1.errors}}
                         </div>
                       </div>
 
@@ -145,6 +148,7 @@
                         </div>
                         <div class="vd_input-wrapper" id="confirm-password-input-wrapper">
                           {{form.password2}}
+                          {{form.password2.errors}}
                         </div>
                       </div>
                     </div>
@@ -166,6 +170,7 @@
                           <h3 class="col-sm-12 text-center"><input type="submit" id="submit" class="btn vd_bg-green vd_white width-100" value="Register"/></h3>
                       </div>
                     </div>
+
                   </form>
                 </div>
               </div>
@@ -248,7 +253,7 @@
 
                     });
                   }else{
-                      swal("There was some problem with your data")
+                      {{form.errors}}
                     }});
                 });
 
