@@ -93,7 +93,7 @@ def user_details(request):
         context = {"form":""}
         form = UserDetailsForm()
         context["form"] = form
-        import ipdb; ipdb.set_trace()
+        #import ipdb; ipdb.set_trace()
         user = request.user
         first_name = user.first_name
         last_name = user.last_name
@@ -388,14 +388,17 @@ def confirm(request):
     if request.user.is_authenticated:
 
         if request.method == 'GET':
-            import ipdb; ipdb.set_trace()
+            #import ipdb; ipdb.set_trace()
             context = {'add':True, 'record_added':False, 'form':None}
             form = UserDetailsForm()
             # if request.user.is_authenticated():
             #     username = request.user.username
             user = request.user
+            try:
+                employee = UserDetails.objects.get(employee=request.user)
+            except UserDetails.DoesNotExist:
+                return HttpResponseRedirect('/myansrsource/user_details')
 
-            employee = UserDetails.objects.get(employee=user)
             first_name = user.first_name
             last_name = user.last_name
             middle_name = employee.middle_name
