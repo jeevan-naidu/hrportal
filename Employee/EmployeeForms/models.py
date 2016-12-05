@@ -139,7 +139,8 @@ class Education(models.Model):
     from_date = models.DateField("From Date", blank=False)
     to_date = models.DateField("To Date", blank=False)
     institute = models.CharField("Institution", max_length=50, blank=False)
-    overall_marks = models.IntegerField("Total Score/GPA",validators=[MaxValueValidator(100)],blank=False)
+    board_university = models.CharField("Board/University", max_length=50,blank=True,null=True)
+    overall_marks = models.FloatField("Total Score/GPA",validators=[MaxValueValidator(100)],blank=False)
     marks_card_attachment = models.FileField(upload_to=content_file_name,blank=True, null=True, verbose_name="Marks card Attachment")
     def __unicode__(self):
         return u'{0}'.format(
