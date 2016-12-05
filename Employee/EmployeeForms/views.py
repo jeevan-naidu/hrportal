@@ -102,15 +102,17 @@ def user_details(request):
         nationality = employee.nationality
         marital_status = employee.marital_status
         wedding_date = employee.wedding_date
+        date_of_birth = employee.date_of_birth
         blood_group = employee.blood_group
         land_phone = employee.land_phone
-        emergency_phone = employee.emergency_phone
+        emergency_phone1 = employee.emergency_phone1
+        emergency_phone2 = employee.emergency_phone2
         mobile_phone = employee.mobile_phone
         personal_email = employee.personal_email
         gender = employee.gender
         form = UserDetailsForm(initial = {'first_name':request.user.first_name,'last_name':request.user.last_name,'middle_name':employee.middle_name,
-        'nationality':employee.nationality,'marital_status':employee.marital_status,'blood_group':employee.blood_group,
-        'land_phone':employee.land_phone,'emergency_phone':employee.emergency_phone,'mobile_phone':employee.mobile_phone,
+        'nationality':employee.nationality,'marital_status':employee.marital_status,'wedding_date':wedding_date,'date_of_birth':date_of_birth,'blood_group':employee.blood_group,
+        'land_phone':employee.land_phone,'emergency_phone1':employee.emergency_phone1,'emergency_phone2':employee.emergency_phone2,'mobile_phone':employee.mobile_phone,
         'personal_email':employee.personal_email,'gender':employee.gender})
 
         context["form"] = form
@@ -129,9 +131,11 @@ def user_details(request):
             nationality = form.cleaned_data['nationality']
             marital_status = form.cleaned_data['marital_status']
             wedding_date = form.cleaned_data['wedding_date']
+            date_of_birth = form.cleaned_data['date_of_birth']
             blood_group = form.cleaned_data['blood_group']
             land_phone = form.cleaned_data['land_phone']
-            emergency_phone = form.cleaned_data['emergency_phone']
+            emergency_phone1 = form.cleaned_data['emergency_phone1']
+            emergency_phone2 = form.cleaned_data['emergency_phone2']
             mobile_phone = form.cleaned_data['mobile_phone']
             personal_email = form.cleaned_data['personal_email']
             gender = form.cleaned_data['gender']
@@ -141,9 +145,11 @@ def user_details(request):
             nationality=nationality,
             marital_status=marital_status,
             wedding_date=wedding_date,
+            date_of_birth=date_of_birth,
             blood_group=blood_group,
             land_phone=land_phone,
-            emergency_phone=emergency_phone,
+            emergency_phone1=emergency_phone1,
+            emergency_phone2=emergency_phone2,
             mobile_phone=mobile_phone,
             personal_email=personal_email,
             gender=gender).save()

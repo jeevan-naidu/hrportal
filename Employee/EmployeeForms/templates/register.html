@@ -43,7 +43,9 @@
 
 
 
-
+    {# Load SweetAlert CSS and JS #}
+       <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/sweetalert/1.0.1/sweetalert.min.css" media="screen">
+       <script src="//cdnjs.cloudflare.com/ajax/libs/sweetalert/1.0.1/sweetalert.min.js"></script>
 
 
 
@@ -78,74 +80,73 @@
                 <div class="panel-body">
 <!--                  <div id="register-success" class="alert alert-success" style="display:none;"><i class="fa fa-exclamation-circle fa-fw"></i> Registration confirmation has been sent to your email </div>
                   <div id="register-passerror" class="alert alert-danger" style="display:none;"><i class="fa fa-exclamation-circle fa-fw"></i> Your password and Confirm password are not same </div>-->
-                  <form class="form-horizontal"  action="functions/register-form.php" role="form" id="register-form">
-                  <div class="alert alert-danger vd_hidden">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-cross"></i></button>
-                    <span class="vd_alert-icon"><i class="fa fa-exclamation-circle vd_red"></i></span><strong>Oh snap!</strong> Change a few things up and try submitting again. </div>
-                  <div class="alert alert-warning vd_hidden">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-cross"></i></button>
-                    <span class="vd_alert-icon"><i class="fa fa-exclamation-circle vd_red"></i></span>Your password and Confirm password are not same </div>
-                  <div class="alert alert-success vd_hidden">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-cross"></i></button>
-                    <span class="vd_alert-icon"><i class="fa fa-check-circle vd_green"></i></span>Registration confirmation has been sent to your email. </div>
 
 
+                    <form id="register" enctype="multipart/form-data" method="post" class="form-horizontal" enctype="multipart/form-data">
+
+                    {% csrf_token %}
                     <div class="form-group">
                       <div class="col-md-12">
                         <div class="label-wrapper">
                           <label class="control-label">Username Name <span class="vd_red">*</span></label>
                         </div>
                         <div class="vd_input-wrapper" id="company-input-wrapper">
-                          <input type="text" placeholder="Your Company Co, Ltd." class="required" required  name="company" id="company">
+                          {{form.username}}
                         </div>
                       </div>
                     </div>
+
                     <div class="form-group">
                       <div class="col-md-6">
                         <div class="label-wrapper">
                           <label class="control-label">First Name <span class="vd_red">*</span></label>
                         </div>
                         <div class="vd_input-wrapper" id="first-name-input-wrapper">
-                          <input type="text" placeholder="John" class="required" required name="firstname" id="firstname">
+                          {{form.first_name}}
                         </div>
                       </div>
+
                       <div class="col-md-6">
                         <div class="label-wrapper">
                           <label class="control-label">Last Name <span class="vd_red">*</span></label>
                         </div>
                         <div class="vd_input-wrapper" id="last-name-input-wrapper">
-                          <input type="text" placeholder="Doe" class="required" required name="lastname" id="lastname">
+                          {{form.last_name}}
                         </div>
                       </div>
                     </div>
+
                     <div class="form-group">
                       <div class="col-md-12">
                         <div class="label-wrapper">
                           <label class="control-label">Email <span class="vd_red">*</span></label>
                         </div>
                         <div class="vd_input-wrapper" id="email-input-wrapper">
-                          <input type="email" placeholder="Email" class="required" required  name="email" id="email">
+                          {{form.email}}
                         </div>
                       </div>
                     </div>
+
                     <div class="form-group">
                       <div class="col-md-6">
                         <div class="label-wrapper">
                           <label class="control-label">Password <span class="vd_red">*</span></label>
                         </div>
                         <div class="vd_input-wrapper" id="password-input-wrapper">
-                          <input type="password" placeholder="Password" class="required" required  name="password" id="password">
+                          {{form.password1}}
                         </div>
                       </div>
+
                       <div class="col-md-6">
                         <div class="label-wrapper">
                           <label class="control-label">Confirm Password <span class="vd_red">*</span></label>
                         </div>
                         <div class="vd_input-wrapper" id="confirm-password-input-wrapper">
-                          <input type="password" placeholder="Password" class="required" required  name="confirmpass" id="confirmpass">
+                          {{form.password2}}
                         </div>
                       </div>
                     </div>
+
                     <div id="vd_login-error" class="alert alert-danger hidden"><i class="fa fa-exclamation-circle fa-fw"></i> Please fill the necessary field </div>
                     <div class="form-group">
                       <div class="col-md-12 mgbt-xs-10 mgtp-20">
@@ -158,8 +159,9 @@
                           <label for="checkbox-2"> I agree with <a href="#">terms of service</a></label>
                         </div>
                       </div>
-                      <div class="col-md-12 text-center mgbt-xs-5">
-                        <button class="btn vd_bg-green vd_white width-100" type="submit" id="submit-register" name="submit-register">Register</button>
+                      <div class="form-group">
+
+                          <h3 class="col-sm-12 text-center"><input type="submit" id="submit" class="btn vd_bg-green vd_white width-100" value="Register"/></h3>
                       </div>
                     </div>
                   </form>
@@ -170,7 +172,12 @@
                 <a href="pages-login.html">SIGN IN<span class="menu-icon"><i class="fa fa-angle-double-right fa-fw"></i></span></a> </div>
             </div>
             <!-- vd_login-page -->
+            <div class="form-group">
 
+
+
+            </div>
+          </form>
           </div>
           <!-- .vd_content-section -->
 
@@ -207,209 +214,6 @@
 </div>
 
 <!-- .vd_body END  -->
-<a id="back-top" href="#" data-action="backtop" class="vd_back-top visible"> <i class="fa  fa-angle-up"> </i> </a>
-
-
-<style type="text/css">
-
-	.vd_input-wrapper input{padding-left: 15px;}
-
-</style>
-
-
-
-<!--
-<a class="back-top" href="#" id="back-top"> <i class="icon-chevron-up icon-white"> </i> </a> -->
-
-<!-- Javascript =============================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script type="text/javascript" src="js/jquery.js"></script>
-<!--[if lt IE 9]>
-  <script type="text/javascript" src="js/excanvas.js"></script>
-<![endif]-->
-<script type="text/javascript" src="js/bootstrap.min.js"></script>
-<script type="text/javascript" src='plugins/jquery-ui/jquery-ui.custom.min.js'></script>
-<script type="text/javascript" src="plugins/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
-
-<script type="text/javascript" src="js/caroufredsel.js"></script>
-<script type="text/javascript" src="js/plugins.js"></script>
-
-<script type="text/javascript" src="plugins/breakpoints/breakpoints.js"></script>
-<script type="text/javascript" src="plugins/dataTables/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="plugins/prettyPhoto-plugin/js/jquery.prettyPhoto.js"></script>
-
-<script type="text/javascript" src="plugins/mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
-<script type="text/javascript" src="plugins/tagsInput/jquery.tagsinput.min.js"></script>
-<script type="text/javascript" src="plugins/bootstrap-switch/bootstrap-switch.min.js"></script>
-<script type="text/javascript" src="plugins/blockUI/jquery.blockUI.js"></script>
-<script type="text/javascript" src="plugins/pnotify/js/jquery.pnotify.min.js"></script>
-
-<script type="text/javascript" src="js/theme.js"></script>
-<script type="text/javascript" src="custom/custom.js"></script>
-
-<!-- Specific Page Scripts Put Here -->
-<script type="text/javascript">
-$(document).ready(function() {
-
-	"use strict";
-
-	var form_register_2 = $('#register-form');
-	var error_register_2 = $('.alert-danger', form_register_2);
-	var success_register_2 = $('.alert-success', form_register_2);
-	var warning_register_2 = $('.alert-warning', form_register_2);
-
-
-	var options = {
-		type: "POST",
-		url:  $("#register-form").attr('action'),
-		dataType: "json",
-		success: function(data) {
-			if (data.response == "success") {
-/*				$("#register-form").fadeOut(500, function(){
-					$('#register-passerror').fadeOut(500);
-					$('#register-success').fadeIn(500);
-				});	*/
-
-				setTimeout(function(){
-					$('#submit-register .fa-spinner').remove()	;
-					$('#submit-register').addClass('disabled');
-					success_register_2.fadeIn(500);
-					error_register_2.fadeOut(500);
-					warning_register_2.fadeOut(500);
-				},1500);
-
-			} else if (data.response == "passerror") {
-				setTimeout(function(){
-					error_register_2.fadeOut(500);
-					warning_register_2.fadeIn(500);
-					$('#submit-register .fa-spinner').remove()	;
-					form_register_2.find('#submit-register').removeClass('disabled');
-					scrollTo(form_register_2,-100);
-				},1500);
-
-
-			} else if (data.response == "empty") {
-
-			} else if (data.response == "unexpected") {
-
-			}
-
-
-
-		},
-		error: function() {
-
-		}
-	};
-
-
-        form_register_2.validate({
-            errorElement: 'div', //default input error message container
-            errorClass: 'vd_red', // default input error message class
-            focusInvalid: false, // do not focus the last invalid input
-            ignore: "",
-            rules: {
-                firstname: {
-                    minlength: 3,
-                    required: true
-                },
-                lastname: {
-                    minlength: 3,
-                    required: true
-                },
-                email: {
-                    required: true,
-                    email: true
-                },
-                website: {
-                    required: true,
-                    url: true
-                },
-                company: {
-                    minlength: 3,
-                    required: true
-                },
-                country: {
-                    required: true
-                },
-                phone: {
-                    required: true
-                },
-                password: {
-                    required: true
-                },
-                confirmpass: {
-                    required: true
-                },
-            },
-
-			errorPlacement: function(error, element) {
-				if (element.parent().hasClass("vd_checkbox") || element.parent().hasClass("vd_radio")){
-					element.parent().append(error);
-				} else if (element.parent().hasClass("vd_input-wrapper")){
-					error.insertAfter(element.parent());
-				}else {
-					error.insertAfter(element);
-				}
-			},
-
-            invalidHandler: function (event, validator) { //display error alert on form submit
-                success_register_2.hide();
-                error_register_2.show();
-				scrollTo(form_register_2,-100);
-
-            },
-
-            highlight: function (element) { // hightlight error inputs
-
-				$(element).addClass('vd_bd-red');
-				$(element).parent().siblings('.help-inline').removeClass('help-inline hidden');
-				if ($(element).parent().hasClass("vd_checkbox") || $(element).parent().hasClass("vd_radio")) {
-					$(element).siblings('.help-inline').removeClass('help-inline hidden');
-				}
-
-            },
-
-            unhighlight: function (element) { // revert the change dony by hightlight
-                $(element)
-                    .closest('.control-group').removeClass('error'); // set error class to the control group
-            },
-
-            success: function (label, element) {
-                label
-                    .addClass('valid').addClass('help-inline hidden') // mark the current input as valid and display OK icon
-                	.closest('.control-group').removeClass('error').addClass('success'); // set success class to the control group
-				$(element).removeClass('vd_bd-red');
-            },
-
-            submitHandler: function (form) {
-				$(form).find('#submit-register').addClass('disabled').prepend('<i class="fa fa-spinner fa-spin mgr-10"></i>')/*.addClass('disabled').attr('disabled')*/;
-				$(form).ajaxSubmit(options);
-            }
-        });
-
-
-
-});
-</script>
-<!-- Specific Page Scripts END -->
-
-
-
-
-<!-- Google Analytics: Change UA-XXXXX-X to be your site's ID. Go to http://www.google.com/analytics/ for more information. -->
-
-<script>
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-XXXXX-X']);
-    _gaq.push(['_trackPageview']);
-
-    (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-</script>
 
 </body>
 
@@ -561,4 +365,3 @@ $(document).ready(function() {
                 });
 
         </script>
-{% endblock %}

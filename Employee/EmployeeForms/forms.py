@@ -10,12 +10,12 @@ from models import Address, UserDetails, Education, PreviousEmployment, Proof, G
 dateTimeOption = {"format": "YYYY-MM-DD", "pickTime": False}
 
 class UserRegistrationForm(UserCreationForm):
-	username = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control','required': 'True'}))
-	first_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control','required': 'True'}))
-	last_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control','required': 'True'}))
-	email = forms.EmailField(required=True, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control','required': 'True','data-error': 'User with this email id exists'}))
-	password1 = forms.CharField(required=True, widget=forms.PasswordInput(attrs={'class': 'width-50 input-sm form-control','required': 'True'}))
-	password2 = forms.CharField(required=True, widget=forms.PasswordInput(attrs={'class': 'width-50 input-sm form-control','required': 'True'}))
+	username = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'width-100 input-sm form-control','required': 'True'}))
+	first_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'width-100 input-sm form-control','required': 'True'}))
+	last_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'width-100 input-sm form-control','required': 'True'}))
+	email = forms.EmailField(required=True, widget=forms.TextInput(attrs={'class': 'width-100 input-sm form-control','required': 'True','data-error': 'User with this email id exists'}))
+	password1 = forms.CharField(required=True, widget=forms.PasswordInput(attrs={'class': 'width-100 input-sm form-control','required': 'True'}))
+	password2 = forms.CharField(required=True, widget=forms.PasswordInput(attrs={'class': 'width-100 input-sm form-control','required': 'True'}))
 
 	class Meta:
 		model = User
@@ -50,15 +50,20 @@ class UserDetailsForm(forms.ModelForm):
 	marital_status = forms.ChoiceField(choices=MARITAL_CHOICES,  required=False, widget=forms.Select(attrs={'class': 'width-50 input-sm form-control','required': 'False'}))
 	wedding_date = forms.DateField(widget=DateTimePicker(options=dateTimeOption),)
 	wedding_date.widget.attrs = {'class': 'input-sm form-control filter_class', 'required': 'false'}
-	# date_of_birth = forms.DateField(widget=DateTimePicker(options=dateTimeOption),)
-	# date_of_birth.widget.attrs = {'class': 'input-sm form-control filter_class'}
+	date_of_birth = forms.DateField(widget=DateTimePicker(options=dateTimeOption),)
+	date_of_birth.widget.attrs = {'class': 'input-sm form-control filter_class'}
 	blood_group = forms.ChoiceField(choices=BLOOD_GROUP_CHOICES, widget=forms.Select(attrs={'class': 'width-50 input-sm form-control','required': 'False'}))
 	land_phone =forms.RegexField(regex=r'^\+?1?\d{9,15}$',
 		error_message=("Phone number must be entered in the format: '+999999999'. "
 		"Up to 15 digits allowed."),
 		widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control',
 		'required': 'true','type': 'tel', 'pattern':'^\+?1?\d{9,15}$'}))
-	emergency_phone = forms.RegexField(regex=r'^\+?1?\d{9,15}$',
+	emergency_phone1 = forms.RegexField(regex=r'^\+?1?\d{9,15}$',
+		error_message=("Phone number must be entered in the format: '+999999999'. "
+		"Up to 15 digits allowed."),
+		widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control',
+		'required': 'true','type': 'tel', 'pattern':'^\+?1?\d{9,15}$'}))
+	emergency_phone2 = forms.RegexField(regex=r'^\+?1?\d{9,15}$',
 		error_message=("Phone number must be entered in the format: '+999999999'. "
 		"Up to 15 digits allowed."),
 		widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control',
@@ -75,8 +80,8 @@ class UserDetailsForm(forms.ModelForm):
 	class Meta:
 		model = UserDetails
 
-		fields = ['first_name','last_name','middle_name','nationality','marital_status','wedding_date',
-		'blood_group','land_phone','emergency_phone','mobile_phone','gender']
+		fields = ['first_name','last_name','middle_name','nationality','marital_status','wedding_date','date_of_birth',
+		'blood_group','land_phone','emergency_phone1','emergency_phone2','mobile_phone','gender']
 		exclude = ['employee']
 
 class EducationForm(forms.ModelForm):

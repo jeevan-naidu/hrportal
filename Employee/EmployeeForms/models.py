@@ -45,6 +45,8 @@ QUALIFICATION = (
 	('HSC', 'Higher Secondary'),
 	('GRAD', 'Graduate'),
 	('PG', 'Post Graduate'),
+    ('PhD', 'Doctrate'),
+    ('Others', 'Others'),
 	)
 
 ADDRESSTYPE_CHOICES = (
@@ -99,11 +101,12 @@ class UserDetails(models.Model):
     nationality = models.CharField("Nationality", max_length=30, blank=False)
     marital_status = models.CharField("Marital Status",max_length=10,choices=MARITAL_CHOICES,blank=True, null=True)
     wedding_date = models.DateField(verbose_name='Wedding Date',null=True,blank=True)
+    date_of_birth = models.DateField(verbose_name='Date of Birth',null=True,blank=True)
     blood_group = models.CharField("Blood Group",max_length=3,choices=BLOOD_GROUP_CHOICES,blank=True)
     mobile_phone = models.CharField("Mobile Phone",max_length=15,unique=True,blank=False)
-    date_of_birth = models.CharField("Data of Birth",max_length=10, null=True, blank=True)
     land_phone = models.CharField("Landline Number",max_length=15, blank=True)
-    emergency_phone = models.CharField("Emergency Contact Number",max_length=15,unique=True,blank=True,null=True)
+    emergency_phone1 = models.CharField("Emergency Contact Number1",max_length=15,unique=True,blank=True,null=True)
+    emergency_phone2 = models.CharField("Emergency Contact Number2",max_length=15,unique=True,blank=True,null=True)
     personal_email = models.EmailField("Personal E-mail",max_length=250,blank=False,unique=True)
     address = models.ManyToManyField(Address, verbose_name='User Address')
     def __unicode__(self):
