@@ -9,6 +9,7 @@ from django.views.generic import CreateView
 from formtools.wizard.views import SessionWizardView
 from django.views.decorators.csrf import csrf_protect
 from django.conf import settings
+from django.template import RequestContext
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from models import Address, UserDetails, Education, PreviousEmployment, Proof
@@ -59,20 +60,25 @@ def invalid_login(request):
 	return render_to_response('invalid.html')
 
 def register(request):
-    # import ipdb; ipdb.set_trace()
+    #import ipdb; ipdb.set_trace()
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect('/myansrsource/register_success')
         else:
-            print form.errors
+            print form.is_valid()
+            print form['email'].errors
+            print form['username'].errors
+            print form['password1'].errors
+            print form['password2'].errors
+    else:
+        form = UserRegistrationForm()
+
     context = {}
     context.update(csrf(request))
 
-    context['form'] = UserRegistrationForm()
-
-    return render_to_response('register.html', context)
+    return render(request,'register.html', {'form':form})
 
 def register_success(request):
 	return HttpResponseRedirect("/myansrsource/login")
@@ -89,15 +95,18 @@ def user_details(request):
         context["form"] = form
         #import ipdb; ipdb.set_trace()
         user = request.user
+        first_name = user.first_name
+        last_name = user.last_name
+        email=user.email
         try:
             employee = UserDetails.objects.get(employee=request.user)
+            print employee
         except UserDetails.DoesNotExist:
             context = {"form":""}
             form = UserDetailsForm()
             context["form"] = form
             return render(request, "wizard.html", context)
-        first_name = user.first_name
-        last_name = user.last_name
+
         middle_name = employee.middle_name
         nationality = employee.nationality
         marital_status = employee.marital_status
@@ -118,43 +127,121 @@ def user_details(request):
         context["form"] = form
         return render(request, "wizard.html", context)
 
+    # instance = UserDetails.objects.get(employee=request.user)
     if request.method == 'POST':
         #import ipdb; ipdb.set_trace()
         context = {"form":""}
+        user = request.user
+        # employee_g = UserDetails.objects.get(employee=user.id)
+        # print employee
+        try:
+            UserDetails.objects.get(employee=user.id)
+            tempsv = UserDetails.objects.get(employee=user.id)
+            tempsv.land_phone = None
+            tempsv.emergency_phone1 = None
+            tempsv.emergency_phone2 = None
+            tempsv.mobile_phone = None
+            tempsv.save()
+        except:
+            user = request.user
         form = UserDetailsForm(request.POST)
 
         if form.is_valid():
-            employee = User.objects.get(username=request.user)
-            first_name = form.cleaned_data['first_name']
-            last_name = form.cleaned_data['last_name']
-            middle_name = form.cleaned_data['middle_name']
-            nationality = form.cleaned_data['nationality']
-            marital_status = form.cleaned_data['marital_status']
-            wedding_date = form.cleaned_data['wedding_date']
-            date_of_birth = form.cleaned_data['date_of_birth']
-            blood_group = form.cleaned_data['blood_group']
-            land_phone = form.cleaned_data['land_phone']
-            emergency_phone1 = form.cleaned_data['emergency_phone1']
-            emergency_phone2 = form.cleaned_data['emergency_phone2']
-            mobile_phone = form.cleaned_data['mobile_phone']
-            personal_email = form.cleaned_data['personal_email']
-            gender = form.cleaned_data['gender']
+            try:
+                if UserDetails.objects.get(employee=request.user):
+                    user = request.user
+                    employee = User.objects.get(username=request.user)
+                    #print "lalala"
+                    first_name = form.cleaned_data['first_name']
+                    last_name = form.cleaned_data['last_name']
+                    middle_name = form.cleaned_data['middle_name']
+                    nationality = form.cleaned_data['nationality']
+                    marital_status = form.cleaned_data['marital_status']
+                    wedding_date = form.cleaned_data['wedding_date']
+                    date_of_birth = form.cleaned_data['date_of_birth']
+                    blood_group = form.cleaned_data['blood_group']
+                    land_phone = form.cleaned_data['land_phone']
+                    emergency_phone1 = form.cleaned_data['emergency_phone1']
+                    emergency_phone2 = form.cleaned_data['emergency_phone2']
+                    mobile_phone = form.cleaned_data['mobile_phone']
+                    personal_email = form.cleaned_data['personal_email']
+                    gender = form.cleaned_data['gender']
 
-            UserDetails(employee = employee,
-            middle_name=middle_name,
-            nationality=nationality,
-            marital_status=marital_status,
-            wedding_date=wedding_date,
-            date_of_birth=date_of_birth,
-            blood_group=blood_group,
-            land_phone=land_phone,
-            emergency_phone1=emergency_phone1,
-            emergency_phone2=emergency_phone2,
-            mobile_phone=mobile_phone,
-            personal_email=personal_email,
-            gender=gender).save()
-            context['form'] = form
-            return HttpResponseRedirect("/myansrsource/user_details/education")
+
+                    userdata = UserDetails.objects.get(employee=user.id)
+                    userdata.first_name = first_name
+                    userdata.last_name = last_name
+                    userdata.middle_name = middle_name
+                    userdata.nationality = nationality
+                    userdata.marital_status = marital_status
+                    userdata.wedding_date = wedding_date
+                    userdata.date_of_birth = date_of_birth
+                    userdata.blood_group = blood_group
+                    userdata.land_phone = land_phone
+                    userdata.emergency_phone1 = emergency_phone1
+                    userdata.emergency_phone2 = emergency_phone2
+                    userdata.mobile_phone = mobile_phone
+                    userdata.personal_email = personal_email
+                    userdata.gender = gender
+                    userdata.save()
+
+                    """UserDetails(employee = employee_g.employee,
+                    middle_name=middle_name,
+                    nationality=nationality,
+                    marital_status=marital_status,
+                    wedding_date=wedding_date,
+                    date_of_birth=date_of_birth,
+                    blood_group=blood_group,
+                    land_phone=land_phone,
+                    emergency_phone1=emergency_phone1,
+                    emergency_phone2=emergency_phone2,
+                    mobile_phone=mobile_phone,
+                    personal_email=personal_email,
+                    gender=gender).save()"""
+
+                    context['form'] = form
+                    return HttpResponseRedirect('/myansrsource/user_details/education')
+
+                # print user
+                # UserDetails1 = UserDetails.objects.get(employee_id == form.cleaned_data['employee'])
+            except UserDetails.DoesNotExist:
+                user = request.user
+                employee = User.objects.get(username=request.user)
+                #print "laal1"
+                first_name = form.cleaned_data['first_name']
+                last_name = form.cleaned_data['last_name']
+                middle_name = form.cleaned_data['middle_name']
+                nationality = form.cleaned_data['nationality']
+                marital_status = form.cleaned_data['marital_status']
+                wedding_date = form.cleaned_data['wedding_date']
+                date_of_birth = form.cleaned_data['date_of_birth']
+                blood_group = form.cleaned_data['blood_group']
+                land_phone = form.cleaned_data['land_phone']
+                emergency_phone1 = form.cleaned_data['emergency_phone1']
+                emergency_phone2 = form.cleaned_data['emergency_phone2']
+                mobile_phone = form.cleaned_data['mobile_phone']
+                personal_email = form.cleaned_data['personal_email']
+                gender = form.cleaned_data['gender']
+
+                UserDetails(employee = employee,
+                middle_name=middle_name,
+                nationality=nationality,
+                marital_status=marital_status,
+                wedding_date=wedding_date,
+                date_of_birth=date_of_birth,
+                blood_group=blood_group,
+                land_phone=land_phone,
+                emergency_phone1=emergency_phone1,
+                emergency_phone2=emergency_phone2,
+                mobile_phone=mobile_phone,
+                personal_email=personal_email,
+                gender=gender).save()
+
+                context['form'] = form
+                return HttpResponseRedirect('/myansrsource/user_details/education')
+
+
+    return render(request, 'education.html', context)
 
 @csrf_exempt
 @login_required
@@ -174,8 +261,7 @@ def education(request):
             education_form = EducationForm(prefix = 'education_form')
             context_data["education_form"] = education_form
             return render(request, "education.html", context_data)
-        # education_form = EducationForm(request.GET, prefix = 'education_form')
-        # print request.GET
+
         if request.user.is_authenticated:
             user = request.user
             employee = Education.objects.get(employee=request.user)
@@ -184,18 +270,19 @@ def education(request):
             from_date = employee.from_date
             to_date = employee.to_date
             institute = employee.institute
+            board_university = employee.board_university
             overall_marks = employee.overall_marks
             marks_card_attachment = employee.marks_card_attachment
             education_form = EducationForm(initial = {'from_date':employee.from_date,'qualification':employee.qualification,'specialization':employee.specialization,
-            'from_date':employee.from_date,'to_date':employee.to_date,'institute':employee.institute,
+            'from_date':employee.from_date,'to_date':employee.to_date,'institute':employee.institute,'board_university':employee.board_university,
             'overall_marks':employee.overall_marks,'marks_card_attachment':employee.marks_card_attachment})
 
             context_data["education_form"] = education_form
             return render(request, "education.html", context_data)
 
     if request.method == 'POST':
-        import ipdb; ipdb.set_trace()
-        print request.POST
+        # import ipdb; ipdb.set_trace()
+        #print request.POST
         education_form = EducationForm(request.POST, request.FILES, prefix = 'education_form')
         context_data = {"education_form":""}
         marks_card_attachment = request.FILES.get('marks_card_attachment',"")
@@ -207,6 +294,7 @@ def education(request):
             from_date = education_form.cleaned_data['from_date']
             to_date = education_form.cleaned_data['to_date']
             institute = education_form.cleaned_data['institute']
+            board_university = education_form.cleaned_data['board_university']
             overall_marks = education_form.cleaned_data['overall_marks']
             marks_card_attachment = education_form.cleaned_data['marks_card_attachment']
             if request.FILES.get('marks_card_attachment', ""):
@@ -218,6 +306,7 @@ def education(request):
             from_date=from_date,
             to_date=to_date,
             institute=institute,
+            board_university=board_university,
             overall_marks=overall_marks,
             marks_card_attachment=marks_card_attachment).save()
             context_data['education_form'] = education_form
@@ -328,6 +417,24 @@ def previous_employment(request):
             form = PreviousEmploymentForm()
             context["form"] = form
             return render(request, "previous.html", context)
+
+        company_name = employee.company_name
+        company_address = employee.company_address
+        job_type = employee.job_type
+        employed_from = employee.employed_from
+        employed_upto = employee.employed_upto
+        last_ctc = employee.last_ctc
+        reason_for_exit = employee.reason_for_exit
+        ps_attachment = employee.ps_attachment
+        rl_attachment = employee.rl_attachment
+
+        form = PreviousEmploymentForm(initial = {'company_name':employee.company_name,'company_address':employee.company_address,
+        'job_type':employee.job_type,'employed_from':employee.employed_from,'employed_upto':employee.employed_upto,
+        'last_ctc':employee.last_ctc,'reason_for_exit':employee.reason_for_exit,'ps_attachment':employee.ps_attachment,
+        'rl_attachment':employee.rl_attachment})
+
+        context["form"] = form
+        return render(request, "proof.html", context)
     #import ipdb; ipdb.set_trace()
 
     if request.method == 'POST':
@@ -377,14 +484,17 @@ def confirm(request):
     if request.user.is_authenticated:
 
         if request.method == 'GET':
-            import ipdb; ipdb.set_trace()
+            #import ipdb; ipdb.set_trace()
             context = {'add':True, 'record_added':False, 'form':None}
             form = UserDetailsForm()
             # if request.user.is_authenticated():
             #     username = request.user.username
             user = request.user
+            try:
+                employee = UserDetails.objects.get(employee=request.user)
+            except UserDetails.DoesNotExist:
+                return HttpResponseRedirect('/myansrsource/user_details')
 
-            employee = UserDetails.objects.get(employee=user)
             first_name = user.first_name
             last_name = user.last_name
             middle_name = employee.middle_name
@@ -393,7 +503,8 @@ def confirm(request):
             wedding_date = employee.wedding_date
             blood_group = employee.blood_group
             land_phone = employee.land_phone
-            emergency_phone = employee.emergency_phone
+            emergency_phone1 = employee.emergency_phone1
+            emergency_phone2 = employee.emergency_phone2
             mobile_phone = employee.mobile_phone
             personal_email = employee.personal_email
             gender = employee.gender
@@ -408,7 +519,8 @@ def confirm(request):
             'wedding_date':wedding_date,
             'blood_group':blood_group,
             'land_phone':land_phone,
-            'emergency_phone':emergency_phone,
+            'emergency_phone1':emergency_phone1,
+            'emergency_phone2':emergency_phone2,
             'mobile_phone':mobile_phone,
             'personal_email':personal_email,
             'gender':gender,

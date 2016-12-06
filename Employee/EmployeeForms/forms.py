@@ -21,6 +21,15 @@ class UserRegistrationForm(UserCreationForm):
 		model = User
 		fields = ('username','first_name', 'last_name','email', 'password1', 'password2')
 
+	def clean_email(self):
+        # Check that email is not duplicate
+		username = self.cleaned_data["username"]
+		email = self.cleaned_data["email"]
+		users = User.objects.filter(email__iexact=email).exclude(username__iexact=username)
+		if users:
+			raise forms.ValidationError('A user with that email already exists.')
+		return email
+
 	def save(self, commit=True):
 		user = super(UserRegistrationForm, self).save(commit=False)
 		user.email = self.cleaned_data['email']
@@ -29,14 +38,7 @@ class UserRegistrationForm(UserCreationForm):
 			user.save()
 		return user
 
-	def clean_email(self):
-        # Check that email is not duplicate
-		username = self.cleaned_data["username"]
-		email = self.cleaned_data["email"]
-		users = User.objects.filter(email__iexact=email).exclude(username__iexact=username)
-		if users:
-			raise forms.ValidationError('A user with that email already exists.')
-		return email.lower()
+
 
 class UserDetailsForm(forms.ModelForm):
 
@@ -57,7 +59,7 @@ class UserDetailsForm(forms.ModelForm):
 		error_message=("Phone number must be entered in the format: '+999999999'. "
 		"Up to 15 digits allowed."),
 		widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control',
-		'required': 'true','type': 'tel', 'pattern':'^\+?1?\d{9,15}$'}))
+		'required': 'False','type': 'tel', 'pattern':'^\+?1?\d{9,15}$'}))
 	emergency_phone1 = forms.RegexField(regex=r'^\+?1?\d{9,15}$',
 		error_message=("Phone number must be entered in the format: '+999999999'. "
 		"Up to 15 digits allowed."),
@@ -94,6 +96,8 @@ class EducationForm(forms.ModelForm):
 	to_date = forms.DateField(widget=DateTimePicker(),)
 	institute = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control',
 		'required': 'True'}))
+	board_university = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control',
+		'required': 'True'}))
 	overall_marks = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control',
 		'required': 'True'}))
 	marks_card_attachment = forms.FileField(label='Marks Card Attachment', required=False, help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"))
@@ -102,8 +106,19 @@ class EducationForm(forms.ModelForm):
 
 	class Meta:
 		model = Education
-		fields = ['qualification', 'specialization', 'from_date', 'to_date', 'institute', 'overall_marks', 'marks_card_attachment']
+		fields = ['qualification', 'specialization', 'from_date', 'to_date', 'institute', 'board_university', 'overall_marks', 'marks_card_attachment']
 		exclude = ['employee']
+
+	def clean(self):
+		cleaned_data = self.cleaned_data
+		to_date = cleaned_data.get('to_date')
+		from_date = cleaned_data.get('from-date')
+		if to_date and from_date:
+			if to_date < from_date:
+				self.add_error('to_date', 'Event end date should not occur before start date.')
+            # You can use ValidationError as well
+            # self.add_error('end_date', form.ValidationError('Event end date should not occur before start date.'))
+    		return cleaned_data
 
 class PreviousEmploymentForm(forms.ModelForm):
 
@@ -125,6 +140,17 @@ class PreviousEmploymentForm(forms.ModelForm):
 		model = PreviousEmployment
 		fields = ['company_name', 'company_address', 'job_type',  'employed_from', 'employed_upto', 'last_ctc','reason_for_exit', 'ps_attachment', 'rl_attachment']
 		exclude = ['employee']
+
+	def clean(self):
+		cleaned_data = self.cleaned_data
+		employed_upto = cleaned_data.get('employed_upto')
+		employed_from = cleaned_data.get('employed_from')
+		if employed_upto and employed_from:
+			if employed_upto < employed_from:
+				self.add_error('employed_upto', 'Event end date should not occur before start date.')
+            # You can use ValidationError as well
+            # self.add_error('end_date', form.ValidationError('Event end date should not occur before start date.'))
+    		return cleaned_data
 
 class ProofForm(forms.ModelForm):
 
