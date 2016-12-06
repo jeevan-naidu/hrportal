@@ -104,7 +104,7 @@ class UserDetails(models.Model):
     date_of_birth = models.DateField(verbose_name='Date of Birth',null=True,blank=True)
     blood_group = models.CharField("Blood Group",max_length=3,choices=BLOOD_GROUP_CHOICES,blank=True)
     mobile_phone = models.CharField("Mobile Phone",max_length=15,unique=True,blank=False)
-    land_phone = models.CharField("Landline Number",max_length=15, blank=True)
+    land_phone = models.CharField("Landline Number",max_length=15, blank=True,null=True)
     emergency_phone1 = models.CharField("Emergency Contact Number1",max_length=15,unique=True,blank=True,null=True)
     emergency_phone2 = models.CharField("Emergency Contact Number2",max_length=15,unique=True,blank=True,null=True)
     personal_email = models.EmailField("Personal E-mail",max_length=250,blank=False,unique=True)
@@ -134,7 +134,7 @@ class PreviousEmployment(models.Model):
 
 class Education(models.Model):
     employee = models.ForeignKey(User, blank=True, null=True)
-    qualification = models.CharField('Qualification', choices = QUALIFICATION, max_length = 5, unique = True)
+    qualification = models.CharField('Qualification', choices = QUALIFICATION, max_length = 5)
     specialization = models.CharField(verbose_name='Specialization',max_length=30,blank=True,null=True)
     from_date = models.DateField("From Date", blank=False)
     to_date = models.DateField("To Date", blank=False)

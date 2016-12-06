@@ -129,17 +129,85 @@ def user_details(request):
 
     # instance = UserDetails.objects.get(employee=request.user)
     if request.method == 'POST':
-        import ipdb; ipdb.set_trace()
+        #import ipdb; ipdb.set_trace()
         context = {"form":""}
         user = request.user
         # employee_g = UserDetails.objects.get(employee=user.id)
         # print employee
+        try:
+            UserDetails.objects.get(employee=user.id)
+            tempsv = UserDetails.objects.get(employee=user.id)
+            tempsv.land_phone = None
+            tempsv.emergency_phone1 = None
+            tempsv.emergency_phone2 = None
+            tempsv.mobile_phone = None
+            tempsv.save()
+        except:
+            user = request.user
         form = UserDetailsForm(request.POST)
+
         if form.is_valid():
-            if UserDetails.objects.get(employee=user.id):
-            # print user
+            try:
+                if UserDetails.objects.get(employee=request.user):
+                    user = request.user
+                    employee = User.objects.get(username=request.user)
+                    #print "lalala"
+                    first_name = form.cleaned_data['first_name']
+                    last_name = form.cleaned_data['last_name']
+                    middle_name = form.cleaned_data['middle_name']
+                    nationality = form.cleaned_data['nationality']
+                    marital_status = form.cleaned_data['marital_status']
+                    wedding_date = form.cleaned_data['wedding_date']
+                    date_of_birth = form.cleaned_data['date_of_birth']
+                    blood_group = form.cleaned_data['blood_group']
+                    land_phone = form.cleaned_data['land_phone']
+                    emergency_phone1 = form.cleaned_data['emergency_phone1']
+                    emergency_phone2 = form.cleaned_data['emergency_phone2']
+                    mobile_phone = form.cleaned_data['mobile_phone']
+                    personal_email = form.cleaned_data['personal_email']
+                    gender = form.cleaned_data['gender']
+
+
+                    userdata = UserDetails.objects.get(employee=user.id)
+                    userdata.first_name = first_name
+                    userdata.last_name = last_name
+                    userdata.middle_name = middle_name
+                    userdata.nationality = nationality
+                    userdata.marital_status = marital_status
+                    userdata.wedding_date = wedding_date
+                    userdata.date_of_birth = date_of_birth
+                    userdata.blood_group = blood_group
+                    userdata.land_phone = land_phone
+                    userdata.emergency_phone1 = emergency_phone1
+                    userdata.emergency_phone2 = emergency_phone2
+                    userdata.mobile_phone = mobile_phone
+                    userdata.personal_email = personal_email
+                    userdata.gender = gender
+                    userdata.save()
+
+                    """UserDetails(employee = employee_g.employee,
+                    middle_name=middle_name,
+                    nationality=nationality,
+                    marital_status=marital_status,
+                    wedding_date=wedding_date,
+                    date_of_birth=date_of_birth,
+                    blood_group=blood_group,
+                    land_phone=land_phone,
+                    emergency_phone1=emergency_phone1,
+                    emergency_phone2=emergency_phone2,
+                    mobile_phone=mobile_phone,
+                    personal_email=personal_email,
+                    gender=gender).save()"""
+
+                    context['form'] = form
+                    return HttpResponseRedirect('/myansrsource/user_details/education')
+
+                # print user
+                # UserDetails1 = UserDetails.objects.get(employee_id == form.cleaned_data['employee'])
+            except UserDetails.DoesNotExist:
                 user = request.user
                 employee = User.objects.get(username=request.user)
+                #print "laal1"
                 first_name = form.cleaned_data['first_name']
                 last_name = form.cleaned_data['last_name']
                 middle_name = form.cleaned_data['middle_name']
@@ -154,6 +222,7 @@ def user_details(request):
                 mobile_phone = form.cleaned_data['mobile_phone']
                 personal_email = form.cleaned_data['personal_email']
                 gender = form.cleaned_data['gender']
+
                 UserDetails(employee = employee,
                 middle_name=middle_name,
                 nationality=nationality,
@@ -167,40 +236,6 @@ def user_details(request):
                 mobile_phone=mobile_phone,
                 personal_email=personal_email,
                 gender=gender).save()
-                context['form'] = form
-                return HttpResponseRedirect('/myansrsource/user_details/education')
-            else:
-                userdata = UserDetails.objects.get(employee=user.id)
-                userdata.last_name = first_name
-                userdata.last_name = last_name
-                userdata.middle_name = middle_name
-                userdata.nationality = nationality
-                userdata.marital_status = marital_status
-                userdata.wedding_date = wedding_date
-                userdata.date_of_birth = date_of_birth
-                userdata.blood_group = blood_group
-                userdata.land_phone=land_phone
-                userdata.emergency_phone1=emergency_phone1
-                userdata.emergency_phone2=emergency_phone2
-                userdata.mobile_phone=mobile_phone
-                userdata.personal_email=personal_email
-                userdata.gender = gender
-                userdata.save()
-                """
-                UserDetails.update_or_create(employee = userdata.employee,
-                middle_name=middle_name,
-                nationality=nationality,
-                marital_status=marital_status,
-                wedding_date=wedding_date,
-                date_of_birth=date_of_birth,
-                blood_group=blood_group,
-                land_phone=land_phone,
-                emergency_phone1=emergency_phone1,
-                emergency_phone2=emergency_phone2,
-                mobile_phone=mobile_phone,
-                personal_email=personal_email,
-                # gender=gender).save()
-                gender=gender) """
 
                 context['form'] = form
                 return HttpResponseRedirect('/myansrsource/user_details/education')
@@ -246,7 +281,7 @@ def education(request):
             return render(request, "education.html", context_data)
 
     if request.method == 'POST':
-        #import ipdb; ipdb.set_trace()
+        # import ipdb; ipdb.set_trace()
         #print request.POST
         education_form = EducationForm(request.POST, request.FILES, prefix = 'education_form')
         context_data = {"education_form":""}
@@ -382,6 +417,24 @@ def previous_employment(request):
             form = PreviousEmploymentForm()
             context["form"] = form
             return render(request, "previous.html", context)
+
+        company_name = employee.company_name
+        company_address = employee.company_address
+        job_type = employee.job_type
+        employed_from = employee.employed_from
+        employed_upto = employee.employed_upto
+        last_ctc = employee.last_ctc
+        reason_for_exit = employee.reason_for_exit
+        ps_attachment = employee.ps_attachment
+        rl_attachment = employee.rl_attachment
+
+        form = PreviousEmploymentForm(initial = {'company_name':employee.company_name,'company_address':employee.company_address,
+        'job_type':employee.job_type,'employed_from':employee.employed_from,'employed_upto':employee.employed_upto,
+        'last_ctc':employee.last_ctc,'reason_for_exit':employee.reason_for_exit,'ps_attachment':employee.ps_attachment,
+        'rl_attachment':employee.rl_attachment})
+
+        context["form"] = form
+        return render(request, "proof.html", context)
     #import ipdb; ipdb.set_trace()
 
     if request.method == 'POST':
