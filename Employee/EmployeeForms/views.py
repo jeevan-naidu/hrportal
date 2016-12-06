@@ -357,44 +357,112 @@ def proof(request):
     if request.method == 'POST':
         #import ipdb; ipdb.set_trace()
         context = {"form":""}
+        user = request.user
+        try:
+            Proof.objects.get(employee=user.id)
+            tempsv = Proof.objects.get(employee=user.id)
+            tempsv.pan = None
+            tempsv.voter_id = None
+            tempsv.aadhar = None
+            tempsv.dl = None
+            tempsv.passport = None
+
+            tempsv.save()
+        except:
+            user = request.user
         form = ProofForm(request.POST, request.FILES)
         if form.is_valid():
-            employee = User.objects.get(username=request.user)
-            pan = form.cleaned_data['pan']
-            pan_attachment = form.cleaned_data['pan_attachment']
-            if request.FILES.get('pan_attachment', ""):
-                form.pan_attachment = request.FILES['pan_attachment']
-            aadhar_card = form.cleaned_data['aadhar_card']
-            aadhar_attachment = form.cleaned_data['aadhar_attachment']
-            if request.FILES.get('aadhar_attachment', ""):
-                form.aadhar_attachment = request.FILES['aadhar_attachment']
-            dl = form.cleaned_data['dl']
-            dl_attachment = form.cleaned_data['dl_attachment']
-            if request.FILES.get('dl_attachment', ""):
-                form.dl_attachment = request.FILES['dl_attachment']
-            passport = form.cleaned_data['passport']
-            passport_attachment = form.cleaned_data['passport_attachment']
-            if request.FILES.get('passport_attachment', ""):
-                form.passport_attachment = request.FILES['passport_attachment']
-            voter_id = form.cleaned_data['voter_id']
-            voter_attachment = form.cleaned_data['voter_attachment']
-            if request.FILES.get('voter_attachment', ""):
-                form.voter_attachment = request.FILES['voter_attachment']
+            try:
+                if Proof.objects.get(employee=request.user):
+                    user = request.user
+                    employee = User.objects.get(username=request.user)
+                    pan = form.cleaned_data['pan']
+                    pan_attachment = form.cleaned_data['pan_attachment']
+                    if request.FILES.get('pan_attachment', ""):
+                        form.pan_attachment = request.FILES['pan_attachment']
+                    aadhar_card = form.cleaned_data['aadhar_card']
+                    aadhar_attachment = form.cleaned_data['aadhar_attachment']
+                    if request.FILES.get('aadhar_attachment', ""):
+                        form.aadhar_attachment = request.FILES['aadhar_attachment']
+                    dl = form.cleaned_data['dl']
+                    dl_attachment = form.cleaned_data['dl_attachment']
+                    if request.FILES.get('dl_attachment', ""):
+                        form.dl_attachment = request.FILES['dl_attachment']
+                    passport = form.cleaned_data['passport']
+                    passport_attachment = form.cleaned_data['passport_attachment']
+                    if request.FILES.get('passport_attachment', ""):
+                        form.passport_attachment = request.FILES['passport_attachment']
+                    voter_id = form.cleaned_data['voter_id']
+                    voter_attachment = form.cleaned_data['voter_attachment']
+                    if request.FILES.get('voter_attachment', ""):
+                        form.voter_attachment = request.FILES['voter_attachment']
 
-            Proof(employee=employee,
-            pan=pan,
-            pan_attachment=pan_attachment,
-            aadhar_card=aadhar_card,
-            aadhar_attachment=aadhar_attachment,
-            dl=dl,
-            dl_attachment=dl_attachment,
-            passport=passport,
-            passport_attachment=passport_attachment,
-            voter_id=voter_id,
-            voter_attachment=voter_attachment).save()
-            context['form'] = form
 
-            return HttpResponseRedirect("/myansrsource/user_details/confirm")
+                    fields = [pan,aadhar_card,dl,passport,voter_id]
+                    check = [ val for val in fields]
+                    if len(check) > 1:
+                        userdata = Proof.objects.get(employee=user.id)
+                        userdata.pan = pan
+                        userdata.pan_attachment = pan_attachment
+                        userdata.aadhar_card = aadhar_card
+                        userdata.aadhar_attachment = aadhar_attachment
+                        userdata.dl = dl
+                        userdata.dl_attachment = dl_attachment
+                        userdata.passport = passport
+                        userdata.passport_attachment = passport_attachment
+                        userdata.voter_id = voter_id
+                        userdata.voter_attachment = voter_attachment
+                        userdata.save()
+                        context['form'] = form
+
+                        return HttpResponseRedirect("/myansrsource/user_details/confirm")
+                    else:
+                        return HttpResponse("Please fill min 2 fields")
+
+            except Proof.DoesNotExist:
+
+                user = request.user
+                employee = User.objects.get(username=request.user)
+                pan = form.cleaned_data['pan']
+                pan_attachment = form.cleaned_data['pan_attachment']
+                if request.FILES.get('pan_attachment', ""):
+                    form.pan_attachment = request.FILES['pan_attachment']
+                aadhar_card = form.cleaned_data['aadhar_card']
+                aadhar_attachment = form.cleaned_data['aadhar_attachment']
+                if request.FILES.get('aadhar_attachment', ""):
+                    form.aadhar_attachment = request.FILES['aadhar_attachment']
+                dl = form.cleaned_data['dl']
+                dl_attachment = form.cleaned_data['dl_attachment']
+                if request.FILES.get('dl_attachment', ""):
+                    form.dl_attachment = request.FILES['dl_attachment']
+                passport = form.cleaned_data['passport']
+                passport_attachment = form.cleaned_data['passport_attachment']
+                if request.FILES.get('passport_attachment', ""):
+                    form.passport_attachment = request.FILES['passport_attachment']
+                voter_id = form.cleaned_data['voter_id']
+                voter_attachment = form.cleaned_data['voter_attachment']
+                if request.FILES.get('voter_attachment', ""):
+                    form.voter_attachment = request.FILES['voter_attachment']
+                fields = [pan,aadhar_card,dl,passport,voter_id]
+                check = [ val for val in fields if val]
+                if len(check) > 1:
+                    Proof(employee=employee,
+                    pan=pan,
+                    pan_attachment=pan_attachment,
+                    aadhar_card=aadhar_card,
+                    aadhar_attachment=aadhar_attachment,
+                    dl=dl,
+                    dl_attachment=dl_attachment,
+                    passport=passport,
+                    passport_attachment=passport_attachment,
+                    voter_id=voter_id,
+                    voter_attachment=voter_attachment).save()
+                    context['form'] = form
+
+                    return HttpResponseRedirect("/myansrsource/user_details/confirm")
+                else:
+                    return HttpResponse("Please fill min 2 fields")
+
 
     context['form'] = form
     return render(request,'proof.html',context)
@@ -438,7 +506,7 @@ def previous_employment(request):
     #import ipdb; ipdb.set_trace()
 
     if request.method == 'POST':
-        # import ipdb; ipdb.set_trace()
+        #import ipdb; ipdb.set_trace()
 
         form = PreviousEmploymentForm(request.POST, request.FILES)
         context = {"form":""}
