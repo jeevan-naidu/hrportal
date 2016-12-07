@@ -73,6 +73,15 @@ def content_file_name(instance, filename):
     os_path = os.path.join(path, filename)
     return os_path
 
+class ConfirmationCode(models.Model):
+ 
+    username = models.ForeignKey(User, default=True)
+    confirmation_code = models.CharField(verbose_name="Confirmation Code",max_length=100,blank=False, null = False, unique=True)
+
+    def __unicode__(self):
+        return u'{0}'.format(
+            self.confirmation_code)
+
 class Address(models.Model):
 
     class Meta:
@@ -109,6 +118,7 @@ class UserDetails(models.Model):
     emergency_phone2 = models.CharField("Emergency Contact Number2",max_length=15,unique=True,blank=True,null=True)
     personal_email = models.EmailField("Personal E-mail",max_length=250,blank=False,unique=True)
     address = models.ManyToManyField(Address, verbose_name='User Address')
+    confirmation_code = models.CharField("Confirmation Code",max_length=15,unique=True,blank=True,null=True)
     def __unicode__(self):
         return u'{0}'.format(
             self.employee)

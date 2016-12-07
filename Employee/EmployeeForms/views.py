@@ -6,13 +6,16 @@ from django.core.context_processors import csrf
 from django.views.generic import View
 from django.contrib import messages
 from django.views.generic import CreateView
+from django.conf import settings
+import random
+import string
+from django.core.mail import send_mail
 from formtools.wizard.views import SessionWizardView
 from django.views.decorators.csrf import csrf_protect
-from django.conf import settings
 from django.template import RequestContext
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
-from models import Address, UserDetails, Education, PreviousEmployment, Proof
+from models import Address, UserDetails, Education, PreviousEmployment, Proof, ConfirmationCode
 from forms import UserDetailsForm, EducationForm, PreviousEmploymentForm, ProofForm, UserRegistrationForm
 
 AllowedFileTypes = ['jpg', 'csv','png', 'pdf', 'xlsx', 'xls', 'docx', 'doc', 'jpeg', 'eml']
@@ -62,9 +65,24 @@ def invalid_login(request):
 def register(request):
     #import ipdb; ipdb.set_trace()
     if request.method == 'POST':
+        # user = request.user
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
+            username = request.POST['username']
+            first_name = request.POST['first_name']
+            last_name = request.POST['last_name']
+            password1 = request.POST['password1']
+            password2 = request.POST['password2']
+            email = request.POST['email']
+  
+            # User(username=username, first_name=first_name, last_name=last_name, email=email, password=password1).save()
             form.save()
+            # confirmation_code = ''.join(random.choice(string.ascii_uppercase + string.digits + string.ascii_lowercase) for x in range(33))
+    
+            # ccc = ConfirmationCode(confirmation_code=confirmation_code)
+            # ccc.save()
+            send_registration_confirmation(username)
+            # send_mail('Subject here', 'Here is the message.', settings.EMAIL_HOST_USER,[user.email], fail_silently=False)
             return HttpResponseRedirect('/myansrsource/register_success')
         else:
             print form.is_valid()
@@ -79,6 +97,17 @@ def register(request):
     context.update(csrf(request))
 
     return render(request,'register.html', {'form':form})
+
+def send_registration_confirmation(username):
+    # user = request.user
+    username = User.objects.get(username=username)
+    confirmation_code = ''.join(random.choice(string.ascii_uppercase + string.digits + string.ascii_lowercase) for x in range(33))
+    ccc = ConfirmationCode(confirmation_code=confirmation_code,username=username)
+    ccc.save()
+    p = ccc
+    title = "Gsick account confirmation"
+    content = "http://www.gsick.com/confirm/" + str(p.confirmation_code) + username.username
+    send_mail(title, content, 'no-reply@gsick.com', [username.email], fail_silently=False)
 
 def register_success(request):
 	return HttpResponseRedirect("/myansrsource/login")

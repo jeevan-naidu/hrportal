@@ -21,8 +21,12 @@ class PreviousEmploymentAdmin(admin.ModelAdmin):
 class AddressAdmin(admin.ModelAdmin):
 	list_display = [ 'address_type']
 
+class ConfirmationCodeAdmin(admin.ModelAdmin):
+	list_display = [ 'confirmation_code', 'username']
+
 admin.site.register(UserDetails, UserDetailsAdmin)
 admin.site.register(Education, EducationAdmin)
 admin.site.register(Proof, ProofAdmin)
 admin.site.register(PreviousEmployment, PreviousEmploymentAdmin)
 admin.site.register(Address, AddressAdmin)
+admin.site.register(ConfirmationCode, ConfirmationCodeAdmin)
