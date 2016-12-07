@@ -46,7 +46,7 @@
 
 
 <!-- ~~~~sanjay~~~~ -->
-                        <form id="user_details_form" method="post" class="form-horizontal" enctype="multipart/form-data">
+                        <form id="user_details_form" method="post" class="form-horizontal" enctype="multipart/form-data" data-toggle="validator">
 
                         {% csrf_token %}
 
@@ -62,7 +62,7 @@
                               <label class="col-sm-2 control-label">First Name<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-7 controls">
                                 {{form.first_name}}
-
+                                <div class="help-block with-errors"></div>
                               </div>
                             </div>
 
@@ -70,7 +70,7 @@
                               <label class="col-sm-2 control-label">Last Name<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-7 controls">
                                 {{form.last_name}}
-
+                                <div class="help-block with-errors"></div>
                               </div>
                             </div>
 
@@ -78,7 +78,7 @@
                                 <label class="col-sm-2 control-label">Middle Name<span class="mandatory-field"> *</span></label>
                                 <div class="col-sm-7 controls">
                                   {{form.middle_name}}
-
+                                <div class="help-block with-errors"></div>
                                 </div>
                               </div>
 
@@ -86,7 +86,7 @@
                               <label class="col-sm-2 control-label">Gender<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-2 controls">
                                 {{form.gender}}
-
+                                <div class="help-block with-errors"></div>
                               </div>
                             </div>
 
@@ -94,7 +94,7 @@
                               <label class="col-sm-2 control-label">Nationality<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-7 controls">
                                 {{form.nationality}}
-
+                                <div class="help-block with-errors"></div>
                               </div>
                             </div>
 
@@ -102,7 +102,7 @@
                               <label class="col-sm-2 control-label">Marital Status<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-7 controls">
                                 {{form.marital_status}}
-
+                                <div class="help-block with-errors"></div>
                               </div>
                             </div>
 
@@ -110,7 +110,7 @@
                               <label class="col-sm-2 control-label">Wedding Date<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-7 controls">
                                 {{form.wedding_date}}
-
+                                <div class="help-block with-errors"></div>
                               </div>
                             </div>
 
@@ -119,7 +119,7 @@
                               <label class="col-sm-2 control-label">Date of Birth<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-7 controls">
                                 {{form.date_of_birth}}
-
+                                <div class="help-block with-errors"></div>
                               </div>
                             </div>
 
@@ -127,7 +127,7 @@
                               <label class="col-sm-2 control-label">Blood Group<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-2 controls">
                                 {{form.blood_group}}
-
+                                <div class="help-block with-errors"></div>
                               </div>
                             </div>
 
@@ -135,7 +135,7 @@
                               <label class="col-sm-2 control-label">Land Phone<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-7 controls">
                                 {{form.land_phone}}
-
+                                <div class="help-block with-errors"></div>
                               </div>
                             </div>
 
@@ -143,7 +143,7 @@
                               <label class="col-sm-2 control-label">Emergency Phone(primary)<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-7 controls">
                                 {{form.emergency_phone1}}
-
+                                <div class="help-block with-errors"></div>
                               </div>
                             </div>
 
@@ -152,7 +152,7 @@
                               <label class="col-sm-2 control-label">Emergency Phone(secondary)<span class="mandatory-field"> *</span></label>
                                   <div class="col-sm-7 controls">
                                     {{form.emergency_phone2}}
-
+                                <div class="help-block with-errors"></div>
                                     </div>
                                 </div>
 
@@ -160,7 +160,7 @@
                               <label class="col-sm-2 control-label">Mobile Number<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-7 controls">
                                 {{form.mobile_phone}}
-
+                                <div class="help-block with-errors"></div>
                               </div>
                             </div>
 
@@ -168,6 +168,7 @@
                               <label class="col-sm-2 control-label">Personal Email<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-7 controls">
                                 {{form.personal_email}}
+                                <div class="help-block with-errors"></div>                                
                               </div>
                             </div>
 
@@ -176,7 +177,7 @@
 
 
                             <div class="form-group">
-                                <h3 class="col-sm-12 text-center"><input type="submit" id="submit" class="btn vd_bg-green vd_white width-10" value="Save"/></h3>
+                                <h3 class="col-sm-12 text-right"><input type="submit" id="submit" class="btn vd_bg-green vd_white width-10" value="Save"/></h3>
                             </div>
                         </form>
 

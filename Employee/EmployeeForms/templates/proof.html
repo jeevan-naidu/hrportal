@@ -39,7 +39,7 @@
 
 
               <div class="tab-pane" id="tab4">
-                <form id="form" method="post" class="form-horizontal" enctype="multipart/form-data">
+                <form id="form" method="post" class="form-horizontal" enctype="multipart/form-data" data-toggle="validator">
 
                 {% csrf_token %}
                 <div class="form-group">
@@ -47,6 +47,7 @@
                   <div class="col-sm-7 controls">
                     {{form.pan}}
                     {{form.pan_attachment}}
+                    <div class="help-block with-errors"></div>
                   </div>
 
                 </div>
@@ -55,6 +56,7 @@
                   <div class="col-sm-7 controls">
                     {{form.aadhar_card}}
                     {{form.aadhar_attachment}}
+                    <div class="help-block with-errors"></div>
                   </div>
                 </div>
                 <div class="form-group">
@@ -62,6 +64,7 @@
                   <div class="col-sm-7 controls">
                   {{form.dl}}
                   {{form.dl_attachment}}
+                    <div class="help-block with-errors"></div>
                   </div>
                 </div>
                 <div class="form-group">
@@ -70,6 +73,7 @@
                     {{form.passport}}
 
                     {{form.passport_attachment}}
+                    <div class="help-block with-errors"></div>
 
                   </div>
                 </div>
@@ -78,6 +82,7 @@
                   <div class="col-sm-7 controls">
                     {{form.voter_id}}
                     {{form.voter_attachment}}
+                    <div class="help-block with-errors"></div>
                   </div>
                 </div>
 
