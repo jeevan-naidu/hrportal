@@ -41,13 +41,14 @@
 
               <div class="tab-pane" id="tab3">
 
-                <form id="previous_employment_form" method="post" class="form-horizontal" enctype="multipart/form-data">
+                <form id="previous_employment_form" method="post" class="form-horizontal" enctype="multipart/form-data" data-toggle="validator">
 
                 {% csrf_token %}
                 <div class="form-group">
                   <label class="col-sm-2 control-label">Company Name</label>
                   <div id = "id_company_name" class="col-sm-7 controls">
                     {{form.company_name}}
+                    <div class="help-block with-errors"></div>
 
                   </div>
                 </div>
@@ -56,6 +57,7 @@
                   <label class="col-sm-2 control-label">Company Address</label>
                   <div class="col-sm-7 controls">
                     {{form.company_address}}
+                    <div class="help-block with-errors"></div>
 
                   </div>
                     </div>
@@ -64,6 +66,7 @@
                       <label class="col-sm-2 control-label">Job Type</label>
                       <div class="col-sm-7 controls">
                         {{form.job_type}}
+                    <div class="help-block with-errors"></div>
 
                       </div>
                         </div>
@@ -72,6 +75,7 @@
                   <label class="col-sm-2 control-label">Employed From</label>
                   <div class="col-sm-7 controls">
                     {{form.employed_from}}
+                    <div class="help-block with-errors"></div>
 
                   </div>
                 </div>
@@ -79,6 +83,7 @@
                   <label class="col-sm-2 control-label">Employed To</label>
                   <div class="col-sm-7 controls">
                     {{form.employed_upto}}
+                    <div class="help-block with-errors"></div>
 
                   </div>
                 </div>
@@ -90,6 +95,7 @@
                   <label class="col-sm-2 control-label">Last CTC</label>
                   <div class="col-sm-7 controls">
                     {{form.last_ctc}}
+                    <div class="help-block with-errors"></div>
 
                   </div>
                 </div>
@@ -97,6 +103,7 @@
                   <label class="col-sm-2 control-label">Reason For Exit</label>
                   <div class="col-sm-7 controls">
                     {{form.reason_for_exit}}
+                    <div class="help-block with-errors"></div>
 
                   </div>
                 </div>
@@ -106,7 +113,7 @@
                   <div class="col-sm-7 controls">
 
                     {{form.ps_attachment}}
-
+                    <div class="help-block with-errors"></div>
 
                   </div>
                 </div>
@@ -115,6 +122,7 @@
                   <label class="col-sm-2 control-label">Attachments for Relieving Letter</label>
                   <div class="col-sm-7 controls">
                       {{form.rl_attachment}}
+                    <div class="help-block with-errors"></div>
                   </div>
                 </div>
 
@@ -176,15 +184,15 @@
                            e.preventDefault();
                            var data = new FormData($('form').get(0));
                            swal({   title: "Do you want to add again?",
-               							text: "If you want to add another eduaction detail press yes else click no!",
-               							type: "warning",
-               							showCancelButton: true,
-               							confirmButtonColor: "#DD6B55",
-               							confirmButtonText: "Save and fill again!",
-               							cancelButtonText: "Save and continue to next tab",
-               							closeOnConfirm: true,
-               							closeOnCancel: true
-               							},
+                            text: "If you want to add another eduaction detail press yes else click no!",
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "Save and fill again!",
+                            cancelButtonText: "Save and continue to next tab",
+                            closeOnConfirm: true,
+                            closeOnCancel: true
+                            },
                              function(isConfirm) {
                                if (isConfirm) {
                                  $.ajax( {

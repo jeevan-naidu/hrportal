@@ -40,7 +40,7 @@
 
 <div class="tab-pane" id="tab2">
 
-  <form id="education_form" enctype="multipart/form-data" method="post" class="form-horizontal" enctype="multipart/form-data">
+  <form id="education_form" enctype="multipart/form-data" method="post" class="form-horizontal" enctype="multipart/form-data" data-toggle="validator">
 
   {% csrf_token %}
   <!-- <div class="form-group">
@@ -55,7 +55,7 @@
     <label class="col-sm-2 control-label">Qualification<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
       {{education_form.qualification}}
-
+      <div class="help-block with-errors"></div>
     </div>
   </div>
 
@@ -63,7 +63,7 @@
     <label class="col-sm-2 control-label">Specialization<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
       {{education_form.specialization}}
-
+      <div class="help-block with-errors"></div>
     </div>
   </div>
 
@@ -74,7 +74,7 @@
     <div class="col-sm-3 controls">
       <div class="input-group">
         {{education_form.from_date}}
-
+      <div class="help-block with-errors"></div>
         <span class="input-group-addon" id="datepicker-icon-trigger" data-datepicker="#datepicker-icon"><i class="fa fa-calendar"></i></span> </div>
     </div>
   </div>
@@ -83,6 +83,10 @@
     <div class="col-sm-3 controls">
       <div class="input-group">
         {{education_form.to_date}}
+<<<<<<< HEAD
+=======
+      <div class="help-block with-errors"></div>
+>>>>>>> 0cded6bd1829b2320fd8257c7dbe7c8281f137ea
         <span class="input-group-addon" id="datepicker-icon-trigger" data-datepicker="#datepicker-icon"><i class="fa fa-calendar"></i></span> </div>
     </div>
   </div>
@@ -90,14 +94,14 @@
     <label class="col-sm-2 control-label">Institution<span class="mandatory-field"> *</span></label>
     <div id="institute" class="col-sm-7 controls">
       {{education_form.institute}}
-
+      <div class="help-block with-errors"></div>
     </div>
   </div>
   <div class="form-group">
     <label class="col-sm-2 control-label">Board/University<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
       {{education_form.board_university}}
-
+      <div class="help-block with-errors"></div>
     </div>
   </div>
   <div class="form-group">
@@ -105,7 +109,7 @@
     <div class="col-sm-7 controls">
       {{education_form.overall_marks}}
       {{education_form.marks_card_attachment}}
-
+      <div class="help-block with-errors"></div>
     </div>
   </div>
 
@@ -198,15 +202,15 @@ This section updates on click of 3 buttons : Karle 0, karle 2 and BTP
                   e.preventDefault();
                   var data = new FormData($('form').get(0));
                   swal({   title: "Do you want to add again?",
-      							text: "If you want to add another eduaction detail press yes else click no!",
-      							type: "warning",
-      							showCancelButton: true,
-      							confirmButtonColor: "#DD6B55",
-      							confirmButtonText: "Save and fill again!",
-      							cancelButtonText: "Save and continue to next tab",
-      							closeOnConfirm: true,
-      							closeOnCancel: true
-      							},
+                    text: "If you want to add another eduaction detail press yes else click no!",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Save and fill again!",
+                    cancelButtonText: "Save and continue to next tab",
+                    closeOnConfirm: true,
+                    closeOnCancel: true
+                    },
                     function(isConfirm) {
                       if (isConfirm) {
 
