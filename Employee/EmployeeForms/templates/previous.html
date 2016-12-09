@@ -46,7 +46,7 @@
                 {% csrf_token %}
                 <div class="form-group">
                   <label class="col-sm-2 control-label">Company Name</label>
-                  <div class="col-sm-7 controls">
+                  <div id = "id_company_name" class="col-sm-7 controls">
                     {{form.company_name}}
 
                   </div>
@@ -126,11 +126,12 @@
                 <!-- <div class="form-group">
                     <h3 class="text-center"><input type="submit" id="submit1" onclick="myFunction()" class="btn btn-danger" onclick="form.action='/myansrsource/user_details/previous_employment';" value="Save-addmore"/></h3>
                 </div> -->
-
+                 <input type="button" id="vivek1" class="btn vd_bg-green vd_white width-10" value="vivek1"/>
+                 <input type="button" id="vivek2" class="btn vd_bg-green vd_white width-10" value="vivek2"/>
            </form>
          </div><!-- ./tab-content -->
 
-
+        
 
                                 </div><!-- ./wizard1 ~~~ -->
 
@@ -143,7 +144,32 @@
                      </div>
                      <!-- row -->
 
-
+                     <script type="text/javascript">            
+                      $("#vivek1").click(function(){
+                        // e.preventDefault();
+                        // debugger;
+                        // var company_name = "{{form.data.company_name}}"
+                        var company_name = "{{form.company_name}}".val()
+                        // var company_name = "cts";
+                        
+                        
+                          
+                          $.ajax({
+                            type: "GET",
+                            url : '/myansrsource/user_details/previous_employment',
+                            data : {'company_name':company_name},
+                            success : function(data){
+                             $("#previous_employment_form").html(data);
+                             // console.log(data);
+                             return data;
+                            }
+                            // error: function(xhr, status, error) {
+                            //   alert(xhr.responseText);
+                            // }
+                          });
+                        
+                    });
+                        </script>
 
                      <script type="text/javascript">
                      $("#previous_employment_form").submit(function (e) {

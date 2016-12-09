@@ -2,7 +2,6 @@ from django import forms
 from django.contrib.auth.models import User
 import datetime
 import calendar
-from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from bootstrap3_datetime.widgets import DateTimePicker
 from django.utils.safestring import mark_safe

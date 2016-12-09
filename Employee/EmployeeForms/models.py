@@ -42,8 +42,8 @@ JOB_TYPE = (
 
 QUALIFICATION = (
 	('SSC', 'Senior Secondary'),
-	('HSC', 'Higher Secondary'),
-	('GRAD', 'Graduate'),
+    ('HSC', 'Higher Secondary'),
+    ('GRAD', 'Graduate'),
 	('PG', 'Post Graduate'),
     ('PhD', 'Doctrate'),
     ('Others', 'Others'),
@@ -153,8 +153,14 @@ class Education(models.Model):
     overall_marks = models.FloatField("Total Score/GPA",validators=[MaxValueValidator(100)],blank=False)
     marks_card_attachment = models.FileField(upload_to=content_file_name,blank=True, null=True, verbose_name="Marks card Attachment")
     def __unicode__(self):
-        return u'{0}'.format(
+        return u'{0},{1},{2},{3},{4},{5},{6},{7}'.format(
             self.qualification,
+            self.specialization,
+            self.from_date,
+            self.to_date,
+            self.institute,
+            self.board_university,
+            self.overall_marks,
             self.employee)
 
 class Proof(models.Model):

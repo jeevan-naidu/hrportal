@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, render_to_response
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
+from django.template.loader import render_to_string
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.core.context_processors import csrf
@@ -7,6 +8,7 @@ from django.views.generic import View
 from django.contrib import messages
 from django.views.generic import CreateView
 from django.conf import settings
+from django.http import JsonResponse
 import random
 import string
 from django.core.mail import send_mail
@@ -75,12 +77,7 @@ def register(request):
             password2 = request.POST['password2']
             email = request.POST['email']
   
-            # User(username=username, first_name=first_name, last_name=last_name, email=email, password=password1).save()
             form.save()
-            # confirmation_code = ''.join(random.choice(string.ascii_uppercase + string.digits + string.ascii_lowercase) for x in range(33))
-    
-            # ccc = ConfirmationCode(confirmation_code=confirmation_code)
-            # ccc.save()
             send_registration_confirmation(username)
             # send_mail('Subject here', 'Here is the message.', settings.EMAIL_HOST_USER,[user.email], fail_silently=False)
             return HttpResponseRedirect('/myansrsource/register_success')
@@ -122,14 +119,14 @@ def user_details(request):
         context = {"form":""}
         form = UserDetailsForm()
         context["form"] = form
-        #import ipdb; ipdb.set_trace()
+        import ipdb; ipdb.set_trace()
         user = request.user
         first_name = user.first_name
         last_name = user.last_name
         email=user.email
         try:
             employee = UserDetails.objects.get(employee=request.user)
-            print employee
+            # print employee
         except UserDetails.DoesNotExist:
             context = {"form":""}
             form = UserDetailsForm()
@@ -161,6 +158,7 @@ def user_details(request):
         #import ipdb; ipdb.set_trace()
         context = {"form":""}
         user = request.user
+
         # employee_g = UserDetails.objects.get(employee=user.id)
         # print employee
         try:
@@ -278,24 +276,17 @@ def education(request):
     #education form
     # import ipdb; ipdb.set_trace()
     if request.method == 'GET':
+
         context_data = {"education_form":""}
         education_form = EducationForm()
         context_data["education_form"] = education_form
-        #import ipdb; ipdb.set_trace()
+        # import ipdb; ipdb.set_trace()
         user = request.user
         try:
-            employee = Education.objects.get(employee=request.user)
-        except Education.DoesNotExist:
-            context_data = {"education_form":""}
-            education_form = EducationForm(prefix = 'education_form')
-            context_data["education_form"] = education_form
-            return render(request, "education.html", context_data)
-
-        if request.user.is_authenticated:
-            user = request.user
-            employee = Education.objects.get(employee=request.user)
-            qualification = employee.qualification
-            specialization = employee.specialization
+            qualification = request.GET.get('qualification', '')
+            specialization = request.GET.get('specialization', '')
+            employee = Education.objects.get(employee=request.user,
+                    qualification=qualification, specialization=specialization)
             from_date = employee.from_date
             to_date = employee.to_date
             institute = employee.institute
@@ -305,12 +296,27 @@ def education(request):
             education_form = EducationForm(initial = {'from_date':employee.from_date,'qualification':employee.qualification,'specialization':employee.specialization,
             'from_date':employee.from_date,'to_date':employee.to_date,'institute':employee.institute,'board_university':employee.board_university,
             'overall_marks':employee.overall_marks,'marks_card_attachment':employee.marks_card_attachment})
-
             context_data["education_form"] = education_form
-            return render(request, "education.html", context_data)
-
+            # return
+            return render(request, "dummy.html", context_data)
+        except Education.DoesNotExist:
+            context_data = {"education_form":""}
+            education_form = EducationForm(prefix = 'education_form')
+            context_data["education_form"] = education_form
+            try:
+                employee = Education.objects.filter(employee=request.user)
+                lists = employee
+                entry1 = employee[0]
+                entry2 = employee[1]
+                
+                
+                return render(request, "education.html", {'education_form':education_form,'lists':employee,'employee':request.user,
+                        'qualification':entry1.qualification,'specialization':entry1.specialization})
+                
+            except Education.DoesNotExist:            
+                return render(request, "education.html", context_data)
     if request.method == 'POST':
-        # import ipdb; ipdb.set_trace()
+        #import ipdb; ipdb.set_trace()
         #print request.POST
         education_form = EducationForm(request.POST, request.FILES, prefix = 'education_form')
         context_data = {"education_form":""}
@@ -341,8 +347,8 @@ def education(request):
             context_data['education_form'] = education_form
             return render(request, 'education.html',context_data)
 
-    context_data['education_form'] = education_form
-    return render(request, 'education.html',context_data)
+    # context_data['education_form'] = education_form
+    # return render(request, 'education.html',context_data)
 
 @csrf_exempt
 @login_required
@@ -506,9 +512,27 @@ def previous_employment(request):
         form = PreviousEmploymentForm()
         context["form"] = form
         #import ipdb; ipdb.set_trace()
+        company_name = request.GET.get('company_name', '')
         user = request.user
         try:
-            employee = PreviousEmployment.objects.get(employee=request.user)
+            employee = PreviousEmployment.objects.get(employee=request.user,company_name=company_name)
+            company_name = employee.company_name
+            company_address = employee.company_address
+            job_type = employee.job_type
+            employed_from = employee.employed_from
+            employed_upto = employee.employed_upto
+            last_ctc = employee.last_ctc
+            reason_for_exit = employee.reason_for_exit
+            ps_attachment = employee.ps_attachment
+            rl_attachment = employee.rl_attachment
+
+            form = PreviousEmploymentForm(initial = {'company_name':employee.company_name,'company_address':employee.company_address,
+            'job_type':employee.job_type,'employed_from':employee.employed_from,'employed_upto':employee.employed_upto,
+            'last_ctc':employee.last_ctc,'reason_for_exit':employee.reason_for_exit,'ps_attachment':employee.ps_attachment,
+            'rl_attachment':employee.rl_attachment})
+
+            context["form"] = form
+            return render(request, "previous_display.html", context)
         except PreviousEmployment.DoesNotExist:
             context = {"form":""}
             form = PreviousEmploymentForm()
@@ -531,7 +555,7 @@ def previous_employment(request):
         'rl_attachment':employee.rl_attachment})
 
         context["form"] = form
-        return render(request, "proof.html", context)
+        return render(request, "previous.html", context)
     #import ipdb; ipdb.set_trace()
 
     if request.method == 'POST':

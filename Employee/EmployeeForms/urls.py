@@ -17,6 +17,6 @@ urlpatterns = [
                        url(r'^/user_details/proof$', views.proof),
                        url(r'^/user_details/previous_employment$', views.previous_employment),
                        url(r'^/user_details/confirm$', views.confirm),
-                       #url(r'^/user_details/file$', views.file),
+                       # url(r'^/user_details/file$', views.file),
                        url(r'^/download_form$', views.download_form),
                        ]
