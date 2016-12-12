@@ -1,0 +1,132 @@
+
+              <div class="tab-pane" id="tab3">
+
+                <form id="previous_employment_form" method="post" class="form-horizontal" enctype="multipart/form-data">
+
+                {% csrf_token %}
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">Company Name</label>
+                  <div class="col-sm-7 controls">
+                    {{form.company_name}}
+
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">Company Address</label>
+                  <div class="col-sm-7 controls">
+                    {{form.company_address}}
+
+                  </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">Job Type</label>
+                      <div class="col-sm-7 controls">
+                        {{form.job_type}}
+
+                      </div>
+                        </div>
+
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">Employed From</label>
+                  <div class="col-sm-7 controls">
+                    {{form.employed_from}}
+
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">Employed To</label>
+                  <div class="col-sm-7 controls">
+                    {{form.employed_upto}}
+
+                  </div>
+                </div>
+
+
+
+
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">Last CTC</label>
+                  <div class="col-sm-7 controls">
+                    {{form.last_ctc}}
+
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">Reason For Exit</label>
+                  <div class="col-sm-7 controls">
+                    {{form.reason_for_exit}}
+
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">Attachments for pay slips<br/></label>
+
+                  <div class="col-sm-7 controls">
+
+                    {{form.ps_attachment}}
+
+
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">Attachments for Relieving Letter</label>
+                  <div class="col-sm-7 controls">
+                      {{form.rl_attachment}}
+                  </div>
+                </div>
+
+                <div class="form-group">
+
+                    <h3 class="col-sm-12 text-right"><input type="submit" id="submit" class="btn vd_bg-green vd_white width-10" value="Save"/></h3>
+                </div>
+
+                <!-- <div class="form-group">
+                    <h3 class="text-center"><input type="submit" id="submit1" onclick="myFunction()" class="btn btn-danger" onclick="form.action='/myansrsource/user_details/previous_employment';" value="Save-addmore"/></h3>
+                </div> -->
+
+           </form>
+         </div><!-- ./tab-content -->
+
+         <input type="button" id="vivek1" class="btn vd_bg-green vd_white width-10" value="vivek1"/>
+         <input type="button" id="vivek2" class="btn vd_bg-green vd_white width-10" value="vivek2"/>
+
+                                </div><!-- ./wizard1 ~~~ -->
+
+                           </div>
+                           <!-- Panel Body -->
+                         </div>
+                         <!-- Panel Widget -->
+                       </div>
+                       <!-- col-md-12 -->
+                     </div>
+                     <!-- row -->
+
+                     <script type="text/javascript">            
+                      $("#vivek1").click(function(){
+                        // e.preventDefault();
+                        // debugger;
+                        var company_name = document.getElementsById("{{ form.company_name }}").val;
+
+                        // var specialization = "cd";
+                        
+                        
+                          
+                          $.ajax({
+                            type: "GET",
+                            url : '/myansrsource/user_details/previous_employment',
+                            data : {'company_name':company_name},
+                            success : function(data){
+                             $("#previous_employment_form").html(data);
+                             // console.log(data);
+                             return data;
+                            }
+                            // error: function(xhr, status, error) {
+                            //   alert(xhr.responseText);
+                            // }
+                          });
+                        
+                    });
+                        </script>

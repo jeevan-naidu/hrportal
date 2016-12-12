@@ -1,0 +1,151 @@
+
+<div class="tab-pane" id="tab2">
+
+  <form id="education_form" enctype="multipart/form-data" method="post" class="form-horizontal" enctype="multipart/form-data">
+
+  {% csrf_token %}
+  <!-- <div class="form-group">
+    <label class="col-sm-2 control-label">Employee</label>
+    <div class="col-sm-7 controls">
+      {{education_form.employee}}
+
+    </div>
+  </div> -->
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Qualification<span class="mandatory-field"> *</span></label>
+    <div id="qual" class="col-sm-7 controls">
+      {{education_form.qualification}}
+
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Specialization<span class="mandatory-field"> *</span></label>
+    <div id="spec" class="col-sm-7 controls">
+      {{education_form.specialization}}
+
+    </div>
+  </div>
+
+
+
+  <div class="form-group">
+    <label id ="from_date" class="col-sm-2 control-label">From Date<span class="mandatory-field"> *</span></label>
+    <div class="col-sm-3 controls">
+      <div class="input-group">
+        {{education_form.from_date}}
+
+        <span class="input-group-addon" id="datepicker-icon-trigger" data-datepicker="#datepicker-icon"><i class="fa fa-calendar"></i></span> </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label id="to_date" class="col-sm-2 control-label">To Date<span class="mandatory-field"> *</span></label>
+    <div class="col-sm-3 controls">
+      <div class="input-group">
+        {{education_form.to_date}}
+        <span class="input-group-addon" id="datepicker-icon-trigger" data-datepicker="#datepicker-icon"><i class="fa fa-calendar"></i></span> </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Institution<span class="mandatory-field"> *</span></label>
+    <div id="institute" class="col-sm-7 controls">
+      {{education_form.institute}}
+
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Board/University<span class="mandatory-field"> *</span></label>
+    <div class="col-sm-7 controls">
+      {{education_form.board_university}}
+
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Overall Marks<span class="mandatory-field"> *</span></label>
+    <div class="col-sm-7 controls">
+      {{education_form.overall_marks}}
+      {{education_form.marks_card_attachment}}
+
+    </div>
+  </div>
+
+  
+  <div class="form-group">
+
+        <h3 class="col-sm-12 text-right"><input type="submit" id="submit" class="btn vd_bg-green vd_white width-10" value="Save"/></h3>
+
+  </div>
+</form>
+
+</div><!-- ./tab-content -->
+
+
+
+                       </div><!-- ./wizard1 ~~~ -->
+
+                  </div>
+                  <!-- Panel Body -->
+                </div>
+                <!-- Panel Widget -->
+              </div>
+              <!-- col-md-12 -->
+            </div>
+            <!-- row -->
+<!-- <div id="display" class="pos-rel">
+ This div will be pupulated using ajax. Ajax request will render template BookMeetingform.html and will update this section with it.
+This section updates on click of 3 buttons : Karle 0, karle 2 and BTP
+
+
+
+</div> -->
+
+            
+           <!--  <script type="text/javascript">            
+            $("#vivek1").click(function(){
+              // e.preventDefault();
+              debugger;
+              var user = "{{employee}}";
+              var qualification = "{{qualification}}";
+              var specialization = "{{specialization}}";
+              
+                $.ajax({
+                  type: "GET",
+                  url : '/myansrsource/user_details/education',
+                  data : {'qualification':qualification,'specialization':specialization},
+                  success : function(data){
+                   $("#education_form").html(data);
+                   // console.log(data);
+                   return data;
+                  }
+                  // error: function(xhr, status, error) {
+                  //   alert(xhr.responseText);
+                  // }
+                });
+              
+          });-->
+           <!-- <script type="text/javascript">            
+            $("#vivek2").click(function(){
+              // e.preventDefault();
+              // debugger;
+              var user = "{{employee}}";
+              // var list2 = "{{lists.1}}";
+              var qualification = "{{qualification2}}";
+              var specialization = "{{specialization2}}";
+
+                $.ajax({
+                  type: "GET",
+                  url : '/myansrsource/user_details/education',
+                  data : {'qualification':qualification,'specialization':specialization},
+                  success : function(data){
+                   $("#education_form").html(data);
+                   // console.log(data);
+                   // return data;
+                  }
+                  // error: function(xhr, status, error) {
+                  //   alert(xhr.responseText);
+                  // }
+                });
+              
+          });
+          </script>  -->
