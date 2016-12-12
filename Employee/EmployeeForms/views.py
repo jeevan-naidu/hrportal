@@ -298,20 +298,23 @@ def education(request):
             'overall_marks':employee.overall_marks,'marks_card_attachment':employee.marks_card_attachment})
             context_data["education_form"] = education_form
             # return
-            return render(request, "dummy.html", context_data)
+            return render(request, "education_display.html", context_data)
         except Education.DoesNotExist:
             context_data = {"education_form":""}
             education_form = EducationForm(prefix = 'education_form')
             context_data["education_form"] = education_form
             try:
                 employee = Education.objects.filter(employee=request.user)
-                lists = employee
-                entry1 = employee[0]
-                entry2 = employee[1]
+                no_of_degree = len(employee)
+                lists = []
+                qual = {'qual':'','spec':''}
+                for emp in employee:
+                    qual['qual'] = emp.qualification
+                    qual['spec'] = emp.specialization
+                    lists.append(qual)
+                    qual = {'qual':'','spec':''}
                 
-                
-                return render(request, "education.html", {'education_form':education_form,'lists':employee,'employee':request.user,
-                        'qualification':entry1.qualification,'specialization':entry1.specialization})
+                return render(request, "education.html", {'education_form':education_form,'education_list':lists,'employee':request.user})
                 
             except Education.DoesNotExist:            
                 return render(request, "education.html", context_data)
@@ -512,9 +515,10 @@ def previous_employment(request):
         form = PreviousEmploymentForm()
         context["form"] = form
         #import ipdb; ipdb.set_trace()
-        company_name = request.GET.get('company_name', '')
+        
         user = request.user
         try:
+            company_name = request.GET.get('company_name', '')
             employee = PreviousEmployment.objects.get(employee=request.user,company_name=company_name)
             company_name = employee.company_name
             company_address = employee.company_address
@@ -537,26 +541,23 @@ def previous_employment(request):
             context = {"form":""}
             form = PreviousEmploymentForm()
             context["form"] = form
-            return render(request, "previous.html", context)
-
-        company_name = employee.company_name
-        company_address = employee.company_address
-        job_type = employee.job_type
-        employed_from = employee.employed_from
-        employed_upto = employee.employed_upto
-        last_ctc = employee.last_ctc
-        reason_for_exit = employee.reason_for_exit
-        ps_attachment = employee.ps_attachment
-        rl_attachment = employee.rl_attachment
-
-        form = PreviousEmploymentForm(initial = {'company_name':employee.company_name,'company_address':employee.company_address,
-        'job_type':employee.job_type,'employed_from':employee.employed_from,'employed_upto':employee.employed_upto,
-        'last_ctc':employee.last_ctc,'reason_for_exit':employee.reason_for_exit,'ps_attachment':employee.ps_attachment,
-        'rl_attachment':employee.rl_attachment})
-
-        context["form"] = form
-        return render(request, "previous.html", context)
-    #import ipdb; ipdb.set_trace()
+            try:
+                employee = PreviousEmployment.objects.filter(employee=request.user)
+                no_of_companies = len(employee)
+                lists = []
+                company = {'company_name':''}
+                for emp in employee:
+                    company['company_name'] = emp.company_name
+                    
+                    lists.append(company)
+                    company = {'company_name':''}
+                
+                return render(request, "previous.html", {'form':form,'employment_list':lists,'employee':request.user})
+            except Education.DoesNotExist:            
+                return render(request, "previous.html", context_data)
+    #     context["form"] = form
+    #     return render(request, "previous.html", context)
+    # #import ipdb; ipdb.set_trace()
 
     if request.method == 'POST':
         #import ipdb; ipdb.set_trace()

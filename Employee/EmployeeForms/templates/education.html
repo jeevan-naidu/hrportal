@@ -83,10 +83,6 @@
     <div class="col-sm-3 controls">
       <div class="input-group">
         {{education_form.to_date}}
-<<<<<<< HEAD
-=======
-      <div class="help-block with-errors"></div>
->>>>>>> 0cded6bd1829b2320fd8257c7dbe7c8281f137ea
         <span class="input-group-addon" id="datepicker-icon-trigger" data-datepicker="#datepicker-icon"><i class="fa fa-calendar"></i></span> </div>
     </div>
   </div>
@@ -113,8 +109,7 @@
     </div>
   </div>
 
-  <input type="button" id="vivek1" class="btn vd_bg-green vd_white width-10" value="vivek1"/>
-  <input type="button" id="vivek2" class="btn vd_bg-green vd_white width-10" value="vivek2"/>
+  
   
   <div class="form-group">
 
@@ -122,7 +117,8 @@
 
   </div>
 </form>
-
+<input type="button" id="vivek1" class="btn vd_bg-green vd_white width-10" value="vivek1"/>
+  <input type="button" id="vivek2" class="btn vd_bg-green vd_white width-10" value="vivek2"/>
 </div><!-- ./tab-content -->
 
 
@@ -149,11 +145,13 @@ This section updates on click of 3 buttons : Karle 0, karle 2 and BTP
             <script type="text/javascript">            
             $("#vivek1").click(function(){
               // e.preventDefault();
-              debugger;
+              // debugger;
 
               var user = "{{employee}}";
-              var qualification = "{{qualification}}";
-              var specialization = "{{specialization}}";
+              var list1 = "{{education_list.0}}";
+              console.log(list1);
+              var qualification = "{{education_list.0.qual}}";
+              var specialization = "{{education_list.0.spec}}";
               
                 $.ajax({
                   type: "GET",
@@ -161,7 +159,6 @@ This section updates on click of 3 buttons : Karle 0, karle 2 and BTP
                   data : {'qualification':qualification,'specialization':specialization},
                   success : function(data){
                    $("#education_form").html(data);
-                    console.log(data);
                    // return data;
                   }
                   // error: function(xhr, status, error) {
@@ -175,10 +172,12 @@ This section updates on click of 3 buttons : Karle 0, karle 2 and BTP
               <script type="text/javascript">            
             $("#vivek2").click(function(){
               // e.preventDefault();
-              debugger;
+              // debugger;
               var user = "{{employee}}";
-              var qualification = "{{qualification}}";
-              var specialization = "{{specialization}}";
+              var list2 = "{{education_list.1}}";
+              // console.log(list2);
+              var qualification = "{{education_list.1.qual}}";
+              var specialization = "{{education_list.1.spec}}";
 
                 $.ajax({
                   type: "GET",
