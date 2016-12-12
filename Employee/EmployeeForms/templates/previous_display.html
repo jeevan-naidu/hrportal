@@ -1,8 +1,4 @@
 
-              <div class="tab-pane" id="tab3">
-
-                <form id="previous_employment_form" method="post" class="form-horizontal" enctype="multipart/form-data">
-
                 {% csrf_token %}
                 <div class="form-group">
                   <label class="col-sm-2 control-label">Company Name</label>
@@ -84,51 +80,3 @@
                 </div>
 
 
-
-
-           </form>
-         </div><!-- ./tab-content -->
-<<<<<<< HEAD
-         <script type="text/javascript">
-                     $("#previous_employment_form").submit(function (e) {
-                           e.preventDefault();
-                           var data = new FormData($('form').get(0));
-                           swal({   title: "Do you want to add again?",
-                            text: "If you want to add another eduaction detail press yes else click no!",
-                            type: "warning",
-                            showCancelButton: true,
-                            confirmButtonColor: "#DD6B55",
-                            confirmButtonText: "Save and fill again!",
-                            cancelButtonText: "Save and continue to next tab",
-                            closeOnConfirm: true,
-                            closeOnCancel: true
-                            },
-                             function(isConfirm) {
-                               if (isConfirm) {
-                                 $.ajax( {
-                                   type: "POST",
-                                   url: '/myansrsource/user_details/previous_employment',
-                                   data: data,
-                                   cache: false,
-                                   processData: false,
-                                   contentType: false,
-                                   success: function( response ) {
-                                      window.location='/myansrsource/user_details/previous_employment'
-                                   }
-
-                                 });
-                               }else{
-                                   $.ajax( {
-                                     type: "POST",
-                                     url: '/myansrsource/user_details/previous_employment',
-                                     data: $("#previous_employment_form").serialize(),
-                                     success: function( response ) {
-                                        window.location='/myansrsource/user_details/proof'
-                                 }
-                               });}});
-                             });
-
-                     </script>
-=======
-
->>>>>>> c4f39da2cd0dabdb6744ace6f6066823bcdf0417

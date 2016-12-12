@@ -146,7 +146,7 @@ This section updates on click of 3 buttons : Karle 0, karle 2 and BTP
             <script type="text/javascript">            
             $("#vivek1").click(function(){
               // e.preventDefault();
-              // debugger;
+              debugger;
 
               var user = "{{employee}}";
               var list1 = "{{education_list.0}}";
@@ -159,7 +159,7 @@ This section updates on click of 3 buttons : Karle 0, karle 2 and BTP
                   url : '/myansrsource/user_details/education',
                   data : {'qualification':qualification,'specialization':specialization},
                   success : function(data){
-                   $("#form").html(data);
+                   $("#education_form").html(data);
                    // return data;
                   }
                   // error: function(xhr, status, error) {
@@ -185,7 +185,7 @@ This section updates on click of 3 buttons : Karle 0, karle 2 and BTP
                   url : '/myansrsource/user_details/education',
                   data : {'qualification':qualification,'specialization':specialization},
                   success : function(data){
-                   $("#form").html(data);
+                   $("#education_form").html(data);
                    // console.log(data);
                    // return data;
                   }

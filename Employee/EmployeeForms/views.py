@@ -319,7 +319,7 @@ def education(request):
                 return render(request, "education.html", context)
 
     if request.method == 'POST':
-        # import ipdb; ipdb.set_trace()
+        import ipdb; ipdb.set_trace()
         #print request.POST
         context = {"form":""}
         form = EducationForm(request.POST, request.FILES, prefix = 'form')

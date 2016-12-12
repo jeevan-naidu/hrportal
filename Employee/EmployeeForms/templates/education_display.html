@@ -1,8 +1,4 @@
 
-<div class="tab-pane" id="tab2">
-
-  <form id="education_form" enctype="multipart/form-data" method="post" class="form-horizontal" enctype="multipart/form-data">
-
   {% csrf_token %}
   <!-- <div class="form-group">
     <label class="col-sm-2 control-label">Employee</label>
@@ -15,7 +11,7 @@
   <div class="form-group">
     <label class="col-sm-2 control-label">Qualification<span class="mandatory-field"> *</span></label>
     <div id="qual" class="col-sm-7 controls">
-      {{education_form.qualification}}
+      {{form.qualification}}
       <div class="help-block with-errors"></div>
     </div>
   </div>
@@ -23,7 +19,7 @@
   <div class="form-group">
     <label class="col-sm-2 control-label">Specialization<span class="mandatory-field"> *</span></label>
     <div id="spec" class="col-sm-7 controls">
-      {{education_form.specialization}}
+      {{form.specialization}}
       <div class="help-block with-errors"></div>
     </div>
   </div>
@@ -34,7 +30,7 @@
     <label id ="from_date" class="col-sm-2 control-label">From Date<span class="mandatory-field"> *</span></label>
     <div class="col-sm-3 controls">
       <div class="input-group">
-        {{education_form.from_date}}
+        {{form.from_date}}
       <div class="help-block with-errors"></div>
         <span class="input-group-addon" id="datepicker-icon-trigger" data-datepicker="#datepicker-icon"><i class="fa fa-calendar"></i></span> </div>
     </div>
@@ -43,7 +39,7 @@
     <label id="to_date" class="col-sm-2 control-label">To Date<span class="mandatory-field"> *</span></label>
     <div class="col-sm-3 controls">
       <div class="input-group">
-        {{education_form.to_date}}
+        {{form.to_date}}
         <div class="help-block with-errors"></div>
         <span class="input-group-addon" id="datepicker-icon-trigger" data-datepicker="#datepicker-icon"><i class="fa fa-calendar"></i></span> </div>      
     </div>
@@ -51,22 +47,22 @@
   <div class="form-group">
     <label class="col-sm-2 control-label">Institution<span class="mandatory-field"> *</span></label>
     <div id="institute" class="col-sm-7 controls">
-      {{education_form.institute}}
+      {{form.institute}}
       <div class="help-block with-errors"></div>
     </div>
   </div>
   <div class="form-group">
     <label class="col-sm-2 control-label">Board/University<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
-      {{education_form.board_university}}
+      {{form.board_university}}
       <div class="help-block with-errors"></div>
     </div>
   </div>
   <div class="form-group">
     <label class="col-sm-2 control-label">Overall Marks<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
-      {{education_form.overall_marks}}
-      {{education_form.marks_card_attachment}}
+      {{form.overall_marks}}
+      {{form.marks_card_attachment}}
       <div class="help-block with-errors"></div>
     </div>
   </div>
@@ -79,51 +75,5 @@
         </h3>
 
   </div>
-</form>
-
-</div><!-- ./tab-content -->
             
-<<<<<<< HEAD
-           <script type="text/javascript">
-                     $("#education_form").submit(function (e) {
-                           e.preventDefault();
-                           var data = new FormData($('form').get(0));
-                           swal({   title: "Do you want to add again?",
-                            text: "If you want to add another eduaction detail press yes else click no!",
-                            type: "warning",
-                            showCancelButton: true,
-                            confirmButtonColor: "#DD6B55",
-                            confirmButtonText: "Save and fill again!",
-                            cancelButtonText: "Save and continue to next tab",
-                            closeOnConfirm: true,
-                            closeOnCancel: true
-                            },
-                             function(isConfirm) {
-                               if (isConfirm) {
-                                 $.ajax( {
-                                   type: "POST",
-                                   url: '/myansrsource/user_details/eduaction',
-                                   data: data,
-                                   cache: false,
-                                   processData: false,
-                                   contentType: false,
-                                   success: function( response ) {
-                                      window.location='/myansrsource/user_details/eduaction'
-                                   }
 
-                                 });
-                               }else{
-                                   $.ajax( {
-                                     type: "POST",
-                                     url: '/myansrsource/user_details/education',
-                                     data: $("#previous_employment_form").serialize(),
-                                     success: function( response ) {
-                                        window.location='/myansrsource/user_details/previous_employment'
-                                 }
-                               });}});
-                             });
-
-                     </script>
-=======
-
->>>>>>> c4f39da2cd0dabdb6744ace6f6066823bcdf0417
