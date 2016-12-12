@@ -79,73 +79,51 @@
 </form>
 
 </div><!-- ./tab-content -->
-
-
-
-                       </div><!-- ./wizard1 ~~~ -->
-
-                  </div>
-                  <!-- Panel Body -->
-                </div>
-                <!-- Panel Widget -->
-              </div>
-              <!-- col-md-12 -->
-            </div>
-            <!-- row -->
-<!-- <div id="display" class="pos-rel">
- This div will be pupulated using ajax. Ajax request will render template BookMeetingform.html and will update this section with it.
-This section updates on click of 3 buttons : Karle 0, karle 2 and BTP
-
-
-
-</div> -->
-
             
-           <!--  <script type="text/javascript">            
-            $("#vivek1").click(function(){
-              // e.preventDefault();
-              debugger;
-              var user = "{{employee}}";
-              var qualification = "{{qualification}}";
-              var specialization = "{{specialization}}";
-              
-                $.ajax({
-                  type: "GET",
-                  url : '/myansrsource/user_details/education',
-                  data : {'qualification':qualification,'specialization':specialization},
-                  success : function(data){
-                   $("#education_form").html(data);
-                   // console.log(data);
-                   return data;
-                  }
-                  // error: function(xhr, status, error) {
-                  //   alert(xhr.responseText);
-                  // }
-                });
-              
-          });-->
-           <!-- <script type="text/javascript">            
-            $("#vivek2").click(function(){
-              // e.preventDefault();
-              // debugger;
-              var user = "{{employee}}";
-              // var list2 = "{{lists.1}}";
-              var qualification = "{{qualification2}}";
-              var specialization = "{{specialization2}}";
+           <script type="text/javascript">
+            $("#education_form").submit(function () {
+                  
+                  debugger;
+                  var data = new FormData($('form').get(0));
+                  swal({   title: "Do you want to add again?",
+                    text: "If you want to add another eduaction detail press yes else click no!",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Save and fill again!",
+                    cancelButtonText: "Save and continue to next tab",
+                    closeOnConfirm: true,
+                    closeOnCancel: true
+                    },
+                    function(isConfirm) {
+                      if (isConfirm) {
 
-                $.ajax({
-                  type: "GET",
-                  url : '/myansrsource/user_details/education',
-                  data : {'qualification':qualification,'specialization':specialization},
-                  success : function(data){
-                   $("#education_form").html(data);
-                   // console.log(data);
-                   // return data;
-                  }
-                  // error: function(xhr, status, error) {
-                  //   alert(xhr.responseText);
-                  // }
-                });
-              
-          });
-          </script>  -->
+                        $.ajax( {
+                          type: "POST",
+                          url: '/myansrsource/user_details/education',
+                          data: data,
+                          cache: false,
+                          processData: false,
+                          contentType: false,
+                          success: function( response ) {
+                             window.location='/myansrsource/user_details/education'
+                          }
+
+                        });
+                      }else{
+                          $.ajax( {
+                            type: "POST",
+                            url: '/myansrsource/user_details/education',
+                            data: data,
+                            cache: false,
+                            processData: false,
+                            contentType: false,
+                            success: function( response ) {
+                               window.location='/myansrsource/user_details/previous_employment'
+                        }
+                                  });
+                        }
+                        });
+                    });
+
+            </script>

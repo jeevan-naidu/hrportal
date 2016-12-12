@@ -119,7 +119,7 @@ def user_details(request):
         context = {"form":""}
         form = UserDetailsForm()
         context["form"] = form
-        import ipdb; ipdb.set_trace()
+        # import ipdb; ipdb.set_trace()
         user = request.user
         first_name = user.first_name
         last_name = user.last_name
@@ -279,7 +279,7 @@ def education(request):
         context = {"education_form":""}
         education_form = EducationForm()
         context["education_form"] = education_form
-        import ipdb; ipdb.set_trace()
+        # import ipdb; ipdb.set_trace()
         user = request.user
         try:
             qualification = request.GET.get('qualification', '')
@@ -317,70 +317,71 @@ def education(request):
                 
             except Education.DoesNotExist:            
                 return render(request, "education.html", context)
+
     if request.method == 'POST':
-        import ipdb; ipdb.set_trace()
+        # import ipdb; ipdb.set_trace()
         #print request.POST
         context = {"education_form":""}
         education_form = EducationForm(request.POST, request.FILES, prefix = 'education_form')
         marks_card_attachment = request.FILES.get('marks_card_attachment',"")
 
         if education_form.is_valid():
-            # try:
-            #     if Education.objects.get(employee=request.user):
-            #         user = request.user
-            #         employee = User.objects.get(username=request.user)
-            #         qualification = education_form.cleaned_data['qualification']
-            #         specialization = education_form.cleaned_data['specialization']
-            #         from_date = education_form.cleaned_data['from_date']
-            #         to_date = education_form.cleaned_data['to_date']
-            #         institute = education_form.cleaned_data['institute']
-            #         board_university = education_form.cleaned_data['board_university']
-            #         overall_marks = education_form.cleaned_data['overall_marks']
-            #         marks_card_attachment = education_form.cleaned_data['marks_card_attachment']
-            #         if request.FILES.get('marks_card_attachment', ""):
-            #             education_form.marks_card_attachment = request.FILES['marks_card_attachment']
+            try:
+                if Education.objects.get(employee=request.user,qualification=qualification, specialization=specialization):
+                    user = request.user
+                    employee = User.objects.get(username=request.user)
+                    # qualification = education_form.cleaned_data['qualification']
+                    # specialization = education_form.cleaned_data['specialization']
+                    from_date = education_form.cleaned_data['from_date']
+                    to_date = education_form.cleaned_data['to_date']
+                    institute = education_form.cleaned_data['institute']
+                    board_university = education_form.cleaned_data['board_university']
+                    overall_marks = education_form.cleaned_data['overall_marks']
+                    marks_card_attachment = education_form.cleaned_data['marks_card_attachment']
+                    if request.FILES.get('marks_card_attachment', ""):
+                        education_form.marks_card_attachment = request.FILES['marks_card_attachment']
 
-            #         userdata = Education.objects.get(employee=user.id)
-            #         userdata.qualification = qualification
-            #         userdata.specialization = specialization
-            #         userdata.from_date = from_date
-            #         userdata.to_date = to_date
-            #         userdata.institute = institute
-            #         userdata.board_university = board_university
-            #         userdata.overall_marks = overall_marks
-            #         userdata.marks_card_attachment = marks_card_attachment
-            #         userdata.save()
-            #         context_data['education_form'] = education_form
-            #         return render(request, 'education.html',context_data)
+                    userdata = Education.objects.get(employee=user.id)
+                    # userdata.qualification = qualification
+                    # userdata.specialization = specialization
+                    userdata.from_date = from_date
+                    userdata.to_date = to_date
+                    userdata.institute = institute
+                    userdata.board_university = board_university
+                    userdata.overall_marks = overall_marks
+                    userdata.marks_card_attachment = marks_card_attachment
+                    userdata.save()
+                    context_data['education_form'] = education_form
+                    return render(request, 'education_display.html',context_data)
 
-            # except Education.DoesNotExist:
-            user = request.user
-            employee = User.objects.get(username=request.user)
-            qualification = education_form.cleaned_data['qualification']
-            specialization = education_form.cleaned_data['specialization']
-            from_date = education_form.cleaned_data['from_date']
-            to_date = education_form.cleaned_data['to_date']
-            institute = education_form.cleaned_data['institute']
-            board_university = education_form.cleaned_data['board_university']
-            overall_marks = education_form.cleaned_data['overall_marks']
-            marks_card_attachment = education_form.cleaned_data['marks_card_attachment']
-            if request.FILES.get('marks_card_attachment', ""):
-                education_form.marks_card_attachment = request.FILES['marks_card_attachment']
+            except Education.DoesNotExist:
+                user = request.user
+                employee = User.objects.get(username=request.user)
+                qualification = education_form.cleaned_data['qualification']
+                specialization = education_form.cleaned_data['specialization']
+                from_date = education_form.cleaned_data['from_date']
+                to_date = education_form.cleaned_data['to_date']
+                institute = education_form.cleaned_data['institute']
+                board_university = education_form.cleaned_data['board_university']
+                overall_marks = education_form.cleaned_data['overall_marks']
+                marks_card_attachment = education_form.cleaned_data['marks_card_attachment']
+                if request.FILES.get('marks_card_attachment', ""):
+                    education_form.marks_card_attachment = request.FILES['marks_card_attachment']
 
-            Education(employee=employee,
-            qualification=qualification,
-            specialization=specialization,
-            from_date=from_date,
-            to_date=to_date,
-            institute=institute,
-            board_university=board_university,
-            overall_marks=overall_marks,
-            marks_card_attachment=marks_card_attachment).save()
-            context['education_form'] = education_form
-            return render(request, 'education.html',context)
+                Education(employee=employee,
+                qualification=qualification,
+                specialization=specialization,
+                from_date=from_date,
+                to_date=to_date,
+                institute=institute,
+                board_university=board_university,
+                overall_marks=overall_marks,
+                marks_card_attachment=marks_card_attachment).save()
+                context['education_form'] = education_form
+                return render(request, 'education.html',context)
 
     context['education_form'] = education_form
-    return render(request, 'education.html',context)
+    return render(request, 'education_display.html',context)
 
 @csrf_exempt
 @login_required
