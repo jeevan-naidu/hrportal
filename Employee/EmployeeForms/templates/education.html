@@ -40,11 +40,11 @@
 
 <div class="tab-pane" id="tab2">
 
-  <form id="education_form" enctype="multipart/form-data" method="post" class="form-horizontal" enctype="multipart/form-data" data-toggle="validator">
+  <form id="education_form" enctype="multipart/form-data" method="post" class="form-horizontal col-sm-7" enctype="multipart/form-data" data-toggle="validator">
 
   {% csrf_token %}
   <!-- <div class="form-group">
-    <label class="col-sm-2 control-label">Employee</label>
+    <label class="col-sm-5 control-label">Employee</label>
     <div class="col-sm-7 controls">
       {{form.employee}}
 
@@ -52,7 +52,7 @@
   </div> -->
 
   <div class="form-group">
-    <label class="col-sm-2 control-label">Qualification<span class="mandatory-field"> *</span></label>
+    <label class="col-sm-5 control-label">Qualification<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
       {{form.qualification}}
       <div class="help-block with-errors"></div>
@@ -60,7 +60,7 @@
   </div>
 
   <div class="form-group">
-    <label class="col-sm-2 control-label">Specialization<span class="mandatory-field"> *</span></label>
+    <label class="col-sm-5 control-label">Specialization<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
       {{form.specialization}}
       <div class="help-block with-errors"></div>
@@ -70,8 +70,8 @@
 
 
   <div class="form-group">
-    <label id ="from_date" class="col-sm-2 control-label">From Date<span class="mandatory-field"> *</span></label>
-    <div class="col-sm-3 controls">
+    <label id ="from_date" class="col-sm-5 control-label">From Date<span class="mandatory-field"> *</span></label>
+    <div class="col-sm-7 controls">
       <div class="input-group">
         {{form.from_date}}
       <div class="help-block with-errors"></div>
@@ -79,8 +79,8 @@
     </div>
   </div>
   <div class="form-group">
-    <label id="to_date" class="col-sm-2 control-label">To Date<span class="mandatory-field"> *</span></label>
-    <div class="col-sm-3 controls">
+    <label id="to_date" class="col-sm-5 control-label">To Date<span class="mandatory-field"> *</span></label>
+    <div class="col-sm-7 controls">
       <div class="input-group">
         {{form.to_date}}
         <div class="help-block with-errors"></div>        
@@ -88,21 +88,21 @@
     </div>
   </div>
   <div class="form-group">
-    <label class="col-sm-2 control-label">Institution<span class="mandatory-field"> *</span></label>
+    <label class="col-sm-5 control-label">Institution<span class="mandatory-field"> *</span></label>
     <div id="institute" class="col-sm-7 controls">
       {{form.institute}}
       <div class="help-block with-errors"></div>
     </div>
   </div>
   <div class="form-group">
-    <label class="col-sm-2 control-label">Board/University<span class="mandatory-field"> *</span></label>
+    <label class="col-sm-5 control-label">Board/University<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
       {{form.board_university}}
       <div class="help-block with-errors"></div>
     </div>
   </div>
   <div class="form-group">
-    <label class="col-sm-2 control-label">Overall Marks<span class="mandatory-field"> *</span></label>
+    <label class="col-sm-5 control-label">Overall Marks<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
       {{form.overall_marks}}
       {{form.marks_card_attachment}}
@@ -114,12 +114,38 @@
   
   <div class="form-group">
 
-        <h3 class="col-sm-12 text-right"><input type="submit" id="submit" class="btn vd_bg-green vd_white width-10" value="Save"/></h3>
+        <h3 class="col-sm-12 text-right"><input type="submit" id="submit" class="btn vd_bg-green vd_white" value="Save"/></h3>
 
   </div>
 </form>
-<input type="button" id="vivek1" class="btn vd_bg-green vd_white width-10" value="vivek1"/>
-  <input type="button" id="vivek2" class="btn vd_bg-green vd_white width-10" value="vivek2"/>
+
+
+<div id="user-list" class="col-sm-5">
+<!--   <input type="button" id="vivek1" class="btn vd_bg-green vd_white width-10" value="vivek1"/>
+  <input type="button" id="vivek2" class="btn vd_bg-green vd_white width-10" value="vivek2"/> -->
+
+  <div class="content-list">
+      <ul class="list-wrapper">
+        <li> 
+        <span id="vivek1">
+<!--           <div class="menu-icon vd_yellow"><i class="fa fa-suitcase"></i></div> -->
+          <div class="menu-text"> Someone has give you a surprise
+<!--             <div class="menu-info"><span class="menu-date">12 Minutes Ago</span></div> -->
+          </div>
+          </span> 
+        </li>
+        <li> 
+        <span id="vivek2">
+          
+          <div class="menu-text">Change your user profile details</div>
+          </span> 
+        </li>
+      </ul>
+    </div><!-- ./ content-list -->
+
+  </div><!-- ./ user-list -->
+
+
 </div><!-- ./tab-content -->
 
 
@@ -134,19 +160,14 @@
               <!-- col-md-12 -->
             </div>
             <!-- row -->
-<!-- <div id="display" class="pos-rel">
- This div will be pupulated using ajax. Ajax request will render template BookMeetingform.html and will update this section with it.
-This section updates on click of 3 buttons : Karle 0, karle 2 and BTP
 
 
-
-</div> -->
 
             
             <script type="text/javascript">            
             $("#vivek1").click(function(){
               // e.preventDefault();
-              debugger;
+              // debugger;
 
               var user = "{{employee}}";
               var list1 = "{{education_list.0}}";
@@ -168,9 +189,9 @@ This section updates on click of 3 buttons : Karle 0, karle 2 and BTP
                 });
               
           });
-              </script>
 
-              <script type="text/javascript">            
+
+           
             $("#vivek2").click(function(){
               // e.preventDefault();
               // debugger;
@@ -195,9 +216,9 @@ This section updates on click of 3 buttons : Karle 0, karle 2 and BTP
                 });
               
           });
-          </script>
 
-            <script type="text/javascript">
+
+
             $("#education_form").submit(function (e) {
                   e.preventDefault();
                   var data = new FormData($('form').get(0));
