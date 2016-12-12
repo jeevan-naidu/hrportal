@@ -153,58 +153,58 @@
                      <!-- row -->
 
                      <script type="text/javascript">            
-            $("#vivek1").click(function(){
-              // e.preventDefault();
-              // debugger;
+                      $("#vivek1").click(function(){
+                        // e.preventDefault();
+                        // debugger;
 
-              var user = "{{employee}}";
-              var list1 = "{{employment_list.0}}";
-              // console.log(list1);
-              var company_name = "{{employment_list.0.company_name}}";
-              // var specialization = "{{education_list.0.spec}}";
-              
-                $.ajax({
-                  type: "GET",
-                  url : '/myansrsource/user_details/previous_employment',
-                  data : {'company_name':company_name},
-                  success : function(data){
-                   $("#previous_employment_form").html(data);
-                   // return data;
-                  }
-                  // error: function(xhr, status, error) {
-                  //   alert(xhr.responseText);
-                  // }
-                });
-              
-          });
-              </script>
+                        var user = "{{employee}}";
+                        var list1 = "{{employment_list.0}}";
+                        // console.log(list1);
+                        var company_name = "{{employment_list.0.company_name}}";
+                        // var specialization = "{{education_list.0.spec}}";
+                        
+                          $.ajax({
+                            type: "GET",
+                            url : '/myansrsource/user_details/previous_employment',
+                            data : {'company_name':company_name},
+                            success : function(data){
+                             $("#previous_employment_form").html(data);
+                             // return data;
+                            }
+                            // error: function(xhr, status, error) {
+                            //   alert(xhr.responseText);
+                            // }
+                          });
+                        
+                    });
+                        </script>
 
               <script type="text/javascript">            
-            $("#vivek2").click(function(){
-              // e.preventDefault();
-              // debugger;
-              var user = "{{employee}}";
-              var list2 = "{{employment_list.1}}";
-              // console.log(list2);
-              var company_name = "{{employment_list.1.company_name}}";
-              // var specialization = "{{education_list.1.spec}}";
+                    $("#vivek2").click(function(){
+                      // e.preventDefault();
+                      // debugger;
+                      var user = "{{employee}}";
+                      var list2 = "{{employment_list.1}}";
+                      // console.log(list2);
+                      var company_name = "{{employment_list.1.company_name}}";
+                      // var specialization = "{{education_list.1.spec}}";
 
-                $.ajax({
-                  type: "GET",
-                  url : '/myansrsource/user_details/previous_employment',
-                  data : {'company_name':company_name},
-                  success : function(data){
-                   $("#previous_employment_form").html(data);
-                   // console.log(data);
-                   // return data;
-                  }
-                  // error: function(xhr, status, error) {
-                  //   alert(xhr.responseText);
-                  // }
-                });
-              
-          });
-          </script>
+                        $.ajax({
+                          type: "GET",
+                          url : '/myansrsource/user_details/previous_employment',
+                          data : {'company_name':company_name},
+                          success : function(data){
+                           $("#previous_employment_form").html(data);
+                           // console.log(data);
+                           // return data;
+                          }
+                          // error: function(xhr, status, error) {
+                          //   alert(xhr.responseText);
+                          // }
+                        });
+                      
+                  });
+                  </script>
 
                      <script type="text/javascript">
                      $("#previous_employment_form").submit(function (e) {

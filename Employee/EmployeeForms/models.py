@@ -46,7 +46,7 @@ QUALIFICATION = (
     ('GRAD', 'Graduate'),
 	('PG', 'Post Graduate'),
     ('PhD', 'Doctrate'),
-    ('Others', 'Others'),
+    ('Other', 'Others'),
 	)
 
 ADDRESSTYPE_CHOICES = (
