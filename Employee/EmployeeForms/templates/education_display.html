@@ -82,49 +82,42 @@
 </div><!-- ./tab-content -->
             
            <script type="text/javascript">
-            $("#education_form").submit(function () {
-                  
-                  debugger;
-                  var data = new FormData($('form').get(0));
-                  swal({   title: "Do you want to add again?",
-                    text: "If you want to add another eduaction detail press yes else click no!",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "Save and fill again!",
-                    cancelButtonText: "Save and continue to next tab",
-                    closeOnConfirm: true,
-                    closeOnCancel: true
-                    },
-                    function(isConfirm) {
-                      if (isConfirm) {
+                     $("#education_form").submit(function (e) {
+                           e.preventDefault();
+                           var data = new FormData($('form').get(0));
+                           swal({   title: "Do you want to add again?",
+                            text: "If you want to add another eduaction detail press yes else click no!",
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "Save and fill again!",
+                            cancelButtonText: "Save and continue to next tab",
+                            closeOnConfirm: true,
+                            closeOnCancel: true
+                            },
+                             function(isConfirm) {
+                               if (isConfirm) {
+                                 $.ajax( {
+                                   type: "POST",
+                                   url: '/myansrsource/user_details/eduaction',
+                                   data: data,
+                                   cache: false,
+                                   processData: false,
+                                   contentType: false,
+                                   success: function( response ) {
+                                      window.location='/myansrsource/user_details/eduaction'
+                                   }
 
-                        $.ajax( {
-                          type: "POST",
-                          url: '/myansrsource/user_details/education',
-                          data: data,
-                          cache: false,
-                          processData: false,
-                          contentType: false,
-                          success: function( response ) {
-                             window.location='/myansrsource/user_details/education'
-                          }
+                                 });
+                               }else{
+                                   $.ajax( {
+                                     type: "POST",
+                                     url: '/myansrsource/user_details/education',
+                                     data: $("#previous_employment_form").serialize(),
+                                     success: function( response ) {
+                                        window.location='/myansrsource/user_details/previous_employment'
+                                 }
+                               });}});
+                             });
 
-                        });
-                      }else{
-                          $.ajax( {
-                            type: "POST",
-                            url: '/myansrsource/user_details/education',
-                            data: data,
-                            cache: false,
-                            processData: false,
-                            contentType: false,
-                            success: function( response ) {
-                               window.location='/myansrsource/user_details/previous_employment'
-                        }
-                                  });
-                        }
-                        });
-                    });
-
-            </script>
+                     </script>

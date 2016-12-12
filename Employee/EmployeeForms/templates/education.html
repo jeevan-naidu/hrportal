@@ -46,7 +46,7 @@
   <!-- <div class="form-group">
     <label class="col-sm-2 control-label">Employee</label>
     <div class="col-sm-7 controls">
-      {{education_form.employee}}
+      {{form.employee}}
 
     </div>
   </div> -->
@@ -54,7 +54,7 @@
   <div class="form-group">
     <label class="col-sm-2 control-label">Qualification<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
-      {{education_form.qualification}}
+      {{form.qualification}}
       <div class="help-block with-errors"></div>
     </div>
   </div>
@@ -62,7 +62,7 @@
   <div class="form-group">
     <label class="col-sm-2 control-label">Specialization<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
-      {{education_form.specialization}}
+      {{form.specialization}}
       <div class="help-block with-errors"></div>
     </div>
   </div>
@@ -73,7 +73,7 @@
     <label id ="from_date" class="col-sm-2 control-label">From Date<span class="mandatory-field"> *</span></label>
     <div class="col-sm-3 controls">
       <div class="input-group">
-        {{education_form.from_date}}
+        {{form.from_date}}
       <div class="help-block with-errors"></div>
         <span class="input-group-addon" id="datepicker-icon-trigger" data-datepicker="#datepicker-icon"><i class="fa fa-calendar"></i></span> </div>
     </div>
@@ -82,7 +82,7 @@
     <label id="to_date" class="col-sm-2 control-label">To Date<span class="mandatory-field"> *</span></label>
     <div class="col-sm-3 controls">
       <div class="input-group">
-        {{education_form.to_date}}
+        {{form.to_date}}
         <div class="help-block with-errors"></div>        
         <span class="input-group-addon" id="datepicker-icon-trigger" data-datepicker="#datepicker-icon"><i class="fa fa-calendar"></i></span> </div>
     </div>
@@ -90,22 +90,22 @@
   <div class="form-group">
     <label class="col-sm-2 control-label">Institution<span class="mandatory-field"> *</span></label>
     <div id="institute" class="col-sm-7 controls">
-      {{education_form.institute}}
+      {{form.institute}}
       <div class="help-block with-errors"></div>
     </div>
   </div>
   <div class="form-group">
     <label class="col-sm-2 control-label">Board/University<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
-      {{education_form.board_university}}
+      {{form.board_university}}
       <div class="help-block with-errors"></div>
     </div>
   </div>
   <div class="form-group">
     <label class="col-sm-2 control-label">Overall Marks<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
-      {{education_form.overall_marks}}
-      {{education_form.marks_card_attachment}}
+      {{form.overall_marks}}
+      {{form.marks_card_attachment}}
       <div class="help-block with-errors"></div>
     </div>
   </div>
@@ -159,7 +159,7 @@ This section updates on click of 3 buttons : Karle 0, karle 2 and BTP
                   url : '/myansrsource/user_details/education',
                   data : {'qualification':qualification,'specialization':specialization},
                   success : function(data){
-                   $("#education_form").html(data);
+                   $("#form").html(data);
                    // return data;
                   }
                   // error: function(xhr, status, error) {
@@ -185,7 +185,7 @@ This section updates on click of 3 buttons : Karle 0, karle 2 and BTP
                   url : '/myansrsource/user_details/education',
                   data : {'qualification':qualification,'specialization':specialization},
                   success : function(data){
-                   $("#education_form").html(data);
+                   $("#form").html(data);
                    // console.log(data);
                    // return data;
                   }

@@ -276,9 +276,9 @@ def education(request):
     # import ipdb; ipdb.set_trace()
     if request.method == 'GET':
 
-        context = {"education_form":""}
-        education_form = EducationForm()
-        context["education_form"] = education_form
+        context = {"form":""}
+        form = EducationForm()
+        context["form"] = form
         # import ipdb; ipdb.set_trace()
         user = request.user
         try:
@@ -292,16 +292,16 @@ def education(request):
             board_university = employee.board_university
             overall_marks = employee.overall_marks
             marks_card_attachment = employee.marks_card_attachment
-            education_form = EducationForm(initial = {'from_date':employee.from_date,'qualification':employee.qualification,'specialization':employee.specialization,
+            form = EducationForm(initial = {'from_date':employee.from_date,'qualification':employee.qualification,'specialization':employee.specialization,
             'from_date':employee.from_date,'to_date':employee.to_date,'institute':employee.institute,'board_university':employee.board_university,
             'overall_marks':employee.overall_marks,'marks_card_attachment':employee.marks_card_attachment})
-            context["education_form"] = education_form
+            context["form"] = form
             
             return render(request, "education_display.html", context)
         except Education.DoesNotExist:
-            context = {"education_form":""}
-            education_form = EducationForm(prefix = 'education_form')
-            context["education_form"] = education_form
+            context = {"form":""}
+            form = EducationForm(prefix = 'form')
+            context["form"] = form
             try:
                 employee = Education.objects.filter(employee=request.user)
                 no_of_degree = len(employee)
@@ -313,7 +313,7 @@ def education(request):
                     lists.append(qual)
                     qual = {'qual':'','spec':''}
                 
-                return render(request, "education.html", {'education_form':education_form,'education_list':lists,'employee':request.user})
+                return render(request, "education.html", {'form':form,'education_list':lists,'employee':request.user})
                 
             except Education.DoesNotExist:            
                 return render(request, "education.html", context)
@@ -321,52 +321,54 @@ def education(request):
     if request.method == 'POST':
         # import ipdb; ipdb.set_trace()
         #print request.POST
-        context = {"education_form":""}
-        education_form = EducationForm(request.POST, request.FILES, prefix = 'education_form')
+        context = {"form":""}
+        form = EducationForm(request.POST, request.FILES, prefix = 'form')
         marks_card_attachment = request.FILES.get('marks_card_attachment',"")
 
-        if education_form.is_valid():
+        if form.is_valid():
             try:
-                if Education.objects.get(employee=request.user,qualification=qualification, specialization=specialization):
+                if Education.objects.filter(employee=request.user):
                     user = request.user
                     employee = User.objects.get(username=request.user)
-                    # qualification = education_form.cleaned_data['qualification']
-                    # specialization = education_form.cleaned_data['specialization']
-                    from_date = education_form.cleaned_data['from_date']
-                    to_date = education_form.cleaned_data['to_date']
-                    institute = education_form.cleaned_data['institute']
-                    board_university = education_form.cleaned_data['board_university']
-                    overall_marks = education_form.cleaned_data['overall_marks']
-                    marks_card_attachment = education_form.cleaned_data['marks_card_attachment']
+                    qualification = form.cleaned_data['qualification']
+                    specialization = form.cleaned_data['specialization']
+                    from_date = form.cleaned_data['from_date']
+                    to_date = form.cleaned_data['to_date']
+                    institute = form.cleaned_data['institute']
+                    board_university = form.cleaned_data['board_university']
+                    overall_marks = form.cleaned_data['overall_marks']
+                    marks_card_attachment = form.cleaned_data['marks_card_attachment']
                     if request.FILES.get('marks_card_attachment', ""):
-                        education_form.marks_card_attachment = request.FILES['marks_card_attachment']
+                        form.marks_card_attachment = request.FILES['marks_card_attachment']
 
                     userdata = Education.objects.get(employee=user.id)
-                    # userdata.qualification = qualification
-                    # userdata.specialization = specialization
-                    userdata.from_date = from_date
-                    userdata.to_date = to_date
-                    userdata.institute = institute
-                    userdata.board_university = board_university
-                    userdata.overall_marks = overall_marks
-                    userdata.marks_card_attachment = marks_card_attachment
-                    userdata.save()
-                    context_data['education_form'] = education_form
-                    return render(request, 'education_display.html',context_data)
+                    for details in userdata:
+
+                        details.qualification = qualification
+                        details.specialization = specialization
+                        details.from_date = from_date
+                        details.to_date = to_date
+                        details.institute = institute
+                        details.board_university = board_university
+                        details.overall_marks = overall_marks
+                        details.marks_card_attachment = marks_card_attachment
+                        details.save()
+                        context_data['form'] = form
+                        return render(request, 'education_display.html',context_data)
 
             except Education.DoesNotExist:
                 user = request.user
                 employee = User.objects.get(username=request.user)
-                qualification = education_form.cleaned_data['qualification']
-                specialization = education_form.cleaned_data['specialization']
-                from_date = education_form.cleaned_data['from_date']
-                to_date = education_form.cleaned_data['to_date']
-                institute = education_form.cleaned_data['institute']
-                board_university = education_form.cleaned_data['board_university']
-                overall_marks = education_form.cleaned_data['overall_marks']
-                marks_card_attachment = education_form.cleaned_data['marks_card_attachment']
+                qualification = form.cleaned_data['qualification']
+                specialization = form.cleaned_data['specialization']
+                from_date = form.cleaned_data['from_date']
+                to_date = form.cleaned_data['to_date']
+                institute = form.cleaned_data['institute']
+                board_university = form.cleaned_data['board_university']
+                overall_marks = form.cleaned_data['overall_marks']
+                marks_card_attachment = form.cleaned_data['marks_card_attachment']
                 if request.FILES.get('marks_card_attachment', ""):
-                    education_form.marks_card_attachment = request.FILES['marks_card_attachment']
+                    form.marks_card_attachment = request.FILES['marks_card_attachment']
 
                 Education(employee=employee,
                 qualification=qualification,
@@ -377,10 +379,10 @@ def education(request):
                 board_university=board_university,
                 overall_marks=overall_marks,
                 marks_card_attachment=marks_card_attachment).save()
-                context['education_form'] = education_form
+                context['form'] = form
                 return render(request, 'education.html',context)
 
-    context['education_form'] = education_form
+    context['form'] = form
     return render(request, 'education_display.html',context)
 
 @csrf_exempt
@@ -589,7 +591,7 @@ def previous_employment(request):
     #     return render(request, "previous.html", context)
 
     if request.method == 'POST':
-        #import ipdb; ipdb.set_trace()
+        import ipdb; ipdb.set_trace()
 
         form = PreviousEmploymentForm(request.POST, request.FILES)
         context = {"form":""}
@@ -597,33 +599,67 @@ def previous_employment(request):
         rl_attachment = request.FILES.get('rl_attachment',"")
 
         if form.is_valid():
-            employee = User.objects.get(username=request.user)
-            company_name = form.cleaned_data['company_name']
-            company_address = form.cleaned_data['company_address']
-            job_type = form.cleaned_data['job_type']
-            employed_from = form.cleaned_data['employed_from']
-            employed_upto = form.cleaned_data['employed_upto']
-            last_ctc = form.cleaned_data['last_ctc']
-            reason_for_exit = form.cleaned_data['reason_for_exit']
-            ps_attachment = form.cleaned_data['ps_attachment']
-            if request.FILES.get('ps_attachment', ""):
-                form.ps_attachment = request.FILES['ps_attachment']
-            rl_attachment = form.cleaned_data['rl_attachment']
-            if request.FILES.get('rl_attachment', ""):
-                form.rl_attachment = request.FILES['rl_attachment']
+            try:
+                if PreviousEmployment.objects.filter(employee=request.user):
+                    user = request.user
+                    employee = User.objects.get(username=request.user)
+                    company_name = form.cleaned_data['company_name']
+                    company_address = form.cleaned_data['company_address']
+                    job_type = form.cleaned_data['job_type']
+                    employed_from = form.cleaned_data['employed_from']
+                    employed_upto = form.cleaned_data['employed_upto']
+                    last_ctc = form.cleaned_data['last_ctc']
+                    reason_for_exit = form.cleaned_data['reason_for_exit']
+                    ps_attachment = form.cleaned_data['ps_attachment']
+                    if request.FILES.get('ps_attachment', ""):
+                        form.ps_attachment = request.FILES['ps_attachment']
+                    rl_attachment = form.cleaned_data['rl_attachment']
+                    if request.FILES.get('rl_attachment', ""):
+                        form.rl_attachment = request.FILES['rl_attachment']
 
-            PreviousEmployment(employee=employee,
-            company_name=company_name,
-            company_address=company_address,
-            job_type=job_type,
-            employed_from=employed_from,
-            employed_upto=employed_upto,
-            last_ctc=last_ctc,
-            reason_for_exit=reason_for_exit,
-            ps_attachment=ps_attachment,
-            rl_attachment=rl_attachment).save()
-            context['form'] = form
-            return render(request, 'previous.html',context)
+                    userdata = PreviousEmployment.objects.filter(employee=user.id)
+                    for details in userdata:
+                        details.company_name = company_name
+                        details.company_address = company_address
+                        details.job_type = job_type
+                        details.employed_from = employed_from
+                        details.employed_upto = employed_upto
+                        details.last_ctc = last_ctc
+                        details.reason_for_exit = reason_for_exit
+                        details.ps_attachment = ps_attachment
+                        details.rl_attachment = rl_attachment
+                        details.save()
+                        context['form'] = form
+                        return render(request, 'previous.html',context)
+            except UserDetails.DoesNotExist:
+                user = request.user
+                employee = User.objects.get(username=request.user)
+                company_name = form.cleaned_data['company_name']
+                company_address = form.cleaned_data['company_address']
+                job_type = form.cleaned_data['job_type']
+                employed_from = form.cleaned_data['employed_from']
+                employed_upto = form.cleaned_data['employed_upto']
+                last_ctc = form.cleaned_data['last_ctc']
+                reason_for_exit = form.cleaned_data['reason_for_exit']
+                ps_attachment = form.cleaned_data['ps_attachment']
+                if request.FILES.get('ps_attachment', ""):
+                    form.ps_attachment = request.FILES['ps_attachment']
+                rl_attachment = form.cleaned_data['rl_attachment']
+                if request.FILES.get('rl_attachment', ""):
+                    form.rl_attachment = request.FILES['rl_attachment']
+
+                PreviousEmployment(employee=employee,
+                company_name=company_name,
+                company_address=company_address,
+                job_type=job_type,
+                employed_from=employed_from,
+                employed_upto=employed_upto,
+                last_ctc=last_ctc,
+                reason_for_exit=reason_for_exit,
+                ps_attachment=ps_attachment,
+                rl_attachment=rl_attachment).save()
+                context['form'] = form
+                return render(request, 'previous.html',context)
 
     context['form'] = form
     return render(request, 'previous.html',context)
