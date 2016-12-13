@@ -126,19 +126,11 @@
 
   <div class="content-list">
       <ul class="list-wrapper">
-        <li> 
-        <span id="vivek1">
-<!--           <div class="menu-icon vd_yellow"><i class="fa fa-suitcase"></i></div> -->
-          <div class="menu-text">Vivek 1
-<!--             <div class="menu-info"><span class="menu-date">12 Minutes Ago</span></div> -->
-          </div>
-          </span> 
+        <li id="graduation_1"> 
+          <div class="menu-text">Graduation 1</div>
         </li>
-        <li> 
-        <span id="vivek2">
-          
-          <div class="menu-text">Vivek 2</div>
-          </span> 
+        <li id="graduation_2"> 
+          <div class="menu-text">Graduation 2</div>
         </li>
       </ul>
     </div><!-- ./ content-list -->
@@ -164,16 +156,41 @@
 
 
             
-            <script type="text/javascript">            
+            <script type="text/javascript">
+
+            var lists = "{{education_list}}";
+            console.log(lists);
+            var list_string = JSON.stringify(lists)
+            console.log(list_string);
+            var list_string_first = list_string;
+            console.log(list_string_first);
+
+            var theObj1 = {"tabs":{"Editor Review 2":false,"Editor Review 3":true,"Editor Review 1":true},
+                            "tab_name":{"1":"Editor Review 1","2":"Editor Review 2","3":"Editor Review 3"},
+                            "team_members":{"130":"Bhaviya","354":"AkshayFernandes"}
+                          }
+
+
+            var theObj1 = {"tabs":{"Editor Review 2":false,"Editor Review 3":true,"Editor Review 1":true},
+                            "tab_name":{"1":"Editor Review 1","2":"Editor Review 2","3":"Editor Review 3"},
+                            "team_members":{"130":"Bhaviya","354":"AkshayFernandes"}
+                          }
+
+
+
+
             $("#vivek1").click(function(){
               // e.preventDefault();
               // debugger;
 
               var user = "{{employee}}";
+              console.log(user);
               var list1 = "{{education_list.0}}";
-              // console.log(list1);
+              console.log(list1);
               var qualification = "{{education_list.0.qual}}";
+              console.log(qualification);
               var specialization = "{{education_list.0.spec}}";
+              console.log(specialization);
               
                 $.ajax({
                   type: "GET",
@@ -192,14 +209,17 @@
 
 
            
-/*            $("#vivek2").click(function(){
+            $("#graduation_1").click(function(){
               // e.preventDefault();
               // debugger;
               var user = "{{employee}}";
-              var list2 = "{{education_list.1}}";
-              // console.log(list2);
+              console.log(user);
+              var list1 = "{{education_list.1}}";
+              console.log(list1);
               var qualification = "{{education_list.1.qual}}";
+              console.log(qualification);
               var specialization = "{{education_list.1.spec}}";
+              console.log(specialization);
 
                 $.ajax({
                   type: "GET",
@@ -215,7 +235,7 @@
                   // }
                 });
               
-          });*/
+          });
 
 
 

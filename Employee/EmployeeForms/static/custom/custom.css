@@ -47,7 +47,7 @@ input[type="file"].bare{
 
 /* Education form */
 
-#user-list .content-list span{cursor: pointer;}
+#user-list .content-list li{cursor: pointer;}
 
 
 /* Confirm */
