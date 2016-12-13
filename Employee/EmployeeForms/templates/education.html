@@ -182,7 +182,7 @@
                           },
                           "graduation_2":{
                             "qualification":"{{education_list.1.qual}}",
-                            "specialization":"{{education_list.0.spec}}"
+                            "specialization":"{{education_list.1.spec}}"
                           }
                         }
 
@@ -192,29 +192,31 @@
             $('.content-list li').click(function(){
               // e.preventDefault();
               // debugger;
-
+              var qualification;
+              var specialization;
 
               var the_id_key = $(this).attr('id');
               console.log(the_id_key);
 
               // Object Iteration
 
-              for (var key in theObj) {
-                console.log(theObj[the_id_key]);
+              for (var key in theObj[the_id_key]) {
+                console.log(theObj[the_id_key]['qualification']);
+                var qualification = theObj[the_id_key]['qualification'];
+                console.log(theObj[the_id_key]['specialization']);
+                var specialization = theObj[the_id_key]['specialization'];
               }
 
 
 
 
 
-              var user = "{{employee}}";
+/*              var user = "{{employee}}";
               console.log('the user is ' + user);
               var list1 = "{{education_list.0}}";
-              console.log('list1 is ' + list1);
-              var qualification = "{{education_list.0.qual}}";
-              console.log('qualification is ' + qualification);
-              var specialization = "{{education_list.0.spec}}";
-              console.log('specialization is ' + specialization);
+              console.log('list1 is ' + list1);*/
+              // var qualification = "{{education_list.0.qual}}";
+              // var specialization = "{{education_list.0.spec}}";
 
 
 
