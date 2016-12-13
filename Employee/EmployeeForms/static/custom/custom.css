@@ -35,7 +35,9 @@ input[type="file"].bare{
 }
 
 
+/* User Profile */
 
+#id_wedding_date_pickers, #id_date_of_birth_pickers{width: 50%}
 
 
 /* Footer hardcoded fix */
@@ -46,3 +48,8 @@ input[type="file"].bare{
 /* Education form */
 
 #user-list .content-list span{cursor: pointer;}
+
+
+/* Confirm */
+
+.thanks-text{color: #f44336; margin-bottom: 25px;}

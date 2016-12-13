@@ -41,11 +41,11 @@
 
               <div class="tab-pane" id="tab3">
 
-                <form id="previous_employment_form" method="post" class="form-horizontal" enctype="multipart/form-data" data-toggle="validator">
+                <form id="previous_employment_form" method="post" class="form-horizontal col-sm-7" enctype="multipart/form-data" data-toggle="validator">
 
                 {% csrf_token %}
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">Company Name</label>
+                  <label class="col-sm-5 control-label">Company Name</label>
                   <div id = "id_company_name" class="col-sm-7 controls">
                     {{form.company_name}}
                     <div class="help-block with-errors"></div>
@@ -54,7 +54,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">Company Address</label>
+                  <label class="col-sm-5 control-label">Company Address</label>
                   <div class="col-sm-7 controls">
                     {{form.company_address}}
                     <div class="help-block with-errors"></div>
@@ -63,7 +63,7 @@
                     </div>
 
                     <div class="form-group">
-                      <label class="col-sm-2 control-label">Job Type</label>
+                      <label class="col-sm-5 control-label">Job Type</label>
                       <div class="col-sm-7 controls">
                         {{form.job_type}}
                     <div class="help-block with-errors"></div>
@@ -72,7 +72,7 @@
                         </div>
 
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">Employed From</label>
+                  <label class="col-sm-5 control-label">Employed From</label>
                   <div class="col-sm-7 controls">
                     {{form.employed_from}}
                     <div class="help-block with-errors"></div>
@@ -80,7 +80,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">Employed To</label>
+                  <label class="col-sm-5 control-label">Employed To</label>
                   <div class="col-sm-7 controls">
                     {{form.employed_upto}}
                     <div class="help-block with-errors"></div>
@@ -92,7 +92,7 @@
 
 
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">Last CTC</label>
+                  <label class="col-sm-5 control-label">Last CTC</label>
                   <div class="col-sm-7 controls">
                     {{form.last_ctc}}
                     <div class="help-block with-errors"></div>
@@ -100,7 +100,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">Reason For Exit</label>
+                  <label class="col-sm-5 control-label">Reason For Exit</label>
                   <div class="col-sm-7 controls">
                     {{form.reason_for_exit}}
                     <div class="help-block with-errors"></div>
@@ -108,7 +108,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">Attachments for pay slips<br/></label>
+                  <label class="col-sm-5 control-label">Attachments for pay slips<br/></label>
 
                   <div class="col-sm-7 controls">
 
@@ -119,7 +119,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">Attachments for Relieving Letter</label>
+                  <label class="col-sm-5 control-label">Attachments for Relieving Letter</label>
                   <div class="col-sm-7 controls">
                       {{form.rl_attachment}}
                     <div class="help-block with-errors"></div>
@@ -128,15 +128,43 @@
 
                 <div class="form-group">
 
-                    <h3 class="col-sm-12 text-right"><input type="submit" id="submit" class="btn vd_bg-green vd_white width-10" value="Save"/></h3>
+                    <h3 class="col-sm-12 text-right"><input type="submit" id="submit" class="btn vd_bg-green vd_white" value="Save"/></h3>
                 </div>
 
                 <!-- <div class="form-group">
                     <h3 class="text-center"><input type="submit" id="submit1" onclick="myFunction()" class="btn btn-danger" onclick="form.action='/myansrsource/user_details/previous_employment';" value="Save-addmore"/></h3>
                 </div> -->
            </form>
-                 <input type="button" id="vivek1" class="btn vd_bg-green vd_white width-10" value="vivek1"/>
-                 <input type="button" id="vivek2" class="btn vd_bg-green vd_white width-10" value="vivek2"/>
+
+
+
+
+            <div id="user-list" class="col-sm-5">
+
+
+              <div class="content-list">
+                  <ul class="list-wrapper">
+                    <li> 
+                    <span id="vivek1">
+            <!--           <div class="menu-icon vd_yellow"><i class="fa fa-suitcase"></i></div> -->
+                      <div class="menu-text">Vivek 1
+            <!--             <div class="menu-info"><span class="menu-date">12 Minutes Ago</span></div> -->
+                      </div>
+                      </span> 
+                    </li>
+                    <li> 
+                    <span id="vivek2">
+                      
+                      <div class="menu-text">Vivek 2</div>
+                      </span> 
+                    </li>
+                  </ul>
+                </div><!-- ./ content-list -->
+
+              </div><!-- ./ user-list -->
+
+
+
          </div><!-- ./tab-content -->
 
         
