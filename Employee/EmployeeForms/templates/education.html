@@ -160,37 +160,46 @@
 
             var lists = "{{education_list}}";
             console.log(lists);
-            var list_string = JSON.stringify(lists)
+            /*var list_string = JSON.stringify(lists)
             console.log(list_string);
             var list_string_first = list_string;
-            console.log(list_string_first);
+            console.log(list_string_first);*/
 
-            var theObj1 = {"tabs":{"Editor Review 2":false,"Editor Review 3":true,"Editor Review 1":true},
+/*            var theObj1 = {"tabs":{"Editor Review 2":false,"Editor Review 3":true,"Editor Review 1":true},
                             "tab_name":{"1":"Editor Review 1","2":"Editor Review 2","3":"Editor Review 3"},
                             "team_members":{"130":"Bhaviya","354":"AkshayFernandes"}
-                          }
+                          }*/
 
 
-            var theObj1 = {"tabs":{"Editor Review 2":false,"Editor Review 3":true,"Editor Review 1":true},
-                            "tab_name":{"1":"Editor Review 1","2":"Editor Review 2","3":"Editor Review 3"},
-                            "team_members":{"130":"Bhaviya","354":"AkshayFernandes"}
-                          }
+            var theObj = {"graduation_1":{
+                            "Editor Review 3":true,
+                            "Editor Review 1":true
+                          },
+                            "graduation_2":{
+                              "2":"Editor Review 2",
+                              "3":"Editor Review 3"
+                            }
+                                        }
 
 
 
 
-            $("#vivek1").click(function(){
+            $('.content-list li').click(function(){
               // e.preventDefault();
               // debugger;
 
+
+
+
+
               var user = "{{employee}}";
-              console.log(user);
+              console.log('the user is ' + user);
               var list1 = "{{education_list.0}}";
-              console.log(list1);
+              console.log('list1 is ' + list1);
               var qualification = "{{education_list.0.qual}}";
-              console.log(qualification);
+              console.log('qualification is ' + qualification);
               var specialization = "{{education_list.0.spec}}";
-              console.log(specialization);
+              console.log('specialization is ' + specialization);
               
                 $.ajax({
                   type: "GET",
@@ -209,7 +218,7 @@
 
 
            
-            $("#graduation_1").click(function(){
+/*            $("#graduation_2").click(function(){
               // e.preventDefault();
               // debugger;
               var user = "{{employee}}";
@@ -235,7 +244,7 @@
                   // }
                 });
               
-          });
+          });*/
 
 
 
