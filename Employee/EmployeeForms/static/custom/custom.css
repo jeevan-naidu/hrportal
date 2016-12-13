@@ -40,10 +40,6 @@ input[type="file"].bare{
 #id_wedding_date_pickers, #id_date_of_birth_pickers{width: 50%}
 
 
-/* Previous Employment */
-
-#id_employed_from_pickers, #id_employed_upto_pickers{width: 50%}
-
 /* Footer hardcoded fix */
 
 .vd_content-wrapper{min-height: 890px !important}

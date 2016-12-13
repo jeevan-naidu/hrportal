@@ -121,16 +121,16 @@ class EducationForm(forms.ModelForm):
 
 class PreviousEmploymentForm(forms.ModelForm):
 
-	company_name = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control',
+	company_name = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'input-sm form-control',
 		'required': 'True'}))
-	company_address = forms.CharField(max_length=500, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control',
+	company_address = forms.CharField(max_length=500, widget=forms.TextInput(attrs={'class': 'input-sm form-control',
 		'required': 'True'}))
-	job_type = forms.ChoiceField(choices=JOB_TYPE, widget=forms.Select(attrs={'class': 'width-50 input-sm form-control','required': 'False'}))
+	job_type = forms.ChoiceField(choices=JOB_TYPE, widget=forms.Select(attrs={'class': 'input-sm form-control','required': 'False'}))
 	employed_from = forms.DateField(widget=DateTimePicker())
 	employed_upto = forms.DateField(widget=DateTimePicker())
-	last_ctc = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control',
+	last_ctc = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'input-sm form-control',
 		'required': 'True'}))
-	reason_for_exit = forms.CharField(max_length=200, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control',
+	reason_for_exit = forms.CharField(max_length=200, widget=forms.TextInput(attrs={'class': 'input-sm form-control',
 		'required': 'False'}))
 	ps_attachment = forms.FileField(label='Pay slips Attachment', required=False, widget=forms.FileInput(attrs={'class': 'bare'}))
 	rl_attachment = forms.FileField(label='Relieving Letter Attachment', required=False, widget=forms.FileInput(attrs={'class': 'bare'}))
