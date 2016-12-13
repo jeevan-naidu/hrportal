@@ -126,6 +126,7 @@
 
   <div class="content-list">
       <ul class="list-wrapper">
+<<<<<<< HEAD
         <li> 
         <span class="0" id="vivek1">
 <!--           <div class="menu-icon vd_yellow"><i class="fa fa-suitcase"></i></div> -->
@@ -139,6 +140,13 @@
           
           <div class="menu-text">Vivek 2</div>
           </span> 
+=======
+        <li id="graduation_1"> 
+          <div class="menu-text">Graduation 1</div>
+        </li>
+        <li id="graduation_2"> 
+          <div class="menu-text">Graduation 2</div>
+>>>>>>> svs-remote
         </li>
       </ul>
     </div><!-- ./ content-list -->
@@ -164,6 +172,7 @@
             
 
             
+<<<<<<< HEAD
             <script type="text/javascript">            
             var lists = "{{education_list}}";
             console.log(lists);
@@ -196,21 +205,52 @@
            
            
             $("#vivek2").click(function(){
+=======
+            <script type="text/javascript">
+
+              
+            var theObj = {"graduation_1":{
+                            "qualification":"{{education_list.0.qual}}",
+                            "specialization":"{{education_list.0.spec}}"
+                          },
+                          "graduation_2":{
+                            "qualification":"{{education_list.1.qual}}",
+                            "specialization":"{{education_list.1.spec}}"
+                          }
+                        }
+
+
+
+
+            $('.content-list li').click(function(){
+>>>>>>> svs-remote
               // e.preventDefault();
               // debugger;
-              var user = "{{employee}}";
-              var list2 = "{{education_list.1}}";
-              // console.log(list2);
-              var qualification = "{{education_list.1.qual}}";
-              var specialization = "{{education_list.1.spec}}";
+              var qualification;
+              var specialization;
 
+              var the_id_key = $(this).attr('id');
+              console.log(the_id_key);
+
+              // Object Iteration
+
+              for (var key in theObj[the_id_key]) {
+                console.log(theObj[the_id_key]['qualification']);
+                var qualification = theObj[the_id_key]['qualification'];
+                console.log(theObj[the_id_key]['specialization']);
+                var specialization = theObj[the_id_key]['specialization'];
+              }
+
+
+
+
+              
                 $.ajax({
                   type: "GET",
                   url : '/myansrsource/user_details/education',
                   data : {'qualification':qualification,'specialization':specialization},
                   success : function(data){
                    $("#education_form").html(data);
-                   // console.log(data);
                    // return data;
                   }
                   // error: function(xhr, status, error) {
@@ -219,6 +259,8 @@
                 });
               
           });
+
+
 
 
 
