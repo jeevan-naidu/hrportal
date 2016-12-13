@@ -161,14 +161,18 @@
             </div>
             <!-- row -->
 
-
+            
 
             
             <script type="text/javascript">            
+            var lists = "{{education_list}}";
+            console.log(lists);
+            // for (i = 0; i < lists.length; i++) { 
+              
             $("#vivek1").click(function(){
               // e.preventDefault();
               // debugger;
-
+              
               var user = "{{employee}}";
               var list1 = "{{education_list.0}}";
               // console.log(list1);
@@ -190,7 +194,7 @@
               
           });
 
-
+          // }
            
             $("#vivek2").click(function(){
               // e.preventDefault();

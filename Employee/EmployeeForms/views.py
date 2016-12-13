@@ -155,7 +155,7 @@ def user_details(request):
 
     # instance = UserDetails.objects.get(employee=request.user)
     if request.method == 'POST':
-        #import ipdb; ipdb.set_trace()
+        import ipdb; ipdb.set_trace()
         context = {"form":""}
         user = request.user
 
@@ -312,7 +312,7 @@ def education(request):
                     qual['spec'] = emp.specialization
                     lists.append(qual)
                     qual = {'qual':'','spec':''}
-                
+                # print lists
                 return render(request, "education.html", {'form':form,'education_list':lists,'employee':request.user})
                 
             except Education.DoesNotExist:            
@@ -342,7 +342,7 @@ def education(request):
                     if request.FILES.get('marks_card_attachment', ""):
                         form.marks_card_attachment = request.FILES['marks_card_attachment']
 
-                    userdata = Education.objects.get(employee=user.id)
+                    userdata = Education.objects.filter(employee=user.id, qualification=qualification,specialization=specialization)
                     for details in userdata:
 
                         details.qualification = qualification
@@ -354,8 +354,8 @@ def education(request):
                         details.overall_marks = overall_marks
                         details.marks_card_attachment = marks_card_attachment
                         details.save()
-                        context_data['form'] = form
-                        return render(request, 'education_display.html',context_data)
+                        context['form'] = form
+                        return render(request, 'education_display.html',context)
 
             except Education.DoesNotExist:
                 user = request.user
