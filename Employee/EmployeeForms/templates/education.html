@@ -127,7 +127,7 @@
   <div class="content-list">
       <ul class="list-wrapper">
         <li> 
-        <span id="vivek1">
+        <span class="0" id="vivek1">
 <!--           <div class="menu-icon vd_yellow"><i class="fa fa-suitcase"></i></div> -->
           <div class="menu-text">Vivek 1
 <!--             <div class="menu-info"><span class="menu-date">12 Minutes Ago</span></div> -->
@@ -135,7 +135,7 @@
           </span> 
         </li>
         <li> 
-        <span id="vivek2">
+        <span class="1" id="vivek2">
           
           <div class="menu-text">Vivek 2</div>
           </span> 
@@ -167,34 +167,33 @@
             <script type="text/javascript">            
             var lists = "{{education_list}}";
             console.log(lists);
-            // for (i = 0; i < lists.length; i++) { 
+            
               
-            $("#vivek1").click(function(){
-              // e.preventDefault();
-              // debugger;
-              
-              var user = "{{employee}}";
-              var list1 = "{{education_list.0}}";
-              // console.log(list1);
-              var qualification = "{{education_list.0.qual}}";
-              var specialization = "{{education_list.0.spec}}";
-              
-                $.ajax({
-                  type: "GET",
-                  url : '/myansrsource/user_details/education',
-                  data : {'qualification':qualification,'specialization':specialization},
-                  success : function(data){
-                   $("#education_form").html(data);
-                   // return data;
-                  }
-                  // error: function(xhr, status, error) {
-                  //   alert(xhr.responseText);
-                  // }
-                });
-              
-          });
-
-          // }
+                    $("#vivek1").click(function(){
+                      // e.preventDefault();
+                        
+                        var user = "{{employee}}";
+                        var list2 = "{{education_list.0}}";
+                        // console.log(list2);
+                        var qualification = "{{education_list.0.qual}}";
+                        var specialization = "{{education_list.0.spec}}";
+                        
+                          $.ajax({
+                            type: "GET",
+                            url : '/myansrsource/user_details/education',
+                            data : {'qualification':qualification,'specialization':specialization},
+                            success : function(data){
+                             $("#education_form").html(data);
+                             // return data;
+                            }
+                            // error: function(xhr, status, error) {
+                            //   alert(xhr.responseText);
+                            // }
+                          });
+                      
+                  });
+        
+           
            
             $("#vivek2").click(function(){
               // e.preventDefault();
