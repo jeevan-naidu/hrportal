@@ -53,3 +53,9 @@ input[type="file"].bare{
 /* Confirm */
 
 .thanks-text{color: #f44336; margin-bottom: 25px;}
+
+
+/* Temp */
+
+#datepicker-icon-trigger{display: none;}
+#from_date + div > .input-group, #to_date + div > .input-group{width: 100%}
