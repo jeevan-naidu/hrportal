@@ -123,7 +123,7 @@ class PreviousEmploymentForm(forms.ModelForm):
 
 	company_name = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control',
 		'required': 'True'}))
-	company_address = forms.CharField(max_length=500, widget=forms.TextInput(attrs={'class': 'width-500 input-sm form-control',
+	company_address = forms.CharField(max_length=500, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control',
 		'required': 'True'}))
 	job_type = forms.ChoiceField(choices=JOB_TYPE, widget=forms.Select(attrs={'class': 'width-50 input-sm form-control','required': 'False'}))
 	employed_from = forms.DateField(widget=DateTimePicker())
