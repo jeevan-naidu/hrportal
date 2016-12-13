@@ -171,15 +171,20 @@
                           }*/
 
 
+/*                if (theObj.hasOwnProperty(key)) {
+                  console.log(theObj[key]);
+                }*/
+
+
             var theObj = {"graduation_1":{
-                            "Editor Review 3":true,
-                            "Editor Review 1":true
+                            "qualification":"{{education_list.0.qual}}",
+                            "specialization":"{{education_list.0.spec}}"
                           },
-                            "graduation_2":{
-                              "2":"Editor Review 2",
-                              "3":"Editor Review 3"
-                            }
-                                        }
+                          "graduation_2":{
+                            "qualification":"{{education_list.1.qual}}",
+                            "specialization":"{{education_list.0.spec}}"
+                          }
+                        }
 
 
 
@@ -187,6 +192,16 @@
             $('.content-list li').click(function(){
               // e.preventDefault();
               // debugger;
+
+
+              var the_id_key = $(this).attr('id');
+              console.log(the_id_key);
+
+              // Object Iteration
+
+              for (var key in theObj) {
+                console.log(theObj[the_id_key]);
+              }
 
 
 
@@ -200,6 +215,9 @@
               console.log('qualification is ' + qualification);
               var specialization = "{{education_list.0.spec}}";
               console.log('specialization is ' + specialization);
+
+
+
               
                 $.ajax({
                   type: "GET",
