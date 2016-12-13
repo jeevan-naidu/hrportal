@@ -41,3 +41,8 @@ input[type="file"].bare{
 /* Footer hardcoded fix */
 
 .vd_content-wrapper{min-height: 890px !important}
+
+
+/* Education form */
+
+#user-list .content-list span{cursor: pointer;}

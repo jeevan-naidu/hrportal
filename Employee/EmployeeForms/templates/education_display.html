@@ -9,16 +9,16 @@
   </div> -->
 
   <div class="form-group">
-    <label class="col-sm-2 control-label">Qualification<span class="mandatory-field"> *</span></label>
-    <div id="qual" class="col-sm-7 controls">
+    <label class="col-sm-5 control-label">Qualification<span class="mandatory-field"> *</span></label>
+    <div class="col-sm-7 controls">
       {{form.qualification}}
       <div class="help-block with-errors"></div>
     </div>
   </div>
 
   <div class="form-group">
-    <label class="col-sm-2 control-label">Specialization<span class="mandatory-field"> *</span></label>
-    <div id="spec" class="col-sm-7 controls">
+    <label class="col-sm-5 control-label">Specialization<span class="mandatory-field"> *</span></label>
+    <div class="col-sm-7 controls">
       {{form.specialization}}
       <div class="help-block with-errors"></div>
     </div>
@@ -27,8 +27,8 @@
 
 
   <div class="form-group">
-    <label id ="from_date" class="col-sm-2 control-label">From Date<span class="mandatory-field"> *</span></label>
-    <div class="col-sm-3 controls">
+    <label id ="from_date" class="col-sm-5 control-label">From Date<span class="mandatory-field"> *</span></label>
+    <div class="col-sm-7 controls">
       <div class="input-group">
         {{form.from_date}}
       <div class="help-block with-errors"></div>
@@ -36,30 +36,30 @@
     </div>
   </div>
   <div class="form-group">
-    <label id="to_date" class="col-sm-2 control-label">To Date<span class="mandatory-field"> *</span></label>
-    <div class="col-sm-3 controls">
+    <label id="to_date" class="col-sm-5 control-label">To Date<span class="mandatory-field"> *</span></label>
+    <div class="col-sm-7 controls">
       <div class="input-group">
         {{form.to_date}}
-        <div class="help-block with-errors"></div>
-        <span class="input-group-addon" id="datepicker-icon-trigger" data-datepicker="#datepicker-icon"><i class="fa fa-calendar"></i></span> </div>      
+        <div class="help-block with-errors"></div>        
+        <span class="input-group-addon" id="datepicker-icon-trigger" data-datepicker="#datepicker-icon"><i class="fa fa-calendar"></i></span> </div>
     </div>
   </div>
   <div class="form-group">
-    <label class="col-sm-2 control-label">Institution<span class="mandatory-field"> *</span></label>
+    <label class="col-sm-5 control-label">Institution<span class="mandatory-field"> *</span></label>
     <div id="institute" class="col-sm-7 controls">
       {{form.institute}}
       <div class="help-block with-errors"></div>
     </div>
   </div>
   <div class="form-group">
-    <label class="col-sm-2 control-label">Board/University<span class="mandatory-field"> *</span></label>
+    <label class="col-sm-5 control-label">Board/University<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
       {{form.board_university}}
       <div class="help-block with-errors"></div>
     </div>
   </div>
   <div class="form-group">
-    <label class="col-sm-2 control-label">Overall Marks<span class="mandatory-field"> *</span></label>
+    <label class="col-sm-5 control-label">Overall Marks<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
       {{form.overall_marks}}
       {{form.marks_card_attachment}}
@@ -71,7 +71,7 @@
   <div class="form-group">
 
         <h3 class="col-sm-12 text-right">
-          <input type="submit" id="submit" class="btn vd_bg-green vd_white width-10" value="Save"/>
+          <input type="submit" id="submit" class="btn vd_bg-green vd_white" value="Save"/>
         </h3>
 
   </div>
