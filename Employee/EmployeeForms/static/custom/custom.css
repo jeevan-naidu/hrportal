@@ -35,8 +35,9 @@ input[type="file"].bare{
 }
 
 
+/* User Profile */
 
-
+#id_wedding_date_pickers, #id_date_of_birth_pickers{width: 50%}
 
 /* Footer hardcoded fix */
 

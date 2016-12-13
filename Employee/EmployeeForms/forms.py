@@ -50,7 +50,7 @@ class UserDetailsForm(forms.ModelForm):
 	nationality = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control','required': 'True'}))
 	marital_status = forms.ChoiceField(choices=MARITAL_CHOICES,  required=False, widget=forms.Select(attrs={'class': 'width-50 input-sm form-control','required': 'False'}))
 	wedding_date = forms.DateField(widget=DateTimePicker(options=dateTimeOption),)
-	wedding_date.widget.attrs = {'class': 'input-sm form-control filter_class', 'required': 'false'}
+	wedding_date.widget.attrs = {'class': 'input-sm form-control filter_class', 'required': 'true'}
 	date_of_birth = forms.DateField(widget=DateTimePicker(options=dateTimeOption),)
 	date_of_birth.widget.attrs = {'class': 'input-sm form-control filter_class'}
 	blood_group = forms.ChoiceField(choices=BLOOD_GROUP_CHOICES, widget=forms.Select(attrs={'class': 'width-50 input-sm form-control','required': 'False'}))
@@ -76,7 +76,7 @@ class UserDetailsForm(forms.ModelForm):
 		widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control',
 		'required': 'true','type': 'tel', 'pattern':'^\+?1?\d{9,15}$'}))
 	personal_email = forms.EmailField(widget=forms.TextInput(attrs={'class': 'width-50 input-sm', 'type':'email'}))
-	gender = forms.ChoiceField(choices=GENDER_CHOICES, widget=forms.Select(attrs={'class': 'width-50 input-sm form-control','required': 'False'}))
+	gender = forms.ChoiceField(choices=GENDER_CHOICES, widget=forms.Select(attrs={'class': 'input-sm form-control','required': 'False'}))
 
 	class Meta:
 		model = UserDetails

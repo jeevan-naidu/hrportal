@@ -249,9 +249,11 @@
 
 $('select#id_marital_status').change(function(){
   if($(this).val() !== 'SG'){
-    $('.wedding_date_form_group').removeClass('hidden')
+    $('.wedding_date_form_group').removeClass('hidden');
+    $('#id_wedding_date').attr('required', true);
   }else if($(this).val() == 'SG'){
-    $('.wedding_date_form_group').addClass('hidden')
+    $('.wedding_date_form_group').addClass('hidden');
+    $('#id_wedding_date').removeAttr('required');
   }
 })
 
