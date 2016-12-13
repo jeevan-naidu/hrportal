@@ -300,7 +300,7 @@ def education(request):
             return render(request, "education_display.html", context)
         except Education.DoesNotExist:
             context = {"form":""}
-            form = EducationForm(prefix = 'form')
+            form = EducationForm()
             context["form"] = form
             try:
                 employee = Education.objects.filter(employee=request.user)
@@ -321,8 +321,9 @@ def education(request):
     if request.method == 'POST':
         import ipdb; ipdb.set_trace()
         #print request.POST
+        
+        form = EducationForm(request.POST, request.FILES)
         context = {"form":""}
-        form = EducationForm(request.POST, request.FILES, prefix = 'form')
         marks_card_attachment = request.FILES.get('marks_card_attachment',"")
 
         if form.is_valid():
@@ -383,7 +384,7 @@ def education(request):
                 return render(request, 'education.html',context)
 
     context['form'] = form
-    return render(request, 'education_display.html',context)
+    return render(request, 'education.html',context)
 
 @csrf_exempt
 @login_required
