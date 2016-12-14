@@ -125,16 +125,17 @@
 
   <div class="content-list">
       <ul class="list-wrapper">
-        <li id="graduation_1"> 
-          <div class="menu-text">Graduation 1</div>
+      {% for val in education_list %}
+        <li id="{{val.qual}}"> 
+          <div class="menu-text">{{val.qual}}</div>
         </li>
-        <li id="graduation_2"> 
-          <div class="menu-text">Graduation 2</div>
-        </li>
+       {% endfor %}
+
       </ul>
     </div><!-- ./ content-list -->
 
   </div><!-- ./ user-list -->
+
 
 
 </div><!-- ./tab-content -->
@@ -155,15 +156,21 @@
             
 
             <script type="text/javascript">
-              {%for val in education_list%}
-              
                 
-            var theObj = {"graduation_1":{
-                            "qualification": "{{val.qual}}",
-                            "specialization": "{{val.spec}}"
-                          }  
-                        }
-              {%endfor%}          
+                            var theObj = 
+
+
+                            {
+              {%for val in education_list%}
+                              "{{val.qual}}":{
+                                            "qualification": "{{val.qual}}",
+                                            "specialization": "{{val.spec}}"
+                                              },    
+              {%endfor%}   
+                            }
+
+
+                     
             $('.content-list li').click(function(){
               // e.preventDefault();
               // debugger;
