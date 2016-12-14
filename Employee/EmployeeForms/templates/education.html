@@ -8,7 +8,7 @@
     <div class="col-md-12">
       <div class="panel widget">
         <div class="panel-heading vd_bg-grey">
-          <h3 class="panel-title"> <span class="menu-icon"> <i class="fa fa-magic"></i> </span> Wizard Basic </h3>
+          <h3 class="panel-title"> <span class="menu-icon"> <i class="fa fa-magic"></i> </span> {{ request.user.username }} </h3>
         </div>
         <div class="panel-body">
 
@@ -151,21 +151,19 @@
               <!-- col-md-12 -->
             </div>
             <!-- row -->
-
-
-
             
+            
+
             <script type="text/javascript">
+              {%for val in education_list%}
               
+                
             var theObj = {"graduation_1":{
-                            "qualification":"{{education_list.0.qual}}",
-                            "specialization":"{{education_list.0.spec}}"
-                          },
-                          "graduation_2":{
-                            "qualification":"{{education_list.1.qual}}",
-                            "specialization":"{{education_list.1.spec}}"
-                          }
+                            "qualification": "{{val.qual}}",
+                            "specialization": "{{val.spec}}"
+                          }  
                         }
+              {%endfor%}          
             $('.content-list li').click(function(){
               // e.preventDefault();
               // debugger;

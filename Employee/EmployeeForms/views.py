@@ -313,7 +313,7 @@ def education(request):
                     lists.append(qual)
                     qual = {'qual':'','spec':''}
                 # print lists
-                return render(request, "education.html", {'form':form,'education_list':lists,'employee':request.user})
+                return render(request, "education.html", {'form':form,'education_list':lists,'no_of_degree':no_of_degree,'employee':request.user})
                 
             except Education.DoesNotExist:            
                 return render(request, "education.html", context)
