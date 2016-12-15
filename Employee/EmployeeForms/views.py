@@ -94,7 +94,7 @@ def send_registration_confirmation(username):
     ccc.save()
     p = ccc
     title = "Thanks for registration"
-    content = "http://127.0.0.1:8000/myansrsource/confirmation/" + str(p.confirmation_code) + "/" + username.username
+    content = "http://hrpotal.com/myansrsource/confirmation/" + str(p.confirmation_code) + "/" + username.username
     send_mail(title, content, 'no-reply@gsick.com', [username.email], fail_silently=False)
 
 def confirmation(request, confirmation_code, username):
@@ -457,7 +457,7 @@ def proof(request):
         return render(request, "proof.html", context)
 
     if request.method == 'POST':
-        # import ipdb; ipdb.set_trace()
+        import ipdb; ipdb.set_trace()
         context = {"form":""}
         user = request.user
         try:
@@ -525,7 +525,7 @@ def proof(request):
 
                         return HttpResponseRedirect("/myansrsource/user_details/confirm")
                     else:
-                        return render(request, "proof.html", context)
+                        return HttpResponse("Please fill min 2 fields")
 
             except Proof.DoesNotExist:
 

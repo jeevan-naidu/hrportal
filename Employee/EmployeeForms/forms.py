@@ -178,18 +178,3 @@ class ProofForm(forms.ModelForm):
 		model = Proof
 		fields = ['pan','pan_attachment', 'aadhar_card','aadhar_attachment', 'dl','dl_attachment', 'passport','passport_attachment', 'voter_id','voter_attachment']
 		exclude = ['employee']
-
-# class FileUploadForm(forms.ModelForm):
-#
-#
-# 	attachment = forms.FileField(label='Attachment', required=False, help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"))
-#     # Add Bootstrap widgets
-# 	attachment.widget.attrs = {'class':'filestyle', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
-# 	title = forms.CharField(max_length=10, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control',
-# 		'required': 'True'}))
-#
-#
-# 	class Meta:
-# 		model = FileUpload
-# 		fields = ['title','attachment']
-# 		exclude = ['employee']
