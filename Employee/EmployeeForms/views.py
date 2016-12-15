@@ -94,7 +94,7 @@ def send_registration_confirmation(username):
     ccc.save()
     p = ccc
     title = "Thanks for registration"
-    content = "http://http://35.154.44.172:8000//myansrsource/confirmation/" + str(p.confirmation_code) + "/" + username.username
+    content = "http://35.154.44.172:8000//myansrsource/confirmation/" + str(p.confirmation_code) + "/" + username.username
     send_mail(title, content, 'no-reply@gsick.com', [username.email], fail_silently=False)
 
 def confirmation(request, confirmation_code, username):
