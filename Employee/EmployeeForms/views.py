@@ -2,12 +2,14 @@ from django.shortcuts import render, redirect, render_to_response
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.template.loader import render_to_string
 from django.contrib import auth
+import datetime
 from django.contrib.auth.decorators import login_required
 from django.core.context_processors import csrf
 from django.views.generic import View
 from django.contrib import messages
 from django.views.generic import CreateView
 from django.conf import settings
+from django.utils import timezone
 from django.http import JsonResponse
 import random
 import string
@@ -25,6 +27,7 @@ AllowedFileTypes = ['jpg', 'csv','png', 'pdf', 'xlsx', 'xls', 'docx', 'doc', 'jp
 def EmployeeWelcome(request):
     return render(request, 'welcome.html',{})
 
+@login_required
 def login(request):
 	context = {}
 	context.update(csrf(request))
@@ -41,23 +44,11 @@ def auth_view(request):
 	else:
 		return HttpResponseRedirect('/myansrsource/invalid')
 
-# def password_change(request):
-#     if request.method == 'POST':
-# 		form = PasswordChangeForm(request.POST)
-# 		if form.is_valid():
-# 			form.save()
-# 			return HttpResponseRedirect('/myansrsource/password_change')
-#
-#     context = {}
-#     context.update(csrf(request))
-#
-#     context['form'] = PasswordChangeForm()
-#     return render_to_response(request, 'password_change.html', context)
-
 def logout(request):
 	auth.logout(request)
 	return render_to_response('logout.html')
 
+@login_required
 def loggedin(request):
 	return render_to_response('loggedin.html',{'user':request.user.username})
 
@@ -79,7 +70,7 @@ def register(request):
   
             form.save()
             send_registration_confirmation(username)
-            # send_mail('Subject here', 'Here is the message.', settings.EMAIL_HOST_USER,[user.email], fail_silently=False)
+           
             return HttpResponseRedirect('/myansrsource')
         else:
             print form.is_valid()
@@ -102,22 +93,25 @@ def send_registration_confirmation(username):
     ccc = ConfirmationCode(confirmation_code=confirmation_code,username=username)
     ccc.save()
     p = ccc
-    title = "Gsick account confirmation"
-    content = "http://www.gsick.com/confirm/" + str(p.confirmation_code) + username.username
+    title = "Thanks for registration"
+    content = "http://127.0.0.1:8000/myansrsource/confirmation/" + str(p.confirmation_code) + "/" + username.username
     send_mail(title, content, 'no-reply@gsick.com', [username.email], fail_silently=False)
 
-# def confirm(request, confirmation_code, username):
-#     try:
-#         user = User.objects.get(username=username)
-#         # profile = user.get_profile()
-#         if profile.confirmation_code == confirmation_code and user.date_joined > (datetime.datetime.now()-datetime.timedelta(days=1)):
-#             user.is_active = True
-#             user.save()
-#             user.backend='django.contrib.auth.backends.ModelBackend' 
-#             auth_login(request,user)
-#         return HttpResponseRedirect('/myansrsource/login')
-#     except:
-#         return HttpResponseRedirect('/myansrsource/register')
+def confirmation(request, confirmation_code, username):
+    print confirmation_code
+    print username
+    # import ipdb; ipdb.set_trace()
+    try:
+        username = User.objects.get(username=username)
+        ccc = ConfirmationCode(confirmation_code=confirmation_code,username=username)
+        if ccc.confirmation_code == confirmation_code and username.date_joined > timezone.make_aware(datetime.datetime.now()-datetime.timedelta(days=1)):
+            username.is_active = True
+            username.save()
+            username.backend='django.contrib.auth.backends.ModelBackend' 
+            auth.login(request,username)
+        return HttpResponseRedirect('/myansrsource/user')
+    except:
+        return HttpResponseRedirect('/myansrsource/register')
 
 def register_success(request):
 	return HttpResponseRedirect("/myansrsource/login")
@@ -463,7 +457,7 @@ def proof(request):
         return render(request, "proof.html", context)
 
     if request.method == 'POST':
-        import ipdb; ipdb.set_trace()
+        # import ipdb; ipdb.set_trace()
         context = {"form":""}
         user = request.user
         try:
@@ -531,7 +525,7 @@ def proof(request):
 
                         return HttpResponseRedirect("/myansrsource/user_details/confirm")
                     else:
-                        return HttpResponse("Please fill min 2 fields")
+                        return render(request, "proof.html", context)
 
             except Proof.DoesNotExist:
 
