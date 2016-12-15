@@ -180,9 +180,9 @@
 
 
                             {
-              {%for val in employment_list%}
-                              "{{val.company_name}}":{
-                                  "company_name": "{{val.company_name}}",
+                                {%for val in employment_list%}
+                                                  "{{val.company_name}}":{
+                                                  "company_name": "{{val.company_name}}",
                                             
                                               },    
               {%endfor%}   
@@ -194,7 +194,6 @@
               // e.preventDefault();
               // debugger;
               var company_name;
-              
               var the_id_key = $(this).attr('id');
               console.log(the_id_key);
               // Object Iteration

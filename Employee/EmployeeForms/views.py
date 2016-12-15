@@ -80,7 +80,7 @@ def register(request):
             form.save()
             send_registration_confirmation(username)
             # send_mail('Subject here', 'Here is the message.', settings.EMAIL_HOST_USER,[user.email], fail_silently=False)
-            return HttpResponseRedirect('/myansrsource/register_success')
+            return HttpResponseRedirect('/myansrsource')
         else:
             print form.is_valid()
             print form['email'].errors
@@ -105,6 +105,19 @@ def send_registration_confirmation(username):
     title = "Gsick account confirmation"
     content = "http://www.gsick.com/confirm/" + str(p.confirmation_code) + username.username
     send_mail(title, content, 'no-reply@gsick.com', [username.email], fail_silently=False)
+
+# def confirm(request, confirmation_code, username):
+#     try:
+#         user = User.objects.get(username=username)
+#         # profile = user.get_profile()
+#         if profile.confirmation_code == confirmation_code and user.date_joined > (datetime.datetime.now()-datetime.timedelta(days=1)):
+#             user.is_active = True
+#             user.save()
+#             user.backend='django.contrib.auth.backends.ModelBackend' 
+#             auth_login(request,user)
+#         return HttpResponseRedirect('/myansrsource/login')
+#     except:
+#         return HttpResponseRedirect('/myansrsource/register')
 
 def register_success(request):
 	return HttpResponseRedirect("/myansrsource/login")
@@ -155,7 +168,7 @@ def user_details(request):
 
     # instance = UserDetails.objects.get(employee=request.user)
     if request.method == 'POST':
-        import ipdb; ipdb.set_trace()
+        # import ipdb; ipdb.set_trace()
         context = {"form":""}
         user = request.user
 
@@ -319,7 +332,7 @@ def education(request):
                 return render(request, "education.html", context)
 
     if request.method == 'POST':
-        import ipdb; ipdb.set_trace()
+        #import ipdb; ipdb.set_trace()
         #print request.POST
         
         form = EducationForm(request.POST, request.FILES)
@@ -328,34 +341,35 @@ def education(request):
 
         if form.is_valid():
             try:
-                if Education.objects.filter(employee=request.user):
-                    user = request.user
-                    employee = User.objects.get(username=request.user)
-                    qualification = form.cleaned_data['qualification']
-                    specialization = form.cleaned_data['specialization']
-                    from_date = form.cleaned_data['from_date']
-                    to_date = form.cleaned_data['to_date']
-                    institute = form.cleaned_data['institute']
-                    board_university = form.cleaned_data['board_university']
-                    overall_marks = form.cleaned_data['overall_marks']
-                    marks_card_attachment = form.cleaned_data['marks_card_attachment']
-                    if request.FILES.get('marks_card_attachment', ""):
-                        form.marks_card_attachment = request.FILES['marks_card_attachment']
+                # Education.objects.get(employee=request.user,qualification=qualification,specialization=specialization)
+                user = request.user
+                employee = User.objects.get(username=request.user)
+                qualification = form.cleaned_data['qualification']
+                specialization = form.cleaned_data['specialization']
+                from_date = form.cleaned_data['from_date']
+                to_date = form.cleaned_data['to_date']
+                institute = form.cleaned_data['institute']
+                board_university = form.cleaned_data['board_university']
+                overall_marks = form.cleaned_data['overall_marks']
+                marks_card_attachment = form.cleaned_data['marks_card_attachment']
+                if request.FILES.get('marks_card_attachment', ""):
+                    form.marks_card_attachment = request.FILES['marks_card_attachment']
 
-                    userdata = Education.objects.filter(employee=user.id, qualification=qualification,specialization=specialization)
-                    for details in userdata:
+                userdata = Education.objects.filter(employee=user.id, qualification=qualification,specialization=specialization)
+                
+                for details in userdata:
 
-                        details.qualification = qualification
-                        details.specialization = specialization
-                        details.from_date = from_date
-                        details.to_date = to_date
-                        details.institute = institute
-                        details.board_university = board_university
-                        details.overall_marks = overall_marks
-                        details.marks_card_attachment = marks_card_attachment
-                        details.save()
-                        context['form'] = form
-                        return render(request, 'education_display.html',context)
+                    details.qualification = qualification
+                    details.specialization = specialization
+                    details.from_date = from_date
+                    details.to_date = to_date
+                    details.institute = institute
+                    details.board_university = board_university
+                    details.overall_marks = overall_marks
+                    details.marks_card_attachment = marks_card_attachment
+                    details.save()
+                    context['form'] = form
+                    return render(request, 'education_display.html',context)
 
             except Education.DoesNotExist:
                 user = request.user
@@ -383,6 +397,29 @@ def education(request):
                 context['form'] = form
                 return render(request, 'education.html',context)
 
+    
+    user = request.user
+    employee = User.objects.get(username=request.user)
+    qualification = form.cleaned_data['qualification']
+    specialization = form.cleaned_data['specialization']
+    from_date = form.cleaned_data['from_date']
+    to_date = form.cleaned_data['to_date']
+    institute = form.cleaned_data['institute']
+    board_university = form.cleaned_data['board_university']
+    overall_marks = form.cleaned_data['overall_marks']
+    marks_card_attachment = form.cleaned_data['marks_card_attachment']
+    if request.FILES.get('marks_card_attachment', ""):
+        form.marks_card_attachment = request.FILES['marks_card_attachment']
+
+    Education(employee=employee,
+    qualification=qualification,
+    specialization=specialization,
+    from_date=from_date,
+    to_date=to_date,
+    institute=institute,
+    board_university=board_university,
+    overall_marks=overall_marks,
+    marks_card_attachment=marks_card_attachment).save()
     context['form'] = form
     return render(request, 'education.html',context)
 
@@ -426,7 +463,7 @@ def proof(request):
         return render(request, "proof.html", context)
 
     if request.method == 'POST':
-        #import ipdb; ipdb.set_trace()
+        import ipdb; ipdb.set_trace()
         context = {"form":""}
         user = request.user
         try:
@@ -468,9 +505,15 @@ def proof(request):
                     if request.FILES.get('voter_attachment', ""):
                         form.voter_attachment = request.FILES['voter_attachment']
 
+                    fields0 = [pan,pan_attachment]
+                    fields1 = [aadhar_card,aadhar_attachment]
+                    fields2 = [dl,dl_attachment]
+                    fields3 = [passport,passport_attachment]
+                    fields4 = [voter_id,voter_attachment]
 
-                    fields = [pan,aadhar_card,dl,passport,voter_id]
-                    check = [ val for val in fields]
+                    fields = [fields0,fields1,fields2,fields3,fields4]
+
+                    check = [ val for val in fields ]
                     if len(check) > 1:
                         userdata = Proof.objects.get(employee=user.id)
                         userdata.pan = pan
@@ -514,8 +557,16 @@ def proof(request):
                 voter_attachment = form.cleaned_data['voter_attachment']
                 if request.FILES.get('voter_attachment', ""):
                     form.voter_attachment = request.FILES['voter_attachment']
-                fields = [pan,aadhar_card,dl,passport,voter_id]
-                check = [ val for val in fields if val]
+
+                fields0 = [pan,pan_attachment]
+                fields1 = [aadhar_card,aadhar_attachment]
+                fields2 = [dl,dl_attachment]
+                fields3 = [passport,passport_attachment]
+                fields4 = [voter_id,voter_attachment]
+
+                fields = [fields0,fields1,fields2,fields3,fields4]
+
+                check = [ val for val in fields]
                 if len(check) > 1:
                     Proof(employee=employee,
                     pan=pan,
@@ -592,7 +643,7 @@ def previous_employment(request):
     #     return render(request, "previous.html", context)
 
     if request.method == 'POST':
-        import ipdb; ipdb.set_trace()
+        # import ipdb; ipdb.set_trace()
 
         form = PreviousEmploymentForm(request.POST, request.FILES)
         context = {"form":""}
@@ -601,37 +652,37 @@ def previous_employment(request):
 
         if form.is_valid():
             try:
-                if PreviousEmployment.objects.filter(employee=request.user):
-                    user = request.user
-                    employee = User.objects.get(username=request.user)
-                    company_name = form.cleaned_data['company_name']
-                    company_address = form.cleaned_data['company_address']
-                    job_type = form.cleaned_data['job_type']
-                    employed_from = form.cleaned_data['employed_from']
-                    employed_upto = form.cleaned_data['employed_upto']
-                    last_ctc = form.cleaned_data['last_ctc']
-                    reason_for_exit = form.cleaned_data['reason_for_exit']
-                    ps_attachment = form.cleaned_data['ps_attachment']
-                    if request.FILES.get('ps_attachment', ""):
-                        form.ps_attachment = request.FILES['ps_attachment']
-                    rl_attachment = form.cleaned_data['rl_attachment']
-                    if request.FILES.get('rl_attachment', ""):
-                        form.rl_attachment = request.FILES['rl_attachment']
+                # PreviousEmployment.objects.get(employee=request.user)
+                user = request.user
+                employee = User.objects.get(username=request.user)
+                company_name = form.cleaned_data['company_name']
+                company_address = form.cleaned_data['company_address']
+                job_type = form.cleaned_data['job_type']
+                employed_from = form.cleaned_data['employed_from']
+                employed_upto = form.cleaned_data['employed_upto']
+                last_ctc = form.cleaned_data['last_ctc']
+                reason_for_exit = form.cleaned_data['reason_for_exit']
+                ps_attachment = form.cleaned_data['ps_attachment']
+                if request.FILES.get('ps_attachment', ""):
+                    form.ps_attachment = request.FILES['ps_attachment']
+                rl_attachment = form.cleaned_data['rl_attachment']
+                if request.FILES.get('rl_attachment', ""):
+                    form.rl_attachment = request.FILES['rl_attachment']
 
-                    userdata = PreviousEmployment.objects.filter(employee=user.id)
-                    for details in userdata:
-                        details.company_name = company_name
-                        details.company_address = company_address
-                        details.job_type = job_type
-                        details.employed_from = employed_from
-                        details.employed_upto = employed_upto
-                        details.last_ctc = last_ctc
-                        details.reason_for_exit = reason_for_exit
-                        details.ps_attachment = ps_attachment
-                        details.rl_attachment = rl_attachment
-                        details.save()
-                        context['form'] = form
-                        return render(request, 'previous.html',context)
+                userdata = PreviousEmployment.objects.filter(employee=user.id, company_name=company_name)
+                for details in userdata:
+                    details.company_name = company_name
+                    details.company_address = company_address
+                    details.job_type = job_type
+                    details.employed_from = employed_from
+                    details.employed_upto = employed_upto
+                    details.last_ctc = last_ctc
+                    details.reason_for_exit = reason_for_exit
+                    details.ps_attachment = ps_attachment
+                    details.rl_attachment = rl_attachment
+                    details.save()
+                    context['form'] = form
+                    return render(request, 'previous.html',context)
             except UserDetails.DoesNotExist:
                 user = request.user
                 employee = User.objects.get(username=request.user)
@@ -662,6 +713,32 @@ def previous_employment(request):
                 context['form'] = form
                 return render(request, 'previous.html',context)
 
+    user = request.user
+    employee = User.objects.get(username=request.user)
+    company_name = form.cleaned_data['company_name']
+    company_address = form.cleaned_data['company_address']
+    job_type = form.cleaned_data['job_type']
+    employed_from = form.cleaned_data['employed_from']
+    employed_upto = form.cleaned_data['employed_upto']
+    last_ctc = form.cleaned_data['last_ctc']
+    reason_for_exit = form.cleaned_data['reason_for_exit']
+    ps_attachment = form.cleaned_data['ps_attachment']
+    if request.FILES.get('ps_attachment', ""):
+        form.ps_attachment = request.FILES['ps_attachment']
+    rl_attachment = form.cleaned_data['rl_attachment']
+    if request.FILES.get('rl_attachment', ""):
+        form.rl_attachment = request.FILES['rl_attachment']
+
+    PreviousEmployment(employee=employee,
+    company_name=company_name,
+    company_address=company_address,
+    job_type=job_type,
+    employed_from=employed_from,
+    employed_upto=employed_upto,
+    last_ctc=last_ctc,
+    reason_for_exit=reason_for_exit,
+    ps_attachment=ps_attachment,
+    rl_attachment=rl_attachment).save()
     context['form'] = form
     return render(request, 'previous.html',context)
 
