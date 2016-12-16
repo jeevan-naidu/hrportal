@@ -201,13 +201,13 @@
                   if (isConfirm) {
                     $.ajax( {
                       type: "POST",
-                      url: '/myansrsource/register',
+                      url: '/register',
                       data: data,
                       cache: false,
                       processData: false,
                       contentType: false,
                       success: function( response ) {
-                         window.location='/myansrsource/register'
+                         window.location='/register'
                       }
 
                     });

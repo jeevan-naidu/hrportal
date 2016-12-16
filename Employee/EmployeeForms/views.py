@@ -27,7 +27,7 @@ AllowedFileTypes = ['jpg', 'csv','png', 'pdf', 'xlsx', 'xls', 'docx', 'doc', 'jp
 def EmployeeWelcome(request):
     return render(request, 'welcome.html',{})
 
-@login_required
+#@login_required
 def login(request):
 	context = {}
 	context.update(csrf(request))
@@ -37,12 +37,13 @@ def auth_view(request):
 	username = request.POST.get('username','')
 	password = request.POST.get('password','')
 	user = auth.authenticate(username=username, password=password)
+        userobj = User.objects.get(username=username)
 
-	if user is not None:
+	if user is not None and userobj.is_active is True:
 		auth.login(request, user)
-		return HttpResponseRedirect('/myansrsource/loggedin')
+		return HttpResponseRedirect('/loggedin')
 	else:
-		return HttpResponseRedirect('/myansrsource/invalid')
+		return HttpResponseRedirect('/invalid')
 
 def logout(request):
 	auth.logout(request)
@@ -67,11 +68,15 @@ def register(request):
             password1 = request.POST['password1']
             password2 = request.POST['password2']
             email = request.POST['email']
+            
   
             form.save()
+            userobj = User.objects.get(username=username)
+            userobj.is_active = 0
+            userobj.save()
             send_registration_confirmation(username)
            
-            return HttpResponseRedirect('/myansrsource')
+            return HttpResponseRedirect('/')
         else:
             print form.is_valid()
             print form['email'].errors
@@ -94,8 +99,8 @@ def send_registration_confirmation(username):
     ccc.save()
     p = ccc
     title = "Thanks for registration"
-    content = "http://35.154.44.172:8000//myansrsource/confirmation/" + str(p.confirmation_code) + "/" + username.username
-    send_mail(title, content, 'no-reply@gsick.com', [username.email], fail_silently=False)
+    content = "http://35.154.44.172:8000/confirmation/" + str(p.confirmation_code) + "/" + username.username
+    send_mail(title, content, 'dummy@ansrsource.com', [username.email], fail_silently=False)
 
 def confirmation(request, confirmation_code, username):
     print confirmation_code
@@ -109,12 +114,12 @@ def confirmation(request, confirmation_code, username):
             username.save()
             username.backend='django.contrib.auth.backends.ModelBackend' 
             auth.login(request,username)
-        return HttpResponseRedirect('/myansrsource/user')
+        return HttpResponseRedirect('/user')
     except:
-        return HttpResponseRedirect('/myansrsource/register')
+        return HttpResponseRedirect('/register')
 
 def register_success(request):
-	return HttpResponseRedirect("/myansrsource/login")
+	return HttpResponseRedirect("/login")
 
 from django.views.decorators.csrf import csrf_exempt
 @csrf_exempt
@@ -233,7 +238,7 @@ def user_details(request):
                     gender=gender).save()"""
 
                     context['form'] = form
-                    return HttpResponseRedirect('/myansrsource/user_details/education')
+                    return HttpResponseRedirect('/user_details/education')
 
                 # print user
                 # UserDetails1 = UserDetails.objects.get(employee_id == form.cleaned_data['employee'])
@@ -271,7 +276,7 @@ def user_details(request):
                 gender=gender).save()
 
                 context['form'] = form
-                return HttpResponseRedirect('/myansrsource/user_details/education')
+                return HttpResponseRedirect('/user_details/education')
 
 
     return render(request, 'education.html', context)
@@ -523,7 +528,7 @@ def proof(request):
                         userdata.save()
                         context['form'] = form
 
-                        return HttpResponseRedirect("/myansrsource/user_details/confirm")
+                        return HttpResponseRedirect("/user_details/confirm")
                     else:
                         return HttpResponse("Please fill min 2 fields")
 
@@ -575,7 +580,7 @@ def proof(request):
                     voter_attachment=voter_attachment).save()
                     context['form'] = form
 
-                    return HttpResponseRedirect("/myansrsource/user_details/confirm")
+                    return HttpResponseRedirect("/user_details/confirm")
                 else:
                     return HttpResponse("Please fill min 2 fields")
 
@@ -749,7 +754,7 @@ def confirm(request):
             try:
                 employee = UserDetails.objects.get(employee=request.user)
             except UserDetails.DoesNotExist:
-                return HttpResponseRedirect('/myansrsource/user_details')
+                return HttpResponseRedirect('/user_details')
 
             first_name = user.first_name
             last_name = user.last_name
@@ -786,7 +791,7 @@ def confirm(request):
 
             return render(request, 'confirm.html',context)
     else:
-        return HttpResponseRedirect('/myansrsource/login')
+        return HttpResponseRedirect('/login')
 
 def download_form(request):
     return render(request, 'download_forms.html',{})

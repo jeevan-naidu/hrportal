@@ -133,4 +133,4 @@ EMAIL_USE_TLS = True
 
 LOGIN_URL = '/'
 
-# LOGIN_REDIRECT_URL = '/myansrsource/user_details/'
+# LOGIN_REDIRECT_URL = '/user_details/'

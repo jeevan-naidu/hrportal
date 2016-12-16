@@ -14,19 +14,19 @@
 
             <div id="wizard-2" class="form-wizard">
               <ul>
-                <li><a href="/myansrsource/user_details">
+                <li><a href="/user_details">
                   <div class="menu-icon"> 1 </div>
                   User Profile </a></li>
-                <li><a href="/myansrsource/user_details/education">
+                <li><a href="/user_details/education">
                   <div class="menu-icon"> 2 </div>
                   Education </a></li>
                 <li class="active"><a href="#tab3" data-toggle="tab">
                   <div class="menu-icon"> 3 </div>
                   Previous Employment </a></li>
-                <li><a href="/myansrsource/user_details/proof">
+                <li><a href="/user_details/proof">
                   <div class="menu-icon"> 4 </div>
                   Proof </a></li>
-                <li><a href="/myansrsource/user_details/confirm">
+                <li><a href="/user_details/confirm">
                   <div class="menu-icon"> 5 </div>
                   Confirm </a></li>
               </ul>
@@ -125,7 +125,7 @@
                 </div>
 
                 <!-- <div class="form-group">
-                    <h3 class="text-center"><input type="submit" id="submit1" onclick="myFunction()" class="btn btn-danger" onclick="form.action='/myansrsource/user_details/previous_employment';" value="Save-addmore"/></h3>
+                    <h3 class="text-center"><input type="submit" id="submit1" onclick="myFunction()" class="btn btn-danger" onclick="form.action='/user_details/previous_employment';" value="Save-addmore"/></h3>
                 </div> -->
            </form>
 
@@ -198,7 +198,7 @@
               
                 $.ajax({
                   type: "GET",
-                  url : '/myansrsource/user_details/previous_employment',
+                  url : '/user_details/previous_employment',
                   data : {'company_name':company_name},
                   success : function(data){
                    $("#previous_employment_form").html(data);
@@ -227,23 +227,23 @@
                                if (isConfirm) {
                                  $.ajax( {
                                    type: "POST",
-                                   url: '/myansrsource/user_details/previous_employment',
+                                   url: '/user_details/previous_employment',
                                    data: data,
                                    cache: false,
                                    processData: false,
                                    contentType: false,
                                    success: function( response ) {
-                                      window.location='/myansrsource/user_details/previous_employment'
+                                      window.location='/user_details/previous_employment'
                                    }
 
                                  });
                                }else{
                                    $.ajax( {
                                      type: "POST",
-                                     url: '/myansrsource/user_details/previous_employment',
+                                     url: '/user_details/previous_employment',
                                      data: $("#previous_employment_form").serialize(),
                                      success: function( response ) {
-                                        window.location='/myansrsource/user_details/proof'
+                                        window.location='/user_details/proof'
                                  }
                                });}});
                              });

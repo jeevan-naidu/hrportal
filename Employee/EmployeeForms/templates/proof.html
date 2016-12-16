@@ -14,19 +14,19 @@
 
             <div id="wizard-2" class="form-wizard">
               <ul>
-                <li><a href="/myansrsource/user_details">
+                <li><a href="/user_details">
                   <div class="menu-icon"> 1 </div>
                   User Profile </a></li>
-                <li><a href="/myansrsource/user_details/education">
+                <li><a href="/user_details/education">
                   <div class="menu-icon"> 2 </div>
                   Education </a></li>
-                <li><a href="/myansrsource/user_details/previous_employment">
+                <li><a href="/user_details/previous_employment">
                   <div class="menu-icon"> 3 </div>
                   Previous Employment </a></li>
                 <li class="active"><a href="#tab4" data-toggle="tab">
                   <div class="menu-icon"> 4 </div>
                   Proof </a></li>
-                <li><a href="/myansrsource/user_details/confirm">
+                <li><a href="/user_details/confirm">
                   <div class="menu-icon"> 5 </div>
                   Confirm </a></li>
               </ul>
@@ -127,13 +127,13 @@
                           if (isConfirm) {
                             $.ajax( {
                               type: "POST",
-                              url: '/myansrsource/user_details/proof',
+                              url: '/user_details/proof',
                               data: data,
                               cache: false,
                               processData: false,
                               contentType: false,
                               success: function( response ) {
-                                 window.location='/myansrsource/user_details/confirm'
+                                 window.location='/user_details/confirm'
                               }
 
                             });
