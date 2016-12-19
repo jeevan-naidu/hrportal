@@ -189,7 +189,6 @@ def user_details(request):
                 if UserDetails.objects.get(employee=request.user):
                     user = request.user
                     employee = User.objects.get(username=request.user)
-                    #print "lalala"
                     first_name = form.cleaned_data['first_name']
                     last_name = form.cleaned_data['last_name']
                     middle_name = form.cleaned_data['middle_name']
@@ -239,8 +238,6 @@ def user_details(request):
                     context['form'] = form
                     return HttpResponseRedirect('/user_details/education')
 
-                # print user
-                # UserDetails1 = UserDetails.objects.get(employee_id == form.cleaned_data['employee'])
             except UserDetails.DoesNotExist:
                 user = request.user
                 employee = User.objects.get(username=request.user)
@@ -276,7 +273,6 @@ def user_details(request):
 
                 context['form'] = form
                 return HttpResponseRedirect('/user_details/education')
-
 
     return render(request, 'education.html', context)
 
@@ -330,7 +326,7 @@ def education(request):
                 return render(request, "education.html", context)
 
     if request.method == 'POST':
-        #import ipdb; ipdb.set_trace()
+        # import ipdb; ipdb.set_trace()
         #print request.POST
         
         form = EducationForm(request.POST, request.FILES)
@@ -395,7 +391,6 @@ def education(request):
                 context['form'] = form
                 return render(request, 'education.html',context)
 
-    
     user = request.user
     employee = User.objects.get(username=request.user)
     qualification = form.cleaned_data['qualification']
@@ -461,7 +456,7 @@ def proof(request):
         return render(request, "proof.html", context)
 
     if request.method == 'POST':
-        # import ipdb; ipdb.set_trace()
+        import ipdb; ipdb.set_trace()
         context = {"form":""}
         user = request.user
         try:
@@ -503,13 +498,7 @@ def proof(request):
                     if request.FILES.get('voter_attachment', ""):
                         form.voter_attachment = request.FILES['voter_attachment']
 
-                    fields0 = [pan,pan_attachment]
-                    fields1 = [aadhar_card,aadhar_attachment]
-                    fields2 = [dl,dl_attachment]
-                    fields3 = [passport,passport_attachment]
-                    fields4 = [voter_id,voter_attachment]
-
-                    fields = [fields0,fields1,fields2,fields3,fields4]
+                    fields = [pan,aadhar_card,dl,passport,voter_id]
 
                     check = [ val for val in fields ]
                     if len(check) > 1:
@@ -556,15 +545,9 @@ def proof(request):
                 if request.FILES.get('voter_attachment', ""):
                     form.voter_attachment = request.FILES['voter_attachment']
 
-                fields0 = [pan,pan_attachment]
-                fields1 = [aadhar_card,aadhar_attachment]
-                fields2 = [dl,dl_attachment]
-                fields3 = [passport,passport_attachment]
-                fields4 = [voter_id,voter_attachment]
+                fields = [pan,aadhar_card,dl,passport,voter_id]
 
-                fields = [fields0,fields1,fields2,fields3,fields4]
-
-                check = [ val for val in fields]
+                check = [ val for val in fields if val]
                 if len(check) > 1:
                     Proof(employee=employee,
                     pan=pan,

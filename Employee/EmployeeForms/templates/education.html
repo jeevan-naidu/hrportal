@@ -54,6 +54,7 @@
     <label class="col-sm-5 control-label">Qualification<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
       {{form.qualification}}
+      {{form.qualification.errors}}
       <div class="help-block with-errors"></div>
     </div>
   </div>
@@ -62,6 +63,7 @@
     <label class="col-sm-5 control-label">Specialization<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
       {{form.specialization}}
+      {{form.specialization.errors}}
       <div class="help-block with-errors"></div>
     </div>
   </div>
@@ -73,6 +75,7 @@
     <div class="col-sm-7 controls">
       <div class="input-group">
         {{form.from_date}}
+        {{form.from_date.errors}}
       <div class="help-block with-errors"></div>
         <span class="input-group-addon" id="datepicker-icon-trigger" data-datepicker="#datepicker-icon"><i class="fa fa-calendar"></i></span> </div>
     </div>
@@ -82,6 +85,7 @@
     <div class="col-sm-7 controls">
       <div class="input-group">
         {{form.to_date}}
+        {{form.to_date.errors}}
         <div class="help-block with-errors"></div>        
         <span class="input-group-addon" id="datepicker-icon-trigger" data-datepicker="#datepicker-icon"><i class="fa fa-calendar"></i></span> </div>
     </div>
@@ -90,6 +94,7 @@
     <label class="col-sm-5 control-label">Institution<span class="mandatory-field"> *</span></label>
     <div id="institute" class="col-sm-7 controls">
       {{form.institute}}
+      {{form.institute.errors}}
       <div class="help-block with-errors"></div>
     </div>
   </div>
@@ -97,6 +102,7 @@
     <label class="col-sm-5 control-label">Board/University<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
       {{form.board_university}}
+      {{form.board_university.errors}}
       <div class="help-block with-errors"></div>
     </div>
   </div>
@@ -104,12 +110,12 @@
     <label class="col-sm-5 control-label">Overall Marks<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
       {{form.overall_marks}}
+      {{form.overall_marks.errors}}
       {{form.marks_card_attachment}}
       <div class="help-block with-errors"></div>
     </div>
   </div>
 
-  
   
   <div class="form-group">
 

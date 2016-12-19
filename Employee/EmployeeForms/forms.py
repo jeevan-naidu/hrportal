@@ -88,17 +88,13 @@ class UserDetailsForm(forms.ModelForm):
 class EducationForm(forms.ModelForm):
 
 	employee = forms.CharField(required=False)
-	qualification = forms.ChoiceField(choices=QUALIFICATION, widget=forms.Select(attrs={'class': 'width-100 input-sm form-control','required': 'False'}))
-	specialization = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-100 input-sm form-control',
-		'required': 'True'}))
+	qualification = forms.ChoiceField(choices=QUALIFICATION, widget=forms.Select(attrs={'class': 'width-100 input-sm form-control','required': 'True'}))
+	specialization = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-100 input-sm form-control','required': 'True'}))
 	from_date = forms.DateField(widget=DateTimePicker(),)
 	to_date = forms.DateField(widget=DateTimePicker(),)
-	institute = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-100 input-sm form-control',
-		'required': 'True'}))
-	board_university = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-100 input-sm form-control',
-		'required': 'True'}))
-	overall_marks = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-100 input-sm form-control',
-		'required': 'True'}))
+	institute = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-100 input-sm form-control','required': 'True'}))
+	board_university = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-100 input-sm form-control','required': 'True'}))
+	overall_marks = forms.FloatField(required=True, widget=forms.NumberInput(attrs={'min': '0', 'max': '100','placeholder': 'Marks float','data-error': 'Please enter marks in float and it should be below 100'}))
 	marks_card_attachment = forms.FileField(label='Marks Card Attachment', required=False, help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"))
     # Add Bootstrap widgets
 	marks_card_attachment.widget.attrs = {'class':'bare', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
@@ -121,17 +117,13 @@ class EducationForm(forms.ModelForm):
 
 class PreviousEmploymentForm(forms.ModelForm):
 
-	company_name = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'input-sm form-control',
-		'required': 'True'}))
-	company_address = forms.CharField(max_length=500, widget=forms.TextInput(attrs={'class': 'input-sm form-control',
-		'required': 'True'}))
+	company_name = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'input-sm form-control','required': 'True'}))
+	company_address = forms.CharField(max_length=500, widget=forms.TextInput(attrs={'class': 'input-sm form-control','required': 'True'}))
 	job_type = forms.ChoiceField(choices=JOB_TYPE, widget=forms.Select(attrs={'class': 'input-sm form-control','required': 'False'}))
 	employed_from = forms.DateField(widget=DateTimePicker())
 	employed_upto = forms.DateField(widget=DateTimePicker())
-	last_ctc = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'input-sm form-control',
-		'required': 'True'}))
-	reason_for_exit = forms.CharField(max_length=200, widget=forms.TextInput(attrs={'class': 'input-sm form-control',
-		'required': 'False'}))
+	last_ctc = forms.FloatField(required=False, widget=forms.NumberInput(attrs={'placeholder': 'CTC float','data-error': 'Please enter your CTC in float'}))
+	reason_for_exit = forms.CharField(max_length=200, widget=forms.TextInput(attrs={'class': 'input-sm form-control','required': 'False'}))
 	ps_attachment = forms.FileField(label='Pay slips Attachment', required=False, widget=forms.FileInput(attrs={'class': 'bare'}))
 	rl_attachment = forms.FileField(label='Relieving Letter Attachment', required=False, widget=forms.FileInput(attrs={'class': 'bare'}))
 
@@ -153,23 +145,23 @@ class PreviousEmploymentForm(forms.ModelForm):
 
 class ProofForm(forms.ModelForm):
 
-	pan = forms.CharField(max_length=10, required=False, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control'}))
+	pan = forms.CharField(max_length=10, required=False, widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control'}))
 	pan_attachment = forms.FileField(label='PAN Attachment',required=False, widget=forms.FileInput(attrs={'class': 'bare'}))
 	# Add Bootstrap widgets
 	#pan_attachment.widget.attrs = {'class':'filestyle', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
-	aadhar_card = forms.CharField(max_length=12, required=False, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control'}))
+	aadhar_card = forms.CharField(max_length=12, required=False, widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control'}))
 	aadhar_attachment = forms.FileField(label='Aadhar Card Attachment', required=False, widget=forms.FileInput(attrs={'class': 'bare'}))
     # Add Bootstrap widgets
 	#aadhar_attachment.widget.attrs = {'class':'filestyle', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
-	dl = forms.CharField(max_length=20, required=False, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control'}))
+	dl = forms.CharField(max_length=20, required=False, widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control'}))
 	dl_attachment = forms.FileField(label='DL Attachment', required=False, help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"), widget=forms.FileInput(attrs={'class': 'bare'}))
     # Add Bootstrap widgets
 	#dl_attachment.widget.attrs = {'class':'filestyle', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
-	passport = forms.CharField(max_length=20, required=False, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control'}))
+	passport = forms.CharField(max_length=20, required=False, widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control'}))
 	passport_attachment = forms.FileField(label='Passport Attachment', required=False, help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"), widget=forms.FileInput(attrs={'class': 'bare'}))
     # Add Bootstrap widgets
 	#passport_attachment.widget.attrs = {'class':'filestyle', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
-	voter_id = forms.CharField(max_length=20, required=False, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control'}))
+	voter_id = forms.CharField(max_length=20, required=False, widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control'}))
 	voter_attachment = forms.FileField(label='Voter Attachment', required=False, help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"), widget=forms.FileInput(attrs={'class': 'bare'}))
     # Add Bootstrap widgets
 	#voter_attachment.widget.attrs = {'class':'filestyle', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}

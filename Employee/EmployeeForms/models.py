@@ -129,7 +129,7 @@ class PreviousEmployment(models.Model):
     company_address = models.CharField("Company Address",max_length=500, null=True)
     employed_from = models.DateField(verbose_name="Start Date", null=False)
     employed_upto = models.DateField(verbose_name="End Date", null=False)
-    last_ctc = models.DecimalField("Last CTC",max_digits=15,decimal_places=2)
+    last_ctc = models.FloatField("Last CTC")
     reason_for_exit = models.CharField(verbose_name="Reason for Exit",max_length=50)
     job_type = models.CharField('Job Type', choices = JOB_TYPE, max_length = 5, default="PT")
     ps_attachment = models.FileField(upload_to=content_file_name,blank=True, null=True, verbose_name="Pay Slip Attachment")
