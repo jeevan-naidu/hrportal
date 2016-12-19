@@ -69,7 +69,6 @@ def register(request):
             password2 = request.POST['password2']
             email = request.POST['email']
             
-  
             form.save()
             userobj = User.objects.get(username=username)
             userobj.is_active = 0
@@ -462,7 +461,7 @@ def proof(request):
         return render(request, "proof.html", context)
 
     if request.method == 'POST':
-        import ipdb; ipdb.set_trace()
+        # import ipdb; ipdb.set_trace()
         context = {"form":""}
         user = request.user
         try:

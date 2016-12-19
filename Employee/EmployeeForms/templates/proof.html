@@ -114,7 +114,7 @@
                       var data = new FormData($('form').get(0));
                       console.log("swal");
                       swal({   title: "Thank you for filling the details",
-                        text: "If you want to add another eduaction detail press yes else click no!",
+                        text: "",
                         type: "success",
                         showCancelButton: true,
                         confirmButtonColor: "#DD6B55",
@@ -135,7 +135,7 @@
                               success: function( response ) {
                                  window.location='/user_details/confirm'
                               }
-
+                              
                             });
                           }else{
                               swal("There was some problem with your data")
