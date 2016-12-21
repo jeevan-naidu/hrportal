@@ -36,9 +36,12 @@ def login(request):
 def auth_view(request):
 	username = request.POST.get('username','')
 	password = request.POST.get('password','')
-	user = auth.authenticate(username=username, password=password)
-        userobj = User.objects.get(username=username)
 
+	user = auth.authenticate(username=username, password=password)
+        try:
+            userobj = User.objects.get(username=username)
+        except User.DoesNotExist:
+            return HttpResponseRedirect('/login')       
 	if user is not None and userobj.is_active is True:
 		auth.login(request, user)
 		return HttpResponseRedirect('/loggedin')
@@ -144,6 +147,9 @@ def user_details(request):
             context["form"] = form
             return render(request, "wizard.html", context)
 
+        first_name = user.first_name
+        last_name = user.last_name
+        email=user.email
         middle_name = employee.middle_name
         nationality = employee.nationality
         marital_status = employee.marital_status
@@ -170,8 +176,6 @@ def user_details(request):
         context = {"form":""}
         user = request.user
 
-        # employee_g = UserDetails.objects.get(employee=user.id)
-        # print employee
         try:
             UserDetails.objects.get(employee=user.id)
             tempsv = UserDetails.objects.get(employee=user.id)
@@ -498,7 +502,7 @@ def proof(request):
                     if request.FILES.get('voter_attachment', ""):
                         form.voter_attachment = request.FILES['voter_attachment']
 
-                    fields = [pan,aadhar_card,dl,passport,voter_id]
+                    fields = [pan,aadhar_card, dl, passport, voter_id]
 
                     check = [ val for val in fields ]
                     if len(check) > 1:
@@ -544,8 +548,8 @@ def proof(request):
                 voter_attachment = form.cleaned_data['voter_attachment']
                 if request.FILES.get('voter_attachment', ""):
                     form.voter_attachment = request.FILES['voter_attachment']
-
-                fields = [pan,aadhar_card,dl,passport,voter_id]
+      
+                fields = [pan,aadhar_card, dl, passport, voter_id]
 
                 check = [ val for val in fields if val]
                 if len(check) > 1:
@@ -730,12 +734,13 @@ def confirm(request):
     if request.user.is_authenticated:
 
         if request.method == 'GET':
-            context = {'add':True, 'record_added':False, 'form':None}
+            context = {'add':True, 'record_added':False, 'form':None, 'errors':[]}
             form = UserDetailsForm()
             user = request.user
             try:
                 employee = UserDetails.objects.get(employee=request.user)
             except UserDetails.DoesNotExist:
+                context['errors'].append('User details not filled')
                 return HttpResponseRedirect('/user_details')
 
             first_name = user.first_name

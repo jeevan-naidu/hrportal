@@ -8,7 +8,7 @@
     <div class="col-md-12">
       <div class="panel widget">
         <div class="panel-heading vd_bg-grey">
-          <h3 class="panel-title"> <span class="menu-icon"> <i class="fa fa-magic"></i> </span> {{ request.user.username }} </h3>
+          <h3 class="panel-title"> <span class="menu-icon"> <i class="fa fa-magic"></i> </span>  </h3>
         </div>
         <div class="panel-body">
 
@@ -39,9 +39,11 @@
 
 
               <div class="tab-pane" id="tab4">
-                <form id="form" method="post" class="form-horizontal" enctype="multipart/form-data" data-toggle="validator">
-
+                <form id="proof_form" method="post" class="form-horizontal" enctype="multipart/form-data" data-toggle="validator">
+                <!-- * Any of the 2 proofs with attachments is mandatory -->
                 {% csrf_token %}
+                
+
                 <div class="form-group">
                   <label class="col-sm-2 control-label">PAN Card Number</label>
                   <div class="col-sm-7 controls">
@@ -109,7 +111,6 @@
 <!-- row -->
                 <script type="text/javascript">
                 $("#proof_form").submit(function (e) {
-                  debugger;
                       e.preventDefault();
                       var data = new FormData($('form').get(0));
                       console.log("swal");

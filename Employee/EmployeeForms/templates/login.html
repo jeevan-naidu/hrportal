@@ -17,6 +17,9 @@
     <link href="/static/css/theme-responsive.min.css" rel="stylesheet" type="text/css">
 <body id="pages" class="full-layout no-nav-left no-nav-right  nav-top-fixed background-login     responsive remove-navbar login-layout   clearfix" data-active="pages "  data-smooth-scrolling="1">
 <div class="vd_body">
+  {# Load SweetAlert CSS and JS #}
+       <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/sweetalert/1.0.1/sweetalert.min.css" media="screen">
+       <script src="//cdnjs.cloudflare.com/ajax/libs/sweetalert/1.0.1/sweetalert.min.js"></script>
 <!-- Header Start -->
 
 <!-- Header Ends -->
@@ -86,7 +89,7 @@
 					{% endif %}
                     <div class="form-group">
                       <div class="col-md-12 text-center mgbt-xs-5">
-                        <button class="btn vd_bg-green vd_white width-100" type="submit" value="login">Login</button>
+                        <button id = "login" class="btn vd_bg-green vd_white width-100" type="submit" value="login">Login</button>
                       </div>
 <!--                       <div class="col-md-12">
                         <div class="row">
@@ -129,22 +132,14 @@
 </div>
 <!-- .content -->
 
-<!-- Footer Start -->
-  <footer class="footer-2"  id="footer">
-    <div class="vd_bottom ">
-        <div class="container">
-            <div class="row">
-              <div class=" col-xs-12">
-                <div class="copyright text-center">
-                    Copyright &copy;2016 <b>ANSR</b>source Ind. All Rights Reserved
-                </div>
-              </div>
-            </div><!-- row -->
-        </div><!-- container -->
-    </div>
-  </footer>
-<!-- Footer END -->
-
 <style type="text/css">
 .vd_input-wrapper .menu-icon{top:13px;}
 </style>
+
+<script>
+    {% if messages %}
+        {% for message in messages %}
+            alert(message);
+        {% endfor %}
+    {% endif %}
+    </script>
