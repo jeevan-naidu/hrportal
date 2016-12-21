@@ -8,7 +8,7 @@
     <div class="col-md-12">
       <div class="panel widget">
         <div class="panel-heading vd_bg-grey">
-          <h3 class="panel-title"> <span class="menu-icon"> <i class="fa fa-magic"></i> </span>  </h3>
+          <h3 class="panel-title"> <span class="menu-icon"> <i class="fa fa-magic"></i> </span> {{user.first_name}} {{user.last_name}} </h3>
         </div>
         <div class="panel-body">
 
@@ -134,6 +134,7 @@
       {% for val in education_list %}
         <li id="{{val.qual}}"> 
           <div class="menu-text">{{val.qual}}</div>
+          <div class="menu-text">{{val.spec}}</div>
         </li>
        {% endfor %}
 

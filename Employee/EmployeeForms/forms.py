@@ -54,36 +54,29 @@ class UserDetailsForm(forms.ModelForm):
 	date_of_birth = forms.DateField(widget=DateTimePicker(options=dateTimeOption),)
 	date_of_birth.widget.attrs = {'class': 'input-sm form-control filter_class'}
 	blood_group = forms.ChoiceField(choices=BLOOD_GROUP_CHOICES, widget=forms.Select(attrs={'class': 'width-50 input-sm form-control','required': 'False'}))
-	land_phone =forms.RegexField(regex=r'^\+?1?\d{9,15}$',
-		error_message=("Phone number must be entered in the format: '+999999999'. "
-		"Up to 15 digits allowed."),
-		widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control',
-		'required': 'False','type': 'tel', 'pattern':'^\+?1?\d{9,15}$'}))
-	emergency_phone1 = forms.RegexField(regex=r'^\+?1?\d{9,15}$',
-		error_message=("Phone number must be entered in the format: '+999999999'. "
-		"Up to 15 digits allowed."),
-		widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control',
-		'required': 'true','type': 'tel', 'pattern':'^\+?1?\d{9,15}$'}))
-	emergency_phone2 = forms.RegexField(regex=r'^\+?1?\d{9,15}$',
-		error_message=("Phone number must be entered in the format: '+999999999'. "
-		"Up to 15 digits allowed."),
-		widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control',
-		'required': 'true','type': 'tel', 'pattern':'^\+?1?\d{9,15}$'}))
-	#address = models.ForeignKey(Address)
-	mobile_phone = forms.RegexField(regex=r'^\+?1?\d{9,15}$',
-		error_message=("Phone number must be entered in the format: '+999999999'. "
-		"Up to 15 digits allowed."),
-		widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control',
-		'required': 'true','type': 'tel', 'pattern':'^\+?1?\d{9,15}$'}))
+	land_phone =forms.CharField(max_length=10,widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','required': 'False','type': 'tel'}))
+	emergency_phone1 = forms.CharField(max_length=10, widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','required': 'true','type': 'tel'}))
+	emergency_phone2 = forms.CharField(max_length=10,widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','required': 'true','type': 'tel'}))
+	mobile_phone = forms.CharField(max_length=10,widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','required': 'true','type': 'tel'}))
 	personal_email = forms.EmailField(widget=forms.TextInput(attrs={'class': 'width-50 input-sm', 'type':'email'}))
 	gender = forms.ChoiceField(choices=GENDER_CHOICES, widget=forms.Select(attrs={'class': 'input-sm form-control','required': 'False'}))
-
+	address_type = forms.ChoiceField(choices=ADDRESSTYPE_CHOICES, widget=forms.Select(attrs={'class': 'width-30 input-sm form-control','required': 'True'}))
+	address1 = forms.CharField(max_length=200, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control','required': 'True'}))
+	address2 = forms.CharField(max_length=200, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control','required': 'True'}))
+	city = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','required': 'True'}))
+	state = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','required': 'True'}))
+	zipcode = forms.CharField(max_length=10, widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','required': 'True'}))
+		
 	class Meta:
 		model = UserDetails
 
 		fields = ['first_name','last_name','middle_name','nationality','marital_status','wedding_date','date_of_birth',
 		'blood_group','land_phone','emergency_phone1','emergency_phone2','mobile_phone','gender']
 		exclude = ['employee']
+		
+	class Meta:
+		model = Address
+		fields = ['address_type', 'address1', 'address2', 'city', 'state', 'zipcode' ]
 
 class EducationForm(forms.ModelForm):
 

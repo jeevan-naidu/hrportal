@@ -27,10 +27,10 @@ BLOOD_GROUP_CHOICES = (
 
 MARITAL_CHOICES = (
     ('MA', 'Married'),
-    ('WD', 'Windowed'),
+    ('SG', 'Single'),
     ('SE', 'Seperated'),
     ('DV', 'Divorced'),
-    ('SG', 'Single'),
+    ('WD', 'Windowed'),
     )
 
 JOB_TYPE = (
@@ -89,8 +89,8 @@ class Address(models.Model):
 
     employee = models.ForeignKey(User, default=True)
     address_type = models.CharField('Address Type',max_length=2,choices=ADDRESSTYPE_CHOICES,default='PR')
-    address1 = models.CharField(verbose_name="Address 1",max_length=100,blank=False)
-    address2 = models.CharField(verbose_name="Address 2",max_length=100,blank=False)
+    address1 = models.CharField(verbose_name="Address 1",max_length=200,blank=False)
+    address2 = models.CharField(verbose_name="Address 2",max_length=200,blank=False)
     city = models.CharField("City", max_length=30, blank=False)
     state = models.CharField("State", max_length=30, blank=False)
     zipcode = models.CharField("Zip Code", max_length=10, blank=False)

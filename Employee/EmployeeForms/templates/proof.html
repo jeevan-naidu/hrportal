@@ -8,7 +8,7 @@
     <div class="col-md-12">
       <div class="panel widget">
         <div class="panel-heading vd_bg-grey">
-          <h3 class="panel-title"> <span class="menu-icon"> <i class="fa fa-magic"></i> </span>  </h3>
+          <h3 class="panel-title"> <span class="menu-icon"> <i class="fa fa-magic"></i> </span>{{user.first_name}} {{user.last_name}}  </h3>
         </div>
         <div class="panel-body">
 
@@ -39,11 +39,21 @@
 
 
               <div class="tab-pane" id="tab4">
+
                 <form id="proof_form" method="post" class="form-horizontal" enctype="multipart/form-data" data-toggle="validator">
                 <!-- * Any of the 2 proofs with attachments is mandatory -->
                 {% csrf_token %}
                 
-
+                  <div class = "container">
+                    {% if messages %}
+                    <div class = 'row'>
+                    <div class = 'col-xs-12'>
+                    {% for message in messages %}
+                    <h3{% if message.tags %} class ="{{ message.tags }}"{% endif %}>*{{message}}</h3>
+                    {% endfor %}
+                </div>
+                </div>
+                {% endif %}
                 <div class="form-group">
                   <label class="col-sm-2 control-label">PAN Card Number</label>
                   <div class="col-sm-7 controls">
@@ -93,6 +103,7 @@
                       <h3 class="col-sm-12 text-right"><input type="submit" id="submit" class="btn vd_bg-green vd_white" value="Save"/></h3>
 
                 </div>
+              
               </form>
 
             </div><!-- ./tab-content -->
@@ -109,42 +120,6 @@
  <!-- col-md-12 -->
 </div>
 <!-- row -->
-                <script type="text/javascript">
-                $("#proof_form").submit(function (e) {
-                      e.preventDefault();
-                      var data = new FormData($('form').get(0));
-                      console.log("swal");
-                      swal({   title: "Thank you for filling the details",
-                        text: "",
-                        type: "success",
-                        showCancelButton: true,
-                        confirmButtonColor: "#DD6B55",
-                        confirmButtonText: "Next Tab",
-                        closeOnConfirm: true,
-                        closeOnCancel: true
-                        },
-
-                        function(isConfirm) {
-                          if (isConfirm) {
-                            $.ajax( {
-                              type: "POST",
-                              url: '/user_details/proof',
-                              data: data,
-                              cache: false,
-                              processData: false,
-                              contentType: false,
-                              success: function( response ) {
-                                 window.location='/user_details/confirm'
-                              }
-                              
-                            });
-                          }else{
-                              swal("There was some problem with your data")
-                            }});
-                        });
-
-                </script>
-
 
 <!-- End here -->
 {% endblock %}

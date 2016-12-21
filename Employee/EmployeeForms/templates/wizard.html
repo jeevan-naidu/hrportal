@@ -8,7 +8,7 @@
               <div class="col-md-12">
                 <div class="panel widget">
                   <div class="panel-heading vd_bg-grey">
-                    <h3 class="panel-title"> <span class="menu-icon"> <i class="fa fa-magic"></i> </span>  </h3>
+                    <h3 class="panel-title"> <span class="menu-icon"> <i class="fa fa-magic"></i> </span> {{user.first_name}} {{user.last_name}} </h3>
                   </div>
                   <div class="panel-body">
 
@@ -45,7 +45,16 @@
                         <!-- <div id="ajax_loader_user_details_form" class="ajax_bck"><div class="ajax_load_image"></div></div> -->
 
 
-<!-- ~~~~sanjay~~~~ -->
+<!-- ~~~~sanjay~~~~ --><div class = "container">
+                          {% if messages %}
+                          <div class = 'row'>
+                          <div class = 'col-xs-12'>
+                          {% for message in messages %}
+                          <h3{% if message.tags %} class ="{{ message.tags }}"{% endif %}>*{{message}}</h3>
+                          {% endfor %}
+                      </div>
+                      </div>
+                      {% endif %}
                         <form id="user_details_form" method="post" class="form-horizontal" enctype="multipart/form-data" data-toggle="validator">
 
                         {% csrf_token %}
@@ -132,7 +141,7 @@
                             </div>
 
                             <div class="form-group">
-                              <label class="col-sm-2 control-label">Land Phone<span class="mandatory-field"> *</span></label>
+                              <label class="col-sm-2 control-label">Land Phone</label>
                               <div class="col-sm-7 controls">
                                 {{form.land_phone}}
                                 <div class="help-block with-errors"></div>
@@ -172,6 +181,54 @@
                               </div>
                             </div>
 
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">Address Type<span class="mandatory-field"> *</span></label>
+                              <div class="col-sm-7 controls">
+                                {{form.address_type}}
+                                <div class="help-block with-errors"></div>
+                              </div>
+                            </div>
+
+
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">Street<span class="mandatory-field"> *</span></label>
+                                  <div class="col-sm-7 controls">
+                                    {{form.address1}}
+                                <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
+
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">Lane<span class="mandatory-field"> *</span></label>
+                              <div class="col-sm-7 controls">
+                                {{form.address2}}
+                                <div class="help-block with-errors"></div>
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">City<span class="mandatory-field"> *</span></label>
+                              <div class="col-sm-7 controls">
+                                {{form.city}}
+                                <div class="help-block with-errors"></div>                                
+                              </div>
+                            </div>
+
+                              <div class="form-group">
+                              <label class="col-sm-2 control-label">State<span class="mandatory-field"> *</span></label>
+                              <div class="col-sm-7 controls">
+                                {{form.state}}
+                                <div class="help-block with-errors"></div>
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">Zip Code<span class="mandatory-field"> *</span></label>
+                              <div class="col-sm-7 controls">
+                                {{form.zipcode}}
+                                <div class="help-block with-errors"></div>                                
+                              </div>
+                            </div>
 
 
 

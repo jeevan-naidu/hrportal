@@ -13,6 +13,7 @@ from django.utils import timezone
 from django.http import JsonResponse
 import random
 import string
+from django.contrib import messages
 from django.core.mail import send_mail
 from formtools.wizard.views import SessionWizardView
 from django.views.decorators.csrf import csrf_protect
@@ -34,19 +35,22 @@ def login(request):
 	return render_to_response('login.html',context)
 
 def auth_view(request):
-	username = request.POST.get('username','')
-	password = request.POST.get('password','')
+    username = request.POST.get('username','')
+    password = request.POST.get('password','')
+    # import ipdb; ipdb.set_trace()
 
-	user = auth.authenticate(username=username, password=password)
-        try:
-            userobj = User.objects.get(username=username)
-        except User.DoesNotExist:
-            return HttpResponseRedirect('/login')       
-	if user is not None and userobj.is_active is True:
-		auth.login(request, user)
-		return HttpResponseRedirect('/loggedin')
-	else:
-		return HttpResponseRedirect('/invalid')
+    user = auth.authenticate(username=username, password=password)
+    try:
+        userobj = User.objects.get(username=username)
+    except User.DoesNotExist:
+        messages.error(request, 'Please register and confirm from ur email to login!!!!')
+        return render(request,'login.html')       
+    if user is not None and userobj.is_active is True:
+        auth.login(request, user)
+        return HttpResponseRedirect('/loggedin')
+    else:
+        messages.error(request, 'Invalid Username or password!!!!')
+        return render(request,'login.html')
 
 def logout(request):
 	auth.logout(request)
@@ -140,6 +144,7 @@ def user_details(request):
         email=user.email
         try:
             employee = UserDetails.objects.get(employee=request.user)
+            address = Address.objects.get(employee=request.user)
             # print employee
         except UserDetails.DoesNotExist:
             context = {"form":""}
@@ -162,10 +167,18 @@ def user_details(request):
         mobile_phone = employee.mobile_phone
         personal_email = employee.personal_email
         gender = employee.gender
+        address_type = address.address_type
+        address1 = address.address1
+        address2 = address.address2
+        city = address.city
+        state = address.state
+        zipcode = address.zipcode
+                
+
         form = UserDetailsForm(initial = {'first_name':request.user.first_name,'last_name':request.user.last_name,'middle_name':employee.middle_name,
-        'nationality':employee.nationality,'marital_status':employee.marital_status,'wedding_date':wedding_date,'date_of_birth':date_of_birth,'blood_group':employee.blood_group,
+        'nationality':employee.nationality,'marital_status':employee.marital_status,'wedding_date':employee.wedding_date,'date_of_birth':employee.date_of_birth,'blood_group':employee.blood_group,
         'land_phone':employee.land_phone,'emergency_phone1':employee.emergency_phone1,'emergency_phone2':employee.emergency_phone2,'mobile_phone':employee.mobile_phone,
-        'personal_email':employee.personal_email,'gender':employee.gender})
+        'personal_email':employee.personal_email,'gender':employee.gender,'address_type':address.address_type,'address1':address.address1,'address2':address.address2,'city':address.city,'state':address.state,'zipcode':address.zipcode})
 
         context["form"] = form
         return render(request, "wizard.html", context)
@@ -207,6 +220,12 @@ def user_details(request):
                     mobile_phone = form.cleaned_data['mobile_phone']
                     personal_email = form.cleaned_data['personal_email']
                     gender = form.cleaned_data['gender']
+                    address_type = form.cleaned_data['address_type']
+                    address1 = form.cleaned_data['address1']
+                    address2 = form.cleaned_data['address2']
+                    city = form.cleaned_data['city']
+                    state = form.cleaned_data['state']
+                    zipcode = form.cleaned_data['zipcode']
 
                     userdata = UserDetails.objects.get(employee=user.id)
                     userdata.first_name = first_name
@@ -224,7 +243,7 @@ def user_details(request):
                     userdata.personal_email = personal_email
                     userdata.gender = gender
                     userdata.save()
-
+                    Address(address_type=address_type,address1=address1,address2=address2,city=city,state=state,zipcode=zipcode).save()
                     """UserDetails(employee = employee_g.employee,
                     middle_name=middle_name,
                     nationality=nationality,
@@ -260,7 +279,13 @@ def user_details(request):
                 mobile_phone = form.cleaned_data['mobile_phone']
                 personal_email = form.cleaned_data['personal_email']
                 gender = form.cleaned_data['gender']
-
+                address_type = form.cleaned_data['address_type']
+                address1 = form.cleaned_data['address1']
+                address2 = form.cleaned_data['address2']
+                city = form.cleaned_data['city']
+                state = form.cleaned_data['state']
+                zipcode = form.cleaned_data['zipcode']
+                
                 UserDetails(employee = employee,
                 middle_name=middle_name,
                 nationality=nationality,
@@ -274,6 +299,8 @@ def user_details(request):
                 mobile_phone=mobile_phone,
                 personal_email=personal_email,
                 gender=gender).save()
+
+                Address(address_type=address_type,address1=address1,address2=address2,city=city,state=state,zipcode=zipcode).save()
 
                 context['form'] = form
                 return HttpResponseRedirect('/user_details/education')
@@ -420,7 +447,7 @@ def education(request):
     context['form'] = form
     return render(request, 'education.html',context)
 
-@csrf_exempt
+
 @login_required
 
 def proof(request):
@@ -460,7 +487,7 @@ def proof(request):
         return render(request, "proof.html", context)
 
     if request.method == 'POST':
-        import ipdb; ipdb.set_trace()
+        # import ipdb; ipdb.set_trace()
         context = {"form":""}
         user = request.user
         try:
@@ -522,7 +549,9 @@ def proof(request):
 
                         return HttpResponseRedirect("/user_details/confirm")
                     else:
-                        return HttpResponse("Please fill min 2 fields")
+                        messages.error(request, 'Please enter min 2 proofs with attachments')
+                        context['form'] = form
+                        return render(request,'proof.html',context)
 
             except Proof.DoesNotExist:
 
@@ -568,8 +597,9 @@ def proof(request):
 
                     return HttpResponseRedirect("/user_details/confirm")
                 else:
-                    return HttpResponse("Please fill min 2 fields")
-
+                    messages.error(request, 'Please enter min 2 proofs with attachments')
+                    context['form'] = form
+                    return render(request,'proof.html',context)
 
     context['form'] = form
     return render(request,'proof.html',context)
@@ -734,14 +764,16 @@ def confirm(request):
     if request.user.is_authenticated:
 
         if request.method == 'GET':
-            context = {'add':True, 'record_added':False, 'form':None, 'errors':[]}
+            context = {"form":""}
             form = UserDetailsForm()
+            context["form"] = form
             user = request.user
             try:
                 employee = UserDetails.objects.get(employee=request.user)
             except UserDetails.DoesNotExist:
-                context['errors'].append('User details not filled')
-                return HttpResponseRedirect('/user_details')
+                messages.error(request, 'Please fill all your data before confirming!!!!')
+                context["form"] = form
+                return render(request,'wizard.html', context)
 
             first_name = user.first_name
             last_name = user.last_name
