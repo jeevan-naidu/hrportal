@@ -1,5 +1,10 @@
 /* Insert Your Custom CSS Here */
 
+/* Major overrides */
+
+.vd_navbar{background: #3e999e}
+
+
 .navbar-tabs-menu{display: none;}
 .vd_panel-menu{visibility: hidden;} /* This includes resize options for the content area */
 
