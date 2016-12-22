@@ -3,7 +3,7 @@
 
 {%block content %}
 
-<div class="vd_content-section clearfix">
+
   <div class="row">
     <div class="col-md-12">
       <div class="panel widget">
@@ -37,16 +37,36 @@
               </div> -->
 
 <div class="tab-pane" id="tab5">
-   <div class = "container">
+
+
+
+
+
+
+
+
+
+
                     {% if messages %}
-                    <div class = 'row'>
-                    <div class = 'col-xs-12'>
+
                     {% for message in messages %}
-                    <h3{% if message.tags %} class ="{{ message.tags }}"{% endif %}>*{{message}}</h3>
+
+                  <div class="alert alert-danger">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-cross"></i></button>
+                    <span class="vd_alert-icon"><i class="fa fa-exclamation-circle vd_red"></i></span><strong>{{message}}</strong></div>
+
                     {% endfor %}
-                </div>
-                </div>
+
                 {% endif %}
+
+
+
+
+
+
+
+
+
   <form id="confirm_form" class="form-horizontal" role="form">
       <div class="form-group">
         <label class="col-sm-5 control-label">First Name</label>
@@ -129,8 +149,6 @@
 </div>
 <!-- row -->
 
-</div>
-<!-- .vd_content-section -->
 
 
 <!-- End here -->

@@ -43,7 +43,7 @@ def auth_view(request):
     try:
         userobj = User.objects.get(username=username)
     except User.DoesNotExist:
-        messages.error(request, 'Please register and confirm from ur email to login!')
+        messages.error(request, 'Please register and confirm from your email to login!')
         return render(request,'login.html')       
     if user is not None and userobj.is_active is True:
         auth.login(request, user)
@@ -843,11 +843,11 @@ def confirm(request):
                 try:
                     proof=Proof.objects.get(employee=request.user)   
                 except Proof.DoesNotExist:
-                    messages.error(request, 'Oooops!!! Please fill all your proof details before confirming!!!!')
+                    messages.error(request, 'Please fill all your proof details before confirming!')
                     context["form"] = form
                     return render(request,'confirm.html', context)
             except UserDetails.DoesNotExist:
-                messages.error(request, 'Oooops!!!! Please fill all your User details before confirming!!!!')
+                messages.error(request, 'Please fill all your User details before confirming!')
                 context["form"] = form
                 return render(request,'confirm.html', context)
 
