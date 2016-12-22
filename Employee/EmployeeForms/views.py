@@ -43,13 +43,13 @@ def auth_view(request):
     try:
         userobj = User.objects.get(username=username)
     except User.DoesNotExist:
-        messages.error(request, 'Please register and confirm from ur email to login!!!!')
+        messages.error(request, 'Please register and confirm from ur email to login!')
         return render(request,'login.html')       
     if user is not None and userobj.is_active is True:
         auth.login(request, user)
         return HttpResponseRedirect('/loggedin')
     else:
-        messages.error(request, 'Invalid Username or password!!!!')
+        messages.error(request, 'Invalid Username or password!')
         return render(request,'login.html')
 
 def logout(request):
