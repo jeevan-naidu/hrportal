@@ -579,8 +579,10 @@ def proof(request):
                     form.voter_attachment = request.FILES['voter_attachment']
       
                 fields = [pan,aadhar_card, dl, passport, voter_id]
+                fields_attach = [pan_attachment,aadhar_attachment, dl_attachment, passport_attachment, voter_attachment]
 
                 check = [ val for val in fields if val]
+
                 if len(check) > 1:
                     Proof(employee=employee,
                     pan=pan,
@@ -594,6 +596,21 @@ def proof(request):
                     voter_id=voter_id,
                     voter_attachment=voter_attachment).save()
                     context['form'] = form
+
+                # count = 0
+                # for i in range[fields.length]{
+                #     if fields[i] != null
+                #         if fields_attach[i] != null
+                #             count += 1
+                #         else
+                #             message: "No attachment for " + fields[i]
+
+
+                #     if count > 1
+                #         continue
+                #     else
+                #         message: "please upload min req proofs"
+                #     }
 
                     return HttpResponseRedirect("/user_details/confirm")
                 else:
@@ -765,15 +782,36 @@ def confirm(request):
 
         if request.method == 'GET':
             context = {"form":""}
-            form = UserDetailsForm()
+            form = ProofForm()
             context["form"] = form
+            # import ipdb; ipdb.set_trace()
             user = request.user
             try:
-                employee = UserDetails.objects.get(employee=request.user)
+                employee=UserDetails.objects.get(employee=request.user)
+                try:
+                    proof=Proof.objects.get(employee=request.user)
+                    # count = 0
+                    # for i in range[fields.length]
+                    #     if fields[i] != null
+                    #         if fields_attach[i] != null
+                    #             count += 1
+                    #         else
+                    #             message: "No attachment for " + fields[i]
+
+
+                    #     if count > 1
+                    #         continue
+                    #     else
+                    #         message: "please upload min req proofs"
+                        
+                except Proof.DoesNotExist:
+                    messages.error(request, 'Please fill all your proof details before confirming!!!!')
+                    context["form"] = form
+                    return render(request,'confirm.html', context)
             except UserDetails.DoesNotExist:
-                messages.error(request, 'Please fill all your data before confirming!!!!')
+                messages.error(request, 'Please fill all your User details before confirming!!!!')
                 context["form"] = form
-                return render(request,'wizard.html', context)
+                return render(request,'confirm.html', context)
 
             first_name = user.first_name
             last_name = user.last_name
