@@ -1,8 +1,11 @@
 {% extends 'master.html' %}
+{% load bootstrap3 %}
+{% load static from staticfiles %}
 {% block pageTitle %}User Details{% endblock %}
 {% block pageSubTitle %}Start entering your details here{% endblock %}
 {% block content %}
 <!-- Start Here -->
+
 
             <div class="row">
               <div class="col-md-12">
@@ -304,6 +307,8 @@
 // Wedding date
 
 
+
+
 $('select#id_marital_status').change(function(){
   if($(this).val() !== 'SG'){
     $('.wedding_date_form_group').removeClass('hidden');
@@ -316,5 +321,7 @@ $('select#id_marital_status').change(function(){
 
 
 </script>
+
+
 
 {% endblock %}

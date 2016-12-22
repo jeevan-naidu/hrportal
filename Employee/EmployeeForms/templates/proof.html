@@ -120,6 +120,36 @@
  <!-- col-md-12 -->
 </div>
 <!-- row -->
-
+<script type="text/javascript">
+                  $("#proof_form").submit(function (e) {
+                  e.preventDefault();
+                  var data = new FormData($('form').get(0));
+                  swal({   title: "Checking proof details!!",
+                    text: "",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "OK!",
+                    cancelButtonText: "Cancel",
+                    closeOnConfirm: true,
+                    closeOnCancel: true
+                    },
+                    function(isConfirm) {
+                      if (isConfirm) {
+                        $.ajax( {
+                          type: "POST",
+                          url: '/user_details/proof',
+                          data: data,
+                          cache: false,
+                          processData: false,
+                          contentType: false,
+                          success: function( response ) {
+                              
+                             window.location='/user_details/proof'
+                          }
+                        });
+                      }});
+                    });
+            </script>
 <!-- End here -->
 {% endblock %}

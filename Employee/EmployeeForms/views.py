@@ -144,7 +144,31 @@ def user_details(request):
         email=user.email
         try:
             employee = UserDetails.objects.get(employee=request.user)
-            address = Address.objects.get(employee=request.user)
+            try:
+                address = Address.objects.get(employee=request.user)
+            except Address.DoesNotExist:
+                first_name = user.first_name
+                last_name = user.last_name
+                email=user.email
+                middle_name = employee.middle_name
+                nationality = employee.nationality
+                marital_status = employee.marital_status
+                wedding_date = employee.wedding_date
+                date_of_birth = employee.date_of_birth
+                blood_group = employee.blood_group
+                land_phone = employee.land_phone
+                emergency_phone1 = employee.emergency_phone1
+                emergency_phone2 = employee.emergency_phone2
+                mobile_phone = employee.mobile_phone
+                personal_email = employee.personal_email
+                gender = employee.gender
+                form = UserDetailsForm(initial = {'first_name':request.user.first_name,'last_name':request.user.last_name,'middle_name':employee.middle_name,
+                'nationality':employee.nationality,'marital_status':employee.marital_status,'wedding_date':employee.wedding_date,'date_of_birth':employee.date_of_birth,'blood_group':employee.blood_group,
+                'land_phone':employee.land_phone,'emergency_phone1':employee.emergency_phone1,'emergency_phone2':employee.emergency_phone2,'mobile_phone':employee.mobile_phone,
+                'personal_email':employee.personal_email,'gender':employee.gender})
+
+                context["form"] = form
+                return render(request, "wizard.html", context)
             # print employee
         except UserDetails.DoesNotExist:
             context = {"form":""}
@@ -315,7 +339,7 @@ def education(request):
     if request.method == 'GET':
 
         context = {"form":""}
-        form = EducationForm()
+        form = EducationForm(request.FILES)
         context["form"] = form
         # import ipdb; ipdb.set_trace()
         user = request.user
@@ -455,7 +479,7 @@ def proof(request):
     # context = {"form": ""}
     if request.method == 'GET':
         context = {"form":""}
-        form = ProofForm()
+        form = ProofForm(request.FILES)
         context["form"] = form
         # import ipdb; ipdb.set_trace()
         user = request.user
@@ -487,7 +511,7 @@ def proof(request):
         return render(request, "proof.html", context)
 
     if request.method == 'POST':
-        # import ipdb; ipdb.set_trace()
+        import ipdb; ipdb.set_trace()
         context = {"form":""}
         user = request.user
         try:
@@ -580,9 +604,36 @@ def proof(request):
       
                 fields = [pan,aadhar_card, dl, passport, voter_id]
                 fields_attach = [pan_attachment,aadhar_attachment, dl_attachment, passport_attachment, voter_attachment]
-
+                
                 check = [ val for val in fields if val]
-
+                # count = 0
+                # for i in range(0, 10):
+                #     if fields[i] != None:
+                #         if fields_attach[i] != None:
+                #             count += 1
+                #         else:
+                #             messages.error(request, 'Oooops!!! Please fill min 2 proofs!!!!')
+                #             context["form"] = form
+                #             return render(request,'proof.html', context)
+                #     if count > 1:
+                #         Proof(employee=employee,
+                #         pan=pan,
+                #         pan_attachment=pan_attachment,
+                #         aadhar_card=aadhar_card,
+                #         aadhar_attachment=aadhar_attachment,
+                #         dl=dl,
+                #         dl_attachment=dl_attachment,
+                #         passport=passport,
+                #         passport_attachment=passport_attachment,
+                #         voter_id=voter_id,
+                #         voter_attachment=voter_attachment).save()
+                #         context['form'] = form
+                #         return HttpResponseRedirect("/user_details/confirm")
+                #     else:
+                #         messages.error(request, 'Oooops!!! Please fill min 2 proofs!!!!')
+                #         context["form"] = form
+                #         return render(request,'proof.html', context)
+                    
                 if len(check) > 1:
                     Proof(employee=employee,
                     pan=pan,
@@ -628,9 +679,9 @@ def previous_employment(request):
 
     if request.method == 'GET':
         context = {"form":""}
-        form = PreviousEmploymentForm()
+        form = PreviousEmploymentForm(request.FILES)
         context["form"] = form
-        # import ipdb; ipdb.set_trace()
+        #import ipdb; ipdb.set_trace()
         
         user = request.user
         try:
@@ -652,6 +703,7 @@ def previous_employment(request):
             'rl_attachment':employee.rl_attachment})
 
             context["form"] = form
+
             return render(request, "previous_display.html", context)
         except PreviousEmployment.DoesNotExist:
             context = {"form":""}
@@ -789,27 +841,13 @@ def confirm(request):
             try:
                 employee=UserDetails.objects.get(employee=request.user)
                 try:
-                    proof=Proof.objects.get(employee=request.user)
-                    # count = 0
-                    # for i in range[fields.length]
-                    #     if fields[i] != null
-                    #         if fields_attach[i] != null
-                    #             count += 1
-                    #         else
-                    #             message: "No attachment for " + fields[i]
-
-
-                    #     if count > 1
-                    #         continue
-                    #     else
-                    #         message: "please upload min req proofs"
-                        
+                    proof=Proof.objects.get(employee=request.user)   
                 except Proof.DoesNotExist:
-                    messages.error(request, 'Please fill all your proof details before confirming!!!!')
+                    messages.error(request, 'Oooops!!! Please fill all your proof details before confirming!!!!')
                     context["form"] = form
                     return render(request,'confirm.html', context)
             except UserDetails.DoesNotExist:
-                messages.error(request, 'Please fill all your User details before confirming!!!!')
+                messages.error(request, 'Oooops!!!! Please fill all your User details before confirming!!!!')
                 context["form"] = form
                 return render(request,'confirm.html', context)
 
