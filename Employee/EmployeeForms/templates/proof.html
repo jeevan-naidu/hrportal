@@ -126,19 +126,26 @@
 
 
 var validateTwo = function(){
-  alert('validate 2');
+
+  var uploadedCount = 0;
+
+  $('#tab4 .form-group').each(function(){
+
+    if($('input[type="text"]').val() !== ''){
+        uploadedCount++;
+        console.log(uploadedCount);
+        debugger;
+        }
+  })  
+
 }
 
-
-
-$(document).ready(function(){
-  
-})
 
 
 
 $("#proof_form").submit(function (e) {
 e.preventDefault();
+validateTwo();
 var data = new FormData($('form').get(0));
 swal({   title: "Checking proof details!!",
   text: "",
@@ -166,6 +173,12 @@ swal({   title: "Checking proof details!!",
       });
     }});
   });
+
+
+$(document).ready(function(){
+  
+})
+
 </script>
 <!-- End here -->
 {% endblock %}
