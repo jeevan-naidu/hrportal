@@ -44,15 +44,16 @@
                 <!-- * Any of the 2 proofs with attachments is mandatory -->
                 {% csrf_token %}
                 
-                  <div class = "container">
-                    {% if messages %}
-                    <div class = 'row'>
-                    <div class = 'col-xs-12'>
+                  {% if messages %}
+
                     {% for message in messages %}
-                    <h3{% if message.tags %} class ="{{ message.tags }}"{% endif %}>*{{message}}</h3>
+
+                  <div class="alert alert-danger">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-cross"></i></button>
+                    <span class="vd_alert-icon"><i class="fa fa-exclamation-circle vd_red"></i></span><strong>{{message}}</strong></div>
+
                     {% endfor %}
-                </div>
-                </div>
+
                 {% endif %}
                 <div class="form-group">
                   <label class="col-sm-2 control-label">PAN Card Number</label>

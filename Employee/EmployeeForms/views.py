@@ -67,6 +67,7 @@ def register(request):
     #import ipdb; ipdb.set_trace()
     if request.method == 'POST':
         # user = request.user
+        context = {"form":""}
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
             username = request.POST['username']
@@ -81,8 +82,9 @@ def register(request):
             userobj.is_active = 0
             userobj.save()
             send_registration_confirmation(username)
-           
-            return HttpResponseRedirect('/')
+            messages.error(request, 'Please check your email and click the given link!!!')
+            context["form"] = form
+            return render(request,'welcome.html', context)
         else:
             print form.is_valid()
             print form['email'].errors
