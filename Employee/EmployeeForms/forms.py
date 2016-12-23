@@ -50,9 +50,9 @@ class UserDetailsForm(forms.ModelForm):
 	nationality = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control','required': 'True'}))
 	marital_status = forms.ChoiceField(choices=MARITAL_CHOICES,  required=False, widget=forms.Select(attrs={'class': 'width-50 input-sm form-control','required': 'False'}))
 	wedding_date = forms.DateField(label="Wedding Date",widget=DateTimePicker(options=dateTimeOption),)
-	wedding_date.widget.attrs = {'class': 'width-30 form-control filter_class', 'required':'true'}
+	wedding_date.widget.attrs = {'class': 'form-control filter_class', 'required':'true'}
 	date_of_birth = forms.DateField(label="Date of Birth",widget=DateTimePicker(options=dateTimeOption),)
-	date_of_birth.widget.attrs = {'class': 'width-30 form-control filter_class', 'required':'true'}
+	date_of_birth.widget.attrs = {'class': 'form-control filter_class', 'required':'true'}
 	blood_group = forms.ChoiceField(choices=BLOOD_GROUP_CHOICES, widget=forms.Select(attrs={'class': 'width-50 input-sm form-control','required': 'False'}))
 	land_phone =forms.CharField(max_length=10,widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','required': 'False','type': 'tel'}))
 	emergency_phone1 = forms.CharField(max_length=10, widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','required': 'true','type': 'tel'}))
@@ -84,9 +84,9 @@ class EducationForm(forms.ModelForm):
 	qualification = forms.ChoiceField(choices=QUALIFICATION, widget=forms.Select(attrs={'class': 'width-100 input-sm form-control','required': 'True'}))
 	specialization = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-100 input-sm form-control','required': 'True'}))
 	from_date = forms.DateField(label="From date",widget=DateTimePicker(options=dateTimeOption),)
-	from_date.widget.attrs = {'class': 'width-70 form-control filter_class', 'required':'true'}
+	from_date.widget.attrs = {'class': 'form-control filter_class', 'required':'true'}
 	to_date = forms.DateField(label="To date",widget=DateTimePicker(options=dateTimeOption),)
-	to_date.widget.attrs = {'class': 'width-70 form-control filter_class', 'required':'true'}
+	to_date.widget.attrs = {'class': 'form-control filter_class', 'required':'true'}
 	institute = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-100 input-sm form-control','required': 'True'}))
 	board_university = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-100 input-sm form-control','required': 'True'}))
 	overall_marks = forms.FloatField(required=True, widget=forms.NumberInput(attrs={'min': '0', 'max': '100','placeholder': 'Marks float','data-error': 'Please enter marks in float and it should be below 100'}))
@@ -116,9 +116,9 @@ class PreviousEmploymentForm(forms.ModelForm):
 	company_address = forms.CharField(max_length=500, widget=forms.TextInput(attrs={'class': 'input-sm form-control','required': 'True'}))
 	job_type = forms.ChoiceField(choices=JOB_TYPE, widget=forms.Select(attrs={'class': 'input-sm form-control','required': 'False'}))
 	employed_from = forms.DateField(label="From date",widget=DateTimePicker(options=dateTimeOption),)
-	employed_from.widget.attrs = {'class': 'width-70 form-control filter_class', 'required':'true'}
+	employed_from.widget.attrs = {'class': 'form-control filter_class', 'required':'true'}
 	employed_upto = forms.DateField(label="From date",widget=DateTimePicker(options=dateTimeOption),)
-	employed_upto.widget.attrs = {'class': 'width-70 form-control filter_class', 'required':'true'}
+	employed_upto.widget.attrs = {'class': 'form-control filter_class', 'required':'true'}
 	last_ctc = forms.FloatField(required=False, widget=forms.NumberInput(attrs={'placeholder': 'CTC float','data-error': 'Please enter your CTC in float'}))
 	reason_for_exit = forms.CharField(max_length=200, widget=forms.TextInput(attrs={'class': 'input-sm form-control','required': 'False'}))
 	ps_attachment = forms.FileField(label='Pay slips Attachment', required=False, help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"))
