@@ -128,15 +128,26 @@
 var validateTwo = function(){
 
   var uploadedCount = 0;
+  var fileUploadCount = 0;
 
   $('#tab4 .form-group').each(function(){
 
-    if($('input[type="text"]').val() !== ''){
-        uploadedCount++;
-        console.log(uploadedCount);
-        debugger;
+    if($(this).find('input[type="text"]').val() !== ''){
+          uploadedCount++;
+          console.log(uploadedCount);
         }
-  })  
+
+
+     if ($(this).find('input.bare').val() !== '') {
+          fileUploadCount++;
+          console.log('fileUploadCount is ' + fileUploadCount);
+      }   
+
+
+
+  })
+
+  console.log('final uploadedCount is ' + uploadedCount)  ;
 
 }
 
