@@ -121,31 +121,24 @@
 </div>
 <!-- row -->
 <script type="text/javascript">
-
 /* 2 form validation */
-
-
 var validateTwo = function(){
-
   var uploadedCount = 0;
-
+  var fileUploadCount = 0;
   $('#tab4 .form-group').each(function(){
-
-    if($('input[type="text"]').val() !== ''){
-        uploadedCount++;
-        console.log(uploadedCount);
-        debugger;
+    if(($(this).find('input[type="text"]').val() !== '') && ($(this).find('input.bare').val() !== '')){
+          uploadedCount++;
+          console.log(uploadedCount);
         }
-  })  
-
-}
-
-
-
-
-$("#proof_form").submit(function (e) {
-e.preventDefault();
-validateTwo();
+/*     if ($(this).find('input.bare').val() !== '') {
+          fileUploadCount++;
+          console.log('fileUploadCount is ' + fileUploadCount);
+      } */  
+  })
+  console.log('final uploadedCount is ' + uploadedCount)  ;
+  if(uploadedCount < 3){
+      alert('upload 2');
+      }else{
 var data = new FormData($('form').get(0));
 swal({   title: "Checking proof details!!",
   text: "",
@@ -171,14 +164,42 @@ swal({   title: "Checking proof details!!",
            window.location='/user_details/proof'
         }
       });
-    }});
+    }});        
+      }
+}// end of validate2
+$("#proof_form").submit(function (e) {
+e.preventDefault();
+validateTwo();
+/*var data = new FormData($('form').get(0));
+swal({   title: "Checking proof details!!",
+  text: "",
+  type: "warning",
+  showCancelButton: true,
+  confirmButtonColor: "#DD6B55",
+  confirmButtonText: "OK!",
+  cancelButtonText: "Cancel",
+  closeOnConfirm: true,
+  closeOnCancel: true
+  },
+  function(isConfirm) {
+    if (isConfirm) {
+      $.ajax( {
+        type: "POST",
+        url: '/user_details/proof',
+        data: data,
+        cache: false,
+        processData: false,
+        contentType: false,
+        success: function( response ) {
+            
+           window.location='/user_details/proof'
+        }
+      });
+    }});*/
   });
-
-
 $(document).ready(function(){
   
 })
-
 </script>
 <!-- End here -->
 {% endblock %}
