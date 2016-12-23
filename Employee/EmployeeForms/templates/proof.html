@@ -132,16 +132,16 @@ var validateTwo = function(){
 
   $('#tab4 .form-group').each(function(){
 
-    if($(this).find('input[type="text"]').val() !== ''){
+    if(($(this).find('input[type="text"]').val() !== '') && ($(this).find('input.bare').val() !== '')){
           uploadedCount++;
           console.log(uploadedCount);
         }
 
 
-     if ($(this).find('input.bare').val() !== '') {
+/*     if ($(this).find('input.bare').val() !== '') {
           fileUploadCount++;
           console.log('fileUploadCount is ' + fileUploadCount);
-      }   
+      } */  
 
 
 
@@ -149,14 +149,11 @@ var validateTwo = function(){
 
   console.log('final uploadedCount is ' + uploadedCount)  ;
 
-}
+  if(uploadedCount < 3){
 
+      alert('upload 2');
 
-
-
-$("#proof_form").submit(function (e) {
-e.preventDefault();
-validateTwo();
+      }else{
 var data = new FormData($('form').get(0));
 swal({   title: "Checking proof details!!",
   text: "",
@@ -182,7 +179,48 @@ swal({   title: "Checking proof details!!",
            window.location='/user_details/proof'
         }
       });
-    }});
+    }});        
+      }
+
+
+
+}// end of validate2
+
+
+
+
+
+
+
+$("#proof_form").submit(function (e) {
+e.preventDefault();
+validateTwo();
+/*var data = new FormData($('form').get(0));
+swal({   title: "Checking proof details!!",
+  text: "",
+  type: "warning",
+  showCancelButton: true,
+  confirmButtonColor: "#DD6B55",
+  confirmButtonText: "OK!",
+  cancelButtonText: "Cancel",
+  closeOnConfirm: true,
+  closeOnCancel: true
+  },
+  function(isConfirm) {
+    if (isConfirm) {
+      $.ajax( {
+        type: "POST",
+        url: '/user_details/proof',
+        data: data,
+        cache: false,
+        processData: false,
+        contentType: false,
+        success: function( response ) {
+            
+           window.location='/user_details/proof'
+        }
+      });
+    }});*/
   });
 
 
