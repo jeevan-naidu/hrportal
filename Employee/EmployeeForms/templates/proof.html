@@ -138,7 +138,15 @@ var validateTwo = function(){
   })
   console.log('final uploadedCount is ' + uploadedCount)  ;
   if(uploadedCount < 3){
-      alert('upload 2');
+      swal({title:"Min 2 proofs with attachments required",
+            type: "error",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "OK!",
+            cancelButtonText: "Cancel",
+            closeOnConfirm: true,
+            closeOnCancel: true
+            })
       }else{
 var data = new FormData($('form').get(0));
 swal({   title: "Checking proof details!!",

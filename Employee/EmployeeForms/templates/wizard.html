@@ -209,7 +209,7 @@
                                 </div>
 
                             <div class="form-group">
-                              <label class="col-sm-2 control-label">Lane<span class="mandatory-field"> *</span></label>
+                              <label class="col-sm-2 control-label">Lane</label>
                               <div class="col-sm-7 controls">
                                 {{form.address2}}
                                 <div class="help-block with-errors"></div>
@@ -317,10 +317,10 @@
 
 
 $('select#id_marital_status').change(function(){
-  if($(this).val() !== 'SG'){
+  if($(this).val() == 'MA'){
     $('.wedding_date_form_group').removeClass('hidden');
     $('#id_wedding_date').attr('required', true);
-  }else if($(this).val() == 'SG'){
+  }else if($(this).val() !== 'MA'){
     $('.wedding_date_form_group').addClass('hidden');
     $('#id_wedding_date').removeAttr('required');
   }
