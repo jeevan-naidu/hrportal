@@ -19,4 +19,6 @@ urlpatterns = [
                        url(r'^user_details/previous_employment$', views.previous_employment),
                        url(r'^user_details/confirm$', views.confirm),
                        url(r'^download_form$', views.download_form),
+                       url(r'^candidate_overview$', views.candidate_overview),
+                       url(r'^print_candidate_information$', views.print_candidate_information),
                        ]

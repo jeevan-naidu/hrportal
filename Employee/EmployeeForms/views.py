@@ -893,3 +893,9 @@ def confirm(request):
 
 def download_form(request):
     return render(request, 'download_forms.html',{})
+
+def candidate_overview(request):
+    return render(request, 'candidate_overview.html',{})
+
+def print_candidate_information(request):
+    return render(request, 'print.html',{})
