@@ -1,0 +1,118 @@
+{% extends 'master.html' %}
+
+{% block pageTitle %}Candidate Overview{% endblock %}
+{% block pageSubTitle %}The list of candidate with the essential details{% endblock %}
+
+{% block content %}
+
+
+<link href="/static/plugins/dataTables/css/dataTables.bootstrap.css" rel="stylesheet" type="text/css">
+
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="panel widget">
+                  <div class="panel-heading vd_bg-grey">
+                    <h3 class="panel-title">List of Candidates</h3>
+                  </div>
+                  <div class="panel-body">
+
+
+
+
+
+
+
+
+
+
+
+                    <table class="table table-striped" id="data-tables">
+                      <thead>
+                        <tr>
+                          <th>MRF</th>
+                          <th>Name</th>
+                          <th>Department</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr class="odd gradeX">
+                          <td>234</td>
+                          <td>Tony Stark</td>
+                          <td>Lorem Ipsum</td>
+<td class="menu-action">
+<a data-original-title="view" data-toggle="tooltip" data-placement="top" class="btn menu-icon vd_bd-green vd_green" onclick="window.open('/print_candidate_information')"> 
+<i class="fa fa-eye"></i> 
+</a> 
+<!-- <a data-original-title="edit" data-toggle="tooltip" data-placement="top" class="btn menu-icon vd_bd-yellow vd_yellow"> 
+<i class="fa fa-pencil"></i> 
+</a> 
+<a data-original-title="delete" data-toggle="tooltip" data-placement="top" class="btn menu-icon vd_bd-red vd_red"> 
+<i class="fa fa-times"></i> 
+</a> -->
+</td>
+                        </tr>
+                        <tr class="even gradeC">
+                          <td>147</td>
+                          <td>Captain America</td>
+                          <td>Dolor sit amet</td>
+<td class="menu-action">
+<a data-original-title="view" data-toggle="tooltip" data-placement="top" class="btn menu-icon vd_bd-green vd_green" onclick="window.open('/print_candidate_information')"> 
+<i class="fa fa-eye"></i> 
+</a> 
+<!-- <a data-original-title="edit" data-toggle="tooltip" data-placement="top" class="btn menu-icon vd_bd-yellow vd_yellow"> 
+<i class="fa fa-pencil"></i> 
+</a> 
+<a data-original-title="delete" data-toggle="tooltip" data-placement="top" class="btn menu-icon vd_bd-red vd_red"> 
+<i class="fa fa-times"></i> 
+</a> -->
+</td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+
+
+
+
+
+
+
+
+
+                  <button class="btn btn-primary" onclick="window.open('/print_candidate_information')">Print Page</button>
+
+
+
+
+
+                  </div>
+                 </div>
+                </div>
+               </div>
+
+
+
+
+<script type="text/javascript" src="/static/plugins/dataTables/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/static/js/dataTables.bootstrap.js"></script>
+
+
+<script type="text/javascript">
+	
+$(document).ready(function(){
+
+        $('#data-tables').dataTable({
+          searching: false,
+          scrollCollapse: true
+        });
+
+})// ./dom.ready
+
+</script>
+
+
+
+{% endblock %}
+
