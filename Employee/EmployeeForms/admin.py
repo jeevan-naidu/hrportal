@@ -19,7 +19,7 @@ class PreviousEmploymentAdmin(admin.ModelAdmin):
 	search_fields = ['user']
 
 class AddressAdmin(admin.ModelAdmin):
-	list_display = [ 'address_type']
+	list_display = [ 'employee','address_type']
 
 class ConfirmationCodeAdmin(admin.ModelAdmin):
 	list_display = [ 'confirmation_code', 'username']

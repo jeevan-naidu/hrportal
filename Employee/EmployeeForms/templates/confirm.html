@@ -136,7 +136,20 @@
 
 
 
-      <h3 class="col-sm-12 text-right"><a href="/loggedin"><input type="button" class="btn btn-success" value="Finish"/></a></h3>
+
+
+
+
+                    {% if messages %}
+      <h3 class="col-sm-12 text-right"><input type="button" class="btn btn-success" value="Finish" disabled /></h3>
+                    {% else %}
+      <h3 class="col-sm-12 text-right"><a href="/loggedin"><input type="button" class="btn btn-success" value="Finish"  /></a></h3>
+                {% endif %}
+
+
+
+
+
   </form>
 </div><!-- ./tab-pane -->
 </div><!-- ./wizard1 ~~~ -->

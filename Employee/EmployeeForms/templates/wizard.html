@@ -48,16 +48,23 @@
                         <!-- <div id="ajax_loader_user_details_form" class="ajax_bck"><div class="ajax_load_image"></div></div> -->
 
 
-<!-- ~~~~sanjay~~~~ --><div class = "container">
-                          {% if messages %}
-                          <div class = 'row'>
-                          <div class = 'col-xs-12'>
-                          {% for message in messages %}
-                          <h3{% if message.tags %} class ="{{ message.tags }}"{% endif %}>*{{message}}</h3>
-                          {% endfor %}
-                      </div>
-                      </div>
-                      {% endif %}
+<!-- ~~~~sanjay~~~~ -->
+
+                    {% if messages %}
+
+                    {% for message in messages %}
+
+                  <div class="alert alert-danger">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-cross"></i></button>
+                    <span class="vd_alert-icon"><i class="fa fa-exclamation-circle vd_red"></i></span><strong>{{message}}</strong></div>
+
+                    {% endfor %}
+
+                {% endif %}
+
+
+
+                      
                         <form id="user_details_form" method="post" class="form-horizontal" enctype="multipart/form-data" data-toggle="validator">
 
                         {% csrf_token %}
@@ -202,7 +209,7 @@
                                 </div>
 
                             <div class="form-group">
-                              <label class="col-sm-2 control-label">Lane<span class="mandatory-field"> *</span></label>
+                              <label class="col-sm-2 control-label">Lane</label>
                               <div class="col-sm-7 controls">
                                 {{form.address2}}
                                 <div class="help-block with-errors"></div>
@@ -310,10 +317,10 @@
 
 
 $('select#id_marital_status').change(function(){
-  if($(this).val() !== 'SG'){
+  if($(this).val() == 'MA'){
     $('.wedding_date_form_group').removeClass('hidden');
     $('#id_wedding_date').attr('required', true);
-  }else if($(this).val() == 'SG'){
+  }else if($(this).val() !== 'MA'){
     $('.wedding_date_form_group').addClass('hidden');
     $('#id_wedding_date').removeAttr('required');
   }

@@ -67,6 +67,7 @@ def register(request):
     #import ipdb; ipdb.set_trace()
     if request.method == 'POST':
         # user = request.user
+        context = {"form":""}
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
             username = request.POST['username']
@@ -81,8 +82,9 @@ def register(request):
             userobj.is_active = 0
             userobj.save()
             send_registration_confirmation(username)
-           
-            return HttpResponseRedirect('/')
+            messages.error(request, 'Please check your email and click the given link!!!')
+            context["form"] = form
+            return render(request,'welcome.html', context)
         else:
             print form.is_valid()
             print form['email'].errors
@@ -209,7 +211,7 @@ def user_details(request):
 
     # instance = UserDetails.objects.get(employee=request.user)
     if request.method == 'POST':
-        # import ipdb; ipdb.set_trace()
+        import ipdb; ipdb.set_trace()
         context = {"form":""}
         user = request.user
 
@@ -288,6 +290,7 @@ def user_details(request):
             except UserDetails.DoesNotExist:
                 user = request.user
                 employee = User.objects.get(username=request.user)
+                # address = User.objects.get(employee=request.user)
                 #print "laal1"
                 first_name = form.cleaned_data['first_name']
                 last_name = form.cleaned_data['last_name']

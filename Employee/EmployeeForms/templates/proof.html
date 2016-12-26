@@ -44,15 +44,16 @@
                 <!-- * Any of the 2 proofs with attachments is mandatory -->
                 {% csrf_token %}
                 
-                  <div class = "container">
-                    {% if messages %}
-                    <div class = 'row'>
-                    <div class = 'col-xs-12'>
+                  {% if messages %}
+
                     {% for message in messages %}
-                    <h3{% if message.tags %} class ="{{ message.tags }}"{% endif %}>*{{message}}</h3>
+
+                  <div class="alert alert-danger">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-cross"></i></button>
+                    <span class="vd_alert-icon"><i class="fa fa-exclamation-circle vd_red"></i></span><strong>{{message}}</strong></div>
+
                     {% endfor %}
-                </div>
-                </div>
+
                 {% endif %}
                 <div class="form-group">
                   <label class="col-sm-2 control-label">PAN Card Number</label>
@@ -121,38 +122,31 @@
 </div>
 <!-- row -->
 <script type="text/javascript">
-
 /* 2 form validation */
-
-
 var validateTwo = function(){
-
   var uploadedCount = 0;
   var fileUploadCount = 0;
-
   $('#tab4 .form-group').each(function(){
-
     if(($(this).find('input[type="text"]').val() !== '') && ($(this).find('input.bare').val() !== '')){
           uploadedCount++;
           console.log(uploadedCount);
         }
-
-
 /*     if ($(this).find('input.bare').val() !== '') {
           fileUploadCount++;
           console.log('fileUploadCount is ' + fileUploadCount);
       } */  
-
-
-
   })
-
   console.log('final uploadedCount is ' + uploadedCount)  ;
-
   if(uploadedCount < 3){
-
-      alert('upload 2');
-
+      swal({title:"Min 2 proofs with attachments required",
+            type: "error",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "OK!",
+            cancelButtonText: "Cancel",
+            closeOnConfirm: true,
+            closeOnCancel: true
+            })
       }else{
 var data = new FormData($('form').get(0));
 swal({   title: "Checking proof details!!",
@@ -181,17 +175,7 @@ swal({   title: "Checking proof details!!",
       });
     }});        
       }
-
-
-
 }// end of validate2
-
-
-
-
-
-
-
 $("#proof_form").submit(function (e) {
 e.preventDefault();
 validateTwo();
@@ -222,12 +206,9 @@ swal({   title: "Checking proof details!!",
       });
     }});*/
   });
-
-
 $(document).ready(function(){
   
 })
-
 </script>
 <!-- End here -->
 {% endblock %}

@@ -19,18 +19,18 @@
 
 input[type="file"].bare{
     border: 0px !important;
-    width: auto !important;	
+    width: auto !important; 
 }
 
 
 /* Download forms sections */
 
 .the-form img{
-	display: block;
-	width: 50%;
-	margin: auto;
-	border: 1px solid #dedede;
-	height: 200px;
+    display: block;
+    width: 50%;
+    margin: auto;
+    border: 1px solid #dedede;
+    height: 200px;
 }
 .the-form h3{
     text-align: center;
