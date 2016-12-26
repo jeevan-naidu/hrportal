@@ -154,7 +154,7 @@ class ProofForm(forms.ModelForm):
 	aadhar_attachment = forms.FileField(label='Aadhar Card Attachment', required=False, help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"))
     # Add Bootstrap widgets
 	aadhar_attachment.widget.attrs = {'class':'bare', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
-	dl = forms.CharField(max_length=20, required=False, widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control'}))
+	dl = forms.CharField(max_length=15, required=False, widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control'}))
 	dl_attachment = forms.FileField(label='DL Attachment', required=False, help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"))
     # Add Bootstrap widgets
 	dl_attachment.widget.attrs = {'class':'bare', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
@@ -162,7 +162,7 @@ class ProofForm(forms.ModelForm):
 	passport_attachment = forms.FileField(label='Passport Attachment', required=False, help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"))
     # Add Bootstrap widgets
 	passport_attachment.widget.attrs = {'class':'bare', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
-	voter_id = forms.CharField(max_length=20, required=False, widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control'}))
+	voter_id = forms.CharField(max_length=10, required=False, widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control'}))
 	voter_attachment = forms.FileField(label='Voter ID Attachment', required=False, help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"))
     # Add Bootstrap widgets
 	voter_attachment.widget.attrs = {'class':'bare', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
