@@ -60,6 +60,14 @@ input[type="file"].bare{
 .thanks-text{color: #f44336; margin-bottom: 25px;}
 
 
+/* Datetimepicker */
+
+
+.datepicker-months{width: 200px !important}
+.datepicker-years{width: 225px !important}
+.bootstrap-datetimepicker-widget .datepicker table{width: 100% !important}
+
+
 /* Temp */
 
 #datepicker-icon-trigger{display: none;}
