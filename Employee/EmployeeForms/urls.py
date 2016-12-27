@@ -14,6 +14,7 @@ urlpatterns = [
                        url(r'^register$', views.register),
                        url(r'^register_success$', views.register_success),
                        url(r'^user_details$', views.user_details),
+                       url(r'^user_details/education_delete$', views.education_delete),
                        url(r'^user_details/education$', views.education),
                        url(r'^user_details/proof$', views.proof),
                        url(r'^user_details/previous_employment$', views.previous_employment),

@@ -335,7 +335,25 @@ def user_details(request):
 
     return render(request, 'education.html', context)
 
-@csrf_exempt
+def education_delete(request):
+    #education form
+    # import ipdb; ipdb.set_trace()
+    if request.method == 'GET':
+
+        
+        user = request.user
+        qualification = request.GET.get('qualification', '')
+        specialization = request.GET.get('specialization', '')
+        employee = Education.objects.filter(employee=request.user,
+            qualification=qualification, specialization=specialization).delete()
+        context = {"form":""}
+        form = EducationForm(request.FILES)
+        context["form"] = form
+        
+          
+        return render(request, "education_display.html", context)
+
+
 @login_required
 def education(request):
     #education form

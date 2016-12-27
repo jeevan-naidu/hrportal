@@ -143,10 +143,10 @@
   <div class="content-list the-qualification">
       <ul class="list-wrapper">
       {% for val in education_list %}
-        <li id="{{val.qual}}"> 
+        <li id="{{val.qual}},{{val.spec}}"> 
           <div class="menu-text">{{val.qual}} - <span class="qual-spec">{{val.spec}}</span></div>
-        </li>
-          <div class="menu-icon vd_red pull-right"><i class="fa fa-times"></i></div>
+          </li>
+          <div class="menu-icon vd_red pull-right"><i id ="{{val.qual}},{{val.spec}}" class="fa fa-times"></i></div>
        {% endfor %}
 
       </ul>
@@ -174,13 +174,59 @@
             
 
             <script type="text/javascript">
+
+
+
+            var theObj = 
+
+
+                            {
+              {%for val in education_list%}
+                              "{{val.qual}},{{val.spec}}":{
+                                            "qualification": "{{val.qual}}",
+                                            "specialization": "{{val.spec}}"
+                                              },    
+              {%endfor%}   
+                            }
+
+
+                     
+            $('.content-list i').click(function(){
+              // e.preventDefault();
+              debugger;
+              var qualification;
+              var specialization;
+              var the_id_key = $(this).attr('id');
+              console.log(the_id_key);
+              // Object Iteration
+              for (var key in theObj[the_id_key]) {
+                console.log(theObj[the_id_key]['qualification']);
+                var qualification = theObj[the_id_key]['qualification'];
+                console.log(theObj[the_id_key]['specialization']);
+                var specialization = theObj[the_id_key]['specialization'];
+              }
+              
+                $.ajax({
+                  type: "GET",
+                  url : '/user_details/education_delete',
+                  data : {'qualification':qualification,'specialization':specialization},
+                  success : function(data){
+                   
+                   // return data;
+                  }
+                  // error: function(xhr, status, error) {
+                  //   alert(xhr.responseText);
+                  // }
+                });
+              
+          });
                 
                             var theObj = 
 
 
                             {
               {%for val in education_list%}
-                              "{{val.qual}}":{
+                              "{{val.qual}},{{val.spec}}":{
                                             "qualification": "{{val.qual}}",
                                             "specialization": "{{val.spec}}"
                                               },    
