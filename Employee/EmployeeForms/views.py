@@ -43,13 +43,13 @@ def auth_view(request):
     try:
         userobj = User.objects.get(username=username)
     except User.DoesNotExist:
-        messages.error(request, 'Please register and confirm from your email to login!')
+        messages.error(request, 'Please register and confirm from your email to login')
         return render(request,'login.html')       
     if user is not None and userobj.is_active is True:
         auth.login(request, user)
         return HttpResponseRedirect('/loggedin')
     else:
-        messages.error(request, 'Invalid Username or password!')
+        messages.error(request, 'Invalid Username or password')
         return render(request,'login.html')
 
 def logout(request):
@@ -82,7 +82,7 @@ def register(request):
             userobj.is_active = 0
             userobj.save()
             send_registration_confirmation(username)
-            messages.error(request, 'Please check your email and click the given link!!!')
+            messages.error(request, 'Please check your email and click the given link')
             context["form"] = form
             return render(request,'welcome.html', context)
         else:
@@ -149,21 +149,21 @@ def user_details(request):
             try:
                 address = Address.objects.get(employee=request.user)
             except Address.DoesNotExist:
-                first_name = user.first_name
-                last_name = user.last_name
-                email=user.email
-                middle_name = employee.middle_name
-                nationality = employee.nationality
-                marital_status = employee.marital_status
-                wedding_date = employee.wedding_date
-                date_of_birth = employee.date_of_birth
-                blood_group = employee.blood_group
-                land_phone = employee.land_phone
-                emergency_phone1 = employee.emergency_phone1
-                emergency_phone2 = employee.emergency_phone2
-                mobile_phone = employee.mobile_phone
-                personal_email = employee.personal_email
-                gender = employee.gender
+                # first_name = user.first_name
+                # last_name = user.last_name
+                # email=user.email
+                # middle_name = employee.middle_name
+                # nationality = employee.nationality
+                # marital_status = employee.marital_status
+                # wedding_date = employee.wedding_date
+                # date_of_birth = employee.date_of_birth
+                # blood_group = employee.blood_group
+                # land_phone = employee.land_phone
+                # emergency_phone1 = employee.emergency_phone1
+                # emergency_phone2 = employee.emergency_phone2
+                # mobile_phone = employee.mobile_phone
+                # personal_email = employee.personal_email
+                # gender = employee.gender
                 form = UserDetailsForm(initial = {'first_name':request.user.first_name,'last_name':request.user.last_name,'middle_name':employee.middle_name,
                 'nationality':employee.nationality,'marital_status':employee.marital_status,'wedding_date':employee.wedding_date,'date_of_birth':employee.date_of_birth,'blood_group':employee.blood_group,
                 'land_phone':employee.land_phone,'emergency_phone1':employee.emergency_phone1,'emergency_phone2':employee.emergency_phone2,'mobile_phone':employee.mobile_phone,
@@ -178,27 +178,27 @@ def user_details(request):
             context["form"] = form
             return render(request, "wizard.html", context)
 
-        first_name = user.first_name
-        last_name = user.last_name
-        email=user.email
-        middle_name = employee.middle_name
-        nationality = employee.nationality
-        marital_status = employee.marital_status
-        wedding_date = employee.wedding_date
-        date_of_birth = employee.date_of_birth
-        blood_group = employee.blood_group
-        land_phone = employee.land_phone
-        emergency_phone1 = employee.emergency_phone1
-        emergency_phone2 = employee.emergency_phone2
-        mobile_phone = employee.mobile_phone
-        personal_email = employee.personal_email
-        gender = employee.gender
-        address_type = address.address_type
-        address1 = address.address1
-        address2 = address.address2
-        city = address.city
-        state = address.state
-        zipcode = address.zipcode
+        # first_name = user.first_name
+        # last_name = user.last_name
+        # email=user.email
+        # middle_name = employee.middle_name
+        # nationality = employee.nationality
+        # marital_status = employee.marital_status
+        # wedding_date = employee.wedding_date
+        # date_of_birth = employee.date_of_birth
+        # blood_group = employee.blood_group
+        # land_phone = employee.land_phone
+        # emergency_phone1 = employee.emergency_phone1
+        # emergency_phone2 = employee.emergency_phone2
+        # mobile_phone = employee.mobile_phone
+        # personal_email = employee.personal_email
+        # gender = employee.gender
+        # address_type = address.address_type
+        # address1 = address.address1
+        # address2 = address.address2
+        # city = address.city
+        # state = address.state
+        # zipcode = address.zipcode
                 
 
         form = UserDetailsForm(initial = {'first_name':request.user.first_name,'last_name':request.user.last_name,'middle_name':employee.middle_name,
@@ -254,6 +254,8 @@ def user_details(request):
                     zipcode = form.cleaned_data['zipcode']
 
                     userdata = UserDetails.objects.get(employee=user.id)
+                    userdata1 = Address.objects.get(employee=user.id)
+                    
                     userdata.first_name = first_name
                     userdata.last_name = last_name
                     userdata.middle_name = middle_name
@@ -268,8 +270,17 @@ def user_details(request):
                     userdata.mobile_phone = mobile_phone
                     userdata.personal_email = personal_email
                     userdata.gender = gender
+                    userdata1.address_type=address_type
+                    userdata1.address1=address1
+                    userdata1.address2=address2
+                    userdata1.city=city
+                    userdata1.state=state
+                    userdata1.zipcode=zipcode
                     userdata.save()
-                    Address(address_type=address_type,address1=address1,address2=address2,city=city,state=state,zipcode=zipcode).save()
+                    userdata1.save()
+                    
+                    context['form'] = form
+                    return HttpResponseRedirect('/user_details/education')
                     """UserDetails(employee = employee_g.employee,
                     middle_name=middle_name,
                     nationality=nationality,
@@ -284,13 +295,9 @@ def user_details(request):
                     personal_email=personal_email,
                     gender=gender).save()"""
 
-                    context['form'] = form
-                    return HttpResponseRedirect('/user_details/education')
-
             except UserDetails.DoesNotExist:
                 user = request.user
                 employee = User.objects.get(username=request.user)
-                # address = User.objects.get(employee=request.user)
                 #print "laal1"
                 first_name = form.cleaned_data['first_name']
                 last_name = form.cleaned_data['last_name']
@@ -306,6 +313,7 @@ def user_details(request):
                 mobile_phone = form.cleaned_data['mobile_phone']
                 personal_email = form.cleaned_data['personal_email']
                 gender = form.cleaned_data['gender']
+                address = User.objects.get(username=request.user)
                 address_type = form.cleaned_data['address_type']
                 address1 = form.cleaned_data['address1']
                 address2 = form.cleaned_data['address2']
@@ -313,21 +321,11 @@ def user_details(request):
                 state = form.cleaned_data['state']
                 zipcode = form.cleaned_data['zipcode']
                 
-                UserDetails(employee = employee,
-                middle_name=middle_name,
-                nationality=nationality,
-                marital_status=marital_status,
-                wedding_date=wedding_date,
-                date_of_birth=date_of_birth,
-                blood_group=blood_group,
-                land_phone=land_phone,
-                emergency_phone1=emergency_phone1,
-                emergency_phone2=emergency_phone2,
-                mobile_phone=mobile_phone,
-                personal_email=personal_email,
-                gender=gender).save()
-
-                Address(address_type=address_type,address1=address1,address2=address2,city=city,state=state,zipcode=zipcode).save()
+                UserDetails(employee = employee,middle_name=middle_name,nationality=nationality,marital_status=marital_status,wedding_date=wedding_date,
+                date_of_birth=date_of_birth,blood_group=blood_group,land_phone=land_phone, emergency_phone1=emergency_phone1,emergency_phone2=emergency_phone2,
+                mobile_phone=mobile_phone,personal_email=personal_email,gender=gender).save()
+                print employee
+                Address(employee=employee, address_type=address_type,address1=address1,address2=address2,city=city,state=state,zipcode=zipcode).save()
 
                 context['form'] = form
                 return HttpResponseRedirect('/user_details/education')
@@ -514,7 +512,7 @@ def proof(request):
         return render(request, "proof.html", context)
 
     if request.method == 'POST':
-        import ipdb; ipdb.set_trace()
+        # import ipdb; ipdb.set_trace()
         context = {"form":""}
         user = request.user
         try:
@@ -609,34 +607,7 @@ def proof(request):
                 fields_attach = [pan_attachment,aadhar_attachment, dl_attachment, passport_attachment, voter_attachment]
                 
                 check = [ val for val in fields if val]
-                # count = 0
-                # for i in range(0, 10):
-                #     if fields[i] != None:
-                #         if fields_attach[i] != None:
-                #             count += 1
-                #         else:
-                #             messages.error(request, 'Oooops!!! Please fill min 2 proofs!!!!')
-                #             context["form"] = form
-                #             return render(request,'proof.html', context)
-                #     if count > 1:
-                #         Proof(employee=employee,
-                #         pan=pan,
-                #         pan_attachment=pan_attachment,
-                #         aadhar_card=aadhar_card,
-                #         aadhar_attachment=aadhar_attachment,
-                #         dl=dl,
-                #         dl_attachment=dl_attachment,
-                #         passport=passport,
-                #         passport_attachment=passport_attachment,
-                #         voter_id=voter_id,
-                #         voter_attachment=voter_attachment).save()
-                #         context['form'] = form
-                #         return HttpResponseRedirect("/user_details/confirm")
-                #     else:
-                #         messages.error(request, 'Oooops!!! Please fill min 2 proofs!!!!')
-                #         context["form"] = form
-                #         return render(request,'proof.html', context)
-                    
+                
                 if len(check) > 1:
                     Proof(employee=employee,
                     pan=pan,
@@ -650,21 +621,6 @@ def proof(request):
                     voter_id=voter_id,
                     voter_attachment=voter_attachment).save()
                     context['form'] = form
-
-                # count = 0
-                # for i in range[fields.length]{
-                #     if fields[i] != null
-                #         if fields_attach[i] != null
-                #             count += 1
-                #         else
-                #             message: "No attachment for " + fields[i]
-
-
-                #     if count > 1
-                #         continue
-                #     else
-                #         message: "please upload min req proofs"
-                #     }
 
                     return HttpResponseRedirect("/user_details/confirm")
                 else:
@@ -846,11 +802,11 @@ def confirm(request):
                 try:
                     proof=Proof.objects.get(employee=request.user)   
                 except Proof.DoesNotExist:
-                    messages.error(request, 'Please fill all your proof details before confirming!')
+                    messages.error(request, 'Please fill all your proof details before confirming')
                     context["form"] = form
                     return render(request,'confirm.html', context)
             except UserDetails.DoesNotExist:
-                messages.error(request, 'Please fill all your User details before confirming!')
+                messages.error(request, 'Please fill all your User details before confirming')
                 context["form"] = form
                 return render(request,'confirm.html', context)
 
