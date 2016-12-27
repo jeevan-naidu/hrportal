@@ -211,7 +211,7 @@ def user_details(request):
 
     # instance = UserDetails.objects.get(employee=request.user)
     if request.method == 'POST':
-        import ipdb; ipdb.set_trace()
+        # import ipdb; ipdb.set_trace()
         context = {"form":""}
         user = request.user
 
@@ -276,7 +276,10 @@ def user_details(request):
                     userdata1.city=city
                     userdata1.state=state
                     userdata1.zipcode=zipcode
-                    userdata.save()
+                    try:
+                        userdata.save()
+                    except Exception,e:
+                        print str(e)
                     userdata1.save()
                     
                     context['form'] = form

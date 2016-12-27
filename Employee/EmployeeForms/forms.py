@@ -55,10 +55,16 @@ class UserDetailsForm(forms.ModelForm):
 	date_of_birth = forms.DateField(label="Date of Birth",widget=DateTimePicker(options=dateTimeOption),)
 	date_of_birth.widget.attrs = {'class': 'form-control filter_class', 'required':'true'}
 	blood_group = forms.ChoiceField(choices=BLOOD_GROUP_CHOICES, widget=forms.Select(attrs={'class': 'width-50 input-sm form-control','required': 'False'}))
-	land_phone =forms.IntegerField(min_value=0, max_value=99999999,required=False, widget=forms.NumberInput(attrs={'class': 'width-30 input-sm form-control'}))
-	emergency_phone1 = forms.IntegerField(min_value=0, max_value=99999999,widget=forms.NumberInput(attrs={'class': 'width-30 input-sm form-control','required': 'true'}))
-	emergency_phone2 = forms.IntegerField(min_value=0, max_value=99999999,widget=forms.NumberInput(attrs={'class': 'width-30 input-sm form-control','required': 'true'}))
-	mobile_phone = forms.IntegerField(min_value=0, max_value=99999999,widget=forms.NumberInput(attrs={'class': 'width-30 input-sm form-control','required': 'true'}))
+	land_phone = forms.RegexField(max_length=10,required=False, regex=r'^\+?1?\d{9,15}$',error_message=("Phone number must be entered in the format: '999999999'. ""It should be 10 digits."),
+                                   widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','type': 'tel', 'pattern':'^\+?1?\d{9,15}$'}))
+	mobile_number = forms.RegexField(max_length=10,required=False, regex=r'^\+?1?\d{9,15}$',error_message=("Phone number must be entered in the format: '999999999'. ""It should be 10 digits."),
+                                   widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','type': 'tel', 'pattern':'^\+?1?\d{9,15}$'}))
+	emergency_phone1 = forms.RegexField(max_length=10,regex=r'^\+?1?\d{9,15}$',error_message=("Phone number must be entered in the format: '999999999'.""It should be 10 digits."),
+                                   widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','type': 'tel', 'pattern':'^\+?1?\d{9,15}$'}))
+	emergency_phone2 = forms.RegexField(max_length=10,regex=r'^\+?1?\d{9,15}$',error_message=("Phone number must be entered in the format: '999999999'. ""It should be 10 digits."),
+                                   widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','type': 'tel', 'pattern':'^\+?1?\d{9,15}$'}))
+	mobile_phone = forms.RegexField(max_length=10,regex=r'^\+?1?\d{9,15}$',error_message=("Phone number must be entered in the format: '999999999'. ""It should be 10 digits."),
+                                   widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','type': 'tel', 'pattern':'^\+?1?\d{9,15}$'}))
 	personal_email = forms.EmailField(widget=forms.TextInput(attrs={'class': 'width-50 input-sm', 'type':'email'}))
 	gender = forms.ChoiceField(choices=GENDER_CHOICES, widget=forms.Select(attrs={'class': 'input-sm form-control','required': 'False'}))
 	address_type = forms.ChoiceField(choices=ADDRESSTYPE_CHOICES, widget=forms.Select(attrs={'class': 'width-30 input-sm form-control','required': 'True'}))
@@ -66,7 +72,8 @@ class UserDetailsForm(forms.ModelForm):
 	address2 = forms.CharField(max_length=200, required=False, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control'}))
 	city = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','required': 'True'}))
 	state = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','required': 'True'}))
-	zipcode = forms.CharField(widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','required': 'True','type':'number'}))
+	zipcode = forms.RegexField(max_length=6,required=False, regex=r'^\+?1?\d{5,6}$',error_message=("Please enter zipcode with 6 digits"),
+                                   widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','type': 'tel', 'pattern':'^\+?1?\d{5,6}$'}))
 		
 	class Meta:
 		model = UserDetails
