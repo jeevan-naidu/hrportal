@@ -43,13 +43,13 @@ def auth_view(request):
     try:
         userobj = User.objects.get(username=username)
     except User.DoesNotExist:
-        messages.error(request, 'Please register and confirm from your email to login!')
+        messages.error(request, 'Please register and confirm from your email to login')
         return render(request,'login.html')       
     if user is not None and userobj.is_active is True:
         auth.login(request, user)
         return HttpResponseRedirect('/loggedin')
     else:
-        messages.error(request, 'Invalid Username or password!')
+        messages.error(request, 'Invalid Username or password')
         return render(request,'login.html')
 
 def logout(request):
@@ -82,7 +82,7 @@ def register(request):
             userobj.is_active = 0
             userobj.save()
             send_registration_confirmation(username)
-            messages.error(request, 'Please check your email and click the given link!!!')
+            messages.error(request, 'Please check your email and click the given link')
             context["form"] = form
             return render(request,'welcome.html', context)
         else:
@@ -211,7 +211,7 @@ def user_details(request):
 
     # instance = UserDetails.objects.get(employee=request.user)
     if request.method == 'POST':
-        # import ipdb; ipdb.set_trace()
+        import ipdb; ipdb.set_trace()
         context = {"form":""}
         user = request.user
 
@@ -254,6 +254,7 @@ def user_details(request):
                     zipcode = form.cleaned_data['zipcode']
 
                     userdata = UserDetails.objects.get(employee=user.id)
+                    userdata1 = Address.objects.get(employee=user.id)
                     
                     userdata.first_name = first_name
                     userdata.last_name = last_name
@@ -269,15 +270,17 @@ def user_details(request):
                     userdata.mobile_phone = mobile_phone
                     userdata.personal_email = personal_email
                     userdata.gender = gender
+                    userdata1.address_type=address_type
+                    userdata1.address1=address1
+                    userdata1.address2=address2
+                    userdata1.city=city
+                    userdata1.state=state
+                    userdata1.zipcode=zipcode
                     userdata.save()
-                    useraddress = Address.objects.get(employee=user.id)
-                    useraddress.address_type=address_type
-                    useraddress.address1=address1
-                    useraddress.address2=address2
-                    useraddress.city=city
-                    useraddress.state=state
-                    useraddress.zipcode=zipcode
-                    useraddress.save()
+                    userdata1.save()
+                    
+                    context['form'] = form
+                    return HttpResponseRedirect('/user_details/education')
                     """UserDetails(employee = employee_g.employee,
                     middle_name=middle_name,
                     nationality=nationality,
@@ -291,9 +294,6 @@ def user_details(request):
                     mobile_phone=mobile_phone,
                     personal_email=personal_email,
                     gender=gender).save()"""
-
-                    context['form'] = form
-                    return HttpResponseRedirect('/user_details/education')
 
             except UserDetails.DoesNotExist:
                 user = request.user
@@ -802,11 +802,11 @@ def confirm(request):
                 try:
                     proof=Proof.objects.get(employee=request.user)   
                 except Proof.DoesNotExist:
-                    messages.error(request, 'Please fill all your proof details before confirming!')
+                    messages.error(request, 'Please fill all your proof details before confirming')
                     context["form"] = form
                     return render(request,'confirm.html', context)
             except UserDetails.DoesNotExist:
-                messages.error(request, 'Please fill all your User details before confirming!')
+                messages.error(request, 'Please fill all your User details before confirming')
                 context["form"] = form
                 return render(request,'confirm.html', context)
 

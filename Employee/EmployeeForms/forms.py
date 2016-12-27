@@ -5,6 +5,7 @@ import calendar
 from django.contrib.auth.forms import UserCreationForm
 from bootstrap3_datetime.widgets import DateTimePicker
 from django.utils.safestring import mark_safe
+from django.core.validators import MaxValueValidator
 from models import Address, UserDetails, Education, PreviousEmployment, Proof, GENDER_CHOICES,BLOOD_GROUP_CHOICES,MARITAL_CHOICES,QUALIFICATION,ADDRESSTYPE_CHOICES, JOB_TYPE
 dateTimeOption = {"format": "YYYY-MM-DD", "pickTime": False}
 
@@ -54,10 +55,10 @@ class UserDetailsForm(forms.ModelForm):
 	date_of_birth = forms.DateField(label="Date of Birth",widget=DateTimePicker(options=dateTimeOption),)
 	date_of_birth.widget.attrs = {'class': 'form-control filter_class', 'required':'true'}
 	blood_group = forms.ChoiceField(choices=BLOOD_GROUP_CHOICES, widget=forms.Select(attrs={'class': 'width-50 input-sm form-control','required': 'False'}))
-	land_phone =forms.CharField(max_length=10,required=False, widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','type': 'tel'}))
-	emergency_phone1 = forms.CharField(max_length=10, widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','required': 'true','type': 'tel'}))
-	emergency_phone2 = forms.CharField(max_length=10,widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','required': 'true','type': 'tel'}))
-	mobile_phone = forms.CharField(max_length=10,widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','required': 'true','type': 'tel'}))
+	land_phone =forms.IntegerField(validators=[MaxValueValidator(9999999999)],required=False, widget=forms.NumberInput(attrs={'class': 'width-30 input-sm form-control','type': 'tel'}))
+	emergency_phone1 = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'width-30 input-sm form-control','required': 'true'}))
+	emergency_phone2 = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'width-30 input-sm form-control','required': 'true'}))
+	mobile_phone = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'width-30 input-sm form-control','required': 'true'}))
 	personal_email = forms.EmailField(widget=forms.TextInput(attrs={'class': 'width-50 input-sm', 'type':'email'}))
 	gender = forms.ChoiceField(choices=GENDER_CHOICES, widget=forms.Select(attrs={'class': 'input-sm form-control','required': 'False'}))
 	address_type = forms.ChoiceField(choices=ADDRESSTYPE_CHOICES, widget=forms.Select(attrs={'class': 'width-30 input-sm form-control','required': 'True'}))
@@ -65,7 +66,7 @@ class UserDetailsForm(forms.ModelForm):
 	address2 = forms.CharField(max_length=200, required=False, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control'}))
 	city = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','required': 'True'}))
 	state = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','required': 'True'}))
-	zipcode = forms.CharField(max_length=10, widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','required': 'True'}))
+	zipcode = forms.CharField(widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','required': 'True','type':'number'}))
 		
 	class Meta:
 		model = UserDetails
