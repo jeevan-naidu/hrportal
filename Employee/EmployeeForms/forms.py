@@ -10,12 +10,12 @@ from models import Address, UserDetails, Education, PreviousEmployment, Proof, G
 dateTimeOption = {"format": "YYYY-MM-DD", "pickTime": False}
 
 class UserRegistrationForm(UserCreationForm):
-	username = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'width-100 input-sm form-control','required': 'True'}))
-	first_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'width-100 input-sm form-control','required': 'True'}))
-	last_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'width-100 input-sm form-control','required': 'True'}))
-	email = forms.EmailField(required=True, widget=forms.TextInput(attrs={'class': 'width-100 input-sm form-control','required': 'True','data-error': 'User with this email id exists'}))
-	password1 = forms.CharField(required=True, widget=forms.PasswordInput(attrs={'class': 'width-100 input-sm form-control','required': 'True'}))
-	password2 = forms.CharField(required=True, widget=forms.PasswordInput(attrs={'class': 'width-100 input-sm form-control','required': 'True'}))
+	username = forms.CharField(required=True, widget=forms.TextInput())
+	first_name = forms.CharField(required=True, widget=forms.TextInput())
+	last_name = forms.CharField(required=True, widget=forms.TextInput())
+	email = forms.EmailField(required=True, widget=forms.TextInput(attrs={'required': 'True','data-error': 'User with this email id exists'}))
+	password1 = forms.CharField(required=True, widget=forms.PasswordInput())
+	password2 = forms.CharField(required=True, widget=forms.PasswordInput())
 
 	class Meta:
 		model = User
