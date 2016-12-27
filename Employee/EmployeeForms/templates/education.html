@@ -137,13 +137,13 @@
 <!--   <input type="button" id="vivek1" class="btn vd_bg-green vd_white width-10" value="vivek1"/>
   <input type="button" id="vivek2" class="btn vd_bg-green vd_white width-10" value="vivek2"/> -->
 
-  <div class="content-list">
+  <div class="content-list the-qualification">
       <ul class="list-wrapper">
       {% for val in education_list %}
         <li id="{{val.qual}}"> 
-          <div class="menu-text">{{val.qual}}</div>
-          <div class="menu-text">{{val.spec}}</div>
+          <div class="menu-text">{{val.qual}} - <span class="qual-spec">{{val.spec}}</span></div>
         </li>
+          <div class="menu-icon vd_red pull-right"><i class="fa fa-times"></i></div>
        {% endfor %}
 
       </ul>

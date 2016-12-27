@@ -52,7 +52,16 @@ input[type="file"].bare{
 
 /* Education form */
 
+.the-qualification{color: #b15814}
+.the-qualification .menu-icon{
+    margin-top: -30px;
+    margin-right: 5px;
+    position: relative;    
+    cursor: pointer;
+}
 #user-list .content-list li{cursor: pointer;}
+
+.qual-spec{font-weight: bold;color: #8e8e8e}
 
 
 /* Confirm */
