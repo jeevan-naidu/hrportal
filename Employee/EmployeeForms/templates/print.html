@@ -5,10 +5,14 @@
 
 	<link href="/static/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 	<style type="text/css">
+
+	h3{margin-bottom: 50px;}
 		
 	div.print-div span{
 		display: inline-block;
 		width: 100px;
+		margin-left: 25%;
+		margin-right: 25px;
 	}
 	div.print-div span:after{
 		content: ":";
@@ -17,6 +21,10 @@
 	}
 
 	</style>
+
+	<script type="text/javascript">
+		window.load(this.print());
+	</script>
 </head>
 <body>
 
@@ -26,7 +34,7 @@
 <div class="print-div"><span>Last Name</span> {{request.user.last_name}} </div>
 
 
-<button class="btn btn-primary" onclick="window.print()">Print this</button>
+<!-- <button class="btn btn-primary" onclick="window.print()">Print this</button> -->
 </div>
 </body>
 </html>
