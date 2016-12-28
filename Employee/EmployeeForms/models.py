@@ -54,6 +54,8 @@ ADDRESSTYPE_CHOICES = (
     ('TM', 'Temporary'),
     )
 
+
+
 def content_file_name(instance, filename):
     ''' This function generates a random string of length 16 which will be a combination of (4 digits + 4
     characters(lowercase) + 4 digits + 4 characters(uppercase)) seperated 4 characters by hyphen(-) '''
@@ -96,12 +98,8 @@ class Address(models.Model):
     zipcode = models.CharField("Zip Code", max_length=10, blank=False)
 
     def __unicode__(self):
-        return u'{0}, {1}, {2}, {3}, {4}'.format(
-            self.address1,
-            self.address2,
-            self.city,
-            self.state,
-            self.zipcode)
+        return u'{0}'.format(
+            self.address_type)
 
 class UserDetails(models.Model):
     employee = models.ForeignKey(User, blank=True, null=True)
@@ -130,7 +128,7 @@ class PreviousEmployment(models.Model):
     employed_from = models.DateField(verbose_name="Start Date", null=False)
     employed_upto = models.DateField(verbose_name="End Date", null=False)
     last_ctc = models.FloatField("Last CTC")
-    reason_for_exit = models.CharField(verbose_name="Reason for Exit",max_length=50)
+    reason_for_exit = models.CharField(verbose_name="Reason for Exit",max_length=100)
     job_type = models.CharField('Job Type', choices = JOB_TYPE, max_length = 5, default="PT")
     ps_attachment = models.FileField(upload_to=content_file_name,blank=True, null=True, verbose_name="Pay Slip Attachment")
     rl_attachment = models.FileField(upload_to=content_file_name,blank=True, null=True, verbose_name="Relieving letter Attachment")

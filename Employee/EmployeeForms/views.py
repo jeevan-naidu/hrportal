@@ -147,23 +147,9 @@ def user_details(request):
         try:
             employee = UserDetails.objects.get(employee=request.user)
             try:
-                address = Address.objects.get(employee=request.user)
+                address = Address.objects.get(employee=request.user, address_type='PR')
             except Address.DoesNotExist:
-                # first_name = user.first_name
-                # last_name = user.last_name
-                # email=user.email
-                # middle_name = employee.middle_name
-                # nationality = employee.nationality
-                # marital_status = employee.marital_status
-                # wedding_date = employee.wedding_date
-                # date_of_birth = employee.date_of_birth
-                # blood_group = employee.blood_group
-                # land_phone = employee.land_phone
-                # emergency_phone1 = employee.emergency_phone1
-                # emergency_phone2 = employee.emergency_phone2
-                # mobile_phone = employee.mobile_phone
-                # personal_email = employee.personal_email
-                # gender = employee.gender
+                
                 form = UserDetailsForm(initial = {'first_name':request.user.first_name,'last_name':request.user.last_name,'middle_name':employee.middle_name,
                 'nationality':employee.nationality,'marital_status':employee.marital_status,'wedding_date':employee.wedding_date,'date_of_birth':employee.date_of_birth,'blood_group':employee.blood_group,
                 'land_phone':employee.land_phone,'emergency_phone1':employee.emergency_phone1,'emergency_phone2':employee.emergency_phone2,'mobile_phone':employee.mobile_phone,
@@ -178,40 +164,18 @@ def user_details(request):
             context["form"] = form
             return render(request, "wizard.html", context)
 
-        # first_name = user.first_name
-        # last_name = user.last_name
-        # email=user.email
-        # middle_name = employee.middle_name
-        # nationality = employee.nationality
-        # marital_status = employee.marital_status
-        # wedding_date = employee.wedding_date
-        # date_of_birth = employee.date_of_birth
-        # blood_group = employee.blood_group
-        # land_phone = employee.land_phone
-        # emergency_phone1 = employee.emergency_phone1
-        # emergency_phone2 = employee.emergency_phone2
-        # mobile_phone = employee.mobile_phone
-        # personal_email = employee.personal_email
-        # gender = employee.gender
-        # address_type = address.address_type
-        # address1 = address.address1
-        # address2 = address.address2
-        # city = address.city
-        # state = address.state
-        # zipcode = address.zipcode
-                
-
         form = UserDetailsForm(initial = {'first_name':request.user.first_name,'last_name':request.user.last_name,'middle_name':employee.middle_name,
-        'nationality':employee.nationality,'marital_status':employee.marital_status,'wedding_date':employee.wedding_date,'date_of_birth':employee.date_of_birth,'blood_group':employee.blood_group,
-        'land_phone':employee.land_phone,'emergency_phone1':employee.emergency_phone1,'emergency_phone2':employee.emergency_phone2,'mobile_phone':employee.mobile_phone,
-        'personal_email':employee.personal_email,'gender':employee.gender,'address_type':address.address_type,'address1':address.address1,'address2':address.address2,'city':address.city,'state':address.state,'zipcode':address.zipcode})
+        'nationality':employee.nationality,'marital_status':employee.marital_status,'wedding_date':employee.wedding_date,'date_of_birth':employee.date_of_birth,
+        'blood_group':employee.blood_group,'land_phone':employee.land_phone,'emergency_phone1':employee.emergency_phone1,'emergency_phone2':employee.emergency_phone2,
+        'mobile_phone':employee.mobile_phone,'personal_email':employee.personal_email,'gender':employee.gender,'address_type':address.address_type,'address1':address.address1,
+        'address2':address.address2,'city':address.city,'state':address.state,'zipcode':address.zipcode})
 
         context["form"] = form
         return render(request, "wizard.html", context)
 
     # instance = UserDetails.objects.get(employee=request.user)
     if request.method == 'POST':
-        import ipdb; ipdb.set_trace()
+        # import ipdb; ipdb.set_trace()
         context = {"form":""}
         user = request.user
 
@@ -369,6 +333,47 @@ def education_delete(request):
         return render(request, "education_display.html", context)
         #return HttpResponseRedirect('/user_details/education')
 
+def address_tempo(request):
+    # import ipdb; ipdb.set_trace()
+    if request.method=='GET':
+        context = {"form":""}
+        form = UserDetailsForm(request.POST)
+       
+        user = request.user
+        employee = UserDetails.objects.get(employee=request.user)
+
+        form = UserDetailsForm(initial = {'first_name':request.user.first_name,'last_name':request.user.last_name,'middle_name':employee.middle_name,
+        'nationality':employee.nationality,'marital_status':employee.marital_status,'wedding_date':employee.wedding_date,'date_of_birth':employee.date_of_birth,'blood_group':employee.blood_group,
+        'land_phone':employee.land_phone,'emergency_phone1':employee.emergency_phone1,'emergency_phone2':employee.emergency_phone2,'mobile_phone':employee.mobile_phone,
+        'personal_email':employee.personal_email,'gender':employee.gender})
+        
+        context["form"] = form
+        return render(request, "wizard.html", context)
+
+def address_copy(request):
+    # import ipdb; ipdb.set_trace()
+    if request.method=='POST':
+        user = request.user
+        employee = UserDetails.objects.get(employee=request.user)
+
+        form = UserDetailsForm(initial = {'first_name':request.user.first_name,'last_name':request.user.last_name,'middle_name':employee.middle_name,
+        'nationality':employee.nationality,'marital_status':employee.marital_status,'wedding_date':employee.wedding_date,'date_of_birth':employee.date_of_birth,'blood_group':employee.blood_group,
+        'land_phone':employee.land_phone,'emergency_phone1':employee.emergency_phone1,'emergency_phone2':employee.emergency_phone2,'mobile_phone':employee.mobile_phone,
+        'personal_email':employee.personal_email,'gender':employee.gender})
+        context = {"form":""}
+        form = UserDetailsForm(request.POST)
+        
+        if form.is_valid():
+            address = Address.objects.filter(employee=request.user, address_type='PR')
+            address_type = 'TM'
+            address1 = form.cleaned_data['address1']
+            address2 = form.cleaned_data['address2']
+            city = form.cleaned_data['city']
+            state = form.cleaned_data['state']
+            zipcode = form.cleaned_data['zipcode']
+            Address(employee=user, address_type=address_type,address1=address1,address2=address2,city=city,state=state,zipcode=zipcode).save()
+            context["form"] = form
+            return render(request, "wizard.html", context)
 
 @login_required
 def education(request):
@@ -397,7 +402,7 @@ def education(request):
             'overall_marks':employee.overall_marks,'marks_card_attachment':employee.marks_card_attachment})
             context["form"] = form
             
-            return render(request, "education.html", context)
+            return render(request, "education_display.html", context)
         except Education.DoesNotExist:
             context = {"form":""}
             form = EducationForm()

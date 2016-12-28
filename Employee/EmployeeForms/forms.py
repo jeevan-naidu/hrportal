@@ -100,21 +100,19 @@ class EducationForm(forms.ModelForm):
     # Add Bootstrap widgets
 	marks_card_attachment.widget.attrs = {'class':'bare', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
 
+	def clean(self):
+		from_date = self.cleaned_data.get("from_date")
+		to_date = self.cleaned_data.get("to_date")
+		if to_date < from_date:
+			msg = u"End date should be greater than start date."
+			self._errors["to_date"] = self.error_class([msg])
+
 	class Meta:
 		model = Education
 		fields = ['qualification', 'specialization', 'from_date', 'to_date', 'institute', 'board_university', 'overall_marks', 'marks_card_attachment']
 		exclude = ['employee']
 
-	def clean(self):
-		cleaned_data = self.cleaned_data
-		to_date = cleaned_data.get('to_date')
-		from_date = cleaned_data.get('from-date')
-		if to_date and from_date:
-			if to_date < from_date:
-				self.add_error('to_date', 'Event end date should not occur before start date.')
-            # You can use ValidationError as well
-            # self.add_error('end_date', form.ValidationError('Event end date should not occur before start date.'))
-    		return cleaned_data
+	
 
 class PreviousEmploymentForm(forms.ModelForm):
 
@@ -138,17 +136,6 @@ class PreviousEmploymentForm(forms.ModelForm):
 		model = PreviousEmployment
 		fields = ['company_name', 'company_address', 'job_type',  'employed_from', 'employed_upto', 'last_ctc','reason_for_exit', 'ps_attachment', 'rl_attachment']
 		exclude = ['employee']
-
-	def clean(self):
-		cleaned_data = self.cleaned_data
-		employed_upto = cleaned_data.get('employed_upto')
-		employed_from = cleaned_data.get('employed_from')
-		if employed_upto and employed_from:
-			if employed_upto < employed_from:
-				self.add_error('employed_upto', 'Event end date should not occur before start date.')
-            # You can use ValidationError as well
-            # self.add_error('end_date', form.ValidationError('Event end date should not occur before start date.'))
-    		return cleaned_data
 
 class ProofForm(forms.ModelForm):
 

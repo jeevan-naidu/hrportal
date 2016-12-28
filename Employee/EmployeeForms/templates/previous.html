@@ -20,10 +20,10 @@
                 <li><a href="/user_details">
                   <div class="menu-icon"> 1 </div>
                   User Profile </a></li>
-                <li><a href="#tab2" data-toggle="tab">
+                <li><a href="/user_details/education">
                   <div class="menu-icon"> 2 </div>
                   Education </a></li>
-                <li class="active"><a href="/user_details/previous_employment">
+                <li class="active"><a href="#tab3" data-toggle="tab">
                   <div class="menu-icon"> 3 </div>
                   Previous Employment </a></li>
                 <li><a href="/user_details/proof">
@@ -43,7 +43,7 @@
 
 <div class="tab-pane" id="tab2">
 
-  <form id="education_form" enctype="multipart/form-data" method="post" class="form-horizontal col-sm-7" enctype="multipart/form-data" data-toggle="validator">
+  <form id="previous_employment_form" enctype="multipart/form-data" method="post" class="form-horizontal col-sm-7" enctype="multipart/form-data" data-toggle="validator">
 
   {% csrf_token %}
   <!-- <div class="form-group">
@@ -67,6 +67,15 @@
     <div class="col-sm-7 controls">
       {{form.company_address}}
       {{form.company_address.errors}}
+      <div class="help-block with-errors"></div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-5 control-label">Job Type</label>
+    <div class="col-sm-7 controls">
+      {{form.job_type}}
+      {{form.job_type.errors}}
       <div class="help-block with-errors"></div>
     </div>
   </div>

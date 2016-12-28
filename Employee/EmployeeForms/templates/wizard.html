@@ -194,7 +194,7 @@
                             <div class="form-group">
                               <label class="col-sm-2 control-label">Address Type<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-7 controls">
-                                {{form.address_type}}
+                                {{form.address_type}}<span id="address" class="glyphicon glyphicon-plus"></span>
                                 <div class="help-block with-errors"></div>
                               </div>
                             </div>
@@ -313,7 +313,32 @@
 
 // Wedding date
 
-
+$("#address").click(function (e) {
+                  e.preventDefault();
+                  swal({   title: "Do you want to make your permanent address as temporary address??",
+                    text: "Press NO if u want add your temporary address manually",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "YES",
+                    cancelButtonText: "NO",
+                    closeOnConfirm: true,
+                    closeOnCancel: true
+                    },
+                    function(isConfirm) {
+                      if (isConfirm) {
+                        $.ajax( {
+                          type: "POST",
+                          url: '/user_details/address_copy',
+                          data: $("#user_details_form").serialize(),
+                          success: function( response ) {
+                             window.location='/user_details'
+                          }
+                        });
+                      }else{
+                          window.location='/user_details/address_tempo'
+                        }});
+                    });
 
 
 $('select#id_marital_status').change(function(){
