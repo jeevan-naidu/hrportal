@@ -133,16 +133,18 @@
 <!--   <input type="button" id="vivek1" class="btn vd_bg-green vd_white width-10" value="vivek1"/>
   <input type="button" id="vivek2" class="btn vd_bg-green vd_white width-10" value="vivek2"/> -->
 
-                    <div class="content-list">
-                        <ul class="list-wrapper">
-                        {% for val in employment_list %}
-                          <li id="{{val.company_name}}"> 
-                            <div class="menu-text">{{val.company_name}}</div>
-                          </li>
-                         {% endfor %}
+    <div class="content-list the-previous">
+      <ul class="list-wrapper">
+      {% for val in employment_list %}
+        <li id="{{val.company_name}}"> 
+          <div class="menu-text">{{val.company_name}}</div>
+          </li>
+          <div class="menu-icon vd_red pull-right"><i id ="{{val.company_name}}" class="glyphicon glyphicon-trash"></i></div>
+       {% endfor %}
 
-                        </ul>
-                      </div><!-- ./ content-list -->
+      </ul>
+    </div><!-- ./ content-list -->
+
 
                     </div><!-- ./ user-list -->
 
@@ -165,6 +167,50 @@
                      <!-- row -->
 
                      <script type="text/javascript">
+
+
+                     var theObj = 
+
+
+                            {
+              {%for val in education_list%}
+                              "{{val.company_name}}":{
+                                            "qualification": "{{val.qual}}",
+                                            "specialization": "{{val.spec}}"
+                                              },    
+              {%endfor%}   
+                            }
+
+
+                     
+            $('.content-list i').click(function(){
+              // e.preventDefault();
+              // debugger;
+              var company_name;
+              var the_id_key = $(this).attr('id');
+              console.log(the_id_key);
+              // Object Iteration
+              for (var key in theObj[the_id_key]) {
+                console.log(theObj[the_id_key]['company_name']);
+                var company_name = theObj[the_id_key]['company_name'];
+                
+              }
+              
+              
+                $.ajax({
+                  type: "GET",
+                  url : '/user_details/education_delete',
+                  data : {'company_name':company_name},
+                  success : function(data){
+                   $("#previous_employment_form")
+                   // return data;
+                  }
+                  // error: function(xhr, status, error) {
+                  //   alert(xhr.responseText);
+                  // }
+                });
+              
+          });
                 
                             var theObj = 
 

@@ -335,6 +335,21 @@ def user_details(request):
 
     return render(request, 'education.html', context)
 
+def previous_delete(request):
+    #education form
+    # import ipdb; ipdb.set_trace()
+    if request.method == 'GET':
+
+        
+        user = request.user
+        company_name = request.GET.get('company_name', '')
+        employee = Education.objects.filter(employee=request.user,company_name=company_name).delete()
+        context = {"form":""}
+        form = PreviousEmploymentForm(request.FILES)
+        context["form"] = form
+        
+        return render(request, "previous_display.html", context)
+
 def education_delete(request):
     #education form
     # import ipdb; ipdb.set_trace()

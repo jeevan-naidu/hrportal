@@ -146,7 +146,7 @@
         <li id="{{val.qual}},{{val.spec}}"> 
           <div class="menu-text">{{val.qual}} - <span class="qual-spec">{{val.spec}}</span></div>
           </li>
-          <div class="menu-icon vd_red pull-right"><i id ="{{val.qual}},{{val.spec}}" class="fa fa-times"></i></div>
+          <div class="menu-icon vd_red pull-right"><i id ="{{val.qual}},{{val.spec}}" class="glyphicon glyphicon-trash"></i></div>
        {% endfor %}
 
       </ul>
@@ -193,7 +193,7 @@
                      
             $('.content-list i').click(function(){
               // e.preventDefault();
-              debugger;
+              // debugger;
               var qualification;
               var specialization;
               var the_id_key = $(this).attr('id');
@@ -211,7 +211,7 @@
                   url : '/user_details/education_delete',
                   data : {'qualification':qualification,'specialization':specialization},
                   success : function(data){
-                   
+                   $("#education_form")
                    // return data;
                   }
                   // error: function(xhr, status, error) {
