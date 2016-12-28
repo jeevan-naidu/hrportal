@@ -112,7 +112,7 @@ class UserDetails(models.Model):
     wedding_date = models.DateField(verbose_name='Wedding Date',null=True,blank=True)
     date_of_birth = models.DateField(verbose_name='Date of Birth',null=True,blank=True)
     blood_group = models.CharField("Blood Group",max_length=3,choices=BLOOD_GROUP_CHOICES,blank=True)
-    mobile_phone = models.CharField("Mobile Phone",max_length=10,unique=True,blank=False)
+    mobile_phone = models.CharField("Mobile Phone",max_length=10,unique=True,blank=False,null=True)
     land_phone = models.CharField("Landline Number", max_length=10,blank=True,null=True)
     emergency_phone1 = models.CharField("Emergency Contact Number1",max_length=10,unique=True,blank=True,null=True)
     emergency_phone2 = models.CharField("Emergency Contact Number2",max_length=10,unique=True,blank=True,null=True)

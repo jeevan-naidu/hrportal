@@ -108,7 +108,7 @@ def send_registration_confirmation(username):
     p = ccc
     title = "Thanks for registration"
     content = "http://35.154.44.172:8000/confirmation/" + str(p.confirmation_code) + "/" + username.username
-    send_mail(title, content, 'dummy@ansrsource.com', [username.email], fail_silently=False)
+    send_mail(title, content, 'myansrsource@ansrsource.com', [username.email], fail_silently=False)
 
 def confirmation(request, confirmation_code, username):
     print confirmation_code
@@ -211,7 +211,7 @@ def user_details(request):
 
     # instance = UserDetails.objects.get(employee=request.user)
     if request.method == 'POST':
-        # import ipdb; ipdb.set_trace()
+        import ipdb; ipdb.set_trace()
         context = {"form":""}
         user = request.user
 
@@ -336,14 +336,14 @@ def user_details(request):
     return render(request, 'education.html', context)
 
 def previous_delete(request):
-    #education form
+    
     # import ipdb; ipdb.set_trace()
     if request.method == 'GET':
 
         
         user = request.user
         company_name = request.GET.get('company_name', '')
-        employee = Education.objects.filter(employee=request.user,company_name=company_name).delete()
+        employee = PreviousEmployment.objects.filter(employee=request.user,company_name=company_name).delete()
         context = {"form":""}
         form = PreviousEmploymentForm(request.FILES)
         context["form"] = form
@@ -367,6 +367,7 @@ def education_delete(request):
         
           
         return render(request, "education_display.html", context)
+        #return HttpResponseRedirect('/user_details/education')
 
 
 @login_required
@@ -396,7 +397,7 @@ def education(request):
             'overall_marks':employee.overall_marks,'marks_card_attachment':employee.marks_card_attachment})
             context["form"] = form
             
-            return render(request, "education_display.html", context)
+            return render(request, "education.html", context)
         except Education.DoesNotExist:
             context = {"form":""}
             form = EducationForm()

@@ -211,7 +211,7 @@
                   url : '/user_details/education_delete',
                   data : {'qualification':qualification,'specialization':specialization},
                   success : function(data){
-                   $("#education_form")
+                   window.location='/user_details/education'
                    // return data;
                   }
                   // error: function(xhr, status, error) {
@@ -308,3 +308,4 @@
 <!-- End here -->
 
 {% endblock %}
+

@@ -57,8 +57,6 @@ class UserDetailsForm(forms.ModelForm):
 	blood_group = forms.ChoiceField(choices=BLOOD_GROUP_CHOICES, widget=forms.Select(attrs={'class': 'width-50 input-sm form-control','required': 'False'}))
 	land_phone = forms.RegexField(max_length=10,required=False, regex=r'^\+?1?\d{9,15}$',error_message=("Phone number must be entered in the format: '999999999'. ""It should be 10 digits."),
                                    widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','type': 'tel', 'pattern':'^\+?1?\d{9,15}$'}))
-	mobile_number = forms.RegexField(max_length=10,required=False, regex=r'^\+?1?\d{9,15}$',error_message=("Phone number must be entered in the format: '999999999'. ""It should be 10 digits."),
-                                   widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','type': 'tel', 'pattern':'^\+?1?\d{9,15}$'}))
 	emergency_phone1 = forms.RegexField(max_length=10,regex=r'^\+?1?\d{9,15}$',error_message=("Phone number must be entered in the format: '999999999'.""It should be 10 digits."),
                                    widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','type': 'tel', 'pattern':'^\+?1?\d{9,15}$'}))
 	emergency_phone2 = forms.RegexField(max_length=10,regex=r'^\+?1?\d{9,15}$',error_message=("Phone number must be entered in the format: '999999999'. ""It should be 10 digits."),
@@ -121,7 +119,7 @@ class EducationForm(forms.ModelForm):
 class PreviousEmploymentForm(forms.ModelForm):
 
 	company_name = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'input-sm form-control','required': 'True'}))
-	company_address = forms.CharField(max_length=500, widget=forms.TextInput(attrs={'class': 'input-sm form-control','required': 'True'}))
+	company_address = forms.CharField(required=False, max_length=500, widget=forms.TextInput(attrs={'class': 'input-sm form-control'}))
 	job_type = forms.ChoiceField(choices=JOB_TYPE, widget=forms.Select(attrs={'class': 'input-sm form-control','required': 'False'}))
 	employed_from = forms.DateField(label="From date",widget=DateTimePicker(options=dateTimeOption),)
 	employed_from.widget.attrs = {'class': 'form-control filter_class', 'required':'true'}

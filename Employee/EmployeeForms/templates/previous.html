@@ -1,8 +1,11 @@
 {% extends 'master.html' %}
-{% block pageTitle %}Previous Employment Details{% endblock %}
-{% block pageSubTitle %}Start entering your work details here{% endblock %}
-{%block content %}
 
+
+{%block content %}
+<head>
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
 
   <div class="row">
     <div class="col-md-12">
@@ -17,10 +20,10 @@
                 <li><a href="/user_details">
                   <div class="menu-icon"> 1 </div>
                   User Profile </a></li>
-                <li><a href="/user_details/education">
+                <li><a href="#tab2" data-toggle="tab">
                   <div class="menu-icon"> 2 </div>
                   Education </a></li>
-                <li class="active"><a href="#tab3" data-toggle="tab">
+                <li class="active"><a href="/user_details/previous_employment">
                   <div class="menu-icon"> 3 </div>
                   Previous Employment </a></li>
                 <li><a href="/user_details/proof">
@@ -32,108 +35,112 @@
               </ul>
 <hr>
 
-              <div class="tab-pane" id="tab3">
-
-                <form id="previous_employment_form" method="post" class="form-horizontal col-sm-7" enctype="multipart/form-data" data-toggle="validator">
-
-                {% csrf_token %}
-                <div class="form-group">
-                  <label class="col-sm-5 control-label">Company Name<span class="mandatory-field"> *</span></label>
-                  <div id = "id_company_name" class="col-sm-7 controls">
-                    {{form.company_name}}
-                    <div class="help-block with-errors"></div>
-
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label class="col-sm-5 control-label">Company Address</label>
-                  <div class="col-sm-7 controls">
-                    {{form.company_address}}
-                    <div class="help-block with-errors"></div>
-
-                  </div>
-                    </div>
-
-                    <div class="form-group">
-                      <label class="col-sm-5 control-label">Job Type<span class="mandatory-field"> *</span></label>
-                      <div class="col-sm-7 controls">
-                        {{form.job_type}}
-                    <div class="help-block with-errors"></div>
-
-                      </div>
-                        </div>
-
-                <div class="form-group">
-                  <label class="col-sm-5 control-label">Employed From<span class="mandatory-field"> *</span></label>
-                  <div class="col-sm-7 controls">
-                    {{form.employed_from}}
-                    <div class="help-block with-errors"></div>
-
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-5 control-label">Employed To<span class="mandatory-field"> *</span></label>
-                  <div class="col-sm-7 controls">
-                    {{form.employed_upto}}
-                    <div class="help-block with-errors"></div>
-
-                  </div>
-                </div>
+<!--               <div class="progress progress-striped active">
+                <div class="progress-bar progress-bar-info" > </div>
+              </div> -->
 
 
 
+<div class="tab-pane" id="tab2">
 
-                <div class="form-group">
-                  <label class="col-sm-5 control-label">Last CTC<span class="mandatory-field"> *</span></label>
-                  <div class="col-sm-7 controls">
-                    {{form.last_ctc}}
-                    <div class="help-block with-errors"></div>
+  <form id="education_form" enctype="multipart/form-data" method="post" class="form-horizontal col-sm-7" enctype="multipart/form-data" data-toggle="validator">
 
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-5 control-label">Reason For Exit</label>
-                  <div class="col-sm-7 controls">
-                    {{form.reason_for_exit}}
-                    
-                    <div class="help-block with-errors"></div>
+  {% csrf_token %}
+  <!-- <div class="form-group">
+    <label class="col-sm-5 control-label">Employee</label>
+    <div class="col-sm-7 controls">
+      {{form.employee}}
+    </div>
+  </div> -->
 
-                  </div>
-                </div>
-               <div class="form-group">
-                  <label class="col-sm-5 control-label">Pay slip Attachment<span class="mandatory-field"> *</span></label>
-                  <div class="col-sm-7 controls">
-                    {{form.ps_attachment}}
-                    <div class="help-block with-errors"></div>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-5 control-label">Attachments for Relieving Letter</label>
-                  <div class="col-sm-7 controls">
-                      {{form.rl_attachment}}
-                    <div class="help-block with-errors"></div>
-                  </div>
-                </div>
+  <div class="form-group">
+    <label class="col-sm-5 control-label">Company Name<span class="mandatory-field"> *</span></label>
+    <div class="col-sm-7 controls">
+      {{form.company_name}}
+      {{form.company_name.errors}}
+      <div class="help-block with-errors"></div>
+    </div>
+  </div>
 
-                <div class="form-group">
-
-                    <h3 class="col-sm-12 text-right"><input type="submit" id="submit" class="btn vd_bg-green vd_white" value="Save"/></h3>
-                </div>
-
-                <!-- <div class="form-group">
-                    <h3 class="text-center"><input type="submit" id="submit1" onclick="myFunction()" class="btn btn-danger" onclick="form.action='/user_details/previous_employment';" value="Save-addmore"/></h3>
-                </div> -->
-           </form>
+  <div class="form-group">
+    <label class="col-sm-5 control-label">Company Address</label>
+    <div class="col-sm-7 controls">
+      {{form.company_address}}
+      {{form.company_address.errors}}
+      <div class="help-block with-errors"></div>
+    </div>
+  </div>
 
 
 
+  <div class="form-group">
+    <label id ="from_date" class="col-sm-5 control-label">Employed From<span class="mandatory-field"> *</span></label>
+    <div class="col-sm-7 controls">
+      <div class="input-group">
+        {{form.employed_from}}
+        {{form.employed_from.errors}}
+      <div class="help-block with-errors"></div>
+        <span class="input-group-addon" id="datepicker-icon-trigger" data-datepicker="#datepicker-icon"><i class="fa fa-calendar"></i></span> </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label id="to_date" class="col-sm-5 control-label">Employed To<span class="mandatory-field"> *</span></label>
+    <div class="col-sm-7 controls">
+      <div class="input-group">
+        {{form.employed_upto}}
+        {{form.employed_upto.errors}}
+        <div class="help-block with-errors"></div>        
+        <span class="input-group-addon" id="datepicker-icon-trigger" data-datepicker="#datepicker-icon"><i class="fa fa-calendar"></i></span> </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-5 control-label">Last CTC<span class="mandatory-field"> *</span></label>
+    <div id="institute" class="col-sm-7 controls">
+      {{form.last_ctc}}
+      {{form.last_ctc.errors}}
+      <div class="help-block with-errors"></div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-5 control-label">Reason for Exit<span class="mandatory-field"> *</span></label>
+    <div class="col-sm-7 controls">
+      {{form.reason_for_exit}}
+      {{form.board_reason_for_exituniversity.errors}}
+      <div class="help-block with-errors"></div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-5 control-label">Pay slips attachments<span class="mandatory-field"> *</span></label>
+    <div class="col-sm-7 controls">
+      {{form.ps_attachment}}
+      {{form.ps_attachment.errors}}
+      <div class="help-block with-errors"></div>
+    </div>
+  </div>
 
-            <div id="user-list" class="col-sm-5">
+  
+  <div class="form-group">
+    <label class="col-sm-5 control-label">Relieving letter<span class="mandatory-field"> *</span></label>
+    <div class="col-sm-7 controls">
+      {{form.rl_attachment}}
+      <div class="help-block with-errors"></div>
+    </div>
+  </div>
+
+  
+  <div class="form-group">
+
+        <h3 class="col-sm-12 text-right"><input type="submit" id="submit" class="btn vd_bg-green vd_white" value="Save"/></h3>
+
+  </div>
+</form>
+
+
+<div id="user-list" class="col-sm-5">
 <!--   <input type="button" id="vivek1" class="btn vd_bg-green vd_white width-10" value="vivek1"/>
   <input type="button" id="vivek2" class="btn vd_bg-green vd_white width-10" value="vivek2"/> -->
 
-    <div class="content-list the-previous">
+  <div class="content-list the-previous">
       <ul class="list-wrapper">
       {% for val in employment_list %}
         <li id="{{val.company_name}}"> 
@@ -145,38 +152,38 @@
       </ul>
     </div><!-- ./ content-list -->
 
-
-                    </div><!-- ./ user-list -->
-
+  </div><!-- ./ user-list -->
 
 
-                  </div><!-- ./tab-content -->
+
+</div><!-- ./tab-content -->
 
 
-        
 
-                                </div><!-- ./wizard1 ~~~ -->
+                       </div><!-- ./wizard1 ~~~ -->
 
-                           </div>
-                           <!-- Panel Body -->
-                         </div>
-                         <!-- Panel Widget -->
-                       </div>
-                       <!-- col-md-12 -->
-                     </div>
-                     <!-- row -->
+                  </div>
+                  <!-- Panel Body -->
+                </div>
+                <!-- Panel Widget -->
+              </div>
+              <!-- col-md-12 -->
+            </div>
+            <!-- row -->
+            
+            
 
-                     <script type="text/javascript">
+            <script type="text/javascript">
 
 
-                     var theObj = 
+
+            var theObj = 
 
 
                             {
-              {%for val in education_list%}
+              {%for val in employment_list%}
                               "{{val.company_name}}":{
-                                            "qualification": "{{val.qual}}",
-                                            "specialization": "{{val.spec}}"
+                                            "company_name": "{{val.company_name}}"
                                               },    
               {%endfor%}   
                             }
@@ -192,17 +199,15 @@
               // Object Iteration
               for (var key in theObj[the_id_key]) {
                 console.log(theObj[the_id_key]['company_name']);
-                var company_name = theObj[the_id_key]['company_name'];
-                
+                var qualification = theObj[the_id_key]['company_name'];
               }
-              
               
                 $.ajax({
                   type: "GET",
-                  url : '/user_details/education_delete',
+                  url : '/user_details/previous_delete',
                   data : {'company_name':company_name},
                   success : function(data){
-                   $("#previous_employment_form")
+                   window.location='/user_details/previous_employment'
                    // return data;
                   }
                   // error: function(xhr, status, error) {
@@ -216,10 +221,9 @@
 
 
                             {
-                                {%for val in employment_list%}
-                                                  "{{val.company_name}}":{
-                                                  "company_name": "{{val.company_name}}",
-                                            
+              {%for val in employment_list%}
+                              "{{val.company_name}}":{
+                                            "company_name": "{{val.company_name}}"
                                               },    
               {%endfor%}   
                             }
@@ -235,16 +239,15 @@
               // Object Iteration
               for (var key in theObj[the_id_key]) {
                 console.log(theObj[the_id_key]['company_name']);
-                var company_name = theObj[the_id_key]['company_name'];
-                
+                var qualification = theObj[the_id_key]['company_name'];
               }
               
                 $.ajax({
                   type: "GET",
-                  url : '/user_details/previous_employment',
+                  url : '/user_details/previous_delete',
                   data : {'company_name':company_name},
                   success : function(data){
-                   $("#previous_employment_form").html(data);
+                   window.location='/user_details/previous_employment'
                    // return data;
                   }
                   // error: function(xhr, status, error) {
@@ -253,7 +256,11 @@
                 });
               
           });
-                     $("#previous_employment_form").submit(function (e) {
+                  // error: function(xhr, status, error) {
+                  //   alert(xhr.responseText);
+                  // }
+                
+            $("#previous_employment_form").submit(function (e) {
                            e.preventDefault();
                            var data = new FormData($('form').get(0));
                            swal({   title: "Do you want to add again?",
@@ -292,6 +299,4 @@
                              });
 
                      </script>
-         <!-- End here -->
-
 {% endblock %}
