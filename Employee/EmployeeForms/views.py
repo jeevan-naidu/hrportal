@@ -150,10 +150,10 @@ def user_details(request):
                 address = Address.objects.get(employee=request.user, address_type='PR')
             except Address.DoesNotExist:
                 
-                form = UserDetailsForm(initial = {'first_name':request.user.first_name,'last_name':request.user.last_name,'middle_name':employee.middle_name,
-                'nationality':employee.nationality,'marital_status':employee.marital_status,'wedding_date':employee.wedding_date,'date_of_birth':employee.date_of_birth,'blood_group':employee.blood_group,
-                'land_phone':employee.land_phone,'emergency_phone1':employee.emergency_phone1,'emergency_phone2':employee.emergency_phone2,'mobile_phone':employee.mobile_phone,
-                'personal_email':employee.personal_email,'gender':employee.gender})
+                form = UserDetailsForm(initial = {'first_name_pan':employee.first_name_pan,'last_name_pan':employee.last_name_pan,'middle_name_pan':employee.middle_name_pan,
+                'nationality':employee.nationality,'marital_status':employee.marital_status,'wedding_date':employee.wedding_date,'date_of_birth':employee.date_of_birth,
+                'blood_group':employee.blood_group,'land_phone':employee.land_phone,'emergency_phone1':employee.emergency_phone1,'emergency_phone2':employee.emergency_phone2,
+                'mobile_phone':employee.mobile_phone,'personal_email':employee.personal_email,'gender':employee.gender})
 
                 context["form"] = form
                 return render(request, "wizard.html", context)
@@ -164,7 +164,7 @@ def user_details(request):
             context["form"] = form
             return render(request, "wizard.html", context)
 
-        form = UserDetailsForm(initial = {'first_name':request.user.first_name,'last_name':request.user.last_name,'middle_name':employee.middle_name,
+        form = UserDetailsForm(initial = {'first_name_pan':employee.first_name_pan,'last_name_pan':employee.last_name_pan,'middle_name_pan':employee.middle_name_pan,
         'nationality':employee.nationality,'marital_status':employee.marital_status,'wedding_date':employee.wedding_date,'date_of_birth':employee.date_of_birth,
         'blood_group':employee.blood_group,'land_phone':employee.land_phone,'emergency_phone1':employee.emergency_phone1,'emergency_phone2':employee.emergency_phone2,
         'mobile_phone':employee.mobile_phone,'personal_email':employee.personal_email,'gender':employee.gender,'address_type':address.address_type,'address1':address.address1,
@@ -196,9 +196,9 @@ def user_details(request):
                 if UserDetails.objects.get(employee=request.user):
                     user = request.user
                     employee = User.objects.get(username=request.user)
-                    first_name = form.cleaned_data['first_name']
-                    last_name = form.cleaned_data['last_name']
-                    middle_name = form.cleaned_data['middle_name']
+                    first_name_pan = form.cleaned_data['first_name_pan']
+                    last_name_pan = form.cleaned_data['last_name_pan']
+                    middle_name_pan = form.cleaned_data['middle_name_pan']
                     nationality = form.cleaned_data['nationality']
                     marital_status = form.cleaned_data['marital_status']
                     wedding_date = form.cleaned_data['wedding_date']
@@ -220,9 +220,9 @@ def user_details(request):
                     userdata = UserDetails.objects.get(employee=user.id)
                     userdata1 = Address.objects.get(employee=user.id)
                     
-                    userdata.first_name = first_name
-                    userdata.last_name = last_name
-                    userdata.middle_name = middle_name
+                    userdata.first_name_pan = first_name_pan
+                    userdata.last_name_pan = last_name_pan
+                    userdata.middle_name_pan = middle_name_pan
                     userdata.nationality = nationality
                     userdata.marital_status = marital_status
                     userdata.wedding_date = wedding_date
@@ -266,9 +266,9 @@ def user_details(request):
                 user = request.user
                 employee = User.objects.get(username=request.user)
                 #print "laal1"
-                first_name = form.cleaned_data['first_name']
-                last_name = form.cleaned_data['last_name']
-                middle_name = form.cleaned_data['middle_name']
+                first_name_pan = form.cleaned_data['first_name_pan']
+                last_name_pan = form.cleaned_data['last_name_pan']
+                middle_name_pan = form.cleaned_data['middle_name_pan']
                 nationality = form.cleaned_data['nationality']
                 marital_status = form.cleaned_data['marital_status']
                 wedding_date = form.cleaned_data['wedding_date']
@@ -288,7 +288,7 @@ def user_details(request):
                 state = form.cleaned_data['state']
                 zipcode = form.cleaned_data['zipcode']
                 
-                UserDetails(employee = employee,middle_name=middle_name,nationality=nationality,marital_status=marital_status,wedding_date=wedding_date,
+                UserDetails(employee = employee,first_name_pan=first_name_pan, last_name_pan=last_name_pan,middle_name_pan=middle_name_pan,nationality=nationality,marital_status=marital_status,wedding_date=wedding_date,
                 date_of_birth=date_of_birth,blood_group=blood_group,land_phone=land_phone, emergency_phone1=emergency_phone1,emergency_phone2=emergency_phone2,
                 mobile_phone=mobile_phone,personal_email=personal_email,gender=gender).save()
                 print employee
@@ -342,10 +342,10 @@ def address_tempo(request):
         user = request.user
         employee = UserDetails.objects.get(employee=request.user)
 
-        form = UserDetailsForm(initial = {'first_name':request.user.first_name,'last_name':request.user.last_name,'middle_name':employee.middle_name,
-        'nationality':employee.nationality,'marital_status':employee.marital_status,'wedding_date':employee.wedding_date,'date_of_birth':employee.date_of_birth,'blood_group':employee.blood_group,
-        'land_phone':employee.land_phone,'emergency_phone1':employee.emergency_phone1,'emergency_phone2':employee.emergency_phone2,'mobile_phone':employee.mobile_phone,
-        'personal_email':employee.personal_email,'gender':employee.gender})
+        form = UserDetailsForm(initial = {'first_name_pan':employee.first_name_pan,'last_name_pan':employee.last_name_pan,'middle_name_pan':employee.middle_name_pan,
+        'nationality':employee.nationality,'marital_status':employee.marital_status,'wedding_date':employee.wedding_date,'date_of_birth':employee.date_of_birth,
+        'blood_group':employee.blood_group,'land_phone':employee.land_phone,'emergency_phone1':employee.emergency_phone1,'emergency_phone2':employee.emergency_phone2,
+        'mobile_phone':employee.mobile_phone,'personal_email':employee.personal_email,'gender':employee.gender})
         
         context["form"] = form
         return render(request, "wizard.html", context)
@@ -353,13 +353,16 @@ def address_tempo(request):
 def address_copy(request):
     # import ipdb; ipdb.set_trace()
     if request.method=='POST':
+        context = {"form":""}
+        form = EducationForm(request.FILES)
+        context["form"] = form
         user = request.user
         employee = UserDetails.objects.get(employee=request.user)
 
-        form = UserDetailsForm(initial = {'first_name':request.user.first_name,'last_name':request.user.last_name,'middle_name':employee.middle_name,
-        'nationality':employee.nationality,'marital_status':employee.marital_status,'wedding_date':employee.wedding_date,'date_of_birth':employee.date_of_birth,'blood_group':employee.blood_group,
-        'land_phone':employee.land_phone,'emergency_phone1':employee.emergency_phone1,'emergency_phone2':employee.emergency_phone2,'mobile_phone':employee.mobile_phone,
-        'personal_email':employee.personal_email,'gender':employee.gender})
+        form = UserDetailsForm(initial = {'first_name_pan':employee.first_name_pan,'last_name_pan':employee.last_name_pan,'middle_name_pan':employee.middle_name_pan,
+        'nationality':employee.nationality,'marital_status':employee.marital_status,'wedding_date':employee.wedding_date,'date_of_birth':employee.date_of_birth,
+        'blood_group':employee.blood_group,'land_phone':employee.land_phone,'emergency_phone1':employee.emergency_phone1,'emergency_phone2':employee.emergency_phone2,
+        'mobile_phone':employee.mobile_phone,'personal_email':employee.personal_email,'gender':employee.gender})
         context = {"form":""}
         form = UserDetailsForm(request.POST)
         
@@ -374,6 +377,11 @@ def address_copy(request):
             Address(employee=user, address_type=address_type,address1=address1,address2=address2,city=city,state=state,zipcode=zipcode).save()
             context["form"] = form
             return render(request, "wizard.html", context)
+        else:
+            
+            messages.error(request, 'Fill the permanent address before copying that to temporary address')
+            context["form"] = form
+            return render(request,'wizard.html', context)
 
 @login_required
 def education(request):
@@ -391,13 +399,14 @@ def education(request):
             specialization = request.GET.get('specialization', '')
             employee = Education.objects.get(employee=request.user,
                     qualification=qualification, specialization=specialization)
+            education_type = employee.education_type
             from_date = employee.from_date
             to_date = employee.to_date
             institute = employee.institute
             board_university = employee.board_university
             overall_marks = employee.overall_marks
             marks_card_attachment = employee.marks_card_attachment
-            form = EducationForm(initial = {'from_date':employee.from_date,'qualification':employee.qualification,'specialization':employee.specialization,
+            form = EducationForm(initial = {'education_type':employee.education_type,'from_date':employee.from_date,'qualification':employee.qualification,'specialization':employee.specialization,
             'from_date':employee.from_date,'to_date':employee.to_date,'institute':employee.institute,'board_university':employee.board_university,
             'overall_marks':employee.overall_marks,'marks_card_attachment':employee.marks_card_attachment})
             context["form"] = form
@@ -436,8 +445,10 @@ def education(request):
                 # Education.objects.get(employee=request.user,qualification=qualification,specialization=specialization)
                 user = request.user
                 employee = User.objects.get(username=request.user)
+
                 qualification = form.cleaned_data['qualification']
                 specialization = form.cleaned_data['specialization']
+                education_type = form.cleaned_data['education_type']
                 from_date = form.cleaned_data['from_date']
                 to_date = form.cleaned_data['to_date']
                 institute = form.cleaned_data['institute']
@@ -450,7 +461,7 @@ def education(request):
                 userdata = Education.objects.filter(employee=user.id, qualification=qualification,specialization=specialization)
                 
                 for details in userdata:
-
+                    details.education_type = education_type
                     details.qualification = qualification
                     details.specialization = specialization
                     details.from_date = from_date
@@ -468,6 +479,7 @@ def education(request):
                 employee = User.objects.get(username=request.user)
                 qualification = form.cleaned_data['qualification']
                 specialization = form.cleaned_data['specialization']
+                education_type = form.cleaned_data['education_type']
                 from_date = form.cleaned_data['from_date']
                 to_date = form.cleaned_data['to_date']
                 institute = form.cleaned_data['institute']
@@ -480,6 +492,7 @@ def education(request):
                 Education(employee=employee,
                 qualification=qualification,
                 specialization=specialization,
+                education_type=education_type,
                 from_date=from_date,
                 to_date=to_date,
                 institute=institute,
@@ -493,6 +506,7 @@ def education(request):
     employee = User.objects.get(username=request.user)
     qualification = form.cleaned_data['qualification']
     specialization = form.cleaned_data['specialization']
+    education_type = form.cleaned_data['education_type']
     from_date = form.cleaned_data['from_date']
     to_date = form.cleaned_data['to_date']
     institute = form.cleaned_data['institute']
@@ -505,6 +519,7 @@ def education(request):
     Education(employee=employee,
     qualification=qualification,
     specialization=specialization,
+    education_type=education_type,
     from_date=from_date,
     to_date=to_date,
     institute=institute,
@@ -852,9 +867,9 @@ def confirm(request):
                 context["form"] = form
                 return render(request,'confirm.html', context)
 
-            first_name = user.first_name
-            last_name = user.last_name
-            middle_name = employee.middle_name
+            first_name_pan = employee.first_name_pan
+            last_name_pan = employee.last_name_pan
+            middle_name_pan = employee.middle_name_pan
             nationality = employee.nationality
             marital_status = employee.marital_status
             wedding_date = employee.wedding_date
@@ -868,9 +883,9 @@ def confirm(request):
 
             context = {
             'employee':employee,
-            'first_name':first_name,
-            'last_name':last_name,
-            'middle_name':middle_name,
+            'first_name_pan':first_name_pan,
+            'last_name_pan':last_name_pan,
+            'middle_name_pan':middle_name_pan,
             'nationality':nationality,
             'marital_status':marital_status,
             'wedding_date':wedding_date,

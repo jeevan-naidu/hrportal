@@ -40,6 +40,12 @@ JOB_TYPE = (
     ('IN', 'Intern'),
     )
 
+EDUCATION_TYPE = (
+    ('FT', 'Full Time'),
+    ('PT', 'Part Time'),
+    ('DS', 'Distance Education'),
+    )
+
 QUALIFICATION = (
 	('SSC', 'Senior Secondary'),
     ('HSC', 'Higher Secondary'),
@@ -103,7 +109,9 @@ class Address(models.Model):
 
 class UserDetails(models.Model):
     employee = models.ForeignKey(User, blank=True, null=True)
-    middle_name = models.CharField("Middle Name", max_length=15, blank=True, null=True)
+    first_name_pan = models.CharField("First Name(as per PAN)", max_length=20, blank=True, null=True)
+    last_name_pan = models.CharField("Last Name(as per PAN)", max_length=20, blank=True, null=True)
+    middle_name_pan = models.CharField("Middle Name(as per PAN)", max_length=20, blank=True, null=True)
     gender = models.CharField("Gender", max_length=2,choices=GENDER_CHOICES,blank=False)
     nationality = models.CharField("Nationality", max_length=30, blank=False)
     marital_status = models.CharField("Marital Status",max_length=10,choices=MARITAL_CHOICES,blank=True, null=True)
@@ -132,6 +140,7 @@ class PreviousEmployment(models.Model):
     job_type = models.CharField('Job Type', choices = JOB_TYPE, max_length = 5, default="PT")
     ps_attachment = models.FileField(upload_to=content_file_name,blank=True, null=True, verbose_name="Pay Slip Attachment")
     rl_attachment = models.FileField(upload_to=content_file_name,blank=True, null=True, verbose_name="Relieving letter Attachment")
+    offer_letter_attachment = models.FileField(upload_to=content_file_name,blank=True, null=True, verbose_name="Offer letter Attachment")
     createdon = models.DateTimeField(verbose_name="created Date",auto_now_add=True)
     updatedon = models.DateTimeField(verbose_name="Updated Date",auto_now=True)
     def __unicode__(self):
@@ -142,6 +151,7 @@ class PreviousEmployment(models.Model):
 
 class Education(models.Model):
     employee = models.ForeignKey(User, blank=True, null=True)
+    education_type = models.CharField('Education Type', choices= EDUCATION_TYPE, max_length=5, default='FT')
     qualification = models.CharField('Qualification', choices = QUALIFICATION, max_length = 5)
     specialization = models.CharField(verbose_name='Specialization',max_length=30,blank=True,null=True)
     from_date = models.DateField("From Date", blank=False)
@@ -151,14 +161,9 @@ class Education(models.Model):
     overall_marks = models.FloatField("Total Score/GPA",validators=[MaxValueValidator(100)],blank=False)
     marks_card_attachment = models.FileField(upload_to=content_file_name,blank=True, null=True, verbose_name="Marks card Attachment")
     def __unicode__(self):
-        return u'{0},{1},{2},{3},{4},{5},{6},{7}'.format(
+        return u'{0},{1},{2}'.format(
             self.qualification,
             self.specialization,
-            self.from_date,
-            self.to_date,
-            self.institute,
-            self.board_university,
-            self.overall_marks,
             self.employee)
 
 class Proof(models.Model):

@@ -6,8 +6,8 @@ from django.contrib.auth.forms import UserCreationForm
 from bootstrap3_datetime.widgets import DateTimePicker
 from django.utils.safestring import mark_safe
 from django.core.validators import MaxValueValidator
-from models import Address, UserDetails, Education, PreviousEmployment, Proof, GENDER_CHOICES,BLOOD_GROUP_CHOICES,MARITAL_CHOICES,QUALIFICATION,ADDRESSTYPE_CHOICES, JOB_TYPE
-dateTimeOption = {"format": "YYYY-MM-DD", "pickTime": False}
+from models import Address, UserDetails, Education, PreviousEmployment, Proof, GENDER_CHOICES,BLOOD_GROUP_CHOICES,MARITAL_CHOICES,QUALIFICATION,ADDRESSTYPE_CHOICES, JOB_TYPE, EDUCATION_TYPE
+dateTimeOption = {"format": "MM-DD-YYYY", "pickTime": False}
 
 class UserRegistrationForm(UserCreationForm):
 	username = forms.CharField(required=True, widget=forms.TextInput())
@@ -43,11 +43,11 @@ class UserRegistrationForm(UserCreationForm):
 class UserDetailsForm(forms.ModelForm):
 
 	employee = forms.CharField(required=False)
-	first_name = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control',
+	first_name_pan = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control',
 		'required': 'True', 'data-error': 'Please enter your first name'}))
-	last_name = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control',
+	last_name_pan = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control',
 		'required': 'True', 'data-error': 'Please enter your last name'}))
-	middle_name = forms.CharField(max_length=50,  required=False, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control','data-error': 'Please enter your middle name'}))
+	middle_name_pan = forms.CharField(max_length=50,  required=False, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control','data-error': 'Please enter your middle name'}))
 	nationality = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control','required': 'True'}))
 	marital_status = forms.ChoiceField(choices=MARITAL_CHOICES,  required=False, widget=forms.Select(attrs={'class': 'width-50 input-sm form-control','required': 'False'}))
 	wedding_date = forms.DateField(label="Wedding Date", required=False, widget=DateTimePicker(options=dateTimeOption),)
@@ -76,7 +76,7 @@ class UserDetailsForm(forms.ModelForm):
 	class Meta:
 		model = UserDetails
 
-		fields = ['first_name','last_name','middle_name','nationality','marital_status','wedding_date','date_of_birth',
+		fields = ['first_name_pan','last_name_pan','middle_name_pan','nationality','marital_status','wedding_date','date_of_birth',
 		'blood_group','land_phone','emergency_phone1','emergency_phone2','mobile_phone','gender']
 		exclude = ['employee']
 
@@ -87,6 +87,7 @@ class UserDetailsForm(forms.ModelForm):
 class EducationForm(forms.ModelForm):
 
 	employee = forms.CharField(required=False)
+	education_type = forms.ChoiceField(choices=EDUCATION_TYPE, widget=forms.Select(attrs={'class': 'width-100 input-sm form-control','required': 'True'}))
 	qualification = forms.ChoiceField(choices=QUALIFICATION, widget=forms.Select(attrs={'class': 'width-100 input-sm form-control','required': 'True'}))
 	specialization = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-100 input-sm form-control','required': 'True'}))
 	from_date = forms.DateField(label="From date",widget=DateTimePicker(options=dateTimeOption),)
@@ -109,7 +110,7 @@ class EducationForm(forms.ModelForm):
 
 	class Meta:
 		model = Education
-		fields = ['qualification', 'specialization', 'from_date', 'to_date', 'institute', 'board_university', 'overall_marks', 'marks_card_attachment']
+		fields = ['education_type','qualification', 'specialization', 'from_date', 'to_date', 'institute', 'board_university', 'overall_marks', 'marks_card_attachment']
 		exclude = ['employee']
 
 	
@@ -131,10 +132,13 @@ class PreviousEmploymentForm(forms.ModelForm):
 	rl_attachment = forms.FileField(label='Relieveing Letter Attachment', required=False, help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"))
     # Add Bootstrap widgets
 	rl_attachment.widget.attrs = {'class':'bare', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
+	offer_letter_attachment = forms.FileField(label='Offer Letter Attachment', required=False, help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"))
+    # Add Bootstrap widgets
+	offer_letter_attachment.widget.attrs = {'class':'bare', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
 
 	class Meta:
 		model = PreviousEmployment
-		fields = ['company_name', 'company_address', 'job_type',  'employed_from', 'employed_upto', 'last_ctc','reason_for_exit', 'ps_attachment', 'rl_attachment']
+		fields = ['company_name', 'company_address', 'job_type',  'employed_from', 'employed_upto', 'last_ctc','reason_for_exit', 'ps_attachment', 'rl_attachment', 'offer_letter_attachment']
 		exclude = ['employee']
 
 class ProofForm(forms.ModelForm):
