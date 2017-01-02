@@ -912,3 +912,6 @@ def candidate_overview(request):
 
 def print_candidate_information(request):
     return render(request, 'print.html',{})
+
+def family_details(request):
+    return render(request, 'family_details.html',{})
