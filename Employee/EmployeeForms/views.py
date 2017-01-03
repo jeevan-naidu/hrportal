@@ -150,7 +150,7 @@ def user_details(request):
                 address = Address.objects.get(employee=request.user, address_type='PR')
             except Address.DoesNotExist:
                 
-                form = UserDetailsForm(initial = {'first_name_pan':employee.first_name_pan,'last_name_pan':employee.last_name_pan,'middle_name_pan':employee.middle_name_pan,
+                form = UserDetailsForm(initial = {'name_pan':employee.name_pan,
                 'nationality':employee.nationality,'marital_status':employee.marital_status,'wedding_date':employee.wedding_date,'date_of_birth':employee.date_of_birth,
                 'blood_group':employee.blood_group,'land_phone':employee.land_phone,'emergency_phone1':employee.emergency_phone1,'emergency_phone2':employee.emergency_phone2,
                 'mobile_phone':employee.mobile_phone,'personal_email':employee.personal_email,'gender':employee.gender})
@@ -158,7 +158,7 @@ def user_details(request):
                 context["form"] = form
                 return render(request, "wizard.html", context)
 
-            form = UserDetailsForm(initial = {'first_name_pan':employee.first_name_pan,'last_name_pan':employee.last_name_pan,'middle_name_pan':employee.middle_name_pan,
+            form = UserDetailsForm(initial = {'name_pan':employee.name_pan,
             'nationality':employee.nationality,'marital_status':employee.marital_status,'wedding_date':employee.wedding_date,'date_of_birth':employee.date_of_birth,
             'blood_group':employee.blood_group,'land_phone':employee.land_phone,'emergency_phone1':employee.emergency_phone1,'emergency_phone2':employee.emergency_phone2,
             'mobile_phone':employee.mobile_phone,'personal_email':employee.personal_email,'gender':employee.gender,'address_type':address.address_type,'address1':address.address1,
@@ -173,7 +173,7 @@ def user_details(request):
             context["form"] = form
             return render(request, "wizard.html", context)
 
-        form = UserDetailsForm(initial = {'first_name_pan':employee.first_name_pan,'last_name_pan':employee.last_name_pan,'middle_name_pan':employee.middle_name_pan,
+        form = UserDetailsForm(initial = {'name_pan':employee.name_pan,
         'nationality':employee.nationality,'marital_status':employee.marital_status,'wedding_date':employee.wedding_date,'date_of_birth':employee.date_of_birth,
         'blood_group':employee.blood_group,'land_phone':employee.land_phone,'emergency_phone1':employee.emergency_phone1,'emergency_phone2':employee.emergency_phone2,
         'mobile_phone':employee.mobile_phone,'personal_email':employee.personal_email,'gender':employee.gender,'address_type':address.address_type,'address1':address.address1,
@@ -205,9 +205,7 @@ def user_details(request):
                 if UserDetails.objects.get(employee=request.user):
                     user = request.user
                     employee = User.objects.get(username=request.user)
-                    first_name_pan = form.cleaned_data['first_name_pan']
-                    last_name_pan = form.cleaned_data['last_name_pan']
-                    middle_name_pan = form.cleaned_data['middle_name_pan']
+                    name_pan = form.cleaned_data['name_pan']
                     nationality = form.cleaned_data['nationality']
                     marital_status = form.cleaned_data['marital_status']
                     wedding_date = form.cleaned_data['wedding_date']
@@ -229,9 +227,7 @@ def user_details(request):
                     userdata = UserDetails.objects.get(employee=user.id)
                     userdata1 = Address.objects.get(employee=user.id, address_type='PR')
                     
-                    userdata.first_name_pan = first_name_pan
-                    userdata.last_name_pan = last_name_pan
-                    userdata.middle_name_pan = middle_name_pan
+                    userdata.name_pan = name_pan
                     userdata.nationality = nationality
                     userdata.marital_status = marital_status
                     userdata.wedding_date = wedding_date
@@ -257,27 +253,13 @@ def user_details(request):
                     
                     context['form'] = form
                     return HttpResponseRedirect('/user_details/education')
-                    """UserDetails(employee = employee_g.employee,
-                    middle_name=middle_name,
-                    nationality=nationality,
-                    marital_status=marital_status,
-                    wedding_date=wedding_date,
-                    date_of_birth=date_of_birth,
-                    blood_group=blood_group,
-                    land_phone=land_phone,
-                    emergency_phone1=emergency_phone1,
-                    emergency_phone2=emergency_phone2,
-                    mobile_phone=mobile_phone,
-                    personal_email=personal_email,
-                    gender=gender).save()"""
+                    
 
             except UserDetails.DoesNotExist:
                 user = request.user
                 employee = User.objects.get(username=request.user)
                 #print "laal1"
-                first_name_pan = form.cleaned_data['first_name_pan']
-                last_name_pan = form.cleaned_data['last_name_pan']
-                middle_name_pan = form.cleaned_data['middle_name_pan']
+                name_pan = form.cleaned_data['name_pan']
                 nationality = form.cleaned_data['nationality']
                 marital_status = form.cleaned_data['marital_status']
                 wedding_date = form.cleaned_data['wedding_date']
@@ -297,7 +279,7 @@ def user_details(request):
                 state = form.cleaned_data['state']
                 zipcode = form.cleaned_data['zipcode']
                 
-                UserDetails(employee = employee,first_name_pan=first_name_pan, last_name_pan=last_name_pan,middle_name_pan=middle_name_pan,nationality=nationality,marital_status=marital_status,wedding_date=wedding_date,
+                UserDetails(employee = employee,name_pan=name_pan,nationality=nationality,marital_status=marital_status,wedding_date=wedding_date,
                 date_of_birth=date_of_birth,blood_group=blood_group,land_phone=land_phone, emergency_phone1=emergency_phone1,emergency_phone2=emergency_phone2,
                 mobile_phone=mobile_phone,personal_email=personal_email,gender=gender).save()
                 print employee
@@ -351,7 +333,7 @@ def address_tempo(request):
         user = request.user
         employee = UserDetails.objects.get(employee=request.user)
 
-        form = UserDetailsForm(initial = {'first_name_pan':employee.first_name_pan,'last_name_pan':employee.last_name_pan,'middle_name_pan':employee.middle_name_pan,
+        form = UserDetailsForm(initial = {'name_pan':employee.name_pan,
         'nationality':employee.nationality,'marital_status':employee.marital_status,'wedding_date':employee.wedding_date,'date_of_birth':employee.date_of_birth,
         'blood_group':employee.blood_group,'land_phone':employee.land_phone,'emergency_phone1':employee.emergency_phone1,'emergency_phone2':employee.emergency_phone2,
         'mobile_phone':employee.mobile_phone,'personal_email':employee.personal_email,'gender':employee.gender})
@@ -367,7 +349,7 @@ def address_tempo(request):
         user = request.user      
         employee = UserDetails.objects.get(employee=request.user)
 
-        form = UserDetailsForm(initial = {'first_name_pan':employee.first_name_pan,'last_name_pan':employee.last_name_pan,'middle_name_pan':employee.middle_name_pan,
+        form = UserDetailsForm(initial = {'name_pan':employee.name_pan,
         'nationality':employee.nationality,'marital_status':employee.marital_status,'wedding_date':employee.wedding_date,'date_of_birth':employee.date_of_birth,
         'blood_group':employee.blood_group,'land_phone':employee.land_phone,'emergency_phone1':employee.emergency_phone1,'emergency_phone2':employee.emergency_phone2,
         'mobile_phone':employee.mobile_phone,'personal_email':employee.personal_email,'gender':employee.gender})
@@ -400,7 +382,7 @@ def address_copy(request):
         user = request.user      
         employee = UserDetails.objects.get(employee=request.user)
 
-        form = UserDetailsForm(initial = {'first_name_pan':employee.first_name_pan,'last_name_pan':employee.last_name_pan,'middle_name_pan':employee.middle_name_pan,
+        form = UserDetailsForm(initial = {'name_pan':employee.name_pan,
         'nationality':employee.nationality,'marital_status':employee.marital_status,'wedding_date':employee.wedding_date,'date_of_birth':employee.date_of_birth,
         'blood_group':employee.blood_group,'land_phone':employee.land_phone,'emergency_phone1':employee.emergency_phone1,'emergency_phone2':employee.emergency_phone2,
         'mobile_phone':employee.mobile_phone,'personal_email':employee.personal_email,'gender':employee.gender})
@@ -910,9 +892,7 @@ def confirm(request):
                 context["form"] = form
                 return render(request,'confirm.html', context)
 
-            first_name_pan = employee.first_name_pan
-            last_name_pan = employee.last_name_pan
-            middle_name_pan = employee.middle_name_pan
+            name_pan = employee.name_pan
             nationality = employee.nationality
             marital_status = employee.marital_status
             wedding_date = employee.wedding_date
@@ -926,9 +906,7 @@ def confirm(request):
 
             context = {
             'employee':employee,
-            'first_name_pan':first_name_pan,
-            'last_name_pan':last_name_pan,
-            'middle_name_pan':middle_name_pan,
+            'name_pan':name_pan,
             'nationality':nationality,
             'marital_status':marital_status,
             'wedding_date':wedding_date,
@@ -954,11 +932,11 @@ def candidate_overview(request):
     return render(request, 'candidate_overview.html',{})
 
 def print_candidate_information(request):
-<<<<<<< HEAD
+
     return render(request, 'print.html',{})
-=======
+
     return render(request, 'print.html',{})
 
 def family_details(request):
     return render(request, 'family_details.html',{})
->>>>>>> 76d26aa51a4f818a49827b088b9d40dab5efa3ac
+

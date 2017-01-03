@@ -43,11 +43,8 @@ class UserRegistrationForm(UserCreationForm):
 class UserDetailsForm(forms.ModelForm):
 
 	employee = forms.CharField(required=False)
-	first_name_pan = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control',
+	name_pan = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control',
 		'required': 'True', 'data-error': 'Please enter your first name'}))
-	last_name_pan = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control',
-		'required': 'True', 'data-error': 'Please enter your last name'}))
-	middle_name_pan = forms.CharField(max_length=50,  required=False, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control','data-error': 'Please enter your middle name'}))
 	nationality = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control','required': 'True'}))
 	marital_status = forms.ChoiceField(choices=MARITAL_CHOICES,  required=False, widget=forms.Select(attrs={'class': 'width-50 input-sm form-control','required': 'False'}))
 	wedding_date = forms.DateField(label="Wedding Date", required=False, widget=DateTimePicker(options=dateTimeOption),)
@@ -76,7 +73,7 @@ class UserDetailsForm(forms.ModelForm):
 	class Meta:
 		model = UserDetails
 
-		fields = ['first_name_pan','last_name_pan','middle_name_pan','nationality','marital_status','wedding_date','date_of_birth',
+		fields = ['name_pan','nationality','marital_status','wedding_date','date_of_birth',
 		'blood_group','land_phone','emergency_phone1','emergency_phone2','mobile_phone','gender']
 		exclude = ['employee']
 

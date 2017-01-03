@@ -109,9 +109,7 @@ class Address(models.Model):
 
 class UserDetails(models.Model):
     employee = models.ForeignKey(User, blank=True, null=True)
-    first_name_pan = models.CharField("First Name(as per PAN)", max_length=20, blank=True, null=True)
-    last_name_pan = models.CharField("Last Name(as per PAN)", max_length=20, blank=True, null=True)
-    middle_name_pan = models.CharField("Middle Name(as per PAN)", max_length=20, blank=True, null=True)
+    name_pan = models.CharField("Name(as per PAN)", max_length=20, blank=True, null=True)
     gender = models.CharField("Gender", max_length=2,choices=GENDER_CHOICES,blank=False)
     nationality = models.CharField("Nationality", max_length=30, blank=False)
     marital_status = models.CharField("Marital Status",max_length=10,choices=MARITAL_CHOICES,blank=True, null=True)

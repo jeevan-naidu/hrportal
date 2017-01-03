@@ -76,26 +76,13 @@
                         </div> -->
 
                             <div class="form-group">
-                              <label class="col-sm-2 control-label">First Name(as per PAN card)<span class="mandatory-field"> *</span></label>
+                              <label class="col-sm-2 control-label">Name(as per PAN card)<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-7 controls">
-                                {{form.first_name_pan}}
+                                {{form.name_pan}}
                                 <div class="help-block with-errors"></div>
                               </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Middle Name(as per PAN card)</label>
-                                <div class="col-sm-7 controls">
-                                  {{form.middle_name_pan}}
-                                <div class="help-block with-errors"></div>
-                                </div>
-                              </div>
-                          <div class="form-group">
-                              <label class="col-sm-2 control-label">Last Name(as per PAN card)<span class="mandatory-field"> *</span></label>
-                              <div class="col-sm-7 controls">
-                                {{form.last_name_pan}}
-                                <div class="help-block with-errors"></div>
-                              </div>
-                            </div>
+                            
 
                             
 
@@ -156,22 +143,7 @@
                               </div>
                             </div>
 
-                            <div class="form-group">
-                              <label class="col-sm-2 control-label">Emergency Phone (primary)<span class="mandatory-field"> *</span></label>
-                              <div class="col-sm-7 controls">
-                                {{form.emergency_phone1}}
-                                <div class="help-block with-errors"></div>
-                              </div>
-                            </div>
-
-
-                            <div class="form-group">
-                              <label class="col-sm-2 control-label">Emergency Phone (secondary)<span class="mandatory-field"> *</span></label>
-                                  <div class="col-sm-7 controls">
-                                    {{form.emergency_phone2}}
-                                <div class="help-block with-errors"></div>
-                                    </div>
-                                </div>
+                            
 
                             <div class="form-group">
                               <label class="col-sm-2 control-label">Mobile Phone<span class="mandatory-field"> *</span></label>
@@ -192,7 +164,64 @@
                             <div class="form-group">
                               <label class="col-sm-2 control-label">Address Type<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-7 controls">
-                                {{form.address_type}}<span id="address" class="glyphicon glyphicon-plus"></span>
+                                {{form.address_type}}</span>
+                                
+                                <div class="help-block with-errors"></div>
+
+                              </div>
+                            </div>
+
+
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">Street<span class="mandatory-field"> *</span></label>
+                                  <div class="col-sm-7 controls">
+                                    {{form.address1}}
+                                <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
+
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">Lane</label>
+                              <div class="col-sm-7 controls">
+                                {{form.address2}}
+                                <div class="help-block with-errors"></div>
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">City<span class="mandatory-field"> *</span></label>
+                              <div class="col-sm-7 controls">
+                                {{form.city}}
+                                <div class="help-block with-errors"></div>                                
+                              </div>
+                            </div>
+
+                              <div class="form-group">
+                              <label class="col-sm-2 control-label">State<span class="mandatory-field"> *</span></label>
+                              <div class="col-sm-7 controls">
+                                {{form.state}}
+                                <div class="help-block with-errors"></div>
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">Zip Code<span class="mandatory-field"> *</span></label>
+                              <div class="col-sm-7 controls">
+                                {{form.zipcode}}
+                                <div class="help-block with-errors"></div>                                
+                              <div class="checkbox">
+                                <label><input type="checkbox" value="">Temporary address is same as permanent address</label>
+                            </div>
+                            
+                              
+                              </div>
+                            </div>
+                           
+                            
+                              <div class="form-group">
+                              <label class="col-sm-2 control-label">Address Type<span class="mandatory-field"> *</span></label>
+                              <div class="col-sm-7 controls">
+                                {{form.address_type}}</span>
                                 
                                 <div class="help-block with-errors"></div>
                               </div>
@@ -235,12 +264,9 @@
                               <label class="col-sm-2 control-label">Zip Code<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-7 controls">
                                 {{form.zipcode}}
-                                <div class="help-block with-errors"></div>                                
-                              </div>
-                            </div>
-
-
-
+                                <div class="help-block with-errors"></div> 
+                                </div>
+                                </div>
 
                             <div class="form-group">
                                 <h3 class="col-sm-12 text-right"><input type="submit" id="submit" class="btn vd_bg-green vd_white width-10" value="Save"/></h3>
@@ -322,7 +348,8 @@ $("#address").click(function (e) {
                     confirmButtonText: "YES",
                     cancelButtonText: "NO",
                     closeOnConfirm: true,
-                    closeOnCancel: true
+                    closeOnCancel: true,
+                    timer:3000
                     },
                     function(isConfirm) {
                       if (isConfirm) {
@@ -331,9 +358,9 @@ $("#address").click(function (e) {
                           url: '/user_details/address_copy',
                           data: $("#user_details_form").serialize(),
                           success: function( response ) {
-                            console.log(response);
-                            // window.location='/user_details'
-                            // alert('~~~!!!!!!~~~')
+                            
+                            swal("Cancelled", "Your imaginary file is safe");
+                            
                             // window.location='/user_details'
                           }
 
