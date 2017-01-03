@@ -54,19 +54,19 @@
 
 
                         <form id="user_details_form" method="post" class="form-horizontal" enctype="multipart/form-data" data-toggle="validator">
-                        {{success}}
+
                         {% csrf_token %}
                           {% if messages %}
 
-                                  {% for message in messages %}
+                              {% for message in messages %}
 
-                                <div class="alert alert-danger">
-                                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-cross"></i></button>
-                                  <span class="vd_alert-icon"><i class="fa fa-exclamation-circle vd_red"></i></span><strong>{{message}}</strong></div>
+                            <div class="alert alert-danger">
+                              <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-cross"></i></button>
+                              <span class="vd_alert-icon"><i class="fa fa-exclamation-circle vd_red"></i></span><strong>{{message}}</strong></div>
 
-                                  {% endfor %}
+                              {% endfor %}
 
-                              {% endif %}
+                          {% endif %}
                         <!-- <div class="form-group">
                           <label class="col-sm-2 control-label">UserName</label>
                           <div class="col-sm-7 controls">
@@ -284,7 +284,7 @@
                       if (isConfirm) {
                         $.ajax( {
                           type: "POST",
-                          url: '/user_details',
+                          url: '/user_details/address_tempo',
                           data: $("#user_details_form").serialize(),
                           success: function( response ) {
                              window.location='/user_details/education'
@@ -331,17 +331,12 @@ $("#address").click(function (e) {
                           url: '/user_details/address_copy',
                           data: $("#user_details_form").serialize(),
                           success: function( response ) {
-                            console.log(response);
-                            // window.location='/user_details'
-                            // alert('~~~!!!!!!~~~')
-                            // window.location='/user_details'
+                             window.location='/user_details'
                           }
-
                         });
                       }else{
                           window.location='/user_details/address_tempo'
-                        }
-                      });
+                        }});
                     });
 
 

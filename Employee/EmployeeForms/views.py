@@ -30,9 +30,9 @@ def EmployeeWelcome(request):
 
 #@login_required
 def login(request):
-	context = {}
-	context.update(csrf(request))
-	return render_to_response('login.html',context)
+    context = {}
+    context.update(csrf(request))
+    return render_to_response('login.html',context)
 
 def auth_view(request):
     username = request.POST.get('username','')
@@ -53,15 +53,15 @@ def auth_view(request):
         return render(request,'login.html')
 
 def logout(request):
-	auth.logout(request)
-	return render_to_response('logout.html')
+    auth.logout(request)
+    return render_to_response('logout.html')
 
 @login_required
 def loggedin(request):
-	return render_to_response('loggedin.html',{'user':request.user.username})
+    return render_to_response('loggedin.html',{'user':request.user.username})
 
 def invalid_login(request):
-	return render_to_response('invalid.html')
+    return render_to_response('invalid.html')
 
 def register(request):
     #import ipdb; ipdb.set_trace()
@@ -127,7 +127,7 @@ def confirmation(request, confirmation_code, username):
         return HttpResponseRedirect('/register')
 
 def register_success(request):
-	return HttpResponseRedirect("/login")
+    return HttpResponseRedirect("/login")
 
 from django.views.decorators.csrf import csrf_exempt
 @csrf_exempt
@@ -157,6 +157,15 @@ def user_details(request):
 
                 context["form"] = form
                 return render(request, "wizard.html", context)
+
+            form = UserDetailsForm(initial = {'first_name_pan':employee.first_name_pan,'last_name_pan':employee.last_name_pan,'middle_name_pan':employee.middle_name_pan,
+            'nationality':employee.nationality,'marital_status':employee.marital_status,'wedding_date':employee.wedding_date,'date_of_birth':employee.date_of_birth,
+            'blood_group':employee.blood_group,'land_phone':employee.land_phone,'emergency_phone1':employee.emergency_phone1,'emergency_phone2':employee.emergency_phone2,
+            'mobile_phone':employee.mobile_phone,'personal_email':employee.personal_email,'gender':employee.gender,'address_type':address.address_type,'address1':address.address1,
+            'address2':address.address2,'city':address.city,'state':address.state,'zipcode':address.zipcode})
+
+            context["form"] = form
+            return render(request, "wizard.html", context)
             # print employee
         except UserDetails.DoesNotExist:
             context = {"form":""}
@@ -175,7 +184,7 @@ def user_details(request):
 
     # instance = UserDetails.objects.get(employee=request.user)
     if request.method == 'POST':
-        # import ipdb; ipdb.set_trace()
+        import ipdb; ipdb.set_trace()
         context = {"form":""}
         user = request.user
 
@@ -218,7 +227,7 @@ def user_details(request):
                     zipcode = form.cleaned_data['zipcode']
 
                     userdata = UserDetails.objects.get(employee=user.id)
-                    userdata1 = Address.objects.get(employee=user.id)
+                    userdata1 = Address.objects.get(employee=user.id, address_type='PR')
                     
                     userdata.first_name_pan = first_name_pan
                     userdata.last_name_pan = last_name_pan
@@ -337,7 +346,7 @@ def address_tempo(request):
     # import ipdb; ipdb.set_trace()
     if request.method=='GET':
         context = {"form":""}
-        form = UserDetailsForm(request.POST)
+        form = UserDetailsForm()
        
         user = request.user
         employee = UserDetails.objects.get(employee=request.user)
@@ -347,16 +356,15 @@ def address_tempo(request):
         'blood_group':employee.blood_group,'land_phone':employee.land_phone,'emergency_phone1':employee.emergency_phone1,'emergency_phone2':employee.emergency_phone2,
         'mobile_phone':employee.mobile_phone,'personal_email':employee.personal_email,'gender':employee.gender})
         
+        messages.warning(request,"please fill only temporary address here")
         context["form"] = form
-        return render(request, "wizard.html", context)
+        return render(request, "address_tempo.html", context)
 
-def address_copy(request):
-    # import ipdb; ipdb.set_trace()
     if request.method=='POST':
         context = {"form":""}
-        form = EducationForm(request.FILES)
-        context["form"] = form
-        user = request.user
+        
+        # form = UserDetailsForm(request.POST)  
+        user = request.user      
         employee = UserDetails.objects.get(employee=request.user)
 
         form = UserDetailsForm(initial = {'first_name_pan':employee.first_name_pan,'last_name_pan':employee.last_name_pan,'middle_name_pan':employee.middle_name_pan,
@@ -367,6 +375,39 @@ def address_copy(request):
         form = UserDetailsForm(request.POST)
         
         if form.is_valid():
+            address = Address.objects.get(employee=request.user, address_type='PR')
+            address_type = 'TM'
+            address1 = form.cleaned_data['address1']
+            address2 = form.cleaned_data['address2']
+            city = form.cleaned_data['city']
+            state = form.cleaned_data['state']
+            zipcode = form.cleaned_data['zipcode']
+            Address(employee=user, address_type=address_type,address1=address1,address2=address2,city=city,state=state,zipcode=zipcode).save()
+            context["form"] = form
+            return render(request, "address_tempo.html", context)
+        else:
+            
+            messages.error(request, 'Fill the permanent address before copying that to temporary address')
+            context["form"] = form
+            return render(request,'address_tempo.html', context)
+@csrf_exempt
+def address_copy(request):
+    # import ipdb; ipdb.set_trace()
+    if request.method=='POST':
+        context = {"form":""}
+        
+        # form = UserDetailsForm(request.POST)  
+        user = request.user      
+        employee = UserDetails.objects.get(employee=request.user)
+
+        form = UserDetailsForm(initial = {'first_name_pan':employee.first_name_pan,'last_name_pan':employee.last_name_pan,'middle_name_pan':employee.middle_name_pan,
+        'nationality':employee.nationality,'marital_status':employee.marital_status,'wedding_date':employee.wedding_date,'date_of_birth':employee.date_of_birth,
+        'blood_group':employee.blood_group,'land_phone':employee.land_phone,'emergency_phone1':employee.emergency_phone1,'emergency_phone2':employee.emergency_phone2,
+        'mobile_phone':employee.mobile_phone,'personal_email':employee.personal_email,'gender':employee.gender})
+        context = {"form":""}
+        form = UserDetailsForm(request.POST)
+
+        if form.is_valid():
             address = Address.objects.filter(employee=request.user, address_type='PR')
             address_type = 'TM'
             address1 = form.cleaned_data['address1']
@@ -375,6 +416,8 @@ def address_copy(request):
             state = form.cleaned_data['state']
             zipcode = form.cleaned_data['zipcode']
             Address(employee=user, address_type=address_type,address1=address1,address2=address2,city=city,state=state,zipcode=zipcode).save()
+            context["success"] = "address"
+            messages.warning(request, 'some more lorem ipsum time')
             context["form"] = form
             return render(request, "wizard.html", context)
         else:

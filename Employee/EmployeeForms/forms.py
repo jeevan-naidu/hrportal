@@ -7,7 +7,7 @@ from bootstrap3_datetime.widgets import DateTimePicker
 from django.utils.safestring import mark_safe
 from django.core.validators import MaxValueValidator
 from models import Address, UserDetails, Education, PreviousEmployment, Proof, GENDER_CHOICES,BLOOD_GROUP_CHOICES,MARITAL_CHOICES,QUALIFICATION,ADDRESSTYPE_CHOICES, JOB_TYPE, EDUCATION_TYPE
-dateTimeOption = {"format": "MM-DD-YYYY", "pickTime": False}
+dateTimeOption = {"format": "MM/DD/YYYY", "pickTime": False}
 
 class UserRegistrationForm(UserCreationForm):
 	username = forms.CharField(required=True, widget=forms.TextInput())
