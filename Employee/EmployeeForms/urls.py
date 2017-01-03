@@ -18,6 +18,7 @@ urlpatterns = [
                        url(r'^user_details/address_copy$', views.address_copy),
                        url(r'^user_details/address_tempo$', views.address_tempo),
                        url(r'^user_details/previous_delete$', views.previous_delete),
+                       url(r'^user_details/family_details$', views.family_details),
                        url(r'^user_details/education$', views.education),
                        url(r'^user_details/proof$', views.proof),
                        url(r'^user_details/previous_employment$', views.previous_employment),

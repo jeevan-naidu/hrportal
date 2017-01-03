@@ -81,3 +81,15 @@ input[type="file"].bare{
 
 #datepicker-icon-trigger{display: none;}
 #from_date + div > .input-group, #to_date + div > .input-group{width: 100%}
+
+/* Previous Employment */
+
+#user-list .content-list .menu-icon{
+    position: relative;
+    top: 2px;
+    right: 10px;
+    cursor: pointer;
+}
+#user-list .content-list .list-wrapper>li:last-child{
+    border-bottom: 1px solid #EEE
+}

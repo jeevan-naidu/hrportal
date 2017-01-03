@@ -954,4 +954,11 @@ def candidate_overview(request):
     return render(request, 'candidate_overview.html',{})
 
 def print_candidate_information(request):
+<<<<<<< HEAD
     return render(request, 'print.html',{})
+=======
+    return render(request, 'print.html',{})
+
+def family_details(request):
+    return render(request, 'family_details.html',{})
+>>>>>>> 76d26aa51a4f818a49827b088b9d40dab5efa3ac
