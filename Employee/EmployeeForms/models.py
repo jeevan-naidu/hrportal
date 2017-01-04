@@ -109,11 +109,10 @@ class Address(models.Model):
 
 class UserDetails(models.Model):
     employee = models.ForeignKey(User, blank=True, null=True)
-    name_pan = models.CharField("Name(as per PAN)", max_length=20, blank=True, null=True)
+    name_pan = models.CharField("Name(as per PAN)", max_length=30, blank=True, null=True)
+    photo = models.FileField(upload_to=content_file_name,blank=True, null=True, verbose_name="Photo")
     gender = models.CharField("Gender", max_length=2,choices=GENDER_CHOICES,blank=False)
     nationality = models.CharField("Nationality", max_length=30, blank=False)
-    marital_status = models.CharField("Marital Status",max_length=10,choices=MARITAL_CHOICES,blank=True, null=True)
-    wedding_date = models.DateField(verbose_name='Wedding Date',null=True,blank=True)
     date_of_birth = models.DateField(verbose_name='Date of Birth',null=True,blank=True)
     blood_group = models.CharField("Blood Group",max_length=3,choices=BLOOD_GROUP_CHOICES,blank=True)
     mobile_phone = models.CharField("Mobile Phone",max_length=10,unique=True,blank=False,null=True)
@@ -127,6 +126,35 @@ class UserDetails(models.Model):
         return u'{0}'.format(
             self.employee)
 
+class LanguageProficiency(models.Model):
+    employee = models.ForeignKey(User, blank=True, null=True)
+    language_known = models.CharField(verbose_name='Language Known',max_length=50,null=True,blank=True)
+    speak = models.CharField(verbose_name='Speak',max_length=50,null=True,blank=True)
+    write = models.CharField(verbose_name='Write',max_length=50,null=True,blank=True)
+    read = models.CharField(verbose_name='Read',max_length=50,null=True,blank=True)
+    def __unicode__(self):
+        return u'{0}'.format(
+            self.employee)
+
+
+class FamilyDetails(models.Model):
+    employee = models.ForeignKey(User, blank=True, null=True)
+    marital_status = models.CharField("Marital Status",max_length=10,choices=MARITAL_CHOICES,blank=True, null=True)
+    wedding_date = models.DateField(verbose_name='Wedding Date',null=True,blank=True)
+    spouse_name = models.CharField(verbose_name='Spouse Name',max_length=50,null=True,blank=True)
+    no_of_children = models.CharField(verbose_name='Number of Children', max_length=10, null=True, blank=True)
+    mother_name = models.CharField(verbose_name='Mother Name',max_length=30, null=False, blank=False)
+    mother_dob = models.DateField(verbose_name='Mother Date of Birth',null=True,blank=True)
+    mother_profession = models.CharField(verbose_name='Mother Profession',max_length=50,null=True,blank=True)
+    father_name = models.CharField(verbose_name='Father Name',max_length=30)
+    father_dob = models.DateField(verbose_name='Father Date of Birth',null=True,blank=True)
+    father_profession = models.CharField(verbose_name='Father Profession',max_length=50,null=True,blank=True)
+    child1_name = models.CharField(verbose_name='Child1 Name',max_length=30)
+    child2_name = models.CharField(verbose_name='Child2 Name',max_length=30)
+    def __unicode__(self):
+        return u'{0}'.format(
+            self.employee)
+
 class PreviousEmployment(models.Model):
     employee = models.ForeignKey(User, blank=True, null=True)
     company_name = models.CharField("Company Name", max_length=150)
@@ -134,7 +162,7 @@ class PreviousEmployment(models.Model):
     employed_from = models.DateField(verbose_name="Start Date", null=False)
     employed_upto = models.DateField(verbose_name="End Date", null=False)
     last_ctc = models.FloatField("Last CTC")
-    reason_for_exit = models.CharField(verbose_name="Reason for Exit",max_length=100)
+    reason_for_exit = models.CharField(verbose_name="Reason for Exit",max_length=200)
     job_type = models.CharField('Job Type', choices = JOB_TYPE, max_length = 5, default="PT")
     ps_attachment = models.FileField(upload_to=content_file_name,blank=True, null=True, verbose_name="Pay Slip Attachment")
     rl_attachment = models.FileField(upload_to=content_file_name,blank=True, null=True, verbose_name="Relieving letter Attachment")

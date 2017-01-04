@@ -82,7 +82,14 @@
                                 <div class="help-block with-errors"></div>
                               </div>
                             </div>
-                            
+
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">Passport Size Photo<span class="mandatory-field"> *</span></label>
+                              <div class="col-sm-7 controls">
+                                {{form.photo}}
+                                <div class="help-block with-errors"></div>
+                              </div>
+                            </div>
 
                             
 
@@ -102,21 +109,7 @@
                               </div>
                             </div>
 
-                            <div class="form-group">
-                              <label class="col-sm-2 control-label">Marital Status<span class="mandatory-field"> *</span></label>
-                              <div class="col-sm-7 controls">
-                                {{form.marital_status}}
-                                <div class="help-block with-errors"></div>
-                              </div>
-                            </div>
-
-                            <div class="form-group wedding_date_form_group">
-                              <label class="col-sm-2 control-label">Wedding Date</label>
-                              <div class="col-sm-7 controls">
-                                {{form.wedding_date}}
-                                <div class="help-block with-errors"></div>
-                              </div>
-                            </div>
+                            
 
 
                             <div class="form-group">
@@ -143,7 +136,23 @@
                               </div>
                             </div>
 
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">Emergency Phone(primary)<span class="mandatory-field"> *</span></label>
+                              <div class="col-sm-7 controls">
+                                {{form.emergency_phone1}}
+                                <div class="help-block with-errors"></div>
+                              </div>
+                            </div>
+
                             
+
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">Emergency Phone(secondary)<span class="mandatory-field"> *</span></label>
+                              <div class="col-sm-7 controls">
+                                {{form.emergency_phone2}}
+                                <div class="help-block with-errors"></div>
+                              </div>
+                            </div>
 
                             <div class="form-group">
                               <label class="col-sm-2 control-label">Mobile Phone<span class="mandatory-field"> *</span></label>
@@ -164,7 +173,7 @@
                             <div class="form-group">
                               <label class="col-sm-2 control-label">Address Type<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-7 controls">
-                                {{form.address_type}}</span>
+                                {{form.address_type}}
                                 
                                 <div class="help-block with-errors"></div>
 
@@ -210,63 +219,55 @@
                                 {{form.zipcode}}
                                 <div class="help-block with-errors"></div>                                
                               <div class="checkbox">
-                                <label><input type="checkbox" value="">Temporary address is same as permanent address</label>
-                            </div>
-                            
+                                <label><input id="address" type="checkbox" value="">Temporary is copied from permanent address</label>
+                                <label><span id = "temp_address" class="glyphicon glyphicon-plus"></span>Add a new temporary address</label>
+                              </div>
                               
                               </div>
                             </div>
-                           
-                            
-                              <div class="form-group">
-                              <label class="col-sm-2 control-label">Address Type<span class="mandatory-field"> *</span></label>
+                           <!-- <table>
+                           <tr>
+                           <th></th>
+                           <th>Speak</th>
+                           <th>Read</th>
+                           <th>Write</th>
+                           </tr>
+                           <tr>
+                           <td>
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">Language Known<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-7 controls">
-                                {{form.address_type}}</span>
-                                
+                                {{form.language_known}}
                                 <div class="help-block with-errors"></div>
                               </div>
                             </div>
-
-
+                            </td>
+                            <td>
                             <div class="form-group">
-                              <label class="col-sm-2 control-label">Street<span class="mandatory-field"> *</span></label>
-                                  <div class="col-sm-7 controls">
-                                    {{form.address1}}
+                              
+                              <div class="col-sm-50 controls">
+                                {{form.speak}}
                                 <div class="help-block with-errors"></div>
-                                    </div>
-                                </div>
-
-                            <div class="form-group">
-                              <label class="col-sm-2 control-label">Lane</label>
-                              <div class="col-sm-7 controls">
-                                {{form.address2}}
-                                <div class="help-block with-errors"></div>
-                              </div>
+                              
                             </div>
-
+                            </td>
+                            <td>
                             <div class="form-group">
-                              <label class="col-sm-2 control-label">City<span class="mandatory-field"> *</span></label>
-                              <div class="col-sm-7 controls">
-                                {{form.city}}
-                                <div class="help-block with-errors"></div>                                
-                              </div>
-                            </div>
-
-                              <div class="form-group">
-                              <label class="col-sm-2 control-label">State<span class="mandatory-field"> *</span></label>
-                              <div class="col-sm-7 controls">
-                                {{form.state}}
+                              <div class="col-sm-50 controls">
+                                {{form.read}}
                                 <div class="help-block with-errors"></div>
                               </div>
-                            </div>
-
+                            </td>
+                            <td>
                             <div class="form-group">
-                              <label class="col-sm-2 control-label">Zip Code<span class="mandatory-field"> *</span></label>
-                              <div class="col-sm-7 controls">
-                                {{form.zipcode}}
-                                <div class="help-block with-errors"></div> 
-                                </div>
-                                </div>
+                              <div class="col-sm-50 controls">
+                                {{form.write}}
+                                <div class="help-block with-errors"></div>
+                              
+                            </div>
+                            </td>
+                            </tr>
+                            </table> -->
 
                             <div class="form-group">
                                 <h3 class="col-sm-12 text-right"><input type="submit" id="submit" class="btn vd_bg-green vd_white width-10" value="Save"/></h3>
@@ -274,6 +275,8 @@
                         </form>
 
 <!-- ~~~~sanjay~~~~ -->
+
+
                             </div><!-- ./tab-pane -->
 
 
@@ -295,8 +298,128 @@
             <!-- row -->
 
 <script type="text/javascript">
+
+          // var theObj = 
+
+
+          //                   {
+          //     {%for val in address_list%}
+          //                     "{{val.address_type}}":{
+          //                                   "address_type": "{{val.address_type}}",
+                                            
+          //                                     },    
+          //     {%endfor%}   
+          //                   }
+
+
+                     
+          //   $('.content-list li').click(function(){
+          //     // e.preventDefault();
+          //     // debugger;
+          //     var address_type;
+              
+          //     var the_id_key = $(this).attr('id');
+          //     console.log(the_id_key);
+          //     // Object Iteration
+          //     for (var key in theObj[the_id_key]) {
+          //       console.log(theObj[the_id_key]['address_type']);
+          //       var address_type = theObj[the_id_key]['address_type'];
+          //       }
+
+          //         $.ajax({
+          //         type: "GET",
+          //         url : '/user_details',
+          //         data : {'address_type':address_type},
+          //         success : function(data){
+          //          $("#user_details_form").html(data);
+          //          // return data;
+          //         }
+          //         // error: function(xhr, status, error) {
+          //         //   alert(xhr.responseText);
+          //         // }
+          //       });
+              
+          // });
+
+   $('#id_address_type').on('change', function() {
+  value =  this.value 
+
+                    if (value=='PR'){
+                      var theObj = 
+
+
+                            {
+                               
+                                                "PR":{
+                                                              "address_type": "PR",
+                                                              
+                                                                },    
+                                  
+                              }
+
+              // e.preventDefault();
+              // debugger;
+              var address_type = "PR";
+              
+              
+                $.ajax({
+                  type: "GET",
+                  url : '/user_details',
+                  data : {'address_type':address_type},
+                  success : function(data){
+                   $("#user_details_form").html(data);
+                   // return data;
+                  }
+                  // error: function(xhr, status, error) {
+                  //   alert(xhr.responseText);
+                  // }
+                });
+              }
+          });
+
+
+   $('#id_address_type').on('change', function() {
+  value =  this.value 
+
+                    if (value=='TM'){
+                      var theObj = 
+
+
+                            {
+                               
+                                                "TM":{
+                                                              "address_type": "TM",
+                                                              
+                                                                },    
+                                  
+                              }
+
+              // e.preventDefault();
+              // debugger;
+              var address_type = "TM";
+              
+              
+                $.ajax({
+                  type: "GET",
+                  url : '/user_details',
+                  data : {'address_type':address_type},
+                  success : function(data){
+                   $("#user_details_form").html(data);
+                   // return data;
+                  }
+                  // error: function(xhr, status, error) {
+                  //   alert(xhr.responseText);
+                  // }
+                });
+              }
+          });
+                        
+                      
+
+
             $("#user_details_form").submit(function (e) {
                   e.preventDefault();
+                  var data = new FormData($('form').get(0));
                   swal({   title: "Thank you for filling the details",
                     text: "Keep your education documents and fill the next form",
                     type: "success",
@@ -311,7 +434,10 @@
                         $.ajax( {
                           type: "POST",
                           url: '/user_details',
-                          data: $("#user_details_form").serialize(),
+                          data: data,
+                          cache: false,
+                          processData: false,
+                          contentType: false,
                           success: function( response ) {
                              window.location='/user_details/education'
                           }
@@ -337,53 +463,74 @@
 
 
 // Wedding date
-
-$("#address").click(function (e) {
+window.onload = function(){
+                           document.getElementById("id_address_type").readOnly = false;
+                           document.getElementById("id_address1").readOnly = false;
+                           document.getElementById("id_address2").readOnly = false;
+                           document.getElementById("id_city").readOnly = false;
+                           document.getElementById("id_state").readOnly = false;
+                           document.getElementById("id_zipcode").readOnly = false;
+    }
+$("#address").change(function (e) {
                   e.preventDefault();
-                  swal({   title: "Do you want to make your permanent address as temporary address??",
-                    text: "Press NO if u want add your temporary address manually",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "YES",
-                    cancelButtonText: "NO",
-                    closeOnConfirm: true,
-                    closeOnCancel: true,
-                    timer:3000
-                    },
-                    function(isConfirm) {
-                      if (isConfirm) {
+                  
                         $.ajax( {
                           type: "POST",
                           url: '/user_details/address_copy',
                           data: $("#user_details_form").serialize(),
                           success: function( response ) {
                             
-                            swal("Cancelled", "Your imaginary file is safe");
+                            swal("Success", "Permanent is saved as temporary");
                             
                             // window.location='/user_details'
                           }
 
                         });
-                      }else{
-                          window.location='/user_details/address_tempo'
-                        }
                       });
-                    });
 
-
-$('select#id_marital_status').change(function(){
-  if($(this).val() == 'MA'){
-    $('.wedding_date_form_group').removeClass('hidden');
-    $('#id_wedding_date').attr('required', true);
-  }else if($(this).val() !== 'MA'){
-    $('.wedding_date_form_group').addClass('hidden');
-    $('#id_wedding_date').removeAttr('required');
-  }
-})
-
+$("#temp_address").click(function (e) {
+                  e.preventDefault();
+                  
+                        window.location='/user_details/address_tempo'
+                      });
 
 </script>
+
+<!-- // $("#address").click(function (e) {
+//                   e.preventDefault();
+//                   swal({   title: "Do you want to make your permanent address as temporary address??",
+//                     text: "Press NO if u want add your temporary address manually",
+//                     type: "warning",
+//                     showCancelButton: true,
+//                     confirmButtonColor: "#DD6B55",
+//                     confirmButtonText: "YES",
+//                     cancelButtonText: "NO",
+//                     closeOnConfirm: true,
+//                     closeOnCancel: true,
+//                     timer:3000
+//                     },
+//                     function(isConfirm) {
+//                       if (isConfirm) {
+//                         $.ajax( {
+//                           type: "POST",
+//                           url: '/user_details/address_copy',
+//                           data: $("#user_details_form").serialize(),
+//                           success: function( response ) {
+                            
+//                             swal("Cancelled", "Your imaginary file is safe");
+                            
+//                             // window.location='/user_details'
+//                           }
+
+//                         });
+//                       }else{
+//                           window.location='/user_details/address_tempo'
+//                         }
+//                       });
+//                     });
+ -->
+
+
 
 
 

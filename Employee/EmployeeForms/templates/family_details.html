@@ -53,7 +53,7 @@
                     
 
 
-                        <form id="user_details_form" method="post" class="form-horizontal" enctype="multipart/form-data" data-toggle="validator">
+                        <form id="family_details_form" method="post" class="form-horizontal" enctype="multipart/form-data" data-toggle="validator">
 
                         {% csrf_token %}
 
@@ -64,33 +64,111 @@
 
                           </div>
                         </div> -->
-
-                            <div class="form-group">
-                              <label class="col-sm-2 control-label">Spouse's Name<span class="mandatory-field"> *</span></label>
+                              <div class="form-group">
+                              <label class="col-sm-2 control-label">Marital Status<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-7 controls">
-                                <input class="width-50 input-sm form-control" data-error="Please enter your first name" id="id_first_name_pan" maxlength="50" name="first_name_pan" required="True" type="text">
+                                {{form.marital_status}}
                                 <div class="help-block with-errors"></div>
                               </div>
                             </div>
 
-
-                            <div class="form-group">
-                              <label class="col-sm-2 control-label">Mother's Name<span class="mandatory-field"> *</span></label>
+                            <div class="form-group wedding_date_form_group">
+                              <label class="col-sm-2 control-label">Wedding Date</label>
                               <div class="col-sm-7 controls">
-                                <input class="width-50 input-sm form-control" data-error="Please enter your first name" id="id_first_name_pan" maxlength="50" name="first_name_pan" required="True" type="text">
+                                {{form.wedding_date}}
+                                <div class="help-block with-errors"></div>
+                              </div>
+                            </div>
+                            
+                            <div class="form-group spouse_name_form_group">
+                              <label class="col-sm-2 control-label">Spouse Name</label>
+                              <div class="col-sm-2 controls">
+                                {{form.spouse_name}}
                                 <div class="help-block with-errors"></div>
                               </div>
                             </div>
 
-
-                            <div class="form-group">
-                              <label class="col-sm-2 control-label">Father's Name<span class="mandatory-field"> *</span></label>
+                            <div class="form-group no_of_children_form_group">
+                              <label class="col-sm-2 control-label">Number of children</label>
                               <div class="col-sm-7 controls">
-                                <input class="width-50 input-sm form-control" data-error="Please enter your first name" id="id_first_name_pan" maxlength="50" name="first_name_pan" required="True" type="text">
+                                {{form.no_of_children}}
                                 <div class="help-block with-errors"></div>
                               </div>
                             </div>
 
+                           
+
+
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">Mother Name<span class="mandatory-field"> *</span></label>
+                              <div class="col-sm-7 controls">
+                                {{form.mother_name}}
+                                <div class="help-block with-errors"></div>
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">Mother Date of birth</label>
+                              <div class="col-sm-2 controls">
+                                {{form.mother_dob}}
+                                <div class="help-block with-errors"></div>
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">Mother Profession</label>
+                              <div class="col-sm-7 controls">
+                                {{form.mother_profession}}
+                                <div class="help-block with-errors"></div>
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">Father Name<span class="mandatory-field"> *</span></label>
+                              <div class="col-sm-7 controls">
+                                {{form.father_name}}
+                                <div class="help-block with-errors"></div>
+                              </div>
+                            </div>
+
+                            
+
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">Father Date of Birth</label>
+                              <div class="col-sm-7 controls">
+                                {{form.father_dob}}
+                                <div class="help-block with-errors"></div>
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">Father Profession</label>
+                              <div class="col-sm-7 controls">
+                                {{form.father_profession}}
+                                <div class="help-block with-errors"></div>
+                              </div>
+                            </div>
+
+                            <div class="form-group child1_name_form_group">
+                              <label class="col-sm-2 control-label">Child1 Name</label>
+                              <div class="col-sm-7 controls">
+                                {{form.child1_name}}
+                                <div class="help-block with-errors"></div>                                
+                              </div>
+                            </div>
+
+                            <div class="form-group child2_name_form_group">
+                              <label class="col-sm-2 control-label">Child2 Name</label>
+                              <div class="col-sm-7 controls">
+                                {{form.child2_name}}
+                                
+                                <div class="help-block with-errors"></div>
+
+                              </div>
+                            </div>
+
+
+                           
                     <!--         <div class="form-group">
                               <label class="col-sm-2 control-label">Emergency Phone (primary)<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-7 controls">
@@ -134,7 +212,66 @@
             </div>
             <!-- row -->
 
+<script type="text/javascript">
+
+$("#family_details_form").submit(function (e) {
+                  e.preventDefault();
+                  swal({   title: "Thank you for filling your family details",
+                    text: "Keep your education documents and fill the next form",
+                    type: "success",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Next Tab",
+                    closeOnConfirm: true,
+                    closeOnCancel: true
+                    },
+                    function(isConfirm) {
+                      if (isConfirm) {
+                        $.ajax( {
+                          type: "POST",
+                          url: '/user_details/family_details',
+                          data: $("#family_details_form").serialize(),
+                          success: function( response ) {
+                             window.location='/user_details/education'
+                          }
+                        });
+                      }else{
+                          swal("There was some problem with your data")
+                        }});
+                    });
 
 
+
+$('select#id_marital_status').change(function(){
+  if($(this).val() == 'MA'){
+    $('.wedding_date_form_group').removeClass('hidden');
+    $('#id_wedding_date').attr('required', true);
+    $('.spouse_name_form_group').removeClass('hidden');
+    $('#id_spouse_name').attr('required', true);
+    $('.child1_name_form_group').removeClass('hidden');
+    $('#id_child1_name').attr('required', true);
+    $('.child2_name_form_group').removeClass('hidden');
+    $('#id_child2_name').attr('required', true);
+    
+    $('.no_of_children_form_group').removeClass('hidden');
+    $('#id_child2_name').attr('required', true);
+  }else if($(this).val() !== 'MA'){
+    $('.wedding_date_form_group').addClass('hidden');
+    $('#id_wedding_date').removeAttr('required');
+    $('.spouse_name_form_group').addClass('hidden');
+    $('#id_spouse_name').removeAttr('required');
+    $('.child1_name_form_group').addClass('hidden');
+    $('#id_child1_name').removeAttr('required');
+    $('.child2_name_form_group').addClass('hidden');
+    $('#id_child2_name').removeAttr('required');
+    
+    $('.no_of_children_form_group').addClass('hidden');
+    $('#id_child2_name').removeAttr('required');
+      
+  }
+})
+
+
+</script>
 
 {% endblock %}

@@ -1,0 +1,37 @@
+
+                <script type="text/javascript">
+                $("#submit").click(function (e) {
+                  debugger;
+                      e.preventDefault();
+                      var data = new FormData($('form').get(0));
+                      console.log("swal");
+                      swal({   title: "Min 2 proofs required",
+                        text: "Please enter min 2 proofs",
+                        type: "error",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "OK",
+                        closeOnConfirm: true,
+                        closeOnCancel: true
+                        },
+
+                        function(isConfirm) {
+                          if (isConfirm) {
+                            $.ajax( {
+                              type: "GET",
+                              url: '/myansrsource/user_details/proof',
+                              data: data,
+                              cache: false,
+                              processData: false,
+                              contentType: false,
+                              success: function( response ) {
+                                 window.location='/myansrsource/user_details/proof'
+                              }
+
+                            });
+                          }else{
+                              swal("There was some problem with your data")
+                            }});
+                        });
+
+                </script>

@@ -6,7 +6,7 @@ from django.contrib.auth.forms import UserCreationForm
 from bootstrap3_datetime.widgets import DateTimePicker
 from django.utils.safestring import mark_safe
 from django.core.validators import MaxValueValidator
-from models import Address, UserDetails, Education, PreviousEmployment, Proof, GENDER_CHOICES,BLOOD_GROUP_CHOICES,MARITAL_CHOICES,QUALIFICATION,ADDRESSTYPE_CHOICES, JOB_TYPE, EDUCATION_TYPE
+from models import Address, UserDetails, Education, PreviousEmployment, Proof, FamilyDetails, LanguageProficiency, GENDER_CHOICES,BLOOD_GROUP_CHOICES,MARITAL_CHOICES,QUALIFICATION,ADDRESSTYPE_CHOICES, JOB_TYPE, EDUCATION_TYPE
 dateTimeOption = {"format": "MM/DD/YYYY", "pickTime": False}
 
 class UserRegistrationForm(UserCreationForm):
@@ -45,10 +45,10 @@ class UserDetailsForm(forms.ModelForm):
 	employee = forms.CharField(required=False)
 	name_pan = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control',
 		'required': 'True', 'data-error': 'Please enter your first name'}))
+	photo = forms.FileField(label='Photo Attachment', required=False, help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"))
+    # Add Bootstrap widgets
+	photo.widget.attrs = {'class':'bare', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
 	nationality = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control','required': 'True'}))
-	marital_status = forms.ChoiceField(choices=MARITAL_CHOICES,  required=False, widget=forms.Select(attrs={'class': 'width-50 input-sm form-control','required': 'False'}))
-	wedding_date = forms.DateField(label="Wedding Date", required=False, widget=DateTimePicker(options=dateTimeOption),)
-	wedding_date.widget.attrs = {'class': 'form-control filter_class'}
 	date_of_birth = forms.DateField(label="Date of Birth",widget=DateTimePicker(options=dateTimeOption),)
 	date_of_birth.widget.attrs = {'class': 'form-control filter_class', 'required':'true'}
 	blood_group = forms.ChoiceField(choices=BLOOD_GROUP_CHOICES, widget=forms.Select(attrs={'class': 'width-50 input-sm form-control','required': 'False'}))
@@ -69,17 +69,50 @@ class UserDetailsForm(forms.ModelForm):
 	state = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','required': 'True'}))
 	zipcode = forms.RegexField(max_length=6,required=False, regex=r'^\+?1?\d{5,6}$',error_message=("Please enter zipcode with 6 digits"),
                                    widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','type': 'tel', 'pattern':'^\+?1?\d{5,6}$'}))
-		
+	# language_known = forms.CharField(required=False,max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control'}))
+	# speak = forms.CharField(required=False,max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control'}))
+	# read = forms.CharField(required=True,max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control'}))
+	# write = forms.CharField(required=True,max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control'}))	
+	
 	class Meta:
 		model = UserDetails
 
-		fields = ['name_pan','nationality','marital_status','wedding_date','date_of_birth',
+		fields = ['name_pan','photo','nationality','date_of_birth',
 		'blood_group','land_phone','emergency_phone1','emergency_phone2','mobile_phone','gender']
 		exclude = ['employee']
 
 	class Meta:
 		model = Address
 		fields = ['address_type', 'address1', 'address2', 'city', 'state', 'zipcode' ]
+
+	# class Meta:
+	# 	model = LanguageProficiency
+	# 	fields = ['language_known','speak','read','write']
+
+
+class FamilyDetailsForm(forms.ModelForm):
+
+	employee = forms.CharField(required=False)
+	marital_status = forms.ChoiceField(choices=MARITAL_CHOICES,  required=False, widget=forms.Select(attrs={'class': 'width-50 input-sm form-control','required': 'False'}))
+	wedding_date = forms.DateField(label="Wedding Date", required=False, widget=DateTimePicker(options=dateTimeOption),)
+	wedding_date.widget.attrs = {'class': 'form-control filter_class'}
+	spouse_name = forms.CharField(required=False,max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control'}))
+	no_of_children = forms.CharField(required=False,max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control'}))
+	mother_name = forms.CharField(required=True,max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control'}))
+	mother_dob = forms.DateField(label="Mother Date of birth", required=False, widget=DateTimePicker(options=dateTimeOption),)
+	mother_dob.widget.attrs = {'class': 'form-control filter_class'}
+	mother_profession = forms.CharField(required=False,max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control'}))
+	father_name = forms.CharField(required=True,max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control'}))
+	father_dob = forms.DateField(label="Father Date of birth", required=False, widget=DateTimePicker(options=dateTimeOption),)
+	father_dob.widget.attrs = {'class': 'form-control filter_class'}
+	father_profession = forms.CharField(required=False,max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control'}))
+	child1_name = forms.CharField(required=False,max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control'}))
+	child2_name = forms.CharField(required=False,max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control'}))
+
+	class Meta:
+		model = FamilyDetails
+		fields = ['marital_status','wedding_date','spouse_name','no_of_children','mother_name','mother_dob','mother_profession',
+		'father_name','father_dob','father_profession','child1_name','child2_name']
 
 class EducationForm(forms.ModelForm):
 

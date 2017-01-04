@@ -49,24 +49,26 @@
 
 
 <!-- ~~~~sanjay~~~~ -->
+                       {% if messages %}
 
+                                    {% for message in messages %}
+
+                                  <div class="alert alert-danger container" style="margin-top: 25px;width: 410px">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-cross"></i></button>
+                                    <span class="vd_alert-icon"><i class="fa fa-exclamation-circle vd_red"></i></span><strong>{{message}}</strong>
+                                  </div>
+
+
+                                    {% endfor %}
+
+                                {% endif %}
                     
 
 
                         <form id="user_details_form" method="post" class="form-horizontal" enctype="multipart/form-data" data-toggle="validator">
 
                         {% csrf_token %}
-                          {% if messages %}
-
-                              {% for message in messages %}
-
-                            <div class="alert alert-danger">
-                              <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-cross"></i></button>
-                              <span class="vd_alert-icon"><i class="fa fa-exclamation-circle vd_red"></i></span><strong>{{message}}</strong></div>
-
-                              {% endfor %}
-
-                          {% endif %}
+                       
                         <!-- <div class="form-group">
                           <label class="col-sm-2 control-label">UserName</label>
                           <div class="col-sm-7 controls">
@@ -76,26 +78,13 @@
                         </div> -->
 
                             <div class="form-group">
-                              <label class="col-sm-2 control-label">First Name(as per PAN card)<span class="mandatory-field"> *</span></label>
+                              <label class="col-sm-2 control-label">Name(as per PAN card)<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-7 controls">
-                                {{form.first_name_pan}}
+                                {{form.name_pan}}
                                 <div class="help-block with-errors"></div>
                               </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Middle Name(as per PAN card)</label>
-                                <div class="col-sm-7 controls">
-                                  {{form.middle_name_pan}}
-                                <div class="help-block with-errors"></div>
-                                </div>
-                              </div>
-                          <div class="form-group">
-                              <label class="col-sm-2 control-label">Last Name(as per PAN card)<span class="mandatory-field"> *</span></label>
-                              <div class="col-sm-7 controls">
-                                {{form.last_name_pan}}
-                                <div class="help-block with-errors"></div>
-                              </div>
-                            </div>
+                            
 
                             
 
@@ -115,21 +104,7 @@
                               </div>
                             </div>
 
-                            <div class="form-group">
-                              <label class="col-sm-2 control-label">Marital Status<span class="mandatory-field"> *</span></label>
-                              <div class="col-sm-7 controls">
-                                {{form.marital_status}}
-                                <div class="help-block with-errors"></div>
-                              </div>
-                            </div>
-
-                            <div class="form-group wedding_date_form_group">
-                              <label class="col-sm-2 control-label">Wedding Date</label>
-                              <div class="col-sm-7 controls">
-                                {{form.wedding_date}}
-                                <div class="help-block with-errors"></div>
-                              </div>
-                            </div>
+                            
 
 
                             <div class="form-group">
@@ -192,7 +167,7 @@
                             <div class="form-group">
                               <label class="col-sm-2 control-label">Address Type<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-7 controls">
-                                {{form.address_type}}<span id="address" class="glyphicon glyphicon-plus"></span>
+                                {{form.address_type}}
                                 
                                 <div class="help-block with-errors"></div>
                               </div>

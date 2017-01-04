@@ -163,8 +163,9 @@
       {% for val in employment_list %}
         <li id="{{val.company_name}}"> 
           <div class="menu-text pull-left">{{val.company_name}}</div>
-          <div class="menu-icon vd_red pull-right"><i id ="{{val.company_name}}" class="glyphicon glyphicon-trash"></i></div>
+          
         </li>
+        <div class="menu-icon vd_red pull-right"><i id ="{{val.company_name}}" class="glyphicon glyphicon-trash"></i></div>
        {% endfor %}
 
       </ul>
@@ -262,7 +263,7 @@
               
                 $.ajax({
                   type: "GET",
-                  url : '/user_details/previous_delete',
+                  url : '/user_details/previous_employment',
                   data : {'company_name':company_name},
                   success : function(data){
                    window.location='/user_details/previous_employment'
