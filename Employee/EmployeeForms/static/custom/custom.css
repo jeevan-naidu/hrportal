@@ -86,7 +86,7 @@ input[type="file"].bare{
 
 #user-list .content-list .menu-icon{
     position: relative;
-    top: 2px;
+    top: -25px;
     right: 10px;
     cursor: pointer;
 }
