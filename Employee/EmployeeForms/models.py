@@ -133,8 +133,6 @@ class LanguageProficiency(models.Model):
         return u'{0}'.format(
             self.employee)
 
-
-
 class FamilyDetails(models.Model):
     employee = models.ForeignKey(User, blank=True, null=True)
     marital_status = models.CharField("Marital Status",max_length=10,choices=MARITAL_CHOICES,blank=True, null=True)
@@ -192,13 +190,37 @@ class Education(models.Model):
             self.specialization,
             self.employee)
 
+class EducationUniversity(models.Model):
+    
+    employee = models.ForeignKey(User, blank=True, null=True)
+    board_university = models.CharField("Board/University", max_length=50,blank=True,null=True)
+    def __unicode__(self):
+        return u'{0}'.format(
+            self.employee)
+
+class EducationSpecialization(models.Model):
+
+    employee = models.ForeignKey(User, blank=True, null=True)
+    specialization = models.CharField(verbose_name='Specialization',max_length=30,blank=True,null=True)
+    def __unicode__(self):
+        return u'{0}'.format(
+            self.employee)
+
+class EducationInstitute(models.Model):
+
+    employee = models.ForeignKey(User, blank=True, null=True)
+    specialization = models.CharField(verbose_name='Specialization',max_length=30,blank=True,null=True)
+    def __unicode__(self):
+        return u'{0}'.format(
+            self.employee)
+
 class Proof(models.Model):
     employee = models.ForeignKey(User, blank=True, null=True)
     pan = models.CharField("PAN Number",max_length=10,blank=False)
     pan_attachment = models.FileField(upload_to=content_file_name,blank=True, null=True, verbose_name="Pan Attachment")
     aadhar_card = models.CharField("Aadhar Card",max_length=12,blank=True)
     aadhar_attachment = models.FileField(upload_to=content_file_name,blank=True, null=True, verbose_name="Aadhar Card Attachment")
-    dl = models.CharField("Driving License", max_length=10,blank=True, null=True)
+    dl = models.CharField("Driving License", max_length=15,blank=True, null=True)
     dl_attachment = models.FileField(upload_to=content_file_name,blank=True, null=True, verbose_name="DL Attachment")
     passport = models.CharField("Passport", max_length=10,blank=True,null=True)
     passport_attachment = models.FileField(upload_to=content_file_name,blank=True, null=True, verbose_name="Passport Attachment")

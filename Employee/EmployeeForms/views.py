@@ -803,7 +803,6 @@ def proof(request):
                     form.voter_attachment = request.FILES['voter_attachment']
       
                 fields = [pan,aadhar_card, dl, passport, voter_id]
-                fields_attach = [pan_attachment,aadhar_attachment, dl_attachment, passport_attachment, voter_attachment]
                 
                 check = [ val for val in fields if val]
                 

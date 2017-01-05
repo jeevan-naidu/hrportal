@@ -172,7 +172,7 @@ class PreviousEmploymentForm(forms.ModelForm):
 
 class ProofForm(forms.ModelForm):
 
-	pan = forms.RegexField(max_length=10,regex=r'^[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}$',error_messages={'invalid': 'PAN number must be entered in the format: ABCDE1234F. It should be 10 digits.'},
+	pan = forms.RegexField(max_length=10,required=True,regex=r'^[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}$',error_messages={'invalid': 'PAN number must be entered in the format: ABCDE1234F. It should be 10 digits.'},
                     widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','type': 'tel', 'pattern':'^[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}$'}))
 	pan_attachment = forms.FileField(required=True, label='Pan Attachment', help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"))
     # Add Bootstrap widgets
@@ -182,7 +182,7 @@ class ProofForm(forms.ModelForm):
 	aadhar_attachment = forms.FileField(label='Aadhar Card Attachment', required=False, help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"))
     # Add Bootstrap widgets
 	aadhar_attachment.widget.attrs = {'class':'bare', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
-	dl = forms.CharField(max_length=10, required=False, widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control'}))
+	dl = forms.CharField(max_length=15, required=False, widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control'}))
 	dl_attachment = forms.FileField(label='DL Attachment', required=False, help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"))
     # Add Bootstrap widgets
 	dl_attachment.widget.attrs = {'class':'bare', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
