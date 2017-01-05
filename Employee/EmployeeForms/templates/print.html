@@ -30,44 +30,87 @@
 
 <h3 class="text-center">The Printed Form</h3>
 <div class="container">
+
 <div class="print-div"><span>First Name</span> {{request.user.first_name}} </div>
 <div class="print-div"><span>Last Name</span> {{request.user.last_name}} </div>
 <div class="print-div"><span>Email</span> {{request.user.email}} </div>
 <div class="print-div"><span>Name(as per PAN card)</span> {{name_pan}} </div>
-<div class="print-div"><span>First Name</span> {{gender}} </div>
-<div class="print-div"><span>Last Name</span> {{nationality}} </div>
-<div class="print-div"><span>First Name</span> {{date_of_birth}} </div>
-<div class="print-div"><span>Last Name</span> {{blood_group}} </div>
-<div class="print-div"><span>First Name</span> {{land_phone}} </div>
-<div class="print-div"><span>Last Name</span> {{mobile_phone}} </div>
-<div class="print-div"><span>First Name</span> {{request.user.first_name}} </div>
-<div class="print-div"><span>Last Name</span> {{request.user.last_name}} </div>
-<div class="print-div"><span>First Name</span> {{request.user.first_name}} </div>
-<div class="print-div"><span>Last Name</span> {{request.user.last_name}} </div>
-<div class="print-div"><span>First Name</span> {{request.user.first_name}} </div>
-<div class="print-div"><span>Last Name</span> {{request.user.last_name}} </div>
-<div class="print-div"><span>First Name</span> {{request.user.first_name}} </div>
-<div class="print-div"><span>Last Name</span> {{request.user.last_name}} </div>
-<div class="print-div"><span>First Name</span> {{request.user.first_name}} </div>
-<div class="print-div"><span>Last Name</span> {{request.user.last_name}} </div>
-<div class="print-div"><span>First Name</span> {{request.user.first_name}} </div>
-<div class="print-div"><span>Last Name</span> {{request.user.last_name}} </div>
-<div class="print-div"><span>First Name</span> {{request.user.first_name}} </div>
-<div class="print-div"><span>Last Name</span> {{request.user.last_name}} </div>
-<div class="print-div"><span>First Name</span> {{request.user.first_name}} </div>
-<div class="print-div"><span>Last Name</span> {{request.user.last_name}} </div>
-<div class="print-div"><span>First Name</span> {{request.user.first_name}} </div>
-<div class="print-div"><span>Last Name</span> {{request.user.last_name}} </div>
-<div class="print-div"><span>First Name</span> {{request.user.first_name}} </div>
-<div class="print-div"><span>Last Name</span> {{request.user.last_name}} </div>
-<div class="print-div"><span>First Name</span> {{request.user.first_name}} </div>
-<div class="print-div"><span>Last Name</span> {{request.user.last_name}} </div>
-<div class="print-div"><span>First Name</span> {{request.user.first_name}} </div>
-<div class="print-div"><span>Last Name</span> {{request.user.last_name}} </div>
-<div class="print-div"><span>First Name</span> {{request.user.first_name}} </div>
-<div class="print-div"><span>Last Name</span> {{request.user.last_name}} </div>
+<div class="print-div"><span>Gender</span> {{gender}} </div>
+<div class="print-div"><span>Nationality</span> {{nationality}} </div>
+<div class="print-div"><span>Date of birth</span> {{date_of_birth}} </div>
+<div class="print-div"><span>Blood Group</span> {{blood_group}} </div>
+<div class="print-div"><span>Land Phone</span> {{land_phone}} </div>
+<div class="print-div"><span>Mobile Phone</span> {{mobile_phone}} </div>
+
+<div class="print-div"><span>Address Type</span> {{address_type}} </div>
+<div class="print-div"><span>Street</span> {{address1}} </div>
+<div class="print-div"><span>Lane</span> {{address2}} </div>
+<div class="print-div"><span>City</span> {{city}} </div>
+<div class="print-div"><span>State</span> {{state}} </div>
+<div class="print-div"><span>Zip Code</span> {{zipcode}} </div>
+
+<div class="print-div"><span>Address Type</span> {{address_type}} </div>
+<div class="print-div"><span>Street</span> {{address1}} </div>
+<div class="print-div"><span>Lane</span> {{address2}} </div>
+<div class="print-div"><span>City</span> {{city}} </div>
+<div class="print-div"><span>State</span> {{state}} </div>
+<div class="print-div"><span>Zip Code</span> {{zipcode}} </div>
 
 
+<div class="print-div"><span>Marital Status</span> {{marital_status}} </div>
+<div class="print-div"><span>Wedding Date</span> {{wedding_date}} </div>
+<div class="print-div"><span>Spouse Name</span> {{spouse_name}} </div>
+<div class="print-div"><span>No of Children</span> {{no_of_children}} </div>
+<div class="print-div"><span>Mother Name</span> {{mother_name}} </div>
+<div class="print-div"><span>Mother Date of Birth</span> {{mother_dob}} </div>
+<div class="print-div"><span>Mother Profession</span> {{mother_profession}} </div>
+<div class="print-div"><span>Father Name</span> {{father_name}} </div>
+<div class="print-div"><span>Father Date of Birth</span> {{father_dob}} </div>
+<div class="print-div"><span>Father Profession</span> {{father_profession}} </div>
+<div class="print-div"><span>Emergency Phone(primary)</span> {{emergency_phone1}} </div>
+<div class="print-div"><span>Emergency Phone(Secondary)</span> {{emergency_phone2}} </div>
+<div class="print-div"><span>Child1 Name</span> {{child1_name}} </div>
+<div class="print-div"><span>Child2 Name</span> {{child2_name}} </div>
+
+<div class="print-div"><span>Education Type</span> {{education_type}} </div>
+<div class="print-div"><span>Qualfication</span> {{qualification}} </div>
+<div class="print-div"><span>Specialization</span> {{specialization}} </div>
+<div class="print-div"><span>From Date</span> {{from_date}} </div>
+<div class="print-div"><span>To Date</span> {{to_date}} </div>
+<div class="print-div"><span>Institution</span> {{institute}} </div>
+<div class="print-div"><span>Board/University</span> {{board_university}} </div>
+<div class="print-div"><span>Overall Marks</span> {{overall_marks}} </div>
+
+<div class="print-div"><span>Education Type</span> {{education_type}} </div>
+<div class="print-div"><span>Qualfication</span> {{qualification}} </div>
+<div class="print-div"><span>Specialization</span> {{specialization}} </div>
+<div class="print-div"><span>From Date</span> {{from_date}} </div>
+<div class="print-div"><span>To Date</span> {{to_date}} </div>
+<div class="print-div"><span>Institution</span> {{institute}} </div>
+<div class="print-div"><span>Board/University</span> {{board_university}} </div>
+<div class="print-div"><span>Overall Marks</span> {{overall_marks}} </div>
+
+<div class="print-div"><span>Company Name</span> {{company_name}} </div>
+<div class="print-div"><span>Company Address</span> {{company_address}} </div>
+<div class="print-div"><span>Job Type</span> {{job_type}} </div>
+<div class="print-div"><span>Employed From</span> {{employed_from}} </div>
+<div class="print-div"><span>Employed To</span> {{employed_to}} </div>
+<div class="print-div"><span>Last CTC</span> {{last_ctc}} </div>
+<div class="print-div"><span>Reason for Exit</span> {{reason_for_exit}} </div>
+
+<div class="print-div"><span>Company Name</span> {{company_name}} </div>
+<div class="print-div"><span>Company Address</span> {{company_address}} </div>
+<div class="print-div"><span>Job Type</span> {{job_type}} </div>
+<div class="print-div"><span>Employed From</span> {{employed_from}} </div>
+<div class="print-div"><span>Employed To</span> {{employed_to}} </div>
+<div class="print-div"><span>Last CTC</span> {{last_ctc}} </div>
+<div class="print-div"><span>Reason for Exit</span> {{reason_for_exit}} </div>
+
+<div class="print-div"><span>PAN card Number</span> {{pan}} </div>
+<div class="print-div"><span>Aadhar card Number</span> {{aadhar_card}} </div>
+<div class="print-div"><span>Driving License Number</span> {{dl}} </div>
+<div class="print-div"><span>Passport Number</span> {{passport}} </div>
+<div class="print-div"><span>Voter ID Number</span> {{voter_id}} </div>
 <!-- <button class="btn btn-primary" onclick="window.print()">Print this</button> -->
 </div>
 </body>

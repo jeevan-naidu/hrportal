@@ -45,6 +45,17 @@
   <form id="education_form" enctype="multipart/form-data" method="post" class="form-horizontal col-sm-7" enctype="multipart/form-data" data-toggle="validator">
 
   {% csrf_token %}
+  {% if messages %}
+
+                                  {% for message in messages %}
+
+                                <div class="alert alert-danger">
+                                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-cross"></i></button>
+                                  <span class="vd_alert-icon"><i class="fa fa-exclamation-circle vd_red"></i></span><strong>{{message}}</strong></div>
+
+                                  {% endfor %}
+
+                              {% endif %}
   <!-- <div class="form-group">
     <label class="col-sm-5 control-label">Employee</label>
     <div class="col-sm-7 controls">

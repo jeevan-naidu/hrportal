@@ -190,7 +190,8 @@ def user_details(request):
                         addre = {'address_type':''}
 
                     # print lists
-                    return render(request, "wizard.html", {'form':form,'address_list':lists,'no_of_degree':no_of_degree,'employee':request.user})
+                    return render(request, "wizard.html", {'form':form,'address_list':lists,'no_of_degree':no_of_degree,
+                        'employee':request.user})
                 
                 except Address.DoesNotExist:            
                     return render(request, "wizard.html", context)
@@ -314,10 +315,11 @@ def family_details(request):
         try:
             employee = FamilyDetails.objects.get(employee=request.user)
             
-            form = FamilyDetailsForm(initial = {'marital_status':employee.marital_status,'wedding_date':employee.wedding_date,'spouse_name':employee.spouse_name,
-            'no_of_children':employee.no_of_children,'mother_name':employee.mother_name,'mother_dob':employee.mother_dob,'mother_profession':employee.mother_profession,
-            'father_name':employee.father_name,'father_dob':employee.father_dob,'father_profession':employee.father_profession,
-            'emergency_phone1':employee.emergency_phone1,'emergency_phone2':employee.emergency_phone2,'child1_name':employee.child1_name,'child2_name':employee.child2_name})
+            form = FamilyDetailsForm(initial = {'marital_status':employee.marital_status,'wedding_date':employee.wedding_date,
+            'spouse_name':employee.spouse_name,'no_of_children':employee.no_of_children,'mother_name':employee.mother_name,
+            'mother_dob':employee.mother_dob,'mother_profession':employee.mother_profession,'father_name':employee.father_name,
+            'father_dob':employee.father_dob,'father_profession':employee.father_profession,'emergency_phone1':employee.emergency_phone1,
+            'emergency_phone2':employee.emergency_phone2,'child1_name':employee.child1_name,'child2_name':employee.child2_name})
 
             context["form"] = form
             return render(request, "family_details.html", context)
@@ -397,16 +399,17 @@ def family_details(request):
                 child1_name = form.cleaned_data['child1_name']
                 child2_name = form.cleaned_data['child2_name']
                 
-                FamilyDetails(employee = employee,marital_status=marital_status,wedding_date=wedding_date,
-                spouse_name=spouse_name,no_of_children=no_of_children,mother_name=mother_name, mother_dob=mother_dob,mother_profession=mother_profession,
-                father_name=father_name,father_profession=father_profession,father_dob=father_dob, emergency_phone1=emergency_phone1,emergency_phone2=emergency_phone2,
-                child1_name=child1_name,child2_name=child2_name).save()
+                FamilyDetails(employee = employee,marital_status=marital_status,wedding_date=wedding_date,spouse_name=spouse_name,
+                    no_of_children=no_of_children,mother_name=mother_name, mother_dob=mother_dob,mother_profession=mother_profession,
+                    father_name=father_name,father_profession=father_profession,father_dob=father_dob, emergency_phone1=emergency_phone1,
+                    emergency_phone2=emergency_phone2,child1_name=child1_name,child2_name=child2_name).save()
                 print employee
                 
                 context['form'] = form
                 return HttpResponseRedirect('/user_details/education')
 
     return render(request, 'education.html', context)
+
 def previous_delete(request):
     
     # import ipdb; ipdb.set_trace()
@@ -548,8 +551,9 @@ def education(request):
             board_university = employee.board_university
             overall_marks = employee.overall_marks
             marks_card_attachment = employee.marks_card_attachment
-            form = EducationForm(initial = {'education_type':employee.education_type,'from_date':employee.from_date,'qualification':employee.qualification,'specialization':employee.specialization,
-            'from_date':employee.from_date,'to_date':employee.to_date,'institute':employee.institute,'board_university':employee.board_university,
+            form = EducationForm(initial = {'education_type':employee.education_type,'from_date':employee.from_date,
+            'qualification':employee.qualification,'specialization':employee.specialization,'from_date':employee.from_date,
+            'to_date':employee.to_date,'institute':employee.institute,'board_university':employee.board_university,
             'overall_marks':employee.overall_marks,'marks_card_attachment':employee.marks_card_attachment})
             context["form"] = form
             
@@ -802,7 +806,7 @@ def proof(request):
                 if request.FILES.get('voter_attachment', ""):
                     form.voter_attachment = request.FILES['voter_attachment']
       
-                fields = [pan,aadhar_card, dl, passport, voter_id]
+                fields = [pan, aadhar_card, dl, passport, voter_id]
                 
                 check = [ val for val in fields if val]
                 
@@ -838,7 +842,7 @@ def previous_employment(request):
         context = {"form":""}
         form = PreviousEmploymentForm(request.FILES)
         context["form"] = form
-        #import ipdb; ipdb.set_trace()
+        # import ipdb; ipdb.set_trace()
         
         user = request.user
         try:
@@ -1048,23 +1052,139 @@ def print_candidate_information(request):
         proof_form = ProofForm()
         context["form","education_form","previous_employment_form","proof_form"] = form,education_form,previous_employment_form,proof_form
         
-        
-        employee = UserDetails.objects.get(employee=request.user)
-        name_pan = employee.name_pan
-        nationality = employee.nationality
-        blood_group = employee.blood_group
-        land_phone = employee.land_phone
-        mobile_phone = employee.mobile_phone
-        gender = employee.gender
+        try:
+            employee = UserDetails.objects.get(employee=request.user)
+            name_pan = employee.name_pan
+            nationality = employee.nationality
+            date_of_birth = employee.date_of_birth
+            blood_group = employee.blood_group
+            land_phone = employee.land_phone
+            mobile_phone = employee.mobile_phone
+            gender = employee.gender
+        except UserDetails.DoesNotExist:
+            messages.error(request, 'Please fill all your user details before printing')
+            
+            return HttpResponseRedirect('/user_details')
 
-        context = {
-            'employee':employee,
+        try:
+            address = Address.objects.get(employee=request.user, address_type ='PR')
+            address_type = address.address_type
+            address1 = address.address1
+            address2 = address.address2
+            city = address.city
+            state = address.state
+            zipcode = address.zipcode
+        except Address.DoesNotExist:
+            messages.error(request, 'Please fill all your address details before printing')
+            
+            return HttpResponseRedirect('/user_details')
+
+        try:
+            family = FamilyDetails.objects.get(employee=request.user)
+            marital_status = family.marital_status
+            wedding_date = family.wedding_date
+            spouse_name = family.spouse_name
+            no_of_children = family.no_of_children
+            mother_name = family.mother_name
+            mother_dob = family.mother_dob
+            mother_profession = family.mother_profession
+            father_name = family.father_name
+            father_profession = family.father_profession
+            father_dob = family.father_dob
+            emergency_phone1 = family.emergency_phone1
+            emergency_phone2 = family.emergency_phone2
+            child1_name = family.child1_name
+            child2_name = family.child2_name
+        except FamilyDetails.DoesNotExist:
+            messages.error(request, 'Please fill all your family details before printing')
+            
+            return HttpResponseRedirect('/user_details/family_details')
+
+        try:
+            education = Education.objects.get(employee=request.user, qualification='SSC')
+            education_type = education.education_type
+            qualification = education.qualification
+            specialization = education.specialization
+            from_date= education.from_date
+            to_date = education.to_date
+            institute = education.institute
+            board_university = education.board_university
+            overall_marks = education.overall_marks
+        except Education.DoesNotExist:
+            messages.error(request, 'Please fill all your education details before printing')
+            
+            return HttpResponseRedirect('/user_details/education')
+
+        try:
+            previous = PreviousEmployment.objects.get(employee=request.user)
+            company_name = previous.company_name
+            company_address = previous.company_name
+            job_type = previous.job_type
+            employed_from = previous.employed_from
+            employed_upto = previous.employed_upto
+            last_ctc = previous.last_ctc
+            reason_for_exit = previous.reason_for_exit
+        except PreviousEmployment.DoesNotExist:
+            messages.error(request, 'Please fill all your previous employment details before printing')
+            
+            return HttpResponseRedirect('/user_details/previous_employment')
+
+        try:
+            proof = Proof.objects.get(employee=request.user)
+            pan = proof.pan
+            aadhar_card = proof.aadhar_card
+            dl = proof.dl
+            passport = proof.passport
+            voter_id = proof.voter_id
+        except Proof.DoesNotExist:
+            messages.error(request, 'Please fill all your proof details before printing')
+            
+            return HttpResponseRedirect('/user_details/proof')
+        
+        context = {'employee':employee,'address':address,
             'name_pan':name_pan,
+            'date_of_birth':date_of_birth,
             'nationality':nationality,
             'blood_group':blood_group,
             'land_phone':land_phone,
             'mobile_phone':mobile_phone,
             'gender':gender,
+
+            'address_type':address_type,
+            'address1':address1,
+            'address2':address2,
+            'city':city,
+            'state':state,
+            'zipcode':zipcode,
+
+            'marital_status':marital_status,
+            'wedding_date':wedding_date,
+            'spouse_name':spouse_name,
+            'no_of_children':no_of_children,
+            'mother_name':mother_name,
+            'mother_dob':mother_dob,
+            'mother_profession':mother_profession,
+            'father_name':father_name,
+            'father_profession':father_profession,
+            'father_dob':father_dob,
+            'emergency_phone1':emergency_phone1,
+            'emergency_phone2':emergency_phone2,
+            'child1_name':child1_name,
+            'child2_name':child2_name,
+
+            'company_name' : company_name,
+            'company_address' : company_address,
+            'job_type' : job_type,
+            'employed_from' : employed_from,
+            'employed_upto' : employed_upto,
+            'last_ctc' : last_ctc,
+            'reason_for_exit' : reason_for_exit,
+
+            'pan' : pan,
+            'aadhar_card' : aadhar_card,
+            'dl' : dl,
+            'passport' : passport,
+            'voter_id' : voter_id
             }
 
 
