@@ -149,10 +149,11 @@ def user_details(request):
             # address_type = request.GET.get('address_type','')
             address = Address.objects.get(employee=request.user, address_type='PR')
 
-            form = UserDetailsForm(initial = {'name_pan':employee.name_pan,'photo':employee.photo,'nationality':employee.nationality,'date_of_birth':employee.date_of_birth,
-            'blood_group':employee.blood_group,'land_phone':employee.land_phone,'emergency_phone1':employee.emergency_phone1,'emergency_phone2':employee.emergency_phone2,
-            'mobile_phone':employee.mobile_phone,'personal_email':employee.personal_email,'gender':employee.gender,'address_type':address.address_type,'address1':address.address1,
-            'address2':address.address2,'city':address.city,'state':address.state,'zipcode':address.zipcode})
+            form = UserDetailsForm(initial = {'name_pan':employee.name_pan,'photo':employee.photo,
+            'nationality':employee.nationality,'date_of_birth':employee.date_of_birth,'blood_group':employee.blood_group,
+            'land_phone':employee.land_phone,'mobile_phone':employee.mobile_phone,'gender':employee.gender,
+            'address_type':address.address_type,'address1':address.address1,'address2':address.address2,
+            'city':address.city,'state':address.state,'zipcode':address.zipcode})
 
             context["form"] = form
             return render(request, "wizard.html", context)
@@ -160,19 +161,22 @@ def user_details(request):
                 address_type = request.GET.get('address_type','')
                 address = Address.objects.get(employee=request.user, address_type=address_type)
 
-                form = UserDetailsForm(initial = {'name_pan':employee.name_pan,'photo':employee.photo,'nationality':employee.nationality,'date_of_birth':employee.date_of_birth,
-                'blood_group':employee.blood_group,'land_phone':employee.land_phone,'emergency_phone1':employee.emergency_phone1,'emergency_phone2':employee.emergency_phone2,
-                'mobile_phone':employee.mobile_phone,'personal_email':employee.personal_email,'gender':employee.gender,'address_type':address.address_type,'address1':address.address1,
-                'address2':address.address2,'city':address.city,'state':address.state,'zipcode':address.zipcode})
+                form = UserDetailsForm(initial = {'name_pan':employee.name_pan,'photo':employee.photo,
+                'nationality':employee.nationality,'date_of_birth':employee.date_of_birth,
+                'blood_group':employee.blood_group,'land_phone':employee.land_phone,
+                'mobile_phone':employee.mobile_phone,'gender':employee.gender,'address_type':address.address_type,
+                'address1':address.address1,'address2':address.address2,'city':address.city,'state':address.state,
+                'zipcode':address.zipcode})
                 
                 context["form"] = form
                 return render(request, "wizard.html", context)
 
             except Address.DoesNotExist:
                 
-                form = UserDetailsForm(initial = {'name_pan':employee.name_pan,'photo':employee.photo,'nationality':employee.nationality,'date_of_birth':employee.date_of_birth,
-                'blood_group':employee.blood_group,'land_phone':employee.land_phone,'emergency_phone1':employee.emergency_phone1,'emergency_phone2':employee.emergency_phone2,
-                'mobile_phone':employee.mobile_phone,'personal_email':employee.personal_email,'gender':employee.gender})
+                form = UserDetailsForm(initial = {'name_pan':employee.name_pan,'photo':employee.photo,
+                'nationality':employee.nationality,'date_of_birth':employee.date_of_birth,
+                'blood_group':employee.blood_group,'land_phone':employee.land_phone,
+                'mobile_phone':employee.mobile_phone,'gender':employee.gender})
                 try:
                     address = Address.objects.get(employee=request.user,address_type='PR')
                     employee = Address.objects.filter(employee=request.user)
@@ -212,8 +216,6 @@ def user_details(request):
             UserDetails.objects.get(employee=user.id)
             tempsv = UserDetails.objects.get(employee=user.id)
             tempsv.land_phone = None
-            tempsv.emergency_phone1 = None
-            tempsv.emergency_phone2 = None
             tempsv.mobile_phone = None
             tempsv.save()
         except:
@@ -233,10 +235,7 @@ def user_details(request):
                     date_of_birth = form.cleaned_data['date_of_birth']
                     blood_group = form.cleaned_data['blood_group']
                     land_phone = form.cleaned_data['land_phone']
-                    emergency_phone1 = form.cleaned_data['emergency_phone1']
-                    emergency_phone2 = form.cleaned_data['emergency_phone2']
                     mobile_phone = form.cleaned_data['mobile_phone']
-                    personal_email = form.cleaned_data['personal_email']
                     gender = form.cleaned_data['gender']
                     address_type = form.cleaned_data['address_type']
                     address1 = form.cleaned_data['address1']
@@ -254,10 +253,7 @@ def user_details(request):
                     userdata.date_of_birth = date_of_birth
                     userdata.blood_group = blood_group
                     userdata.land_phone = land_phone
-                    userdata.emergency_phone1 = emergency_phone1
-                    userdata.emergency_phone2 = emergency_phone2
                     userdata.mobile_phone = mobile_phone
-                    userdata.personal_email = personal_email
                     userdata.gender = gender
                     userdata1.address_type=address_type
                     userdata1.address1=address1
@@ -287,10 +283,7 @@ def user_details(request):
                 date_of_birth = form.cleaned_data['date_of_birth']
                 blood_group = form.cleaned_data['blood_group']
                 land_phone = form.cleaned_data['land_phone']
-                emergency_phone1 = form.cleaned_data['emergency_phone1']
-                emergency_phone2 = form.cleaned_data['emergency_phone2']
                 mobile_phone = form.cleaned_data['mobile_phone']
-                personal_email = form.cleaned_data['personal_email']
                 gender = form.cleaned_data['gender']
                 address = User.objects.get(username=request.user)
                 address_type = form.cleaned_data['address_type']
@@ -301,10 +294,11 @@ def user_details(request):
                 zipcode = form.cleaned_data['zipcode']
                 
                 UserDetails(employee = employee,name_pan=name_pan,photo=photo,nationality=nationality,
-                date_of_birth=date_of_birth,blood_group=blood_group,land_phone=land_phone, emergency_phone1=emergency_phone1,emergency_phone2=emergency_phone2,
-                mobile_phone=mobile_phone,personal_email=personal_email,gender=gender).save()
+                date_of_birth=date_of_birth,blood_group=blood_group,land_phone=land_phone,
+                mobile_phone=mobile_phone,gender=gender).save()
                 print employee
-                Address(employee=employee, address_type=address_type,address1=address1,address2=address2,city=city,state=state,zipcode=zipcode).save()
+                Address(employee=employee, address_type=address_type,address1=address1,address2=address2,
+                    city=city,state=state,zipcode=zipcode).save()
 
                 context['form'] = form
                 return HttpResponseRedirect('/user_details/education')
@@ -322,7 +316,8 @@ def family_details(request):
             
             form = FamilyDetailsForm(initial = {'marital_status':employee.marital_status,'wedding_date':employee.wedding_date,'spouse_name':employee.spouse_name,
             'no_of_children':employee.no_of_children,'mother_name':employee.mother_name,'mother_dob':employee.mother_dob,'mother_profession':employee.mother_profession,
-            'father_name':employee.father_name,'father_dob':employee.father_dob,'father_profession':employee.father_profession,'child1_name':employee.child1_name,'child2_name':employee.child2_name})
+            'father_name':employee.father_name,'father_dob':employee.father_dob,'father_profession':employee.father_profession,
+            'emergency_phone1':employee.emergency_phone1,'emergency_phone2':employee.emergency_phone2,'child1_name':employee.child1_name,'child2_name':employee.child2_name})
 
             context["form"] = form
             return render(request, "family_details.html", context)
@@ -354,6 +349,8 @@ def family_details(request):
                     father_name = form.cleaned_data['father_name']
                     father_dob = form.cleaned_data['father_dob']
                     father_profession = form.cleaned_data['father_profession']
+                    emergency_phone1 = form.cleaned_data['emergency_phone1']
+                    emergency_phone2 = form.cleaned_data['emergency_phone2']
                     child1_name = form.cleaned_data['child1_name']
                     child2_name = form.cleaned_data['child2_name']
                     
@@ -369,6 +366,8 @@ def family_details(request):
                     userdata.father_name = father_name
                     userdata.father_dob = father_dob
                     userdata.father_profession = father_profession
+                    userdata.emergency_phone1 = emergency_phone1
+                    userdata.emergency_phone2 = emergency_phone2
                     userdata.child1_name=child1_name
                     userdata.child2_name=child2_name
                     try:
@@ -393,12 +392,15 @@ def family_details(request):
                 father_name = form.cleaned_data['father_name']
                 father_dob = form.cleaned_data['father_dob']
                 father_profession = form.cleaned_data['father_profession']
+                emergency_phone1 = form.cleaned_data['emergency_phone1']
+                emergency_phone2 = form.cleaned_data['emergency_phone2']
                 child1_name = form.cleaned_data['child1_name']
                 child2_name = form.cleaned_data['child2_name']
                 
                 FamilyDetails(employee = employee,marital_status=marital_status,wedding_date=wedding_date,
                 spouse_name=spouse_name,no_of_children=no_of_children,mother_name=mother_name, mother_dob=mother_dob,mother_profession=mother_profession,
-                father_name=father_name,father_profession=father_profession,father_dob=father_dob,child1_name=child1_name,child2_name=child2_name).save()
+                father_name=father_name,father_profession=father_profession,father_dob=father_dob, emergency_phone1=emergency_phone1,emergency_phone2=emergency_phone2,
+                child1_name=child1_name,child2_name=child2_name).save()
                 print employee
                 
                 context['form'] = form
@@ -450,8 +452,8 @@ def address_tempo(request):
 
         form = UserDetailsForm(initial = {'name_pan':employee.name_pan,
         'nationality':employee.nationality,'date_of_birth':employee.date_of_birth,
-        'blood_group':employee.blood_group,'land_phone':employee.land_phone,'emergency_phone1':employee.emergency_phone1,'emergency_phone2':employee.emergency_phone2,
-        'mobile_phone':employee.mobile_phone,'personal_email':employee.personal_email,'gender':employee.gender})
+        'blood_group':employee.blood_group,'land_phone':employee.land_phone,
+        'mobile_phone':employee.mobile_phone,'gender':employee.gender})
         
         messages.warning(request,"please fill only temporary address here")
         context["form"] = form
@@ -466,8 +468,8 @@ def address_tempo(request):
 
         form = UserDetailsForm(initial = {'name_pan':employee.name_pan,
         'nationality':employee.nationality,'date_of_birth':employee.date_of_birth,
-        'blood_group':employee.blood_group,'land_phone':employee.land_phone,'emergency_phone1':employee.emergency_phone1,'emergency_phone2':employee.emergency_phone2,
-        'mobile_phone':employee.mobile_phone,'personal_email':employee.personal_email,'gender':employee.gender})
+        'blood_group':employee.blood_group,'land_phone':employee.land_phone,
+        'mobile_phone':employee.mobile_phone,'gender':employee.gender})
         context = {"form":""}
         form = UserDetailsForm(request.POST)
         
@@ -497,9 +499,10 @@ def address_copy(request):
         user = request.user      
         employee = UserDetails.objects.get(employee=request.user)
 
-        form = UserDetailsForm(initial = {'name_pan':employee.name_pan,'nationality':employee.nationality,'date_of_birth':employee.date_of_birth,
-        'blood_group':employee.blood_group,'land_phone':employee.land_phone,'emergency_phone1':employee.emergency_phone1,'emergency_phone2':employee.emergency_phone2,
-        'mobile_phone':employee.mobile_phone,'personal_email':employee.personal_email,'gender':employee.gender})
+        form = UserDetailsForm(initial = {'name_pan':employee.name_pan,
+        'nationality':employee.nationality,'date_of_birth':employee.date_of_birth,
+        'blood_group':employee.blood_group,'land_phone':employee.land_phone,
+        'mobile_phone':employee.mobile_phone,'gender':employee.gender})
         context = {"form":""}
         form = UserDetailsForm(request.POST)
 
@@ -1010,10 +1013,7 @@ def confirm(request):
             nationality = employee.nationality
             blood_group = employee.blood_group
             land_phone = employee.land_phone
-            emergency_phone1 = employee.emergency_phone1
-            emergency_phone2 = employee.emergency_phone2
             mobile_phone = employee.mobile_phone
-            personal_email = employee.personal_email
             gender = employee.gender
 
             context = {
@@ -1022,10 +1022,7 @@ def confirm(request):
             'nationality':nationality,
             'blood_group':blood_group,
             'land_phone':land_phone,
-            'emergency_phone1':emergency_phone1,
-            'emergency_phone2':emergency_phone2,
             'mobile_phone':mobile_phone,
-            'personal_email':personal_email,
             'gender':gender,
             }
 
@@ -1043,9 +1040,33 @@ def candidate_overview(request):
 
 def print_candidate_information(request):
 
-    return render(request, 'print.html',{})
+    if request.method == 'GET':
+        # import ipdb; ipdb.set_trace()
+        context = {"form":"","education_form":"","previous_employment_form":"","proof_form":""}
+        form = UserDetailsForm()
+        education_form = EducationForm()
+        previous_employment_form = PreviousEmploymentForm()
+        proof_form = ProofForm()
+        context["form","education_form","previous_employment_form","proof_form"] = form,education_form,previous_employment_form,proof_form
+        
+        
+        employee = UserDetails.objects.get(employee=request.user)
+        name_pan = employee.name_pan
+        nationality = employee.nationality
+        blood_group = employee.blood_group
+        land_phone = employee.land_phone
+        mobile_phone = employee.mobile_phone
+        gender = employee.gender
 
-    return render(request, 'print.html',{})
+        context = {
+            'employee':employee,
+            'name_pan':name_pan,
+            'nationality':nationality,
+            'blood_group':blood_group,
+            'land_phone':land_phone,
+            'mobile_phone':mobile_phone,
+            'gender':gender,
+            }
 
 
-
+    return render(request, 'print.html',context)

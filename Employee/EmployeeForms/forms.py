@@ -54,13 +54,8 @@ class UserDetailsForm(forms.ModelForm):
 	blood_group = forms.ChoiceField(choices=BLOOD_GROUP_CHOICES, widget=forms.Select(attrs={'class': 'width-50 input-sm form-control','required': 'False'}))
 	land_phone = forms.RegexField(max_length=10,required=False, regex=r'^\+?1?\d{9,15}$',error_message=("Phone number must be entered in the format: '999999999'. ""It should be 10 digits."),
                                    widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','type': 'tel', 'pattern':'^\+?1?\d{9,15}$'}))
-	emergency_phone1 = forms.RegexField(max_length=10,regex=r'^\+?1?\d{9,15}$',error_message=("Phone number must be entered in the format: '999999999'.""It should be 10 digits."),
-                                   widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','type': 'tel', 'pattern':'^\+?1?\d{9,15}$'}))
-	emergency_phone2 = forms.RegexField(max_length=10,regex=r'^\+?1?\d{9,15}$',error_message=("Phone number must be entered in the format: '999999999'. ""It should be 10 digits."),
-                                   widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','type': 'tel', 'pattern':'^\+?1?\d{9,15}$'}))
 	mobile_phone = forms.RegexField(max_length=10,regex=r'^\+?1?\d{9,15}$',error_message=("Phone number must be entered in the format: '999999999'. ""It should be 10 digits."),
                                    widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','type': 'tel', 'pattern':'^\+?1?\d{9,15}$'}))
-	personal_email = forms.EmailField(widget=forms.TextInput(attrs={'class': 'width-50 input-sm', 'type':'email'}))
 	gender = forms.ChoiceField(choices=GENDER_CHOICES, widget=forms.Select(attrs={'class': 'input-sm form-control','required': 'False'}))
 	address_type = forms.ChoiceField(choices=ADDRESSTYPE_CHOICES, widget=forms.Select(attrs={'class': 'width-30 input-sm form-control','required': 'True'}))
 	address1 = forms.CharField(max_length=200, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control','required': 'True'}))
@@ -78,7 +73,7 @@ class UserDetailsForm(forms.ModelForm):
 		model = UserDetails
 
 		fields = ['name_pan','photo','nationality','date_of_birth',
-		'blood_group','land_phone','emergency_phone1','emergency_phone2','mobile_phone','gender']
+		'blood_group','land_phone','mobile_phone','gender']
 		exclude = ['employee']
 
 	class Meta:
@@ -106,13 +101,17 @@ class FamilyDetailsForm(forms.ModelForm):
 	father_dob = forms.DateField(label="Father Date of birth", required=False, widget=DateTimePicker(options=dateTimeOption),)
 	father_dob.widget.attrs = {'class': 'form-control filter_class'}
 	father_profession = forms.CharField(required=False,max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control'}))
+	emergency_phone1 = forms.RegexField(max_length=10,regex=r'^\+?1?\d{9,15}$',error_message=("Phone number must be entered in the format: '999999999'.""It should be 10 digits."),
+                                   widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','type': 'tel', 'pattern':'^\+?1?\d{9,15}$'}))
+	emergency_phone2 = forms.RegexField(max_length=10,regex=r'^\+?1?\d{9,15}$',error_message=("Phone number must be entered in the format: '999999999'. ""It should be 10 digits."),
+                                   widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','type': 'tel', 'pattern':'^\+?1?\d{9,15}$'}))
 	child1_name = forms.CharField(required=False,max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control'}))
 	child2_name = forms.CharField(required=False,max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control'}))
 
 	class Meta:
 		model = FamilyDetails
 		fields = ['marital_status','wedding_date','spouse_name','no_of_children','mother_name','mother_dob','mother_profession',
-		'father_name','father_dob','father_profession','child1_name','child2_name']
+		'father_name','father_dob','father_profession','emergency_phone1','emergency_phone2','child1_name','child2_name']
 
 class EducationForm(forms.ModelForm):
 
@@ -173,23 +172,27 @@ class PreviousEmploymentForm(forms.ModelForm):
 
 class ProofForm(forms.ModelForm):
 
-	pan = forms.CharField(max_length=10, required=False, widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control'}))
-	pan_attachment = forms.FileField(label='Pan Attachment', required=False, help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"))
+	pan = forms.RegexField(max_length=10,regex=r'^[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}$',error_messages={'invalid': 'PAN number must be entered in the format: ABCDE1234F. It should be 10 digits.'},
+                    widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','type': 'tel', 'pattern':'^[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}$'}))
+	pan_attachment = forms.FileField(required=True, label='Pan Attachment', help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"))
     # Add Bootstrap widgets
 	pan_attachment.widget.attrs = {'class':'bare', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
-	aadhar_card = forms.CharField(max_length=12, required=False, widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control'}))
+	aadhar_card = forms.RegexField(max_length=12, regex=r'^[0-9]{12}$',error_message=("Aadhar number must be entered in the format: '1212121212'. ""It should be 12 digits."),
+                    widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','type': 'tel', 'pattern':'^[0-9]{12}$'}))
 	aadhar_attachment = forms.FileField(label='Aadhar Card Attachment', required=False, help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"))
     # Add Bootstrap widgets
 	aadhar_attachment.widget.attrs = {'class':'bare', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
-	dl = forms.CharField(max_length=15, required=False, widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control'}))
+	dl = forms.CharField(max_length=10, required=False, widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control'}))
 	dl_attachment = forms.FileField(label='DL Attachment', required=False, help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"))
     # Add Bootstrap widgets
 	dl_attachment.widget.attrs = {'class':'bare', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
-	passport = forms.CharField(max_length=20, required=False, widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control'}))
+	passport = forms.RegexField(max_length=8, regex=r'^[A-Za-z]{1}[0-9]{7}$',required=False, error_message=("Aadhar number must be entered in the format: '1212121212'. ""It should be 12 digits."),
+                    widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','type': 'tel', 'pattern':'^[A-Za-z]{1}[0-9]{7}$'}))
 	passport_attachment = forms.FileField(label='Passport Attachment', required=False, help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"))
     # Add Bootstrap widgets
 	passport_attachment.widget.attrs = {'class':'bare', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
-	voter_id = forms.CharField(max_length=10, required=False, widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control'}))
+	voter_id = forms.RegexField(max_length=10, regex=r'^[A-Za-z]{3}[0-9]{7}$',required=False, error_message=("Aadhar number must be entered in the format: '1212121212'. ""It should be 12 digits."),
+                    widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','type': 'tel', 'pattern':'^[A-Za-z]{3}[0-9]{7}$'}))
 	voter_attachment = forms.FileField(label='Voter ID Attachment', required=False, help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"))
     # Add Bootstrap widgets
 	voter_attachment.widget.attrs = {'class':'bare', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}

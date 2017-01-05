@@ -117,9 +117,6 @@ class UserDetails(models.Model):
     blood_group = models.CharField("Blood Group",max_length=3,choices=BLOOD_GROUP_CHOICES,blank=True)
     mobile_phone = models.CharField("Mobile Phone",max_length=10,unique=True,blank=False,null=True)
     land_phone = models.CharField("Landline Number", max_length=10,blank=True,null=True)
-    emergency_phone1 = models.CharField("Emergency Contact Number1",max_length=10,unique=True,blank=True,null=True)
-    emergency_phone2 = models.CharField("Emergency Contact Number2",max_length=10,unique=True,blank=True,null=True)
-    personal_email = models.EmailField("Personal E-mail",max_length=250,blank=False,unique=True)
     address = models.ManyToManyField(Address, verbose_name='User Address')
     confirmation_code = models.CharField("Confirmation Code",max_length=15,unique=True,blank=True,null=True)
     def __unicode__(self):
@@ -137,6 +134,7 @@ class LanguageProficiency(models.Model):
             self.employee)
 
 
+
 class FamilyDetails(models.Model):
     employee = models.ForeignKey(User, blank=True, null=True)
     marital_status = models.CharField("Marital Status",max_length=10,choices=MARITAL_CHOICES,blank=True, null=True)
@@ -149,6 +147,8 @@ class FamilyDetails(models.Model):
     father_name = models.CharField(verbose_name='Father Name',max_length=30)
     father_dob = models.DateField(verbose_name='Father Date of Birth',null=True,blank=True)
     father_profession = models.CharField(verbose_name='Father Profession',max_length=50,null=True,blank=True)
+    emergency_phone1 = models.CharField("Emergency Contact Number1",max_length=10,unique=True,blank=True,null=True)
+    emergency_phone2 = models.CharField("Emergency Contact Number2",max_length=10,unique=True,blank=True,null=True)
     child1_name = models.CharField(verbose_name='Child1 Name',max_length=30)
     child2_name = models.CharField(verbose_name='Child2 Name',max_length=30)
     def __unicode__(self):

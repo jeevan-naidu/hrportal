@@ -59,6 +59,9 @@
                   <label class="col-sm-2 control-label">PAN Card Number<span class="mandatory-field"> *</span></label>
                   <div class="col-sm-7 controls">
                     {{form.pan}}
+                    {% for error in form.pan.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
                     {{form.pan_attachment}}
                     <div class="help-block with-errors"></div>
                   </div>
