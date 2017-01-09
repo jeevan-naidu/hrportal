@@ -1,8 +1,6 @@
 {% extends 'master.html' %}
 {% load bootstrap3 %}
 {% load static from staticfiles %}
-{% block pageTitle %}User Details{% endblock %}
-{% block pageSubTitle %}Start entering your details here{% endblock %}
 {% block content %}
 <!-- Start Here -->
 
@@ -79,6 +77,7 @@
                               <label class="col-sm-2 control-label">Name(as per PAN card)<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-7 controls">
                                 {{form.name_pan}}
+                                {{name_pan_errors}}
                                 <div class="help-block with-errors"></div>
                               </div>
                             </div>
@@ -97,6 +96,7 @@
                               <label class="col-sm-2 control-label">Gender<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-2 controls">
                                 {{form.gender}}
+                                {{gender_errors}}
                                 <div class="help-block with-errors"></div>
                               </div>
                             </div>
@@ -105,6 +105,7 @@
                               <label class="col-sm-2 control-label">Nationality<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-7 controls">
                                 {{form.nationality}}
+                                {{nationality_errors}}
                                 <div class="help-block with-errors"></div>
                               </div>
                             </div>
@@ -116,6 +117,7 @@
                               <label class="col-sm-2 control-label">Date of Birth<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-7 controls">
                                 {{form.date_of_birth}}
+                                {{date_of_birth_errors}}
                                 <div class="help-block with-errors"></div>
                               </div>
                             </div>
@@ -124,6 +126,7 @@
                               <label class="col-sm-2 control-label">Blood Group<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-2 controls">
                                 {{form.blood_group}}
+                                {{blood_group_errors}}
                                 <div class="help-block with-errors"></div>
                               </div>
                             </div>
@@ -132,6 +135,7 @@
                               <label class="col-sm-2 control-label">Land Phone</label>
                               <div class="col-sm-7 controls">
                                 {{form.land_phone}}
+                                {{land_phone_errors}}
                                 <div class="help-block with-errors"></div>
                               </div>
                             </div>
@@ -142,6 +146,7 @@
                               <label class="col-sm-2 control-label">Mobile Phone<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-7 controls">
                                 {{form.mobile_phone}}
+                                {{mobile_phone_errors}}
                                 <div class="help-block with-errors"></div>
                               </div>
                             </div>
@@ -150,7 +155,7 @@
                               <label class="col-sm-2 control-label">Address Type<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-7 controls">
                                 {{form.address_type}}
-                                
+                                {{address_type_errors}}
                                 <div class="help-block with-errors"></div>
 
                               </div>
@@ -161,6 +166,7 @@
                               <label class="col-sm-2 control-label">Street<span class="mandatory-field"> *</span></label>
                                   <div class="col-sm-7 controls">
                                     {{form.address1}}
+                                    {{address1_errors}}
                                 <div class="help-block with-errors"></div>
                                     </div>
                                 </div>
@@ -169,6 +175,7 @@
                               <label class="col-sm-2 control-label">Lane</label>
                               <div class="col-sm-7 controls">
                                 {{form.address2}}
+                                {{address2_errors}}
                                 <div class="help-block with-errors"></div>
                               </div>
                             </div>
@@ -177,6 +184,7 @@
                               <label class="col-sm-2 control-label">City<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-7 controls">
                                 {{form.city}}
+                                {{city_errors}}
                                 <div class="help-block with-errors"></div>                                
                               </div>
                             </div>
@@ -185,6 +193,7 @@
                               <label class="col-sm-2 control-label">State<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-7 controls">
                                 {{form.state}}
+                                {{state_errors}}
                                 <div class="help-block with-errors"></div>
                               </div>
                             </div>
@@ -193,6 +202,7 @@
                               <label class="col-sm-2 control-label">Zip Code<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-7 controls">
                                 {{form.zipcode}}
+                                {{zipcode_errors}}
                                 <div class="help-block with-errors"></div>                                
                               <div class="checkbox">
                                 <label><input id="address" type="checkbox" value="">Temporary is copied from permanent address</label>
@@ -201,50 +211,7 @@
                               
                               </div>
                             </div>
-                           <!-- <table>
-                           <tr>
-                           <th></th>
-                           <th>Speak</th>
-                           <th>Read</th>
-                           <th>Write</th>
-                           </tr>
-                           <tr>
-                           <td>
-                            <div class="form-group">
-                              <label class="col-sm-2 control-label">Language Known<span class="mandatory-field"> *</span></label>
-                              <div class="col-sm-7 controls">
-                                {{form.language_known}}
-                                <div class="help-block with-errors"></div>
-                              </div>
-                            </div>
-                            </td>
-                            <td>
-                            <div class="form-group">
-                              
-                              <div class="col-sm-50 controls">
-                                {{form.speak}}
-                                <div class="help-block with-errors"></div>
-                              
-                            </div>
-                            </td>
-                            <td>
-                            <div class="form-group">
-                              <div class="col-sm-50 controls">
-                                {{form.read}}
-                                <div class="help-block with-errors"></div>
-                              </div>
-                            </td>
-                            <td>
-                            <div class="form-group">
-                              <div class="col-sm-50 controls">
-                                {{form.write}}
-                                <div class="help-block with-errors"></div>
-                              
-                            </div>
-                            </td>
-                            </tr>
-                            </table> -->
-
+                           
                             <div class="form-group">
                                 <h3 class="col-sm-12 text-right"><input type="submit" id="submit" class="btn vd_bg-green vd_white width-10" value="Save"/></h3>
                             </div>

@@ -1,3 +1,4 @@
+{% load permissions %}
 <!DOCTYPE html>
 <!--[if IE 8]>			<html class="ie ie8"> <![endif]-->
 <!--[if IE 9]>			<html class="ie ie9"> <![endif]-->
@@ -96,6 +97,7 @@
     {# Load SweetAlert CSS and JS #}
        <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/sweetalert/1.0.1/sweetalert.min.css" media="screen">
        <script src="//cdnjs.cloudflare.com/ajax/libs/sweetalert/1.0.1/sweetalert.min.js"></script>
+
 
 </head>
 
@@ -334,13 +336,13 @@
             <!-- <span class="menu-badge"><span class="badge vd_bg-red">78</span></span> -->
         </a>
     </li>
-
+    {% if request.user|has_group:"HR" %}
     <li>
         <a href="/candidate_overview">
             <span class="menu-text">Candidate Overview</span>
         </a>
     </li>
-    
+    {%endif%}
 
 
 

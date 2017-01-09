@@ -3,6 +3,7 @@ from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.template.loader import render_to_string
 from django.contrib import auth
 import datetime
+
 from django.contrib.auth.decorators import login_required
 from django.core.context_processors import csrf
 from django.views.generic import View
@@ -32,6 +33,7 @@ def EmployeeWelcome(request):
 def login(request):
     context = {}
     context.update(csrf(request))
+
     return render_to_response('login.html',context)
 
 def auth_view(request):
@@ -58,13 +60,13 @@ def logout(request):
 
 @login_required
 def loggedin(request):
-    return render_to_response('loggedin.html',{'user':request.user.username})
+    return render(request,'loggedin.html',{'user':request.user.username})
 
 def invalid_login(request):
     return render_to_response('invalid.html')
 
 def register(request):
-    #import ipdb; ipdb.set_trace()
+    # import ipdb; ipdb.set_trace()
     if request.method == 'POST':
         # user = request.user
         context = {"form":""}
@@ -204,9 +206,6 @@ def user_details(request):
             context["form"] = form
             return render(request, "wizard.html", context)
 
-
-        
-
     # instance = UserDetails.objects.get(employee=request.user)
     if request.method == 'POST':
         # import ipdb; ipdb.set_trace()
@@ -270,7 +269,6 @@ def user_details(request):
                     
                     context['form'] = form
                     return HttpResponseRedirect('/user_details/education')
-                    
 
             except UserDetails.DoesNotExist:
                 user = request.user
@@ -304,8 +302,34 @@ def user_details(request):
                 context['form'] = form
                 return HttpResponseRedirect('/user_details/education')
 
+        else:
+            
+            print form.is_valid()
+            # import ipdb; ipdb.set_trace()
+            name_pan_errors = form['name_pan'].errors
+            nationality_errors = form['nationality'].errors
+            date_of_birth_errors = form['date_of_birth'].errors
+            blood_group_errors = form['blood_group'].errors
+            land_phone_errors = form['land_phone'].errors
+            mobile_phone_errors = form['mobile_phone'].errors
+            gender_errors = form['gender'].errors
+            address_type_errors = form['address_type'].errors
+            address1_errors = form['address1'].errors
+            address2_errors = form['address2'].errors
+            city_errors = form['city'].errors
+            state_errors = form['state'].errors
+            zipcode_errors = form['zipcode'].errors
+            
+            
+            return render(request, 'wizard.html', {'form':form, 'name_pan_errors':name_pan_errors,
+            'nationality_errors':nationality_errors,'date_of_birth_errors':date_of_birth_errors,'blood_group_errors':blood_group_errors,
+            'land_phone_errors':land_phone_errors,'mobile_phone_errors':mobile_phone_errors,'gender_errors':gender_errors,
+            'address_type_errors':address_type_errors,'address1_errors':address1_errors,'address2_errors':address2_errors,
+            'city_errors':city_errors,'state_errors':state_errors,'zipcode_errors':zipcode_errors})
+
     return render(request, 'education.html', context)
 
+@login_required
 def family_details(request):
     if request.method == 'GET':
         context = {"form":""}
@@ -333,7 +357,15 @@ def family_details(request):
     if request.method == 'POST':
         # import ipdb; ipdb.set_trace()
         context = {"form":""}
-        user = request.user 
+        user = request.user
+        try:
+            FamilyDetails.objects.get(employee=user.id)
+            tempsv = FamilyDetails.objects.get(employee=user.id)
+            tempsv.emergency_phone2 = None
+            tempsv.emergency_phone1 = None
+            tempsv.save()
+        except:
+            user = request.user
         form = FamilyDetailsForm(request.POST)
 
         if form.is_valid():
@@ -407,6 +439,31 @@ def family_details(request):
                 
                 context['form'] = form
                 return HttpResponseRedirect('/user_details/education')
+        else:
+            
+            print form.is_valid()
+            # import ipdb; ipdb.set_trace()
+            marital_status_errors = form['marital_status'].errors
+            wedding_date_errors = form['wedding_date'].errors
+            spouse_name_errors = form['spouse_name'].errors
+            no_of_children_errors = form['no_of_children'].errors
+            mother_name_errors = form['mother_name'].errors
+            mother_dob_errors = form['mother_dob'].errors
+            mother_profession_errors = form['mother_profession'].errors
+            father_name_errors = form['father_name'].errors
+            father_dob_errors = form['father_dob'].errors
+            father_profession_errors = form['father_profession'].errors
+            emergency_phone1_errors = form['emergency_phone1'].errors
+            emergency_phone2_errors = form['emergency_phone2'].errors
+            child1_name_errors = form['child1_name'].errors
+            child2_name_errors = form['child2_name'].errors
+            
+            return render(request, 'family_details.html', {'form':form, 'marital_status_errors':marital_status_errors,
+            'wedding_date_errors':wedding_date_errors,'spouse_name_errors':spouse_name_errors,'no_of_children_errors':no_of_children_errors,
+            'mother_name_errors':mother_name_errors,'mother_dob_errors':mother_dob_errors,'mother_profession_errors':mother_profession_errors,
+            'father_name_errors':father_name_errors,'father_dob_errors':father_dob_errors,'father_profession_errors':father_profession_errors,
+            'emergency_phone1_errors':emergency_phone1_errors,'emergency_phone2_errors':emergency_phone2_errors,'child1_name_errors':child1_name_errors,
+            'child2_name_errors':child2_name_errors})
 
     return render(request, 'education.html', context)
 
@@ -648,6 +705,23 @@ def education(request):
                 context['form'] = form
                 return render(request, 'education.html',context)
 
+        else:
+            print form.is_valid()
+            # import ipdb; ipdb.set_trace()
+            education_type_errors = form['education_type'].errors
+            qualification_errors = form['qualification'].errors
+            specialization_errors = form['specialization'].errors
+            from_date_errors = form['from_date'].errors
+            to_date_errors = form['to_date'].errors
+            institute_errors = form['institute'].errors
+            board_university_errors = form['board_university'].errors
+            overall_marks_errors = form['overall_marks'].errors
+            
+            return render(request, 'education.html', {'form':form, 'education_type_errors':education_type_errors,
+            'qualification_errors':qualification_errors,'specialization_errors':specialization_errors,'overall_marks_errors':overall_marks_errors,
+            'from_date_errors':from_date_errors,'to_date_errors':to_date_errors,'institute_errors':institute_errors,
+            'board_university_errors':board_university_errors})
+
     user = request.user
     employee = User.objects.get(username=request.user)
     qualification = form.cleaned_data['qualification']
@@ -691,7 +765,7 @@ def proof(request):
             employee = Proof.objects.get(employee=request.user)
         except Proof.DoesNotExist:
             context = {"form":""}
-            form = ProofForm()
+            form = ProofForm(request.FILES)
             context["form"] = form
             return render(request, "proof.html", context)
 
@@ -710,7 +784,7 @@ def proof(request):
         'aadhar_card':employee.aadhar_card,'aadhar_attachment':employee.aadhar_attachment,'dl':employee.dl,
         'dl_attachment':employee.dl_attachment,'passport':employee.passport,'passport_attachment':employee.passport_attachment,
         'voter_id':employee.voter_id, 'voter_attachment':employee.voter_attachment})
-
+        
         context["form"] = form
         return render(request, "proof.html", context)
 
@@ -822,6 +896,7 @@ def proof(request):
                     passport_attachment=passport_attachment,
                     voter_id=voter_id,
                     voter_attachment=voter_attachment).save()
+                    messages.error(request, 'Proof details are added successfully')
                     context['form'] = form
 
                     return HttpResponseRedirect("/user_details/confirm")
@@ -830,8 +905,23 @@ def proof(request):
                     context['form'] = form
                     return render(request,'proof.html',context)
 
-    context['form'] = form
-    return render(request,'proof.html',context)
+        else:
+            print form.is_valid()
+            # import ipdb; ipdb.set_trace()
+            pan_error = form['pan'].errors
+            pan_att_error = form['pan_attachment'].errors
+            aadhar_error = form['aadhar_card'].errors
+            addhar_att_error = form['aadhar_attachment'].errors
+            dl_error = form['dl'].errors
+            dl_att_error = form['dl_attachment'].errors
+            passport_error = form['passport'].errors
+            pp_att_error = form['passport_attachment'].errors
+            voter_error = form['voter_id'].errors
+            voter_att_error =  form['voter_attachment'].errors
+            
+            return render(request, 'proof.html', {'form':form, 'pan_error':pan_error,'pan_att_error':pan_att_error,'aadhar_error':aadhar_error,'addhar_att_error':
+            addhar_att_error,'dl_error':dl_att_error,'passport_error':passport_error,'pp_att_error':pp_att_error,'voter_error':voter_error,
+            'voter_att_error':voter_att_error })
 
 @csrf_exempt
 @login_required
@@ -958,6 +1048,21 @@ def previous_employment(request):
                 context['form'] = form
                 return render(request, 'previous.html',context)
 
+        else:
+            print form.is_valid()
+            # import ipdb; ipdb.set_trace()
+            company_name_errors = form['company_name'].errors
+            company_address_errors = form['company_address'].errors
+            job_type_errors = form['job_type'].errors
+            employed_from_errors = form['employed_from'].errors
+            employed_upto_errors = form['employed_upto'].errors
+            last_ctc_errors = form['last_ctc'].errors
+            reason_for_exit_errors = form['reason_for_exit'].errors
+            
+            return render(request, 'previous.html', {'form':form, 'company_name_errors':company_name_errors,
+            'company_address_errors':company_address_error,'job_type_errors':job_type_errors,'employed_from_errors':employed_from_errors,
+            'employed_upto_errors':employed_upto_errors,'last_ctc_errors':last_ctc_errors,'reason_for_exit_errors':reason_for_exit_errors})
+
     user = request.user
     employee = User.objects.get(username=request.user)
     company_name = form.cleaned_data['company_name']
@@ -1005,7 +1110,7 @@ def confirm(request):
                     proof=Proof.objects.get(employee=request.user)   
                 except Proof.DoesNotExist:
                     messages.error(request, 'Please fill all your proof details before confirming')
-                    context["form"] = form
+                    
                     return render(request,'confirm.html', context)
             except UserDetails.DoesNotExist:
                 messages.error(request, 'Please fill all your User details before confirming')
@@ -1067,6 +1172,7 @@ def print_candidate_information(request):
             return HttpResponseRedirect('/user_details')
 
         try:
+            
             address = Address.objects.get(employee=request.user, address_type ='PR')
             address_type = address.address_type
             address1 = address.address1
@@ -1074,9 +1180,22 @@ def print_candidate_information(request):
             city = address.city
             state = address.state
             zipcode = address.zipcode
+            try:
+                address_t = Address.objects.get(employee=request.user, address_type='TM')
+                address_type = address_t.address_type
+                address1 = address_t.address1
+                address2 = address_t.address2
+                city = address_t.city
+                state = address_t.state
+                zipcode = address_t.zipcode
+
+            except Address.DoesNotExist:
+                messages.error(request, 'Please fill all your address details before printing')
+                
+                return HttpResponseRedirect('/user_details')
         except Address.DoesNotExist:
             messages.error(request, 'Please fill all your address details before printing')
-            
+                
             return HttpResponseRedirect('/user_details')
 
         try:
@@ -1101,6 +1220,7 @@ def print_candidate_information(request):
             return HttpResponseRedirect('/user_details/family_details')
 
         try:
+            # import ipdb; ipdb.set_trace()
             education = Education.objects.get(employee=request.user, qualification='SSC')
             education_type = education.education_type
             qualification = education.qualification
@@ -1156,6 +1276,15 @@ def print_candidate_information(request):
             'city':city,
             'state':state,
             'zipcode':zipcode,
+
+            'education_type':education_type,
+            'qualification':qualification,
+            'specialization':specialization,
+            'from_date':from_date,
+            'to_date':to_date,
+            'institute':institute,
+            'board_university':board_university,
+            'overall_marks':overall_marks,
 
             'marital_status':marital_status,
             'wedding_date':wedding_date,

@@ -4,7 +4,7 @@
 {%block content %}
 
 
-  <div class="row">
+  <div class="row"> {{form_errors}} 
     <div class="col-md-12">
       <div class="panel widget">
         <div class="panel-heading vd_bg-grey">
@@ -30,6 +30,8 @@
                   <div class="menu-icon"> 5 </div>
                   Confirm </a></li>
               </ul>
+  
+  
 <hr>
 
 <!--               <div class="progress progress-striped active">
@@ -39,7 +41,9 @@
 
 
               <div class="tab-pane" id="tab4">
-
+             
+                
+                  
                 <form id="proof_form" method="post" class="form-horizontal" enctype="multipart/form-data" data-toggle="validator">
                 <!-- * Any of the 2 proofs with attachments is mandatory -->
                 {% csrf_token %}
@@ -51,18 +55,17 @@
                   <div class="alert alert-danger">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-cross"></i></button>
                     <span class="vd_alert-icon"><i class="fa fa-exclamation-circle vd_red"></i></span><strong>{{message}}</strong></div>
-
-                    {% endfor %}
-
-                {% endif %}
+                   {% endfor %}
+                    {% endif %}
+              
+                    
                 <div class="form-group">
                   <label class="col-sm-2 control-label">PAN Card Number<span class="mandatory-field"> *</span></label>
                   <div class="col-sm-7 controls">
                     {{form.pan}}
-                    {% for error in form.pan.errors %}
-                        <p>{{ error }}</p>
-                    {% endfor %}
+                    <div><id="id_pan_error">{{pan_error}}</div>
                     {{form.pan_attachment}}
+                    <div><id="id_pan_att_error">{{pan_att_error}}</div>
                     <div class="help-block with-errors"></div>
                   </div>
 
@@ -87,8 +90,9 @@
                   <label class="col-sm-2 control-label">Passport Number</label>
                   <div class="col-sm-7 controls">
                     {{form.passport}}
-
+                    {{form.passport.errors}}
                     {{form.passport_attachment}}
+                    {{form.passport_attachment.errors}}
                     <div class="help-block with-errors"></div>
 
                   </div>
@@ -97,11 +101,13 @@
                   <label class="col-sm-2 control-label">Voter's ID Number</label>
                   <div class="col-sm-7 controls">
                     {{form.voter_id}}
+                    {{form.voter_id.errors}}
                     {{form.voter_attachment}}
+                    {{form.voter_attachment.errors}}
                     <div class="help-block with-errors"></div>
                   </div>
                 </div>
-
+                
                 <div class="form-group">
 
                       <h3 class="col-sm-12 text-right"><input type="submit" id="submit" class="btn vd_bg-green vd_white" value="Save"/></h3>
@@ -109,7 +115,7 @@
                 </div>
               
               </form>
-
+             
             </div><!-- ./tab-content -->
 
 
@@ -126,6 +132,10 @@
 <!-- row -->
 <script type="text/javascript">
 /* 2 form validation */
+var pan_error_d;
+var pan_att_error_d;
+pan_error_d = {{pan_error_d}}
+pan_att_error_d = {{pan_att_error_d}}
 var validateTwo = function(){
   var uploadedCount = 0;
   var fileUploadCount = 0;
@@ -141,6 +151,7 @@ var validateTwo = function(){
   })
   console.log('final uploadedCount is ' + uploadedCount)  ;
   if(uploadedCount < 3){
+            // debugger;
       swal({title:"Min 2 proofs with attachments required",
             type: "error",
             showCancelButton: true,
@@ -151,30 +162,68 @@ var validateTwo = function(){
             closeOnCancel: true
             })
       }else{
-var data = new FormData($('form').get(0));
-swal({   title: "Checking proof details!!",
-  text: "",
-  type: "warning",
-  showCancelButton: true,
-  confirmButtonColor: "#DD6B55",
-  confirmButtonText: "OK!",
-  cancelButtonText: "Cancel",
-  closeOnConfirm: true,
-  closeOnCancel: true
-  },
-  function(isConfirm) {
-    if (isConfirm) {
-      $.ajax( {
-        type: "POST",
-        url: '/user_details/proof',
-        data: data,
-        cache: false,
-        processData: false,
-        contentType: false,
-        success: function( response ) {
-            
-           window.location='/user_details/confirm'
-        }
+        // debugger;
+            var data = new FormData($('form').get(0));
+            swal({   title: "Checking proof details!!",
+              text: "",
+              type: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#DD6B55",
+              confirmButtonText: "OK!",
+              cancelButtonText: "Cancel",
+              closeOnConfirm: true,
+              closeOnCancel: true
+              },
+
+              function(isConfirm) {
+                if (isConfirm) {
+                  $.ajax( {
+                    type: "POST",
+                    url: '/user_details/proof',
+                    data: data,
+                    cache: false,
+                    processData: false,
+                    contentType: false,
+                    success: function(data) {
+                        
+                        var proof = $(data).find('#proof_form')
+                        var pan_error = pan_error_d
+                        var pan_att_error = pan_att_error_d
+                        
+                        if (pan_error == pan_error_d){
+                          console.log("if1");
+                            $("#tab4").html(proof); 
+                        }
+                        if (pan_att_error == pan_att_error_d){
+                          console.log("if2");
+                            $("#tab4").html(proof); 
+                        }
+                        else{
+                          swal({   title: "Collecting proof details!!",
+                              text: "",
+                              type: "Success",
+                              showCancelButton: true,
+                              confirmButtonColor: "#DD6B55",
+                              confirmButtonText: "OK!",
+                              cancelButtonText: "Cancel",
+                              closeOnConfirm: true,
+                              closeOnCancel: true
+                              },
+                              function(isConfirm) {
+                                if (isConfirm) {
+                                  console.log("else")
+                                  window.location = '/user_details/confirm'
+                                }
+                              });
+
+                        }
+                        // $("#tab4").html(proof);
+
+
+
+
+                        }
+
       });
     }});        
       }
@@ -182,32 +231,7 @@ swal({   title: "Checking proof details!!",
 $("#proof_form").submit(function (e) {
 e.preventDefault();
 validateTwo();
-/*var data = new FormData($('form').get(0));
-swal({   title: "Checking proof details!!",
-  text: "",
-  type: "warning",
-  showCancelButton: true,
-  confirmButtonColor: "#DD6B55",
-  confirmButtonText: "OK!",
-  cancelButtonText: "Cancel",
-  closeOnConfirm: true,
-  closeOnCancel: true
-  },
-  function(isConfirm) {
-    if (isConfirm) {
-      $.ajax( {
-        type: "POST",
-        url: '/user_details/proof',
-        data: data,
-        cache: false,
-        processData: false,
-        contentType: false,
-        success: function( response ) {
-            
-           window.location='/user_details/proof'
-        }
-      });
-    }});*/
+
   });
 $(document).ready(function(){
   

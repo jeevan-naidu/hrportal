@@ -177,7 +177,7 @@ class ProofForm(forms.ModelForm):
 	pan_attachment = forms.FileField(required=True, label='Pan Attachment', help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"))
     # Add Bootstrap widgets
 	pan_attachment.widget.attrs = {'class':'bare', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
-	aadhar_card = forms.RegexField(max_length=12, regex=r'^[0-9]{12}$',error_message=("Aadhar number must be entered in the format: '1212121212'. ""It should be 12 digits."),
+	aadhar_card = forms.RegexField(max_length=12, required=False,regex=r'^[0-9]{12}$',error_message=("Aadhar number must be entered in the format: '1212121212'. ""It should be 12 digits."),
                     widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','type': 'tel', 'pattern':'^[0-9]{12}$'}))
 	aadhar_attachment = forms.FileField(label='Aadhar Card Attachment', required=False, help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"))
     # Add Bootstrap widgets

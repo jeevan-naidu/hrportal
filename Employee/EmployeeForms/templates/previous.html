@@ -56,17 +56,12 @@
                                   {% endfor %}
 
                               {% endif %}
-  <!-- <div class="form-group">
-    <label class="col-sm-5 control-label">Employee</label>
-    <div class="col-sm-7 controls">
-      {{form.employee}}
-    </div>
-  </div> -->
 
   <div class="form-group">
     <label class="col-sm-5 control-label">Company Name<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
       {{form.company_name}}
+      {{company_name_error}}
       {{form.company_name.errors}}
       <div class="help-block with-errors"></div>
     </div>
@@ -76,6 +71,7 @@
     <label class="col-sm-5 control-label">Company Address</label>
     <div class="col-sm-7 controls">
       {{form.company_address}}
+      {{company_address_errors}}
       {{form.company_address.errors}}
       <div class="help-block with-errors"></div>
     </div>
@@ -85,18 +81,18 @@
     <label class="col-sm-5 control-label">Job Type</label>
     <div class="col-sm-7 controls">
       {{form.job_type}}
+      {{job_type_errors}}
       {{form.job_type.errors}}
       <div class="help-block with-errors"></div>
     </div>
   </div>
-
-
 
   <div class="form-group">
     <label id ="from_date" class="col-sm-5 control-label">Employed From<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
       <div class="input-group">
         {{form.employed_from}}
+        {{employed_from_errors}}
         {{form.employed_from.errors}}
       <div class="help-block with-errors"></div>
         <span class="input-group-addon" id="datepicker-icon-trigger" data-datepicker="#datepicker-icon"><i class="fa fa-calendar"></i></span> </div>
@@ -107,6 +103,7 @@
     <div class="col-sm-7 controls">
       <div class="input-group">
         {{form.employed_upto}}
+        {{employed_upto_errors}}
         {{form.employed_upto.errors}}
         <div class="help-block with-errors"></div>        
         <span class="input-group-addon" id="datepicker-icon-trigger" data-datepicker="#datepicker-icon"><i class="fa fa-calendar"></i></span> </div>
@@ -116,6 +113,7 @@
     <label class="col-sm-5 control-label">Last CTC<span class="mandatory-field"> *</span></label>
     <div id="institute" class="col-sm-7 controls">
       {{form.last_ctc}}
+      {{last_ctc_errors}}
       {{form.last_ctc.errors}}
       <div class="help-block with-errors"></div>
     </div>
@@ -124,6 +122,7 @@
     <label class="col-sm-5 control-label">Reason for Exit<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
       {{form.reason_for_exit}}
+      {{reason_for_exit_errors}}
       {{form.board_reason_for_exituniversity.errors}}
       <div class="help-block with-errors"></div>
     </div>

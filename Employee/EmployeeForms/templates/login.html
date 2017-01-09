@@ -41,10 +41,6 @@
                 <div class="panel-body">
                   <div class="login-icon entypo-icon"> <i class="icon-key" style="margin-top: 25px;display: block;"></i> </div>
 
-
-
-
-
                   <form action="/auth" method="POST" enctype="multipart/form-data" class="form-horizontal" role="form">
                   {% csrf_token %}
                   <!-- <input type='hidden' name='csrfmiddlewaretoken' value='5MNerPBauRsItT3iSIJdEaYF5pKUOvUQ' /> -->
@@ -56,9 +52,6 @@
                     <span class="vd_alert-icon"><i class="fa fa-check-circle vd_green"></i></span><strong>Well done!</strong>. </div>
                     <div class="form-group  mgbt-xs-20">
 
-
-
-
                       <div class="col-md-12">
 
                         <div class="label-wrapper sr-only">
@@ -67,10 +60,6 @@
                         <div class="vd_input-wrapper" id="email-input-wrapper"> <span class="menu-icon"> <i class="fa fa-envelope"></i> </span>
                       <input autofocus="autofocus" class="" id="username" maxlength="30" name="username" placeholder="Userid" required="required" title="" type="text">
                         </div>
-
-
-
-
 
                         <div class="label-wrapper">
                           <label class="control-label sr-only" for="id_password">Password</label>
@@ -107,24 +96,8 @@
 
 
                     </div>
-
-                      
+   
                   </form>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                     {% if messages %}
 
@@ -137,18 +110,6 @@
                       {% endfor %}
 
                     {% endif %}
-
-
-
-
-
-
-
-
-
-
-
-
 
                 </div>
               </div>
