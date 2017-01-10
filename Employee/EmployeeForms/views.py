@@ -208,7 +208,7 @@ def user_details(request):
 
     # instance = UserDetails.objects.get(employee=request.user)
     if request.method == 'POST':
-        # import ipdb; ipdb.set_trace()
+        import ipdb; ipdb.set_trace()
         context = {"form":""}
         user = request.user
 
@@ -226,11 +226,16 @@ def user_details(request):
             try:
                 if UserDetails.objects.get(employee=request.user):
                     user = request.user
-                    employee = User.objects.get(username=request.user)
+                    employee = UserDetails.objects.get(employee=request.user)
+                    photo = employee.photo
                     name_pan = form.cleaned_data['name_pan']
-                    photo = form.cleaned_data['photo']
-                    if request.FILES.get('photo', ""):
-                        form.photo = request.FILES['photo']
+                    
+                    if photo == '':
+                        photo = form.cleaned_data['photo']
+                        if request.FILES.get('photo', ""):
+                            form.photo = request.FILES['photo']
+                    else:
+                        photo = employee.photo
                     nationality = form.cleaned_data['nationality']
                     date_of_birth = form.cleaned_data['date_of_birth']
                     blood_group = form.cleaned_data['blood_group']
@@ -319,7 +324,6 @@ def user_details(request):
             city_errors = form['city'].errors
             state_errors = form['state'].errors
             zipcode_errors = form['zipcode'].errors
-            
             
             return render(request, 'wizard.html', {'form':form, 'name_pan_errors':name_pan_errors,
             'nationality_errors':nationality_errors,'date_of_birth_errors':date_of_birth_errors,'blood_group_errors':blood_group_errors,
@@ -647,7 +651,7 @@ def education(request):
             try:
                 # Education.objects.get(employee=request.user,qualification=qualification,specialization=specialization)
                 user = request.user
-                employee = User.objects.get(username=request.user)
+                employee = Education.objects.get(employee=request.user)
 
                 qualification = form.cleaned_data['qualification']
                 specialization = form.cleaned_data['specialization']
@@ -657,9 +661,12 @@ def education(request):
                 institute = form.cleaned_data['institute']
                 board_university = form.cleaned_data['board_university']
                 overall_marks = form.cleaned_data['overall_marks']
-                marks_card_attachment = form.cleaned_data['marks_card_attachment']
-                if request.FILES.get('marks_card_attachment', ""):
-                    form.marks_card_attachment = request.FILES['marks_card_attachment']
+                if employee.marks_card_attachment == '':
+                    marks_card_attachment = form.cleaned_data['marks_card_attachment']
+                    if request.FILES.get('marks_card_attachment', ""):
+                            form.marks_card_attachment = request.FILES['marks_card_attachment']
+                else:
+                    marks_card_attachment = employee.marks_card_attachment
 
                 userdata = Education.objects.filter(employee=user.id, qualification=qualification,specialization=specialization)
                 
@@ -809,27 +816,42 @@ def proof(request):
             try:
                 if Proof.objects.get(employee=request.user):
                     user = request.user
-                    employee = User.objects.get(username=request.user)
+                    employee = Proof.objects.get(employee=request.user)
                     pan = form.cleaned_data['pan']
-                    pan_attachment = form.cleaned_data['pan_attachment']
-                    if request.FILES.get('pan_attachment', ""):
-                        form.pan_attachment = request.FILES['pan_attachment']
+                    if employee.pan_attachment == '':
+                        pan_attachment = form.cleaned_data['pan_attachment']
+                        if request.FILES.get('pan_attachment', ""):
+                            form.pan_attachment = request.FILES['pan_attachment']
+                    else:
+                        pan_attachment = employee.pan_attachment
                     aadhar_card = form.cleaned_data['aadhar_card']
-                    aadhar_attachment = form.cleaned_data['aadhar_attachment']
-                    if request.FILES.get('aadhar_attachment', ""):
-                        form.aadhar_attachment = request.FILES['aadhar_attachment']
+                    if employee.aadhar_attachment == '':
+                        aadhar_attachment = form.cleaned_data['aadhar_attachment']
+                        if request.FILES.get('pan_attachment', ""):
+                            form.aadhar_attachment = request.FILES['aadhar_attachment']
+                    else:
+                        aadhar_attachment = employee.aadhar_attachment
                     dl = form.cleaned_data['dl']
-                    dl_attachment = form.cleaned_data['dl_attachment']
-                    if request.FILES.get('dl_attachment', ""):
-                        form.dl_attachment = request.FILES['dl_attachment']
+                    if employee.dl_attachment == '':
+                        dl_attachment = form.cleaned_data['dl_attachment']
+                        if request.FILES.get('dl_attachment', ""):
+                            form.dl_attachment = request.FILES['dl_attachment']
+                    else:
+                        dl_attachment = employee.dl_attachment
                     passport = form.cleaned_data['passport']
-                    passport_attachment = form.cleaned_data['passport_attachment']
-                    if request.FILES.get('passport_attachment', ""):
-                        form.passport_attachment = request.FILES['passport_attachment']
+                    if employee.passport_attachment == '':
+                        passport_attachment = form.cleaned_data['passport_attachment']
+                        if request.FILES.get('passport_attachment', ""):
+                            form.passport_attachment = request.FILES['passport_attachment']
+                    else:
+                        passport_attachment = employee.passport_attachment
                     voter_id = form.cleaned_data['voter_id']
-                    voter_attachment = form.cleaned_data['voter_attachment']
-                    if request.FILES.get('voter_attachment', ""):
-                        form.voter_attachment = request.FILES['voter_attachment']
+                    if employee.voter_attachment == '':
+                        voter_attachment = form.cleaned_data['voter_attachment']
+                        if request.FILES.get('voter_attachment', ""):
+                            form.voter_attachment = request.FILES['voter_attachment']
+                    else:
+                        voter_attachment = employee.voter_attachment
 
                     fields = [pan,aadhar_card, dl, passport, voter_id]
 
@@ -947,11 +969,12 @@ def previous_employment(request):
             reason_for_exit = employee.reason_for_exit
             ps_attachment = employee.ps_attachment
             rl_attachment = employee.rl_attachment
+            offer_letter_attachment = employee.offer_letter_attachment
 
             form = PreviousEmploymentForm(initial = {'company_name':employee.company_name,'company_address':employee.company_address,
             'job_type':employee.job_type,'employed_from':employee.employed_from,'employed_upto':employee.employed_upto,
             'last_ctc':employee.last_ctc,'reason_for_exit':employee.reason_for_exit,'ps_attachment':employee.ps_attachment,
-            'rl_attachment':employee.rl_attachment})
+            'rl_attachment':employee.rl_attachment,'offer_letter_attachment':offer_letter_attachment})
 
             context["form"] = form
 
@@ -978,18 +1001,19 @@ def previous_employment(request):
     #     return render(request, "previous.html", context)
 
     if request.method == 'POST':
-        # import ipdb; ipdb.set_trace()
+        import ipdb; ipdb.set_trace()
 
         form = PreviousEmploymentForm(request.POST, request.FILES)
         context = {"form":""}
         ps_attachment = request.FILES.get('ps_attachment',"")
         rl_attachment = request.FILES.get('rl_attachment',"")
+        offer_letter_attachment = request.FILES.get('offer_letter_attachment',"")
 
         if form.is_valid():
             try:
                 # PreviousEmployment.objects.get(employee=request.user)
                 user = request.user
-                employee = User.objects.get(username=request.user)
+                employee = PreviousEmployment.objects.get(employee=request.user)
                 company_name = form.cleaned_data['company_name']
                 company_address = form.cleaned_data['company_address']
                 job_type = form.cleaned_data['job_type']
@@ -997,12 +1021,24 @@ def previous_employment(request):
                 employed_upto = form.cleaned_data['employed_upto']
                 last_ctc = form.cleaned_data['last_ctc']
                 reason_for_exit = form.cleaned_data['reason_for_exit']
-                ps_attachment = form.cleaned_data['ps_attachment']
-                if request.FILES.get('ps_attachment', ""):
-                    form.ps_attachment = request.FILES['ps_attachment']
-                rl_attachment = form.cleaned_data['rl_attachment']
-                if request.FILES.get('rl_attachment', ""):
-                    form.rl_attachment = request.FILES['rl_attachment']
+                if employee.ps_attachment == '':
+                    ps_attachment = form.cleaned_data['ps_attachment']
+                    if request.FILES.get('ps_attachment', ""):
+                            form.ps_attachment = request.FILES['ps_attachment']
+                else:
+                    ps_attachment = employee.ps_attachment
+                if employee.rl_attachment == '':
+                    rl_attachment = form.cleaned_data['rl_attachment']
+                    if request.FILES.get('rl_attachment', ""):
+                            form.rl_attachment = request.FILES['rl_attachment']
+                else:
+                    rl_attachment = employee.rl_attachment
+                if employee.offer_letter_attachment == '':
+                    offer_letter_attachment = form.cleaned_data['offer_letter_attachment']
+                    if request.FILES.get('offer_letter_attachment', ""):
+                            form.offer_letter_attachment = request.FILES['offer_letter_attachment']
+                else:
+                    offer_letter_attachment = employee.offer_letter_attachment
 
                 userdata = PreviousEmployment.objects.filter(employee=user.id, company_name=company_name)
                 for details in userdata:
@@ -1015,10 +1051,12 @@ def previous_employment(request):
                     details.reason_for_exit = reason_for_exit
                     details.ps_attachment = ps_attachment
                     details.rl_attachment = rl_attachment
+                    details.offer_letter_attachment = offer_letter_attachment
+                    
                     details.save()
                     context['form'] = form
                     return render(request, 'previous.html',context)
-            except UserDetails.DoesNotExist:
+            except PreviousEmployment.DoesNotExist:
                 user = request.user
                 employee = User.objects.get(username=request.user)
                 company_name = form.cleaned_data['company_name']
@@ -1034,6 +1072,9 @@ def previous_employment(request):
                 rl_attachment = form.cleaned_data['rl_attachment']
                 if request.FILES.get('rl_attachment', ""):
                     form.rl_attachment = request.FILES['rl_attachment']
+                offer_letter_attachment = form.cleaned_data['offer_letter_attachment']
+                if request.FILES.get('offer_letter_attachment', ""):
+                    form.offer_letter_attachment = request.FILES['offer_letter_attachment']
 
                 PreviousEmployment(employee=employee,
                 company_name=company_name,
@@ -1044,7 +1085,8 @@ def previous_employment(request):
                 last_ctc=last_ctc,
                 reason_for_exit=reason_for_exit,
                 ps_attachment=ps_attachment,
-                rl_attachment=rl_attachment).save()
+                rl_attachment=rl_attachment,
+                offer_letter_attachment=offer_letter_attachment).save()
                 context['form'] = form
                 return render(request, 'previous.html',context)
 
@@ -1078,6 +1120,9 @@ def previous_employment(request):
     rl_attachment = form.cleaned_data['rl_attachment']
     if request.FILES.get('rl_attachment', ""):
         form.rl_attachment = request.FILES['rl_attachment']
+    offer_letter_attachment = form.cleaned_data['offer_letter_attachment']
+    if request.FILES.get('offer_letter_attachment', ""):
+        form.offer_letter_attachment = request.FILES['offer_letter_attachment']
 
     PreviousEmployment(employee=employee,
     company_name=company_name,
@@ -1088,7 +1133,8 @@ def previous_employment(request):
     last_ctc=last_ctc,
     reason_for_exit=reason_for_exit,
     ps_attachment=ps_attachment,
-    rl_attachment=rl_attachment).save()
+    rl_attachment=rl_attachment,
+    offer_letter_attachment=offer_letter_attachment).save()
     context['form'] = form
     return render(request, 'previous.html',context)
 

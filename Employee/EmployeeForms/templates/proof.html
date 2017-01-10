@@ -174,7 +174,6 @@ var validateTwo = function(){
               closeOnConfirm: true,
               closeOnCancel: true
               },
-
               function(isConfirm) {
                 if (isConfirm) {
                   $.ajax( {
@@ -215,15 +214,9 @@ var validateTwo = function(){
                                   window.location = '/user_details/confirm'
                                 }
                               });
-
                         }
                         // $("#tab4").html(proof);
-
-
-
-
                         }
-
       });
     }});        
       }
@@ -231,7 +224,6 @@ var validateTwo = function(){
 $("#proof_form").submit(function (e) {
 e.preventDefault();
 validateTwo();
-
   });
 $(document).ready(function(){
   

@@ -319,7 +319,10 @@
                                    $.ajax( {
                                      type: "POST",
                                      url: '/user_details/previous_employment',
-                                     data: $("#previous_employment_form").serialize(),
+                                     data: data,
+                                     cache: false,
+                                     processData: false,
+                                     contentType: false,
                                      success: function( response ) {
                                         window.location='/user_details/proof'
                                  }
