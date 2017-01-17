@@ -580,7 +580,7 @@ def education_delete(request):
         context["form"] = form
         
           
-        return render(request, "education_display.html", context)
+        return render(request, "/form_templates/education_display.html", context)
         #return HttpResponseRedirect('/user_details/education')
 
 def address_tempo(request):
@@ -708,7 +708,7 @@ def education(request):
             'overall_marks':employee.overall_marks,'marks_card_attachment':employee.marks_card_attachment})
             context["form"] = form
             
-            return render(request, "education_display.html", context)
+            return render(request, "/form_templates/education_display.html", context)
         except Education.DoesNotExist:
             context = {"form":""}
             form = EducationForm()
@@ -771,7 +771,7 @@ def education(request):
                     details.marks_card_attachment = marks_card_attachment
                     details.save()
                     context['form'] = form
-                    return render(request, 'education_display.html',context)
+                    return render(request, '/form_templates/education_display.html',context)
 
             except Education.DoesNotExist:
                 user = request.user
