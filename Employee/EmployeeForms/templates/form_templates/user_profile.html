@@ -1,55 +1,6 @@
-{% extends 'master.html' %}
-{% load bootstrap3 %}
-{% load static from staticfiles %}
-{% block content %}
-<!-- Start Here -->
-
-
-            <div class="row">
-              <div class="col-md-12">
-                <div class="panel widget">
-                  <div class="panel-heading vd_bg-grey">
-                    <h3 class="panel-title"> <span class="menu-icon"> <i class="fa fa-magic"></i> </span> {{user.first_name}} {{user.last_name}} </h3>
-                  </div>
-                  <div class="panel-body">
-
-                      <div id="wizard-2" class="form-wizard">
-                        <ul>
-                          <li><a href="#tab1" data-toggle="tab">
-                            <div class="menu-icon"> 1 </div>
-                            User Profile </a></li>
-                          <li><a href="/user_details/education">
-                            <div class="menu-icon"> 2 </div>
-                            Education </a></li>
-                          <li><a href="/user_details/previous_employment">
-                            <div class="menu-icon"> 3 </div>
-                            Previous Employment </a></li>
-                          <li><a href="/user_details/proof">
-                            <div class="menu-icon"> 4 </div>
-                            Proof </a></li>
-                          <li><a href="/user_details/confirm">
-                            <div class="menu-icon"> 5 </div>
-                            Confirm </a></li>
-                        </ul>
-<hr>
-
-<!--                         <div class="progress progress-striped active">
-                          <div class="progress-bar progress-bar-info" > </div>
-                        </div> -->
-
-
-
-                        <div class="tab-content no-bd">
-
-                          <div class="tab-pane" id="tab1">
-
-                        <!-- <div id="ajax_loader_user_details_form" class="ajax_bck"><div class="ajax_load_image"></div></div> -->
-
-
-<!-- ~~~~sanjay~~~~ -->
-
-                    
-
+{% extends 'form_master.html' %}
+{% block siteTitle %}Main Details{% endblock %}
+{% block form_content %}
 
                         <form id="user_details_form" method="post" class="form-horizontal" enctype="multipart/form-data" data-toggle="validator">
                         {{success}}
@@ -281,20 +232,18 @@
                             </div>
                         </form>
 
-<!-- ~~~~sanjay~~~~ -->
-                        
-                            </div><!-- ./tab-pane -->
 
-                       </div><!-- ./wizard1 ~~~ -->
 
-                  </div>
-                  <!-- Panel Body -->
-                </div>
-                <!-- Panel Widget -->
-              </div>
-              <!-- col-md-12 -->
-            </div>
-            <!-- row -->
+
+
+{% endblock %}                        
+
+
+
+
+
+
+{% block form_scripts %}
 
 <script type="text/javascript">
 
@@ -467,6 +416,5 @@ $("#temp_address").click(function (e) {
                       });
 
 </script>
-
 
 {% endblock %}

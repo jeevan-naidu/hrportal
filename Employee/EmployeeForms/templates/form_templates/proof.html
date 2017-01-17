@@ -1,48 +1,8 @@
-{% extends 'master.html' %}
-{% block pageTitle %}Proof Details{% endblock %}
+{% extends 'form_master.html' %}
+{% block siteTitle %}Proof Details{% endblock %}
 {% block pageSubTitle %}Enter your valid proof details{% endblock %}
-{%block content %}
 
-
-  <div class="row"> {{form_errors}} 
-    <div class="col-md-12">
-      <div class="panel widget">
-        <div class="panel-heading vd_bg-grey">
-          <h3 class="panel-title"> <span class="menu-icon"> <i class="fa fa-magic"></i> </span>{{user.first_name}} {{user.last_name}}  </h3>
-        </div>
-        <div class="panel-body">
-
-            <div id="wizard-2" class="form-wizard">
-              <ul>
-                <li><a href="/user_details">
-                  <div class="menu-icon"> 1 </div>
-                  User Profile </a></li>
-                <li><a href="/user_details/education">
-                  <div class="menu-icon"> 2 </div>
-                  Education </a></li>
-                <li><a href="/user_details/previous_employment">
-                  <div class="menu-icon"> 3 </div>
-                  Previous Employment </a></li>
-                <li class="active"><a href="#tab4" data-toggle="tab">
-                  <div class="menu-icon"> 4 </div>
-                  Proof </a></li>
-                <li><a href="/user_details/confirm">
-                  <div class="menu-icon"> 5 </div>
-                  Confirm </a></li>
-              </ul>
-  
-  
-<hr>
-
-<!--               <div class="progress progress-striped active">
-                <div class="progress-bar progress-bar-info" > </div>
-              </div> -->
-
-
-
-              <div class="tab-pane" id="tab4">
-             
-                
+{% block form_content %}
                   
                 <form id="proof_form" method="post" class="form-horizontal" enctype="multipart/form-data" data-toggle="validator">
                 <!-- * Any of the 2 proofs with attachments is mandatory -->
@@ -60,7 +20,7 @@
               
                     
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">PAN Card Number<span class="mandatory-field"> *</span></label>
+                  <label class="col-sm-3 control-label">PAN Card Number<span class="mandatory-field"> *</span></label>
                   <div class="col-sm-7 controls">
                     {{form.pan}}
                     <div><id="id_pan_error">{{pan_error}}</div>
@@ -71,7 +31,7 @@
 
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">Aadhar Card Number</label>
+                  <label class="col-sm-3 control-label">Aadhar Card Number</label>
                   <div class="col-sm-7 controls">
                     {{form.aadhar_card}}
                     {{form.aadhar_attachment}}
@@ -79,7 +39,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">Driving License Number</label>
+                  <label class="col-sm-3 control-label">Driving License Number</label>
                   <div class="col-sm-7 controls">
                   {{form.dl}}
                   {{form.dl_attachment}}
@@ -87,7 +47,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">Passport Number</label>
+                  <label class="col-sm-3 control-label">Passport Number</label>
                   <div class="col-sm-7 controls">
                     {{form.passport}}
                     {{form.passport.errors}}
@@ -98,7 +58,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">Voter's ID Number</label>
+                  <label class="col-sm-3 control-label">Voter's ID Number</label>
                   <div class="col-sm-7 controls">
                     {{form.voter_id}}
                     {{form.voter_id.errors}}
@@ -116,20 +76,11 @@
               
               </form>
              
-            </div><!-- ./tab-content -->
+{% endblock %}             
+
+{% block form_scripts %}
 
 
-
-          </div><!-- ./wizard1 ~~~ -->
-
-     </div>
-     <!-- Panel Body -->
-   </div>
-   <!-- Panel Widget -->
- </div>
- <!-- col-md-12 -->
-</div>
-<!-- row -->
 <script type="text/javascript">
 /* 2 form validation */
 var pan_error_d;

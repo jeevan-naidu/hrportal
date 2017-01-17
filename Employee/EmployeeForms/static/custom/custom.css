@@ -53,8 +53,8 @@ input[type="file"].bare{
 /* Education form */
 
 .the-qualification{color: #b15814}
-.the-qualification .menu-icon{
-    margin-top: -30px;
+.the-qualification .menu-icon, .the-previous .menu-icon{
+    margin-top: 0px;
     margin-right: 5px;
     position: relative;    
     cursor: pointer;
@@ -86,7 +86,7 @@ input[type="file"].bare{
 
 #user-list .content-list .menu-icon{
     position: relative;
-    top: -25px;
+    top: -28px;
     right: 10px;
     cursor: pointer;
 }

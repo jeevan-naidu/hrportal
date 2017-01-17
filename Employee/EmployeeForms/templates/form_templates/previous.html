@@ -1,46 +1,8 @@
-{% extends 'master.html' %}
+{% extends 'form_master.html' %}
 
 
-{%block content %}
-<head>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-</head>
+{%block form_content %}
 
-  <div class="row">
-    <div class="col-md-12">
-      <div class="panel widget">
-        <div class="panel-heading vd_bg-grey">
-          <h3 class="panel-title"> <span class="menu-icon"> <i class="fa fa-magic"></i> </span> {{user.first_name}} {{user.last_name}} </h3>
-        </div>
-        <div class="panel-body">
-
-            <div id="wizard-2" class="form-wizard">
-              <ul>
-                <li><a href="/user_details">
-                  <div class="menu-icon"> 1 </div>
-                  User Profile </a></li>
-                <li><a href="/user_details/education">
-                  <div class="menu-icon"> 2 </div>
-                  Education </a></li>
-                <li class="active"><a href="#tab3" data-toggle="tab">
-                  <div class="menu-icon"> 3 </div>
-                  Previous Employment </a></li>
-                <li><a href="/user_details/proof">
-                  <div class="menu-icon"> 4 </div>
-                  Proof </a></li>
-                <li><a href="/user_details/confirm">
-                  <div class="menu-icon"> 5 </div>
-                  Confirm </a></li>
-              </ul>
-<hr>
-
-<!--               <div class="progress progress-striped active">
-                <div class="progress-bar progress-bar-info" > </div>
-              </div> -->
-
-
-
-<div class="tab-pane" id="tab2">
 
   <form id="previous_employment_form" enctype="multipart/form-data" method="post" class="form-horizontal col-sm-7" enctype="multipart/form-data" data-toggle="validator">
 
@@ -182,25 +144,10 @@
 
   </div><!-- ./ user-list -->
 
+{% endblock %}
 
-
-</div><!-- ./tab-content -->
-
-
-
-                       </div><!-- ./wizard1 ~~~ -->
-
-                  </div>
-                  <!-- Panel Body -->
-                </div>
-                <!-- Panel Widget -->
-              </div>
-              <!-- col-md-12 -->
-            </div>
-            <!-- row -->
             
-            
-
+{% block form_scripts %}
             <script type="text/javascript">
 
 
