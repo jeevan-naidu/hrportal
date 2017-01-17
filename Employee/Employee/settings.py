@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
+from datetime import timedelta
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -39,6 +40,7 @@ INSTALLED_APPS = [
     'EmployeeForms',
     'bootstrap3',  # Django Bootstrap3
     'bootstrap3_datetime',
+    'axes',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -135,4 +137,16 @@ EMAIL_USE_TLS = True
 
 LOGIN_URL = '/'
 
-# LOGIN_REDIRECT_URL = '/user_details/'
+AXES_LOGIN_FAILURE_LIMIT = 5
+AXES_LOCK_OUT_AT_FAILURE = True
+# AXES_USE_USER_AGENT = True
+AXES_COOLOFF_TIME = timedelta(minutes=15)
+# AXES_LOGGER = 'axes.watch_login'
+AXES_LOCKOUT_TEMPLATE = 'blocked.html'
+# AXES_LOCKOUT_URL = None
+# AXES_VERBOSE = True
+# AXES_USERNAME_FORM_FIELD = username
+# AXES_LOCK_OUT_BY_COMBINATION_USER_AND_IP = True
+# AXES_ONLY_USER_FAILURES = True
+# AXES_NEVER_LOCKOUT_WHITELIST = True
+# AXES_IP_WHITELIST = []

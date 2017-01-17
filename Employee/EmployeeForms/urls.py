@@ -1,11 +1,13 @@
 from django.conf.urls import url, include, patterns
 from django.contrib.auth.decorators import login_required
+from EmployeeForms.views import login
+from axes.decorators import watch_login
 from EmployeeForms import views
 
 urlpatterns = [
                        url(r'^$', (views.EmployeeWelcome), name=u'employee'),
                        url(r'^confirmation/(?P<confirmation_code>\w+)/(?P<username>\w+)$', views.confirmation),
-                       url(r'^user$', views.login),
+                       url(r'^user$', watch_login(login)),
                        url(r'^auth$', views.auth_view),
                        url(r'^logout$', views.logout),
                        url(r'^loggedin$', views.loggedin),
@@ -26,4 +28,5 @@ urlpatterns = [
                        url(r'^download_form$', views.download_form),
                        url(r'^candidate_overview$', views.candidate_overview),
                        url(r'^print_candidate_information$', views.print_candidate_information),
+                       url(r'^checkbox_check$', views.checkbox_check),
                        ]

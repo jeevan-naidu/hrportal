@@ -24,9 +24,25 @@ class AddressAdmin(admin.ModelAdmin):
 class ConfirmationCodeAdmin(admin.ModelAdmin):
 	list_display = [ 'confirmation_code', 'username']
 
+class LanguageProfAdmin(admin.ModelAdmin):
+	list_display = [ 'language_known', 'employee']
+
+class EduSpecAdmin(admin.ModelAdmin):
+	list_display = [ 'specialization']
+
+class EduUniAdmin(admin.ModelAdmin):
+	list_display = [ 'board_university']
+
+class EduInsAdmin(admin.ModelAdmin):
+	list_display = [ 'institute' ]
+
 admin.site.register(UserDetails, UserDetailsAdmin)
 admin.site.register(Education, EducationAdmin)
 admin.site.register(Proof, ProofAdmin)
 admin.site.register(PreviousEmployment, PreviousEmploymentAdmin)
 admin.site.register(Address, AddressAdmin)
 admin.site.register(ConfirmationCode, ConfirmationCodeAdmin)
+admin.site.register(LanguageProficiency, LanguageProfAdmin)
+admin.site.register(EducationUniversity, EduUniAdmin)
+admin.site.register(EducationSpecialization, EduSpecAdmin)
+admin.site.register(EducationInstitute, EduInsAdmin)

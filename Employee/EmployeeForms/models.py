@@ -60,8 +60,6 @@ ADDRESSTYPE_CHOICES = (
     ('TM', 'Temporary'),
     )
 
-
-
 def content_file_name(instance, filename):
     ''' This function generates a random string of length 16 which will be a combination of (4 digits + 4
     characters(lowercase) + 4 digits + 4 characters(uppercase)) seperated 4 characters by hyphen(-) '''
@@ -70,13 +68,9 @@ def content_file_name(instance, filename):
     import string
 
     # random_str length will be 16 which will be combination of (4 digits + 4 characters + 4 digits + 4 characters)
-    random_str =  "".join([random.choice(string.uppercase) for i in range(0,4)]) + "".join([random.choice(string.digits) for i in range(0,4)]) + \
-                    "".join([random.choice(string.lowercase) for i in range(0,4)]) + "".join([random.choice(string.digits) for i in range(0,4)])
-
-    # return string seperated by hyphen eg:
-    random_str =  random_str[:4] + "-" + random_str[4:8] + "-" + random_str[8:12] + "-" + random_str[12:]
+    
     filetype = filename.split(".")[-1].lower()
-    filename = random_str +"." +  filetype
+    filename = filename
     path = "uploads/" + str(instance.employee)
     os_path = os.path.join(path, filename)
     return os_path
@@ -117,25 +111,31 @@ class UserDetails(models.Model):
     blood_group = models.CharField("Blood Group",max_length=3,choices=BLOOD_GROUP_CHOICES,blank=True)
     mobile_phone = models.CharField("Mobile Phone",max_length=10,unique=True,blank=False,null=True)
     land_phone = models.CharField("Landline Number", max_length=10,blank=True,null=True)
-    emergency_phone1 = models.CharField("Emergency Contact Number1",max_length=10,unique=True,blank=True,null=True)
-    emergency_phone2 = models.CharField("Emergency Contact Number2",max_length=10,unique=True,blank=True,null=True)
-    personal_email = models.EmailField("Personal E-mail",max_length=250,blank=False,unique=True)
     address = models.ManyToManyField(Address, verbose_name='User Address')
     confirmation_code = models.CharField("Confirmation Code",max_length=15,unique=True,blank=True,null=True)
     def __unicode__(self):
         return u'{0}'.format(
             self.employee)
 
+    def save(self, *args, **kwargs):
+        # delete old file when replacing by updating the file
+        try:
+            this = UserDetails.objects.get(id=self.id)
+            if this.image != self.image:
+                this.image.delete(save=False)
+        except: pass # when new photo then we do nothing, normal case          
+        super(UserDetails, self).save(*args, **kwargs)
+
 class LanguageProficiency(models.Model):
+
     employee = models.ForeignKey(User, blank=True, null=True)
-    language_known = models.CharField(verbose_name='Language Known',max_length=50,null=True,blank=True)
-    speak = models.CharField(verbose_name='Speak',max_length=50,null=True,blank=True)
-    write = models.CharField(verbose_name='Write',max_length=50,null=True,blank=True)
-    read = models.CharField(verbose_name='Read',max_length=50,null=True,blank=True)
+    language_known = models.CharField(verbose_name='Language Known',max_length=50, null = True, blank=True)
+    speak = models.BooleanField(verbose_name='Speak', default = False)
+    write = models.BooleanField(verbose_name='Write', default = False)
+    read = models.BooleanField(verbose_name='Read', default =False)
     def __unicode__(self):
         return u'{0}'.format(
             self.employee)
-
 
 class FamilyDetails(models.Model):
     employee = models.ForeignKey(User, blank=True, null=True)
@@ -149,6 +149,8 @@ class FamilyDetails(models.Model):
     father_name = models.CharField(verbose_name='Father Name',max_length=30)
     father_dob = models.DateField(verbose_name='Father Date of Birth',null=True,blank=True)
     father_profession = models.CharField(verbose_name='Father Profession',max_length=50,null=True,blank=True)
+    emergency_phone1 = models.CharField("Emergency Contact Number1",max_length=10,unique=True,blank=True,null=True)
+    emergency_phone2 = models.CharField("Emergency Contact Number2",max_length=10,unique=True,blank=True,null=True)
     child1_name = models.CharField(verbose_name='Child1 Name',max_length=30)
     child2_name = models.CharField(verbose_name='Child2 Name',max_length=30)
     def __unicode__(self):
@@ -192,13 +194,34 @@ class Education(models.Model):
             self.specialization,
             self.employee)
 
+class EducationUniversity(models.Model):
+    
+    board_university = models.CharField("Board/University", max_length=50,blank=True,null=True)
+    def __unicode__(self):
+        return u'{0}'.format(
+            self.board_university)
+
+class EducationSpecialization(models.Model):
+
+    specialization = models.CharField(verbose_name='Specialization',max_length=30,blank=True,null=True)
+    def __unicode__(self):
+        return u'{0}'.format(
+            self.specialization)
+
+class EducationInstitute(models.Model):
+
+    institute = models.CharField(verbose_name='Institute',max_length=30,blank=True,null=True)
+    def __unicode__(self):
+        return u'{0}'.format(
+            self.institute)
+
 class Proof(models.Model):
     employee = models.ForeignKey(User, blank=True, null=True)
     pan = models.CharField("PAN Number",max_length=10,blank=False)
     pan_attachment = models.FileField(upload_to=content_file_name,blank=True, null=True, verbose_name="Pan Attachment")
     aadhar_card = models.CharField("Aadhar Card",max_length=12,blank=True)
     aadhar_attachment = models.FileField(upload_to=content_file_name,blank=True, null=True, verbose_name="Aadhar Card Attachment")
-    dl = models.CharField("Driving License", max_length=10,blank=True, null=True)
+    dl = models.CharField("Driving License", max_length=15,blank=True, null=True)
     dl_attachment = models.FileField(upload_to=content_file_name,blank=True, null=True, verbose_name="DL Attachment")
     passport = models.CharField("Passport", max_length=10,blank=True,null=True)
     passport_attachment = models.FileField(upload_to=content_file_name,blank=True, null=True, verbose_name="Passport Attachment")
@@ -207,10 +230,3 @@ class Proof(models.Model):
     def __unicode__(self):
         return u'{0}'.format(
         self.employee)
-
-# class FileUpload(models.Model):
-#     employee = models.ForeignKey(User)
-#     title = models.CharField("Title",max_length=50,blank=False,unique=True)
-#     attachment = models.FileField(upload_to=content_file_name, blank=True, null=True, verbose_name="Attachment")
-#     def __unicode__(self):
-#         return u'{0}'.format(self.employee)

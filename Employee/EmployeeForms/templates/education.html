@@ -45,6 +45,17 @@
   <form id="education_form" enctype="multipart/form-data" method="post" class="form-horizontal col-sm-7" enctype="multipart/form-data" data-toggle="validator">
 
   {% csrf_token %}
+  {% if messages %}
+
+                                  {% for message in messages %}
+
+                                <div class="alert alert-danger">
+                                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-cross"></i></button>
+                                  <span class="vd_alert-icon"><i class="fa fa-exclamation-circle vd_red"></i></span><strong>{{message}}</strong></div>
+
+                                  {% endfor %}
+
+                              {% endif %}
   <!-- <div class="form-group">
     <label class="col-sm-5 control-label">Employee</label>
     <div class="col-sm-7 controls">
@@ -56,6 +67,7 @@
     <label class="col-sm-5 control-label">Education Type<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
       {{form.education_type}}
+      {{education_type_errors}}
       {{form.education_type.errors}}
       <div class="help-block with-errors"></div>
     </div>
@@ -65,6 +77,7 @@
     <label class="col-sm-5 control-label">Qualification<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
       {{form.qualification}}
+      {{qualification_errors}}
       {{form.qualification.errors}}
       <div class="help-block with-errors"></div>
     </div>
@@ -74,7 +87,10 @@
     <label class="col-sm-5 control-label">Specialization<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
       {{form.specialization}}
-      {{form.specialization.errors}}
+      
+      {{specialization_errors}}
+      
+     <!--  {{form.specialization.errors}} -->
       <div class="help-block with-errors"></div>
     </div>
   </div>
@@ -86,6 +102,7 @@
     <div class="col-sm-7 controls">
       <div class="input-group">
         {{form.from_date}}
+        {{from_date_errors}}
         {{form.from_date.errors}}
       <div class="help-block with-errors"></div>
         <span class="input-group-addon" id="datepicker-icon-trigger" data-datepicker="#datepicker-icon"><i class="fa fa-calendar"></i></span> </div>
@@ -96,6 +113,7 @@
     <div class="col-sm-7 controls">
       <div class="input-group">
         {{form.to_date}}
+        {{to_date_errors}}
         {{form.to_date.errors}}
         <div class="help-block with-errors"></div>        
         <span class="input-group-addon" id="datepicker-icon-trigger" data-datepicker="#datepicker-icon"><i class="fa fa-calendar"></i></span> </div>
@@ -105,6 +123,7 @@
     <label class="col-sm-5 control-label">Institution<span class="mandatory-field"> *</span></label>
     <div id="institute" class="col-sm-7 controls">
       {{form.institute}}
+      {{institute_errors}}
       {{form.institute.errors}}
       <div class="help-block with-errors"></div>
     </div>
@@ -113,6 +132,7 @@
     <label class="col-sm-5 control-label">Board/University<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
       {{form.board_university}}
+      {{board_university_errors}}
       {{form.board_university.errors}}
       <div class="help-block with-errors"></div>
     </div>
@@ -121,16 +141,18 @@
     <label class="col-sm-5 control-label">Overall Marks<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
       {{form.overall_marks}}
+      {{overall_marks_errors}}
       {{form.overall_marks.errors}}
       <div class="help-block with-errors"></div>
     </div>
   </div>
 
-  
+  {{marks_card_attachment}}
   <div class="form-group">
     <label class="col-sm-5 control-label">Marks Card<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
       {{form.marks_card_attachment}}
+
       <div class="help-block with-errors"></div>
     </div>
   </div>
@@ -152,6 +174,7 @@
       <ul class="list-wrapper">
       {% for val in education_list %}
         <li id="{{val.qual}},{{val.spec}}"> 
+        <input type="hidden" value="{{val.spec}}" class="speclization">
           <div class="menu-text">{{val.qual}} - <span class="qual-spec">{{val.spec}}</span></div>
           </li>
           <div class="menu-icon vd_red pull-right"><i id ="{{val.qual}},{{val.spec}}" class="glyphicon glyphicon-trash"></i></div>
@@ -178,12 +201,8 @@
               <!-- col-md-12 -->
             </div>
             <!-- row -->
-            
-            
 
             <script type="text/javascript">
-
-
 
             var theObj = 
 
@@ -214,23 +233,35 @@
                 var specialization = theObj[the_id_key]['specialization'];
               }
               
-                $.ajax({
-                  type: "GET",
-                  url : '/user_details/education_delete',
-                  data : {'qualification':qualification,'specialization':specialization},
-                  success : function(data){
-                   window.location='/user_details/education'
-                   // return data;
-                  }
-                  // error: function(xhr, status, error) {
-                  //   alert(xhr.responseText);
-                  // }
-                });
-              
+              swal({   title: "Are you sure you want to delete?",
+                    text: "",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Yes",
+                    cancelButtonText: "No",
+                    closeOnConfirm: true,
+                    closeOnCancel: true
+                    },
+                    function(isConfirm) {
+                      if (isConfirm) {
+                          $.ajax({
+                            type: "GET",
+                            url : '/user_details/education_delete',
+                            data : {'qualification':qualification,'specialization':specialization},
+                            success : function(data){
+                             window.location='/user_details/education'
+                             // return data;
+                            }
+                            // error: function(xhr, status, error) {
+                            //   alert(xhr.responseText);
+                            // }
+                          });
+              }});
           });
+
                 
                             var theObj = 
-
 
                             {
               {%for val in education_list%}
@@ -242,7 +273,6 @@
                             }
 
 
-                     
             $('.content-list li').click(function(){
               // e.preventDefault();
               // debugger;
@@ -272,6 +302,8 @@
                 });
               
           });
+
+
             $("#education_form").submit(function (e) {
                   e.preventDefault();
                   var data = new FormData($('form').get(0));

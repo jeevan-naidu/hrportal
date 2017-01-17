@@ -45,17 +45,23 @@
   <form id="previous_employment_form" enctype="multipart/form-data" method="post" class="form-horizontal col-sm-7" enctype="multipart/form-data" data-toggle="validator">
 
   {% csrf_token %}
-  <!-- <div class="form-group">
-    <label class="col-sm-5 control-label">Employee</label>
-    <div class="col-sm-7 controls">
-      {{form.employee}}
-    </div>
-  </div> -->
+  {% if messages %}
+
+            {% for message in messages %}
+
+          <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-cross"></i></button>
+             <span class="vd_alert-icon"><i class="fa fa-exclamation-circle vd_red"></i></span><strong>{{message}}</strong></div>
+
+            {% endfor %}
+
+         {% endif %}
 
   <div class="form-group">
     <label class="col-sm-5 control-label">Company Name<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
       {{form.company_name}}
+      {{company_name_error}}
       {{form.company_name.errors}}
       <div class="help-block with-errors"></div>
     </div>
@@ -65,6 +71,7 @@
     <label class="col-sm-5 control-label">Company Address</label>
     <div class="col-sm-7 controls">
       {{form.company_address}}
+      {{company_address_errors}}
       {{form.company_address.errors}}
       <div class="help-block with-errors"></div>
     </div>
@@ -74,18 +81,18 @@
     <label class="col-sm-5 control-label">Job Type</label>
     <div class="col-sm-7 controls">
       {{form.job_type}}
+      {{job_type_errors}}
       {{form.job_type.errors}}
       <div class="help-block with-errors"></div>
     </div>
   </div>
-
-
 
   <div class="form-group">
     <label id ="from_date" class="col-sm-5 control-label">Employed From<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
       <div class="input-group">
         {{form.employed_from}}
+        {{employed_from_errors}}
         {{form.employed_from.errors}}
       <div class="help-block with-errors"></div>
         <span class="input-group-addon" id="datepicker-icon-trigger" data-datepicker="#datepicker-icon"><i class="fa fa-calendar"></i></span> </div>
@@ -96,6 +103,7 @@
     <div class="col-sm-7 controls">
       <div class="input-group">
         {{form.employed_upto}}
+        {{employed_upto_errors}}
         {{form.employed_upto.errors}}
         <div class="help-block with-errors"></div>        
         <span class="input-group-addon" id="datepicker-icon-trigger" data-datepicker="#datepicker-icon"><i class="fa fa-calendar"></i></span> </div>
@@ -105,6 +113,7 @@
     <label class="col-sm-5 control-label">Last CTC<span class="mandatory-field"> *</span></label>
     <div id="institute" class="col-sm-7 controls">
       {{form.last_ctc}}
+      {{last_ctc_errors}}
       {{form.last_ctc.errors}}
       <div class="help-block with-errors"></div>
     </div>
@@ -113,6 +122,7 @@
     <label class="col-sm-5 control-label">Reason for Exit<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
       {{form.reason_for_exit}}
+      {{reason_for_exit_errors}}
       {{form.board_reason_for_exituniversity.errors}}
       <div class="help-block with-errors"></div>
     </div>
@@ -217,22 +227,35 @@
               // Object Iteration
               for (var key in theObj[the_id_key]) {
                 console.log(theObj[the_id_key]['company_name']);
-                var qualification = theObj[the_id_key]['company_name'];
+                var company_name = theObj[the_id_key]['company_name'];
               }
+
+              swal({   title: "Are you sure you want to delete?",
+                    text: "",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Yes",
+                    cancelButtonText: "No",
+                    closeOnConfirm: true,
+                    closeOnCancel: true
+                    },
+                    function(isConfirm) {
+                      if (isConfirm) {
               
-                $.ajax({
-                  type: "GET",
-                  url : '/user_details/previous_delete',
-                  data : {'company_name':company_name},
-                  success : function(data){
-                   window.location='/user_details/previous_employment'
-                   // return data;
-                  }
-                  // error: function(xhr, status, error) {
-                  //   alert(xhr.responseText);
-                  // }
-                });
-              
+                          $.ajax({
+                            type: "GET",
+                            url : '/user_details/previous_delete',
+                            data : {'company_name':company_name},
+                            success : function(data){
+                             window.location='/user_details/previous_employment'
+                             // return data;
+                            }
+                            // error: function(xhr, status, error) {
+                            //   alert(xhr.responseText);
+                            // }
+                          });
+              }}); 
           });
                 
                             var theObj = 
@@ -257,7 +280,7 @@
               // Object Iteration
               for (var key in theObj[the_id_key]) {
                 console.log(theObj[the_id_key]['company_name']);
-                var qualification = theObj[the_id_key]['company_name'];
+                var company_name = theObj[the_id_key]['company_name'];
               }
               
                 $.ajax({
@@ -265,7 +288,7 @@
                   url : '/user_details/previous_employment',
                   data : {'company_name':company_name},
                   success : function(data){
-                   window.location='/user_details/previous_employment'
+                   $("#previous_employment_form").html(data);
                    // return data;
                   }
                   // error: function(xhr, status, error) {
@@ -309,7 +332,10 @@
                                    $.ajax( {
                                      type: "POST",
                                      url: '/user_details/previous_employment',
-                                     data: $("#previous_employment_form").serialize(),
+                                     data: data,
+                                     cache: false,
+                                     processData: false,
+                                     contentType: false,
                                      success: function( response ) {
                                         window.location='/user_details/proof'
                                  }
