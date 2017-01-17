@@ -6,6 +6,10 @@ from django.contrib.auth.forms import UserCreationForm
 from bootstrap3_datetime.widgets import DateTimePicker
 from django.utils.safestring import mark_safe
 from django.core.validators import MaxValueValidator
+from django.forms.widgets import ClearableFileInput, CheckboxInput
+from django.utils.html import escape, conditional_escape
+from django.utils.encoding import force_unicode
+from django.utils.safestring import mark_safe
 from models import Address, UserDetails, Education, PreviousEmployment, Proof, FamilyDetails, LanguageProficiency, EducationUniversity, EducationSpecialization, EducationInstitute, GENDER_CHOICES,BLOOD_GROUP_CHOICES,MARITAL_CHOICES,QUALIFICATION,ADDRESSTYPE_CHOICES, JOB_TYPE, EDUCATION_TYPE
 dateTimeOption = {"format": "MM/DD/YYYY", "pickTime": False}
 
@@ -48,8 +52,7 @@ class UserDetailsForm(forms.ModelForm):
 	employee = forms.CharField(required=False)
 	name_pan = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control',
 		'required': 'True', 'data-error': 'Please enter your first name'}))
-	photo = forms.FileField(label='Photo Attachment', required=False,help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"))
-    # Add Bootstrap widgets
+	photo = forms.FileField(required=False, help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"))
 	photo.widget.attrs = {'class':'bare', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
 	nationality = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control','required': 'True'}))
 	date_of_birth = forms.DateField(label="Date of Birth",widget=DateTimePicker(options=dateTimeOption),)
@@ -135,7 +138,7 @@ class EducationForm(forms.ModelForm):
 	institute = forms.ChoiceField(choices=INSTITUTE,widget=forms.Select(attrs={'class':'form-control'}))
 	board_university = forms.ChoiceField(choices=BOARD_UNIVERSITY, widget=forms.Select(attrs={'class':'form-control'}))
 	overall_marks = forms.FloatField(required=True, widget=forms.NumberInput(attrs={'min': '0', 'max': '100','placeholder': 'Marks float','data-error': 'Please enter marks in float and it should be below 100'}))
-	marks_card_attachment = forms.FileField(required=False, widget=forms.FileInput, help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"))
+	marks_card_attachment = forms.FileField(required=False, help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"))
     # Add Bootstrap widgets
 	marks_card_attachment.widget.attrs = {'class':'bare', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
 

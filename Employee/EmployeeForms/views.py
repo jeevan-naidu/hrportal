@@ -10,14 +10,12 @@ from django.contrib import messages
 from django.views.generic import CreateView
 from django.conf import settings
 from django.utils import timezone
-from django.http import JsonResponse
 import random
 import string
 from axes.decorators import watch_login
 from axes.utils import reset
 from django.contrib import messages
 from django.core.mail import send_mail
-from formtools.wizard.views import SessionWizardView
 from django.views.decorators.csrf import csrf_protect
 from django.template import RequestContext
 from django.contrib.auth.models import User
@@ -256,7 +254,7 @@ def user_details(request):
 
     # instance = UserDetails.objects.get(employee=request.user)
     if request.method == 'POST':
-        import ipdb; ipdb.set_trace()
+        # import ipdb; ipdb.set_trace()
         context = {"form":""}
         user = request.user
 
@@ -276,11 +274,18 @@ def user_details(request):
                 if UserDetails.objects.get(employee=request.user):
                     user = request.user
                     employee = UserDetails.objects.get(employee=request.user)
-                
-                    photo = form.cleaned_data['photo']
-                    if request.FILES.get('photo', ""):
-                        form.photo = request.FILES['photo']
-                     
+                    photo_old = employee.photo
+                    if photo_old == '':
+                        photo = form.cleaned_data['photo']
+                        if request.FILES.get('photo', ""):
+                            form.photo = request.FILES['photo']
+                    else:
+
+                        photo = employee.photo
+                        if request.FILES.get('photo', ""):
+                            form.photo = request.FILES['photo']
+                            photo = form.photo
+                    
                     name_pan = form.cleaned_data['name_pan']
                     nationality = form.cleaned_data['nationality']
                     date_of_birth = form.cleaned_data['date_of_birth']
