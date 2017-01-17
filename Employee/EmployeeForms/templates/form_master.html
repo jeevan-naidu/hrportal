@@ -1,0 +1,81 @@
+{% extends 'master.html' %}
+
+
+{% block content %}
+
+<!-- Head Section of Form Pages -->
+
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="panel widget">
+                  <div class="panel-heading vd_bg-grey">
+                    <h3 class="panel-title"> <span class="menu-icon"> <i class="fa fa-magic"></i> </span> {{user.first_name}} {{user.last_name}} </h3>
+                  </div>
+                  <div class="panel-body">
+
+                      <div id="wizard-2" class="form-wizard">
+                        <ul>
+                          <li><a href="#tab1" data-toggle="tab">
+                            <div class="menu-icon"> 1 </div>
+                            User Profile </a></li>
+                          <li><a href="/user_details/education">
+                            <div class="menu-icon"> 2 </div>
+                            Education </a></li>
+                          <li><a href="/user_details/previous_employment">
+                            <div class="menu-icon"> 3 </div>
+                            Previous Employment </a></li>
+                          <li><a href="/user_details/proof">
+                            <div class="menu-icon"> 4 </div>
+                            Proof </a></li>
+                          <li><a href="/user_details/confirm">
+                            <div class="menu-icon"> 5 </div>
+                            Confirm </a></li>
+                        </ul>
+<hr>
+
+
+                        <div class="tab-content no-bd">
+
+                          <div class="tab-pane" id="tab1">
+
+                    
+
+  {% block form_content %}
+
+
+
+  {% endblock %}
+
+
+
+                        
+                            </div><!-- ./tab-pane -->
+
+                       </div><!-- ./wizard1 ~~~ -->
+
+                  </div>
+                  <!-- Panel Body -->
+                </div>
+                <!-- Panel Widget -->
+              </div>
+              <!-- col-md-12 -->
+            </div>
+            <!-- row -->
+
+
+                    
+
+  {% block form_scripts %}
+
+
+
+  {% endblock %}
+
+
+
+
+
+{% endblock %}
+
+ 
