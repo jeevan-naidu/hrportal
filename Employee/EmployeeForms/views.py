@@ -168,7 +168,7 @@ def user_details(request):
                 context["form"] = form
                 context["lang_form"] = lang_form                
 
-                return render(request, "form_templates/wizard.html", context)
+                return render(request, "form_templates/user_profile.html", context)
                 try:
                     address_type = request.GET.get('address_type','')
                     address = Address.objects.get(employee=request.user, address_type=address_type)
@@ -183,7 +183,7 @@ def user_details(request):
                     'read':employee_lang.read,'write':employee_lang.write})
                     context["form"] = form
                     context["lang_form"] = lang_form
-                    return render(request, "form_templates/wizard.html", context)
+                    return render(request, "form_templates/user_profile.html", context)
 
                 except Address.DoesNotExist:
                     
@@ -204,11 +204,11 @@ def user_details(request):
                             addre = {'address_type':''}
 
                         # print lists
-                        return render(request, "form_templates/wizard.html", {'form':form,'address_list':lists,'no_of_degree':no_of_degree,
+                        return render(request, "form_templates/user_profile.html", {'form':form,'address_list':lists,'no_of_degree':no_of_degree,
                             'employee':request.user})
                     
                     except Address.DoesNotExist:            
-                        return render(request, "form_templates/wizard.html", context)
+                        return render(request, "form_templates/user_profile.html", context)
 
             except Address.DoesNotExist:
                 try:
@@ -226,7 +226,7 @@ def user_details(request):
 
                     context["form"] = form
                     context["lang_form"] = lang_form
-                    return render(request, "form_templates/wizard.html", context)
+                    return render(request, "form_templates/user_profile.html", context)
 
                 except Address.DoesNotExist:
 
@@ -243,7 +243,7 @@ def user_details(request):
 
                     context["form"] = form
                     context["lang_form"] = lang_form
-                    return render(request, "form_templates/wizard.html", context)
+                    return render(request, "form_templates/user_profile.html", context)
             # print employee
         except UserDetails.DoesNotExist:
             context = {"form":""}
@@ -252,7 +252,7 @@ def user_details(request):
             
             context["form"] = form
             context["lang_form"] = lang_form
-            return render(request, "form_templates/wizard.html", context)
+            return render(request, "form_templates/user_profile.html", context)
 
     # instance = UserDetails.objects.get(employee=request.user)
     if request.method == 'POST':
@@ -403,7 +403,7 @@ def user_details(request):
             state_errors = form['state'].errors
             zipcode_errors = form['zipcode'].errors
             
-            return render(request, 'form_templates/wizard.html', {'form':form, 'name_pan_errors':name_pan_errors,
+            return render(request, 'form_templates/user_profile.html', {'form':form, 'name_pan_errors':name_pan_errors,
             'nationality_errors':nationality_errors,'date_of_birth_errors':date_of_birth_errors,'blood_group_errors':blood_group_errors,
             'land_phone_errors':land_phone_errors,'mobile_phone_errors':mobile_phone_errors,'gender_errors':gender_errors,
             'address_type_errors':address_type_errors,'address1_errors':address1_errors,'address2_errors':address2_errors,
@@ -663,14 +663,14 @@ def address_copy(request):
 
         Address(employee=user, address_type=address_type,address1=address1,address2=address2,city=city,state=state,zipcode=zipcode).save()
         context["form"] = form
-        return render(request, "form_templates/wizard.html", context,{'address_type':address_type,'address1':address1,'address2':address2,'city':city,'state':state,'zipcode':zipcode})
+        return render(request, "form_templates/user_profile.html", context,{'address_type':address_type,'address1':address1,'address2':address2,'city':city,'state':state,'zipcode':zipcode})
 
     if request.method=='GET':
         context = {"form":""}
         form = UserDetailsForm()
         messages.error(request, 'Fill the permanent address before copying that to temporary address')
         context["form"] = form
-        return render(request,'form_templates/wizard.html', context)
+        return render(request,'form_templates/user_profile.html', context)
 
 def checkbox_check(request):
 
