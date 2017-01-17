@@ -14,30 +14,39 @@
                   </div>
                   <div class="panel-body">
 
+
+
                       <div id="wizard-2" class="form-wizard">
                         <ul>
-                          <li><a href="#tab1" data-toggle="tab">
+
+                            {% if request.get_full_path == "/user_details" %}<li class="active"><a href="#tab1" data-toggle="tab"> {% else %} <li><a href="/user_details"> {% endif %}
                             <div class="menu-icon"> 1 </div>
                             User Profile </a></li>
-                          <li><a href="/user_details/education">
+                            {% if request.get_full_path == "/user_details/family_details" %}<li class="active"><a href="#tab1" data-toggle="tab"> {% else %} <li><a href="/user_details/family_details"> {% endif %}
                             <div class="menu-icon"> 2 </div>
-                            Education </a></li>
-                          <li><a href="/user_details/previous_employment">
+                            Family Details </a></li>
+                            {% if request.get_full_path == "/user_details/education" %}<li class="active"><a href="#tab1" data-toggle="tab"> {% else %} <li><a href="/user_details/education"> {% endif %}
                             <div class="menu-icon"> 3 </div>
-                            Previous Employment </a></li>
-                          <li><a href="/user_details/proof">
+                            Education </a></li>
+                            {% if request.get_full_path == "/user_details/previous_employment" %}<li class="active"><a href="#tab1" data-toggle="tab"> {% else %} <li><a href="/user_details/previous_employment"> {% endif %}
                             <div class="menu-icon"> 4 </div>
-                            Proof </a></li>
-                          <li><a href="/user_details/confirm">
+                            Previous Employment </a></li>
+                            {% if request.get_full_path == "/user_details/proof" %}<li class="active"><a href="#tab1" data-toggle="tab"> {% else %} <li><a href="/user_details/proof"> {% endif %}
                             <div class="menu-icon"> 5 </div>
+                            Proof </a></li>
+                            {% if request.get_full_path == "/user_details/confirm" %}<li class="active"><a href="#tab1" data-toggle="tab"> {% else %} <li><a href="/user_details/confirm"> {% endif %}
+                            <div class="menu-icon"> 6 </div>
                             Confirm </a></li>
+
                         </ul>
+
+
 <hr>
 
 
                         <div class="tab-content no-bd">
 
-                          <div class="tab-pane" id="tab1">
+                          <div class="tab-pane" id="tab1" style="display: block;">
 
 
 

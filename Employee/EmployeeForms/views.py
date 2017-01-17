@@ -428,13 +428,13 @@ def family_details(request):
             'emergency_phone2':employee.emergency_phone2,'child1_name':employee.child1_name,'child2_name':employee.child2_name})
 
             context["form"] = form
-            return render(request, "family_details.html", context)
+            return render(request, "form_templates/family_details.html", context)
             # print employee
         except FamilyDetails.DoesNotExist:
             context = {"form":""}
             form = FamilyDetailsForm()
             context["form"] = form
-            return render(request, "family_details.html", context)
+            return render(request, "form_templates/family_details.html", context)
     
     if request.method == 'POST':
         # import ipdb; ipdb.set_trace()
@@ -540,7 +540,7 @@ def family_details(request):
             child1_name_errors = form['child1_name'].errors
             child2_name_errors = form['child2_name'].errors
             
-            return render(request, 'family_details.html', {'form':form, 'marital_status_errors':marital_status_errors,
+            return render(request, 'form_templates/family_details.html', {'form':form, 'marital_status_errors':marital_status_errors,
             'wedding_date_errors':wedding_date_errors,'spouse_name_errors':spouse_name_errors,'no_of_children_errors':no_of_children_errors,
             'mother_name_errors':mother_name_errors,'mother_dob_errors':mother_dob_errors,'mother_profession_errors':mother_profession_errors,
             'father_name_errors':father_name_errors,'father_dob_errors':father_dob_errors,'father_profession_errors':father_profession_errors,
@@ -580,7 +580,7 @@ def education_delete(request):
         context["form"] = form
         
           
-        return render(request, "/form_templates/education_display.html", context)
+        return render(request, "form_templates/education_display.html", context)
         #return HttpResponseRedirect('/user_details/education')
 
 def address_tempo(request):
@@ -708,7 +708,7 @@ def education(request):
             'overall_marks':employee.overall_marks,'marks_card_attachment':employee.marks_card_attachment})
             context["form"] = form
             
-            return render(request, "/form_templates/education_display.html", context)
+            return render(request, "form_templates/education_display.html", context)
         except Education.DoesNotExist:
             context = {"form":""}
             form = EducationForm()
@@ -771,7 +771,7 @@ def education(request):
                     details.marks_card_attachment = marks_card_attachment
                     details.save()
                     context['form'] = form
-                    return render(request, '/form_templates/education_display.html',context)
+                    return render(request, 'form_templates/education_display.html',context)
 
             except Education.DoesNotExist:
                 user = request.user

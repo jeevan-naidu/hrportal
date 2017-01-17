@@ -1,47 +1,5 @@
-{% extends 'master.html' %}
-{% load bootstrap3 %}
-{% load static from staticfiles %}
-{% block content %}
-<!-- Start Here -->
-
-
-            <div class="row">
-              <div class="col-md-12">
-                <div class="panel widget">
-                  <div class="panel-heading vd_bg-grey">
-                    <h3 class="panel-title"> <span class="menu-icon"> <i class="fa fa-magic"></i> </span> {{user.first_name}} {{user.last_name}} </h3>
-                  </div>
-                  <div class="panel-body">
-
-                      <div id="wizard-2" class="form-wizard">
-                        <ul>
-                          <li><a href="#tab1" data-toggle="tab">
-                            <div class="menu-icon"> 1 </div>
-                            User Profile </a></li>
-                          <li><a href="/user_details/education">
-                            <div class="menu-icon"> 2 </div>
-                            Education </a></li>
-                          <li><a href="/user_details/previous_employment">
-                            <div class="menu-icon"> 3 </div>
-                            Previous Employment </a></li>
-                          <li><a href="/user_details/proof">
-                            <div class="menu-icon"> 4 </div>
-                            Proof </a></li>
-                          <li><a href="/user_details/confirm">
-                            <div class="menu-icon"> 5 </div>
-                            Confirm </a></li>
-                        </ul>
-<hr>
-
-<!--                         <div class="progress progress-striped active">
-                          <div class="progress-bar progress-bar-info" > </div>
-                        </div> -->
-
-
-
-                        <div class="tab-content no-bd">
-
-                          <div class="tab-pane" id="tab1">
+{% extends 'form_master.html' %}
+{% block form_content %}
 
                         <form id="family_details_form" method="post" class="form-horizontal" enctype="multipart/form-data" data-toggle="validator">
 
@@ -59,7 +17,7 @@
                         {% endif %}
                         
                               <div class="form-group">
-                              <label class="col-sm-2 control-label">Marital Status<span class="mandatory-field"> *</span></label>
+                              <label class="col-sm-3 control-label">Marital Status<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-7 controls">
                                 {{form.marital_status}}
                                 {{marital_status_errors}}
@@ -68,7 +26,7 @@
                             </div>
 
                             <div class="form-group wedding_date_form_group">
-                              <label class="col-sm-2 control-label">Wedding Date</label>
+                              <label class="col-sm-3 control-label">Wedding Date</label>
                               <div class="col-sm-7 controls">
                                 {{form.wedding_date}}
                                 {{wedding_date_errors}}
@@ -77,8 +35,8 @@
                             </div>
                             
                             <div class="form-group spouse_name_form_group">
-                              <label class="col-sm-2 control-label">Spouse Name</label>
-                              <div class="col-sm-2 controls">
+                              <label class="col-sm-3 control-label">Spouse Name</label>
+                              <div class="col-sm-3 controls">
                                 {{form.spouse_name}}
                                 {{spouse_name_errors}}
                                 <div class="help-block with-errors"></div>
@@ -86,7 +44,7 @@
                             </div>
 
                             <div class="form-group no_of_children_form_group">
-                              <label class="col-sm-2 control-label">Number of children</label>
+                              <label class="col-sm-3 control-label">Number of children</label>
                               <div class="col-sm-7 controls">
                                 {{form.no_of_children}}
                                 {{no_of_children_errors}}
@@ -95,7 +53,7 @@
                             </div>
 
                             <div class="form-group">
-                              <label class="col-sm-2 control-label">Mother Name<span class="mandatory-field"> *</span></label>
+                              <label class="col-sm-3 control-label">Mother Name<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-7 controls">
                                 {{form.mother_name}}
                                 {{mother_name_errors}}
@@ -104,8 +62,8 @@
                             </div>
 
                             <div class="form-group">
-                              <label class="col-sm-2 control-label">Mother Date of birth</label>
-                              <div class="col-sm-2 controls">
+                              <label class="col-sm-3 control-label">Mother Date of birth</label>
+                              <div class="col-sm-3 controls">
                                 {{form.mother_dob}}
                                 {{mother_dob_errors}}
                                 <div class="help-block with-errors"></div>
@@ -113,7 +71,7 @@
                             </div>
 
                             <div class="form-group">
-                              <label class="col-sm-2 control-label">Mother Profession</label>
+                              <label class="col-sm-3 control-label">Mother Profession</label>
                               <div class="col-sm-7 controls">
                                 {{form.mother_profession}}
                                 {{mother_profession_errors}}
@@ -122,7 +80,7 @@
                             </div>
 
                             <div class="form-group">
-                              <label class="col-sm-2 control-label">Father Name<span class="mandatory-field"> *</span></label>
+                              <label class="col-sm-3 control-label">Father Name<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-7 controls">
                                 {{form.father_name}}
                                 {{father_name_errors}}
@@ -133,7 +91,7 @@
                             
 
                             <div class="form-group">
-                              <label class="col-sm-2 control-label">Father Date of Birth</label>
+                              <label class="col-sm-3 control-label">Father Date of Birth</label>
                               <div class="col-sm-7 controls">
                                 {{form.father_dob}}
                                 {{father_dob_errors}}
@@ -142,7 +100,7 @@
                             </div>
 
                             <div class="form-group">
-                              <label class="col-sm-2 control-label">Father Profession</label>
+                              <label class="col-sm-3 control-label">Father Profession</label>
                               <div class="col-sm-7 controls">
                                 {{form.father_profession}}
                                 {{father_profession_errors}}
@@ -151,7 +109,7 @@
                             </div>
 
                             <div class="form-group">
-                              <label class="col-sm-2 control-label">Emergency Phone(primary)<span class="mandatory-field"> *</span></label>
+                              <label class="col-sm-3 control-label">Emergency Phone (primary)<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-7 controls">
                                 {{form.emergency_phone1}}
                                 {{emergency_phone1_errors}}
@@ -162,7 +120,7 @@
                             
 
                             <div class="form-group">
-                              <label class="col-sm-2 control-label">Emergency Phone(secondary)<span class="mandatory-field"> *</span></label>
+                              <label class="col-sm-3 control-label">Emergency Phone (secondary)<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-7 controls">
                                 {{form.emergency_phone2}}
                                 {{emergency_phone2_errors}}
@@ -171,7 +129,7 @@
                             </div>
 
                             <div class="form-group child1_name_form_group">
-                              <label class="col-sm-2 control-label">Child1 Name</label>
+                              <label class="col-sm-3 control-label">Child1 Name</label>
                               <div class="col-sm-7 controls">
                                 {{form.child1_name}}
                                 {{child1_name_errors}}
@@ -180,7 +138,7 @@
                             </div>
 
                             <div class="form-group child2_name_form_group">
-                              <label class="col-sm-2 control-label">Child2 Name</label>
+                              <label class="col-sm-3 control-label">Child2 Name</label>
                               <div class="col-sm-7 controls">
                                 {{form.child2_name}}
                                 {{child2_name_errors}}
@@ -194,20 +152,8 @@
                             </div>
                         </form>
 
-<!-- ~~~~sanjay~~~~ -->
-                            </div><!-- ./tab-pane -->
-
-
-                       </div><!-- ./wizard1 ~~~ -->
-
-                  </div>
-                  <!-- Panel Body -->
-                </div>
-                <!-- Panel Widget -->
-              </div>
-              <!-- col-md-12 -->
-            </div>
-            <!-- row -->
+{% endblock %}                        
+{% block form_scripts %}                        
 
 <script type="text/javascript">
 
