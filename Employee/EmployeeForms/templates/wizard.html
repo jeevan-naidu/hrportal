@@ -214,7 +214,7 @@
                               </div>
                             </div>
                           </div>
-                           <!-- <table>
+                           <table>
                            <tr>
                            <th>
                            <label class="col-sm-2 control-label">Language<span class="mandatory-field"> *</span></label>
@@ -271,11 +271,11 @@
                             </div>
                             </td>
                             <td>
-                            <span id ="lang_add" class="glyphicon glyphicon-plus">Add language</span>
+                            <span class="glyphicon glyphicon-plus">Add language</span>
                             </td>
                             </tr>
                             </table>
- -->
+
                             <div class="form-group">
                                 <h3 class="col-sm-12 text-right"><input type="submit" id="submit" class="btn vd_bg-green vd_white width-10" value="Save"/></h3>
                             </div>
@@ -419,46 +419,6 @@ $(window).load(function() {
                           swal("There was some problem with your data")
                         }});
                     });
-
-
-
-
-
-/*var temp_add = function(){
-            var a = document.getElementById("id_address_type").value;
-          var b = document.getElementById("id_address1").value;
-          var c = document.getElementById("id_address2").value;
-          var d = document.getElementById("id_city").value;
-          var e = document.getElementById("id_state").value;
-          var f = document.getElementById("id_zipcode").value;
-
-          alert("danger")
-          if a == null && b == null && c == null && d == null && e == null && f == null{
-            $("$address").attr("disabled", true);
-          }
-          else{
-            $("$address").removeAttr("disabled");
-          }
-}*/
-
-
-/*$(window).load(function() {
-  debugger;
-          var a = document.getElementById("id_address_type").value;
-          var b = document.getElementById("id_address1").value;
-          var c = document.getElementById("id_address2").value;
-          var d = document.getElementById("id_city").value;
-          var e = document.getElementById("id_state").value;
-          var f = document.getElementById("id_zipcode").value;
-
-          alert("danger")
-          if a == null && b == null && c == null && d == null && e == null && f == null{
-            $("$address").attr("disabled", true);
-          }
-          else{
-            $("$address").removeAttr("disabled");
-          }
-});*/
 
 $("#address").click(function (e) {
                   e.preventDefault();

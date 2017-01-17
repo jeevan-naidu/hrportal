@@ -129,10 +129,10 @@ class UserDetails(models.Model):
 class LanguageProficiency(models.Model):
 
     employee = models.ForeignKey(User, blank=True, null=True)
-    language_known = models.CharField(verbose_name='Language Known',max_length=50,null=True,blank=True)
-    speak = models.CharField(verbose_name='Speak',max_length=50,null=True,blank=True)
-    write = models.CharField(verbose_name='Write',max_length=50,null=True,blank=True)
-    read = models.CharField(verbose_name='Read',max_length=50,null=True,blank=True)
+    language_known = models.CharField(verbose_name='Language Known',max_length=50, null = True, blank=True)
+    speak = models.BooleanField(verbose_name='Speak', default = False)
+    write = models.BooleanField(verbose_name='Write', default = False)
+    read = models.BooleanField(verbose_name='Read', default =False)
     def __unicode__(self):
         return u'{0}'.format(
             self.employee)

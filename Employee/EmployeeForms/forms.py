@@ -85,9 +85,9 @@ class LanguageProficiencyForm(forms.ModelForm):
 
 	employee = forms.CharField(required=False)
 	language_known = forms.CharField(required=False,max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control'}))
-	speak = forms.CharField(required=False,max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control'}))
-	read = forms.CharField(required=True,max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control'}))
-	write = forms.CharField(required=True,max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control'}))
+	speak = forms.BooleanField(required=False,initial=False)
+	read = forms.BooleanField(required=False,initial=False)
+	write = forms.BooleanField(required=False,initial=False)
 
 	class Meta:
 		model = LanguageProficiency

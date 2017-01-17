@@ -142,7 +142,7 @@ def user_details(request):
     if request.method == 'GET':
         context = {"form":"", "language_form":""}
         form = UserDetailsForm(request.FILES)
-        # lang_form = LanguageProficiencyForm()
+        lang_form = LanguageProficiencyForm()
         context["form"] = form
         # import ipdb; ipdb.set_trace()
         user = request.user
@@ -151,7 +151,7 @@ def user_details(request):
         email=user.email
         try:
             employee = UserDetails.objects.get(employee=request.user)
-            # employee_lang = LanguageProficiency.objects.get(employee=request.user)
+            employee_lang = LanguageProficiency.objects.get(employee=request.user)
             
             try:
                 address_type = request.GET.get('address_type','')
@@ -162,11 +162,11 @@ def user_details(request):
                 'address_type':address.address_type,'address1':address.address1,'address2':address.address2,
                 'city':address.city,'state':address.state,'zipcode':address.zipcode})
 
-                # lang_form = LanguageProficiencyForm(initial = {'language_known':employee_lang.language_known,'speak':employee_lang.speak,
-                # 'read':employee_lang.read,'write':employee_lang.write})
+                lang_form = LanguageProficiencyForm(initial = {'language_known':employee_lang.language_known,'speak':employee_lang.speak,
+                'read':employee_lang.read,'write':employee_lang.write})
 
                 context["form"] = form
-                # context["lang_form"] = lang_form                
+                context["lang_form"] = lang_form                
 
                 return render(request, "wizard.html", context)
                 try:
@@ -179,10 +179,10 @@ def user_details(request):
                     'mobile_phone':employee.mobile_phone,'gender':employee.gender,'address_type':address.address_type,
                     'address1':address.address1,'address2':address.address2,'city':address.city,'state':address.state,
                     'zipcode':address.zipcode})
-                    # form = LanguageProficiencyForm(initial = {'language_known':employee_lang.language_known,'speak':employee_lang.speak,
-                    # 'read':employee_lang.read,'write':employee_lang.write})
+                    form = LanguageProficiencyForm(initial = {'language_known':employee_lang.language_known,'speak':employee_lang.speak,
+                    'read':employee_lang.read,'write':employee_lang.write})
                     context["form"] = form
-                    # context["lang_form"] = lang_form
+                    context["lang_form"] = lang_form
                     return render(request, "wizard.html", context)
 
                 except Address.DoesNotExist:
@@ -220,12 +220,12 @@ def user_details(request):
                     'land_phone':employee.land_phone,'mobile_phone':employee.mobile_phone,'gender':employee.gender,
                     'address_type':address.address_type,'address1':address.address1,'address2':address.address2,
                     'city':address.city,'state':address.state,'zipcode':address.zipcode})
-                    # lang_form = LanguageProficiencyForm(initial = {'language_known':employee_lang.language_known,'speak':employee_lang.speak,
-                        # 'read':employee_lang.read,'write':employee_lang.write})
+                    lang_form = LanguageProficiencyForm(initial = {'language_known':employee_lang.language_known,'speak':employee_lang.speak,
+                        'read':employee_lang.read,'write':employee_lang.write})
                     
 
                     context["form"] = form
-                    # context["lang_form"] = lang_form
+                    context["lang_form"] = lang_form
                     return render(request, "wizard.html", context)
 
                 except Address.DoesNotExist:
@@ -237,21 +237,21 @@ def user_details(request):
                     'land_phone':employee.land_phone,'mobile_phone':employee.mobile_phone,'gender':employee.gender,
                     'address_type':address.address_type,'address1':address.address1,'address2':address.address2,
                     'city':address.city,'state':address.state,'zipcode':address.zipcode})
-                    # lang_form = LanguageProficiencyForm(initial = {'language_known':employee_lang.language_known,'speak':employee_lang.speak,
-                        # 'read':employee_lang.read,'write':employee_lang.write})
+                    lang_form = LanguageProficiencyForm(initial = {'language_known':employee_lang.language_known,'speak':employee_lang.speak,
+                        'read':employee_lang.read,'write':employee_lang.write})
                     
 
                     context["form"] = form
-                    # context["lang_form"] = lang_form
+                    context["lang_form"] = lang_form
                     return render(request, "wizard.html", context)
             # print employee
         except UserDetails.DoesNotExist:
             context = {"form":""}
             form = UserDetailsForm(request.FILES)
-            # lang_form = LanguageProficiencyForm()
+            lang_form = LanguageProficiencyForm()
             
             context["form"] = form
-            # context["lang_form"] = lang_form
+            context["lang_form"] = lang_form
             return render(request, "wizard.html", context)
 
     # instance = UserDetails.objects.get(employee=request.user)
@@ -269,7 +269,7 @@ def user_details(request):
         except:
             user = request.user
         form = UserDetailsForm(request.POST, request.FILES)
-        # lang_form = LanguageProficiencyForm(request.POST)
+        lang_form = LanguageProficiencyForm(request.POST)
 
         if form.is_valid():
             try:
@@ -375,10 +375,10 @@ def user_details(request):
                 city = form.cleaned_data['city']
                 state = form.cleaned_data['state']
                 zipcode = form.cleaned_data['zipcode']
-                # language_known = lang_form.cleaned_data['language_known']
-                # speak = lang_form.cleaned_data['speak']
-                # read = lang_form.cleaned_data['read']
-                # write = lang_form.cleaned_data['write']
+                language_known = lang_form.cleaned_data['language_known']
+                speak = lang_form.cleaned_data['speak']
+                read = lang_form.cleaned_data['read']
+                write = lang_form.cleaned_data['write']
                 
                 UserDetails(employee = employee,name_pan=name_pan,photo=photo,nationality=nationality,
                 date_of_birth=date_of_birth,blood_group=blood_group,land_phone=land_phone,
@@ -386,7 +386,7 @@ def user_details(request):
                 print employee
                 Address(employee=employee, address_type=address_type,address1=address1,address2=address2,
                     city=city,state=state,zipcode=zipcode).save()
-                # LanguageProficiency(employee=employee, language_known=language_known,speak=speak,read=read,write=write).save()
+                LanguageProficiency(employee=employee, language_known=language_known,speak=speak,read=read,write=write).save()
 
                 context['form'] = form
                 return HttpResponseRedirect('/user_details/education')
