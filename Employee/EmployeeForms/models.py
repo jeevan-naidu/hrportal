@@ -60,8 +60,6 @@ ADDRESSTYPE_CHOICES = (
     ('TM', 'Temporary'),
     )
 
-
-
 def content_file_name(instance, filename):
     ''' This function generates a random string of length 16 which will be a combination of (4 digits + 4
     characters(lowercase) + 4 digits + 4 characters(uppercase)) seperated 4 characters by hyphen(-) '''
@@ -70,13 +68,9 @@ def content_file_name(instance, filename):
     import string
 
     # random_str length will be 16 which will be combination of (4 digits + 4 characters + 4 digits + 4 characters)
-    random_str =  "".join([random.choice(string.uppercase) for i in range(0,4)]) + "".join([random.choice(string.digits) for i in range(0,4)]) + \
-                    "".join([random.choice(string.lowercase) for i in range(0,4)]) + "".join([random.choice(string.digits) for i in range(0,4)])
-
-    # return string seperated by hyphen eg:
-    random_str =  random_str[:4] + "-" + random_str[4:8] + "-" + random_str[8:12] + "-" + random_str[12:]
+    
     filetype = filename.split(".")[-1].lower()
-    filename = random_str +"." +  filetype
+    filename = filename
     path = "uploads/" + str(instance.employee)
     os_path = os.path.join(path, filename)
     return os_path
@@ -123,7 +117,17 @@ class UserDetails(models.Model):
         return u'{0}'.format(
             self.employee)
 
+    def save(self, *args, **kwargs):
+        # delete old file when replacing by updating the file
+        try:
+            this = UserDetails.objects.get(id=self.id)
+            if this.image != self.image:
+                this.image.delete(save=False)
+        except: pass # when new photo then we do nothing, normal case          
+        super(UserDetails, self).save(*args, **kwargs)
+
 class LanguageProficiency(models.Model):
+
     employee = models.ForeignKey(User, blank=True, null=True)
     language_known = models.CharField(verbose_name='Language Known',max_length=50,null=True,blank=True)
     speak = models.CharField(verbose_name='Speak',max_length=50,null=True,blank=True)
@@ -192,27 +196,24 @@ class Education(models.Model):
 
 class EducationUniversity(models.Model):
     
-    employee = models.ForeignKey(User, blank=True, null=True)
     board_university = models.CharField("Board/University", max_length=50,blank=True,null=True)
     def __unicode__(self):
         return u'{0}'.format(
-            self.employee)
+            self.board_university)
 
 class EducationSpecialization(models.Model):
 
-    employee = models.ForeignKey(User, blank=True, null=True)
     specialization = models.CharField(verbose_name='Specialization',max_length=30,blank=True,null=True)
     def __unicode__(self):
         return u'{0}'.format(
-            self.employee)
+            self.specialization)
 
 class EducationInstitute(models.Model):
 
-    employee = models.ForeignKey(User, blank=True, null=True)
-    specialization = models.CharField(verbose_name='Specialization',max_length=30,blank=True,null=True)
+    institute = models.CharField(verbose_name='Institute',max_length=30,blank=True,null=True)
     def __unicode__(self):
         return u'{0}'.format(
-            self.employee)
+            self.institute)
 
 class Proof(models.Model):
     employee = models.ForeignKey(User, blank=True, null=True)
@@ -229,10 +230,3 @@ class Proof(models.Model):
     def __unicode__(self):
         return u'{0}'.format(
         self.employee)
-
-# class FileUpload(models.Model):
-#     employee = models.ForeignKey(User)
-#     title = models.CharField("Title",max_length=50,blank=False,unique=True)
-#     attachment = models.FileField(upload_to=content_file_name, blank=True, null=True, verbose_name="Attachment")
-#     def __unicode__(self):
-#         return u'{0}'.format(self.employee)

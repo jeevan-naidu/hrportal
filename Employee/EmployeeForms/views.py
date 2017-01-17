@@ -3,9 +3,8 @@ from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.template.loader import render_to_string
 from django.contrib import auth
 import datetime
-
 from django.contrib.auth.decorators import login_required
-from django.core.context_processors import csrf
+from django.template.context_processors import csrf
 from django.views.generic import View
 from django.contrib import messages
 from django.views.generic import CreateView
@@ -14,6 +13,8 @@ from django.utils import timezone
 from django.http import JsonResponse
 import random
 import string
+from axes.decorators import watch_login
+from axes.utils import reset
 from django.contrib import messages
 from django.core.mail import send_mail
 from formtools.wizard.views import SessionWizardView
@@ -21,8 +22,8 @@ from django.views.decorators.csrf import csrf_protect
 from django.template import RequestContext
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
-from models import Address, UserDetails, Education, PreviousEmployment, Proof, ConfirmationCode, FamilyDetails
-from forms import UserDetailsForm, EducationForm, PreviousEmploymentForm, ProofForm, UserRegistrationForm, FamilyDetailsForm
+from models import Address, UserDetails, Education, PreviousEmployment, Proof, ConfirmationCode, FamilyDetails, LanguageProficiency,EducationUniversity, EducationSpecialization, EducationInstitute
+from forms import UserDetailsForm, EducationForm, PreviousEmploymentForm, ProofForm, UserRegistrationForm, FamilyDetailsForm, LanguageProficiencyForm 
 
 AllowedFileTypes = ['jpg', 'csv','png', 'pdf', 'xlsx', 'xls', 'docx', 'doc', 'jpeg', 'eml']
 # Create your views here.
@@ -30,12 +31,13 @@ def EmployeeWelcome(request):
     return render(request, 'welcome.html',{})
 
 #@login_required
+@watch_login
 def login(request):
     context = {}
     context.update(csrf(request))
-
     return render_to_response('login.html',context)
 
+@watch_login
 def auth_view(request):
     username = request.POST.get('username','')
     password = request.POST.get('password','')
@@ -138,8 +140,9 @@ def user_details(request):
 
     # user details form
     if request.method == 'GET':
-        context = {"form":""}
+        context = {"form":"", "language_form":""}
         form = UserDetailsForm(request.FILES)
+        # lang_form = LanguageProficiencyForm()
         context["form"] = form
         # import ipdb; ipdb.set_trace()
         user = request.user
@@ -148,67 +151,112 @@ def user_details(request):
         email=user.email
         try:
             employee = UserDetails.objects.get(employee=request.user)
-            # address_type = request.GET.get('address_type','')
-            address = Address.objects.get(employee=request.user, address_type='PR')
-
-            form = UserDetailsForm(initial = {'name_pan':employee.name_pan,'photo':employee.photo,
-            'nationality':employee.nationality,'date_of_birth':employee.date_of_birth,'blood_group':employee.blood_group,
-            'land_phone':employee.land_phone,'mobile_phone':employee.mobile_phone,'gender':employee.gender,
-            'address_type':address.address_type,'address1':address.address1,'address2':address.address2,
-            'city':address.city,'state':address.state,'zipcode':address.zipcode})
-
-            context["form"] = form
-            return render(request, "wizard.html", context)
+            # employee_lang = LanguageProficiency.objects.get(employee=request.user)
+            
             try:
                 address_type = request.GET.get('address_type','')
                 address = Address.objects.get(employee=request.user, address_type=address_type)
-
                 form = UserDetailsForm(initial = {'name_pan':employee.name_pan,'photo':employee.photo,
-                'nationality':employee.nationality,'date_of_birth':employee.date_of_birth,
-                'blood_group':employee.blood_group,'land_phone':employee.land_phone,
-                'mobile_phone':employee.mobile_phone,'gender':employee.gender,'address_type':address.address_type,
-                'address1':address.address1,'address2':address.address2,'city':address.city,'state':address.state,
-                'zipcode':address.zipcode})
-                
+                'nationality':employee.nationality,'date_of_birth':employee.date_of_birth,'blood_group':employee.blood_group,
+                'land_phone':employee.land_phone,'mobile_phone':employee.mobile_phone,'gender':employee.gender,
+                'address_type':address.address_type,'address1':address.address1,'address2':address.address2,
+                'city':address.city,'state':address.state,'zipcode':address.zipcode})
+
+                # lang_form = LanguageProficiencyForm(initial = {'language_known':employee_lang.language_known,'speak':employee_lang.speak,
+                # 'read':employee_lang.read,'write':employee_lang.write})
+
                 context["form"] = form
+                # context["lang_form"] = lang_form                
+
                 return render(request, "wizard.html", context)
-
-            except Address.DoesNotExist:
-                
-                form = UserDetailsForm(initial = {'name_pan':employee.name_pan,'photo':employee.photo,
-                'nationality':employee.nationality,'date_of_birth':employee.date_of_birth,
-                'blood_group':employee.blood_group,'land_phone':employee.land_phone,
-                'mobile_phone':employee.mobile_phone,'gender':employee.gender})
                 try:
-                    address = Address.objects.get(employee=request.user,address_type='PR')
-                    employee = Address.objects.filter(employee=request.user)
-                    no_of_degree = len(employee)
-                    lists = []
-                    addre = {'address_type':''}
-                    for emp in employee:
-                        addre['address_type'] = emp.address_type
-                        
-                        lists.append(addre)
-                        addre = {'address_type':''}
+                    address_type = request.GET.get('address_type','')
+                    address = Address.objects.get(employee=request.user, address_type=address_type)
 
-                    # print lists
-                    return render(request, "wizard.html", {'form':form,'address_list':lists,'no_of_degree':no_of_degree,
-                        'employee':request.user})
-                
-                except Address.DoesNotExist:            
+                    form = UserDetailsForm(initial = {'name_pan':employee.name_pan,'photo':employee.photo,
+                    'nationality':employee.nationality,'date_of_birth':employee.date_of_birth,
+                    'blood_group':employee.blood_group,'land_phone':employee.land_phone,
+                    'mobile_phone':employee.mobile_phone,'gender':employee.gender,'address_type':address.address_type,
+                    'address1':address.address1,'address2':address.address2,'city':address.city,'state':address.state,
+                    'zipcode':address.zipcode})
+                    # form = LanguageProficiencyForm(initial = {'language_known':employee_lang.language_known,'speak':employee_lang.speak,
+                    # 'read':employee_lang.read,'write':employee_lang.write})
+                    context["form"] = form
+                    # context["lang_form"] = lang_form
                     return render(request, "wizard.html", context)
 
-            
+                except Address.DoesNotExist:
+                    
+                    form = UserDetailsForm(initial = {'name_pan':employee.name_pan,'photo':employee.photo,
+                    'nationality':employee.nationality,'date_of_birth':employee.date_of_birth,
+                    'blood_group':employee.blood_group,'land_phone':employee.land_phone,
+                    'mobile_phone':employee.mobile_phone,'gender':employee.gender})
+                    try:
+                        address = Address.objects.get(employee=request.user,address_type='PR')
+                        employee = Address.objects.filter(employee=request.user)
+                        no_of_degree = len(employee)
+                        lists = []
+                        addre = {'address_type':''}
+                        for emp in employee:
+                            addre['address_type'] = emp.address_type
+                            
+                            lists.append(addre)
+                            addre = {'address_type':''}
+
+                        # print lists
+                        return render(request, "wizard.html", {'form':form,'address_list':lists,'no_of_degree':no_of_degree,
+                            'employee':request.user})
+                    
+                    except Address.DoesNotExist:            
+                        return render(request, "wizard.html", context)
+
+            except Address.DoesNotExist:
+                try:
+
+                    address = Address.objects.get(employee=request.user, address_type='PR')
+                    photo = employee.photo
+                    form = UserDetailsForm(initial = {'name_pan':employee.name_pan,'photo':employee.photo,
+                    'nationality':employee.nationality,'date_of_birth':employee.date_of_birth,'blood_group':employee.blood_group,
+                    'land_phone':employee.land_phone,'mobile_phone':employee.mobile_phone,'gender':employee.gender,
+                    'address_type':address.address_type,'address1':address.address1,'address2':address.address2,
+                    'city':address.city,'state':address.state,'zipcode':address.zipcode})
+                    # lang_form = LanguageProficiencyForm(initial = {'language_known':employee_lang.language_known,'speak':employee_lang.speak,
+                        # 'read':employee_lang.read,'write':employee_lang.write})
+                    
+
+                    context["form"] = form
+                    # context["lang_form"] = lang_form
+                    return render(request, "wizard.html", context)
+
+                except Address.DoesNotExist:
+
+                    address = Address.objects.get(employee=request.user, address_type='TM')
+                    photo = employee.photo
+                    form = UserDetailsForm(initial = {'name_pan':employee.name_pan,'photo':employee.photo,
+                    'nationality':employee.nationality,'date_of_birth':employee.date_of_birth,'blood_group':employee.blood_group,
+                    'land_phone':employee.land_phone,'mobile_phone':employee.mobile_phone,'gender':employee.gender,
+                    'address_type':address.address_type,'address1':address.address1,'address2':address.address2,
+                    'city':address.city,'state':address.state,'zipcode':address.zipcode})
+                    # lang_form = LanguageProficiencyForm(initial = {'language_known':employee_lang.language_known,'speak':employee_lang.speak,
+                        # 'read':employee_lang.read,'write':employee_lang.write})
+                    
+
+                    context["form"] = form
+                    # context["lang_form"] = lang_form
+                    return render(request, "wizard.html", context)
             # print employee
         except UserDetails.DoesNotExist:
             context = {"form":""}
             form = UserDetailsForm(request.FILES)
+            # lang_form = LanguageProficiencyForm()
+            
             context["form"] = form
+            # context["lang_form"] = lang_form
             return render(request, "wizard.html", context)
 
     # instance = UserDetails.objects.get(employee=request.user)
     if request.method == 'POST':
-        import ipdb; ipdb.set_trace()
+        # import ipdb; ipdb.set_trace()
         context = {"form":""}
         user = request.user
 
@@ -221,21 +269,25 @@ def user_details(request):
         except:
             user = request.user
         form = UserDetailsForm(request.POST, request.FILES)
+        # lang_form = LanguageProficiencyForm(request.POST)
 
         if form.is_valid():
             try:
                 if UserDetails.objects.get(employee=request.user):
                     user = request.user
                     employee = UserDetails.objects.get(employee=request.user)
-                    photo = employee.photo
-                    name_pan = form.cleaned_data['name_pan']
+                    photo_old = employee.photo
                     
-                    if photo == '':
+                    if photo_old == '':
+                        
                         photo = form.cleaned_data['photo']
                         if request.FILES.get('photo', ""):
                             form.photo = request.FILES['photo']
+
                     else:
                         photo = employee.photo
+                        
+                    name_pan = form.cleaned_data['name_pan']
                     nationality = form.cleaned_data['nationality']
                     date_of_birth = form.cleaned_data['date_of_birth']
                     blood_group = form.cleaned_data['blood_group']
@@ -250,30 +302,57 @@ def user_details(request):
                     zipcode = form.cleaned_data['zipcode']
 
                     userdata = UserDetails.objects.get(employee=user.id)
-                    userdata1 = Address.objects.get(employee=user.id, address_type='PR')
-                    
-                    userdata.name_pan = name_pan
-                    userdata.photo = photo
-                    userdata.nationality = nationality
-                    userdata.date_of_birth = date_of_birth
-                    userdata.blood_group = blood_group
-                    userdata.land_phone = land_phone
-                    userdata.mobile_phone = mobile_phone
-                    userdata.gender = gender
-                    userdata1.address_type=address_type
-                    userdata1.address1=address1
-                    userdata1.address2=address2
-                    userdata1.city=city
-                    userdata1.state=state
-                    userdata1.zipcode=zipcode
                     try:
-                        userdata.save()
-                    except Exception,e:
-                        print str(e)
-                    userdata1.save()
-                    
-                    context['form'] = form
-                    return HttpResponseRedirect('/user_details/education')
+                        userdata1 = Address.objects.get(employee=user.id, address_type='PR')
+                        
+                        userdata.name_pan = name_pan
+                        userdata.photo = photo
+                        userdata.nationality = nationality
+                        userdata.date_of_birth = date_of_birth
+                        userdata.blood_group = blood_group
+                        userdata.land_phone = land_phone
+                        userdata.mobile_phone = mobile_phone
+                        userdata.gender = gender
+                        userdata1.address_type=address_type
+                        userdata1.address1=address1
+                        userdata1.address2=address2
+                        userdata1.city=city
+                        userdata1.state=state
+                        userdata1.zipcode=zipcode
+                        try:
+                            userdata.save()
+                        except Exception,e:
+                            print str(e)
+                        userdata1.save()
+                        
+                        context['form'] = form
+                        return HttpResponseRedirect('/user_details/education')
+
+                    except Address.DoesNotExist:
+                        userdata1 = Address.objects.get(employee=user.id, address_type='TM')
+                        
+                        userdata.name_pan = name_pan
+                        userdata.photo = photo
+                        userdata.nationality = nationality
+                        userdata.date_of_birth = date_of_birth
+                        userdata.blood_group = blood_group
+                        userdata.land_phone = land_phone
+                        userdata.mobile_phone = mobile_phone
+                        userdata.gender = gender
+                        userdata1.address_type=address_type
+                        userdata1.address1=address1
+                        userdata1.address2=address2
+                        userdata1.city=city
+                        userdata1.state=state
+                        userdata1.zipcode=zipcode
+                        try:
+                            userdata.save()
+                        except Exception,e:
+                            print str(e)
+                        userdata1.save()
+                        
+                        context['form'] = form
+                        return HttpResponseRedirect('/user_details/education')
 
             except UserDetails.DoesNotExist:
                 user = request.user
@@ -296,6 +375,10 @@ def user_details(request):
                 city = form.cleaned_data['city']
                 state = form.cleaned_data['state']
                 zipcode = form.cleaned_data['zipcode']
+                # language_known = lang_form.cleaned_data['language_known']
+                # speak = lang_form.cleaned_data['speak']
+                # read = lang_form.cleaned_data['read']
+                # write = lang_form.cleaned_data['write']
                 
                 UserDetails(employee = employee,name_pan=name_pan,photo=photo,nationality=nationality,
                 date_of_birth=date_of_birth,blood_group=blood_group,land_phone=land_phone,
@@ -303,6 +386,7 @@ def user_details(request):
                 print employee
                 Address(employee=employee, address_type=address_type,address1=address1,address2=address2,
                     city=city,state=state,zipcode=zipcode).save()
+                # LanguageProficiency(employee=employee, language_known=language_known,speak=speak,read=read,write=write).save()
 
                 context['form'] = form
                 return HttpResponseRedirect('/user_details/education')
@@ -512,16 +596,22 @@ def address_tempo(request):
         form = UserDetailsForm()
        
         user = request.user
-        employee = UserDetails.objects.get(employee=request.user)
+        try:
+            employee = UserDetails.objects.get(employee=request.user)
 
-        form = UserDetailsForm(initial = {'name_pan':employee.name_pan,
-        'nationality':employee.nationality,'date_of_birth':employee.date_of_birth,
-        'blood_group':employee.blood_group,'land_phone':employee.land_phone,
-        'mobile_phone':employee.mobile_phone,'gender':employee.gender})
+            form = UserDetailsForm(initial = {'name_pan':employee.name_pan,
+            'nationality':employee.nationality,'date_of_birth':employee.date_of_birth,
+            'blood_group':employee.blood_group,'land_phone':employee.land_phone,
+            'mobile_phone':employee.mobile_phone,'gender':employee.gender})
         
-        messages.warning(request,"please fill only temporary address here")
-        context["form"] = form
-        return render(request, "address_tempo.html", context)
+            messages.warning(request,"please fill only temporary address here")
+            context["form"] = form
+            return render(request, "address_tempo.html", context)
+        except UserDetails.DoesNotExist:
+            context = {"form":""}
+            form = UserDetailsForm()
+            context["form"] = form
+            return HttpResponseRedirect('/user_details')
 
     if request.method=='POST':
         context = {"form":""}
@@ -560,34 +650,46 @@ def address_copy(request):
         context = {"form":""}
         
         # form = UserDetailsForm(request.POST)  
-        user = request.user      
-        employee = UserDetails.objects.get(employee=request.user)
-
-        form = UserDetailsForm(initial = {'name_pan':employee.name_pan,
-        'nationality':employee.nationality,'date_of_birth':employee.date_of_birth,
-        'blood_group':employee.blood_group,'land_phone':employee.land_phone,
-        'mobile_phone':employee.mobile_phone,'gender':employee.gender})
-        context = {"form":""}
+        user = request.user
         form = UserDetailsForm(request.POST)
+   
+        a = request.POST.get('address_type')
+        b = request.POST.get('address1')
+        C = request.POST.get('address2')
+        d = request.POST.get('city')
+        e = request.POST.get('state')
+        f = request.POST.get('zipcode')
+        address = Address.objects.filter(employee=request.user, address_type=a)
+        address_type = 'TM'
+        address1 = b
+        address2 = C
+        city = d
+        state = e
+        zipcode = f
 
-        if form.is_valid():
-            address = Address.objects.filter(employee=request.user, address_type='PR')
-            address_type = 'TM'
-            address1 = form.cleaned_data['address1']
-            address2 = form.cleaned_data['address2']
-            city = form.cleaned_data['city']
-            state = form.cleaned_data['state']
-            zipcode = form.cleaned_data['zipcode']
-            Address(employee=user, address_type=address_type,address1=address1,address2=address2,city=city,state=state,zipcode=zipcode).save()
-            context["success"] = "address"
-            messages.warning(request, 'some more lorem ipsum time')
-            context["form"] = form
-            return render(request, "wizard.html", context)
-        else:
-            
-            messages.error(request, 'Fill the permanent address before copying that to temporary address')
-            context["form"] = form
-            return render(request,'wizard.html', context)
+        Address(employee=user, address_type=address_type,address1=address1,address2=address2,city=city,state=state,zipcode=zipcode).save()
+        context["form"] = form
+        return render(request, "wizard.html", context,{'address_type':address_type,'address1':address1,'address2':address2,'city':city,'state':state,'zipcode':zipcode})
+
+    if request.method=='GET':
+        context = {"form":""}
+        form = UserDetailsForm()
+        messages.error(request, 'Fill the permanent address before copying that to temporary address')
+        context["form"] = form
+        return render(request,'wizard.html', context)
+
+def checkbox_check(request):
+
+    id = request.GET['id']
+
+    employee = Address.objects.filter(employee = id, address_type='TM')
+
+    if employee:
+        valid = True
+    else:
+        valid = False
+
+    return HttpResponse(valid) 
 
 @login_required
 def education(request):
@@ -605,15 +707,9 @@ def education(request):
             specialization = request.GET.get('specialization', '')
             employee = Education.objects.get(employee=request.user,
                     qualification=qualification, specialization=specialization)
-            education_type = employee.education_type
-            from_date = employee.from_date
-            to_date = employee.to_date
-            institute = employee.institute
-            board_university = employee.board_university
-            overall_marks = employee.overall_marks
-            marks_card_attachment = employee.marks_card_attachment
+            
             form = EducationForm(initial = {'education_type':employee.education_type,'from_date':employee.from_date,
-            'qualification':employee.qualification,'specialization':employee.specialization,'from_date':employee.from_date,
+            'qualification':employee.qualification,'specialization':employee.specialization,
             'to_date':employee.to_date,'institute':employee.institute,'board_university':employee.board_university,
             'overall_marks':employee.overall_marks,'marks_card_attachment':employee.marks_card_attachment})
             context["form"] = form
@@ -648,26 +744,25 @@ def education(request):
         marks_card_attachment = request.FILES.get('marks_card_attachment',"")
 
         if form.is_valid():
+
             try:
                 # Education.objects.get(employee=request.user,qualification=qualification,specialization=specialization)
                 user = request.user
-                employee = Education.objects.get(employee=request.user)
 
                 qualification = form.cleaned_data['qualification']
                 specialization = form.cleaned_data['specialization']
+                employee = Education.objects.get(employee=request.user,qualification=qualification,specialization=specialization)
+
                 education_type = form.cleaned_data['education_type']
                 from_date = form.cleaned_data['from_date']
                 to_date = form.cleaned_data['to_date']
                 institute = form.cleaned_data['institute']
                 board_university = form.cleaned_data['board_university']
                 overall_marks = form.cleaned_data['overall_marks']
-                if employee.marks_card_attachment == '':
-                    marks_card_attachment = form.cleaned_data['marks_card_attachment']
-                    if request.FILES.get('marks_card_attachment', ""):
-                            form.marks_card_attachment = request.FILES['marks_card_attachment']
-                else:
-                    marks_card_attachment = employee.marks_card_attachment
-
+                marks_card_attachment = form.cleaned_data['marks_card_attachment']
+                if request.FILES.get('marks_card_attachment', ""):
+                    form.marks_card_attachment = request.FILES['marks_card_attachment']
+                
                 userdata = Education.objects.filter(employee=user.id, qualification=qualification,specialization=specialization)
                 
                 for details in userdata:
@@ -818,40 +913,35 @@ def proof(request):
                     user = request.user
                     employee = Proof.objects.get(employee=request.user)
                     pan = form.cleaned_data['pan']
-                    if employee.pan_attachment == '':
-                        pan_attachment = form.cleaned_data['pan_attachment']
-                        if request.FILES.get('pan_attachment', ""):
-                            form.pan_attachment = request.FILES['pan_attachment']
-                    else:
-                        pan_attachment = employee.pan_attachment
+                    
+                    pan_attachment = form.cleaned_data['pan_attachment']
+                    if request.FILES.get('pan_attachment', ""):
+                        form.pan_attachment = request.FILES['pan_attachment']
+                    
                     aadhar_card = form.cleaned_data['aadhar_card']
-                    if employee.aadhar_attachment == '':
-                        aadhar_attachment = form.cleaned_data['aadhar_attachment']
-                        if request.FILES.get('pan_attachment', ""):
-                            form.aadhar_attachment = request.FILES['aadhar_attachment']
-                    else:
-                        aadhar_attachment = employee.aadhar_attachment
+                    
+                    aadhar_attachment = form.cleaned_data['aadhar_attachment']
+                    if request.FILES.get('pan_attachment', ""):
+                        form.aadhar_attachment = request.FILES['aadhar_attachment']
+                    
                     dl = form.cleaned_data['dl']
-                    if employee.dl_attachment == '':
-                        dl_attachment = form.cleaned_data['dl_attachment']
-                        if request.FILES.get('dl_attachment', ""):
-                            form.dl_attachment = request.FILES['dl_attachment']
-                    else:
-                        dl_attachment = employee.dl_attachment
+                    
+                    dl_attachment = form.cleaned_data['dl_attachment']
+                    if request.FILES.get('dl_attachment', ""):
+                        form.dl_attachment = request.FILES['dl_attachment']
+                    
                     passport = form.cleaned_data['passport']
-                    if employee.passport_attachment == '':
-                        passport_attachment = form.cleaned_data['passport_attachment']
-                        if request.FILES.get('passport_attachment', ""):
-                            form.passport_attachment = request.FILES['passport_attachment']
-                    else:
-                        passport_attachment = employee.passport_attachment
+                    
+                    passport_attachment = form.cleaned_data['passport_attachment']
+                    if request.FILES.get('passport_attachment', ""):
+                        form.passport_attachment = request.FILES['passport_attachment']
+                    
                     voter_id = form.cleaned_data['voter_id']
-                    if employee.voter_attachment == '':
-                        voter_attachment = form.cleaned_data['voter_attachment']
-                        if request.FILES.get('voter_attachment', ""):
-                            form.voter_attachment = request.FILES['voter_attachment']
-                    else:
-                        voter_attachment = employee.voter_attachment
+                    
+                    voter_attachment = form.cleaned_data['voter_attachment']
+                    if request.FILES.get('voter_attachment', ""):
+                        form.voter_attachment = request.FILES['voter_attachment']
+                    
 
                     fields = [pan,aadhar_card, dl, passport, voter_id]
 
@@ -960,21 +1050,11 @@ def previous_employment(request):
         try:
             company_name = request.GET.get('company_name', '')
             employee = PreviousEmployment.objects.get(employee=request.user,company_name=company_name)
-            company_name = employee.company_name
-            company_address = employee.company_address
-            job_type = employee.job_type
-            employed_from = employee.employed_from
-            employed_upto = employee.employed_upto
-            last_ctc = employee.last_ctc
-            reason_for_exit = employee.reason_for_exit
-            ps_attachment = employee.ps_attachment
-            rl_attachment = employee.rl_attachment
-            offer_letter_attachment = employee.offer_letter_attachment
 
             form = PreviousEmploymentForm(initial = {'company_name':employee.company_name,'company_address':employee.company_address,
-            'job_type':employee.job_type,'employed_from':employee.employed_from,'employed_upto':employee.employed_upto,
-            'last_ctc':employee.last_ctc,'reason_for_exit':employee.reason_for_exit,'ps_attachment':employee.ps_attachment,
-            'rl_attachment':employee.rl_attachment,'offer_letter_attachment':offer_letter_attachment})
+                'job_type':employee.job_type,'employed_from':employee.employed_from,'employed_upto':employee.employed_upto,
+                'last_ctc':employee.last_ctc,'reason_for_exit':employee.reason_for_exit,'ps_attachment':employee.ps_attachment,
+                'rl_attachment':employee.rl_attachment,'offer_letter_attachment':employee.offer_letter_attachment})
 
             context["form"] = form
 
@@ -1001,7 +1081,7 @@ def previous_employment(request):
     #     return render(request, "previous.html", context)
 
     if request.method == 'POST':
-        import ipdb; ipdb.set_trace()
+        # import ipdb; ipdb.set_trace()
 
         form = PreviousEmploymentForm(request.POST, request.FILES)
         context = {"form":""}
@@ -1021,24 +1101,19 @@ def previous_employment(request):
                 employed_upto = form.cleaned_data['employed_upto']
                 last_ctc = form.cleaned_data['last_ctc']
                 reason_for_exit = form.cleaned_data['reason_for_exit']
-                if employee.ps_attachment == '':
-                    ps_attachment = form.cleaned_data['ps_attachment']
-                    if request.FILES.get('ps_attachment', ""):
-                            form.ps_attachment = request.FILES['ps_attachment']
-                else:
-                    ps_attachment = employee.ps_attachment
-                if employee.rl_attachment == '':
-                    rl_attachment = form.cleaned_data['rl_attachment']
-                    if request.FILES.get('rl_attachment', ""):
-                            form.rl_attachment = request.FILES['rl_attachment']
-                else:
-                    rl_attachment = employee.rl_attachment
-                if employee.offer_letter_attachment == '':
-                    offer_letter_attachment = form.cleaned_data['offer_letter_attachment']
-                    if request.FILES.get('offer_letter_attachment', ""):
-                            form.offer_letter_attachment = request.FILES['offer_letter_attachment']
-                else:
-                    offer_letter_attachment = employee.offer_letter_attachment
+                
+                ps_attachment = form.cleaned_data['ps_attachment']
+                if request.FILES.get('ps_attachment', ""):
+                    form.ps_attachment = request.FILES['ps_attachment']
+
+                rl_attachment = form.cleaned_data['rl_attachment']
+                if request.FILES.get('rl_attachment', ""):
+                    form.rl_attachment = request.FILES['rl_attachment']
+                
+                offer_letter_attachment = form.cleaned_data['offer_letter_attachment']
+                if request.FILES.get('offer_letter_attachment', ""):
+                    form.offer_letter_attachment = request.FILES['offer_letter_attachment']
+                
 
                 userdata = PreviousEmployment.objects.filter(employee=user.id, company_name=company_name)
                 for details in userdata:
@@ -1102,7 +1177,7 @@ def previous_employment(request):
             reason_for_exit_errors = form['reason_for_exit'].errors
             
             return render(request, 'previous.html', {'form':form, 'company_name_errors':company_name_errors,
-            'company_address_errors':company_address_error,'job_type_errors':job_type_errors,'employed_from_errors':employed_from_errors,
+            'company_address_errors':company_address_errors,'job_type_errors':job_type_errors,'employed_from_errors':employed_from_errors,
             'employed_upto_errors':employed_upto_errors,'last_ctc_errors':last_ctc_errors,'reason_for_exit_errors':reason_for_exit_errors})
 
     user = request.user

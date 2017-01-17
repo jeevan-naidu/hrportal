@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
+from datetime import timedelta
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ['secret_key']
+SECRET_KEY = 'fl#^n4m5dj@=r70pc*dwg-h1i1z=qvkdpqy1i)p6n48v8)@+!c'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -39,6 +40,7 @@ INSTALLED_APPS = [
     'EmployeeForms',
     'bootstrap3',  # Django Bootstrap3
     'bootstrap3_datetime',
+    'axes',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -78,12 +80,12 @@ WSGI_APPLICATION = 'Employee.wsgi.application'
 
 DATABASES = {
     'default': {
-        "ENGINE": os.environ['engine'],
-        "NAME": os.environ['db'],
-        "USER": os.environ['dbuser'],
-        "PASSWORD": os.environ['dbpassword'],
-        "HOST": os.environ['dbhost'],
-        "PORT": os.environ['dbport'],
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": "candidate",
+        "USER": "root",
+        "PASSWORD": "root",
+        "HOST": "localhost",
+        "PORT": "3306",
     },
 }
 
@@ -126,13 +128,25 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-EMAIL_HOST = os.environ['email_host']
-EMAIL_HOST_USER = os.environ['email_host_user']
-EMAIL_HOST_PASSWORD = os.environ['email_host_password']
-EMAIL_SUBJECT_PREFIX = os.environ['email_subject_prefix']
-EMAIL_PORT = os.environ['email_port']
-EMAIL_USE_TLS = os.environ['email_use_tls']
+EMAIL_HOST = 'smtp.office365.com'
+EMAIL_HOST_USER = 'myansrsource@ansrsource.com'
+EMAIL_HOST_PASSWORD = 'Welcome123'
+EMAIL_SUBJECT_PREFIX = '[myansrsource] '
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
 LOGIN_URL = '/'
 
-# LOGIN_REDIRECT_URL = '/user_details/'
+AXES_LOGIN_FAILURE_LIMIT = 5
+AXES_LOCK_OUT_AT_FAILURE = True
+# AXES_USE_USER_AGENT = True
+AXES_COOLOFF_TIME = timedelta(minutes=15)
+# AXES_LOGGER = 'axes.watch_login'
+AXES_LOCKOUT_TEMPLATE = 'blocked.html'
+# AXES_LOCKOUT_URL = None
+# AXES_VERBOSE = True
+# AXES_USERNAME_FORM_FIELD = username
+# AXES_LOCK_OUT_BY_COMBINATION_USER_AND_IP = True
+# AXES_ONLY_USER_FAILURES = True
+# AXES_NEVER_LOCKOUT_WHITELIST = True
+# AXES_IP_WHITELIST = []

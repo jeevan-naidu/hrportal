@@ -86,6 +86,7 @@
                               <label class="col-sm-2 control-label">Passport Size Photo<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-7 controls">
                                 {{form.photo}}
+
                                 <div class="help-block with-errors"></div>
                               </div>
                             </div>
@@ -150,7 +151,7 @@
                                 <div class="help-block with-errors"></div>
                               </div>
                             </div>
-
+                            <div id="temp_add">
                             <div class="form-group">
                               <label class="col-sm-2 control-label">Address Type<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-7 controls">
@@ -209,25 +210,80 @@
                                 <label><span id = "temp_address" class="glyphicon glyphicon-plus"></span>Add a new temporary address</label>
                               </div>
                               
+
                               </div>
                             </div>
-                           
+                          </div>
+                           <!-- <table>
+                           <tr>
+                           <th>
+                           <label class="col-sm-2 control-label">Language<span class="mandatory-field"> *</span></label>
+                           </th>
+                           <th>
+                           <label class="col-sm-2 control-label">Speak<span class="mandatory-field"> *</span></label>
+                           </th>
+                           <th>
+                           <label class="col-sm-2 control-label">Read<span class="mandatory-field"> *</span></label>
+                           </th>
+                           <th>
+                           <label class="col-sm-2 control-label">Write<span class="mandatory-field"> *</span></label>
+                           </th>
+                           <tr>
+                           <td>
+                            <div class="form-group">
+                              
+                              <div class="col-sm-30 controls">
+                                {{lang_form.language_known}}
+                                
+                                <div class="help-block with-errors"></div>
+                              </div>
+                            </div>
+                            </td>
+                            <td>
+                            <div class="form-group">
+                              
+                              <div class="col-sm-15 controls">
+                                {{lang_form.speak}}
+                                
+                                <div class="help-block with-errors"></div>                                
+                              </div>
+                            </div>
+                            </td>
+                            <td>
+                            <div class="form-group">
+                              
+                              <div class="col-sm-15 controls">
+                                {{lang_form.read}}
+                                
+                                <div class="help-block with-errors"></div>                                
+                              </div>
+                            </div>
+                            </td>
+                            <td>
+                            <div class="form-group">
+                              
+                              <div class="col-sm-15 controls">
+                                  {{lang_form.write}}
+                                  
+
+                              <div class="help-block with-errors"></div>                                
+                              </div>
+                            </div>
+                            </td>
+                            <td>
+                            <span id ="lang_add" class="glyphicon glyphicon-plus">Add language</span>
+                            </td>
+                            </tr>
+                            </table>
+ -->
                             <div class="form-group">
                                 <h3 class="col-sm-12 text-right"><input type="submit" id="submit" class="btn vd_bg-green vd_white width-10" value="Save"/></h3>
                             </div>
                         </form>
 
 <!-- ~~~~sanjay~~~~ -->
-
-
+                        
                             </div><!-- ./tab-pane -->
-
-
-
-
-
-
-
 
                        </div><!-- ./wizard1 ~~~ -->
 
@@ -242,84 +298,62 @@
 
 <script type="text/javascript">
 
-          // var theObj = 
-
-
-          //                   {
-          //     {%for val in address_list%}
-          //                     "{{val.address_type}}":{
-          //                                   "address_type": "{{val.address_type}}",
-                                            
-          //                                     },    
-          //     {%endfor%}   
-          //                   }
-
-
-                     
-          //   $('.content-list li').click(function(){
-          //     // e.preventDefault();
-          //     // debugger;
-          //     var address_type;
-              
-          //     var the_id_key = $(this).attr('id');
-          //     console.log(the_id_key);
-          //     // Object Iteration
-          //     for (var key in theObj[the_id_key]) {
-          //       console.log(theObj[the_id_key]['address_type']);
-          //       var address_type = theObj[the_id_key]['address_type'];
-          //       }
-
-          //         $.ajax({
-          //         type: "GET",
-          //         url : '/user_details',
-          //         data : {'address_type':address_type},
-          //         success : function(data){
-          //          $("#user_details_form").html(data);
-          //          // return data;
-          //         }
-          //         // error: function(xhr, status, error) {
-          //         //   alert(xhr.responseText);
-          //         // }
-          //       });
-              
-          // });
-
-   $('#id_address_type').on('click', function() {
-  value =  this.value 
-
-                    if (value=='PR'){
-                      var theObj = 
-
-
-                            {
-                               
-                                                "PR":{
-                                                              "address_type": "PR",
-                                                              
-                                                                },    
-                                  
-                              }
-
-              // e.preventDefault();
-              // debugger;
-              var address_type = "PR";
-              
-              
-                $.ajax({
+$(window).load(function() {
+  var id = {{request.user.id}}
+  
+  $.ajax({
                   type: "GET",
-                  url : '/user_details',
-                  data : {'address_type':address_type},
+                  url : '/checkbox_check',
+                  data : {'id':id},
                   success : function(data){
-                   $("#user_details_form").html(data);
+                   if (data == 'True'){
+                    $('#address').prop('checked', true)
+                   }
+                   else{
+                     $('#address').prop('checked', false)
+                   }
                    // return data;
                   }
                   // error: function(xhr, status, error) {
                   //   alert(xhr.responseText);
                   // }
                 });
-              }
-          });
 
+
+})
+
+   $('#id_address_type').on('change', function() {
+        value =  this.value 
+  
+    // console.log(value);
+
+        if (value=='PR'){
+            var theObj = 
+                  {
+                    "PR":{
+                          "address_type": "PR",
+                          },                
+                  }
+
+              // e.preventDefault();
+              // debugger;
+            var address_type = "PR";
+
+              $.ajax({
+                type: "GET",
+                url : '/user_details',
+                data : {'address_type':address_type},
+                success : function(data){
+                  var permanent = $(data).find('#temp_add')
+                  $("#temp_add").html(permanent);
+                   // return data;
+                }
+                  // error: function(xhr, status, error) {
+                  //   alert(xhr.responseText);
+                  // }
+              });
+            }
+        });
 
    $('#id_address_type').on('change', function() {
   value =  this.value 
@@ -337,17 +371,16 @@
                                   
                               }
 
-              // e.preventDefault();
-              // debugger;
+
               var address_type = "TM";
-              
-              
+
                 $.ajax({
                   type: "GET",
                   url : '/user_details',
                   data : {'address_type':address_type},
                   success : function(data){
-                   $("#user_details_form").html(data);
+                   var temporary = $(data).find('#temp_add')
+                   $("#temp_add").html(temporary);
                    // return data;
                   }
                   // error: function(xhr, status, error) {
@@ -356,10 +389,7 @@
                 });
               }
           });
-                        
-                      
-
-
+                
             $("#user_details_form").submit(function (e) {
                   e.preventDefault();
                   var data = new FormData($('form').get(0));
@@ -392,43 +422,82 @@
 
 
 
-/*$(document).ready(function(){
-
-   $('#id_wedding_date_pickers').datepicker({
-     format: 'yyyy-mm-dd',
-     autoclose: true
-   }).datepicker("setDate", "0");
-
-}) */
 
 
-// ./doc.ready
+/*var temp_add = function(){
+            var a = document.getElementById("id_address_type").value;
+          var b = document.getElementById("id_address1").value;
+          var c = document.getElementById("id_address2").value;
+          var d = document.getElementById("id_city").value;
+          var e = document.getElementById("id_state").value;
+          var f = document.getElementById("id_zipcode").value;
+
+          alert("danger")
+          if a == null && b == null && c == null && d == null && e == null && f == null{
+            $("$address").attr("disabled", true);
+          }
+          else{
+            $("$address").removeAttr("disabled");
+          }
+}*/
 
 
-// Wedding date
-window.onload = function(){
-                           document.getElementById("id_address_type").readOnly = false;
-                           document.getElementById("id_address1").readOnly = false;
-                           document.getElementById("id_address2").readOnly = false;
-                           document.getElementById("id_city").readOnly = false;
-                           document.getElementById("id_state").readOnly = false;
-                           document.getElementById("id_zipcode").readOnly = false;
-    }
-$("#address").change(function (e) {
+/*$(window).load(function() {
+  debugger;
+          var a = document.getElementById("id_address_type").value;
+          var b = document.getElementById("id_address1").value;
+          var c = document.getElementById("id_address2").value;
+          var d = document.getElementById("id_city").value;
+          var e = document.getElementById("id_state").value;
+          var f = document.getElementById("id_zipcode").value;
+
+          alert("danger")
+          if a == null && b == null && c == null && d == null && e == null && f == null{
+            $("$address").attr("disabled", true);
+          }
+          else{
+            $("$address").removeAttr("disabled");
+          }
+});*/
+
+$("#address").click(function (e) {
                   e.preventDefault();
                   
-                        $.ajax( {
-                          type: "POST",
-                          url: '/user_details/address_copy',
-                          data: $("#user_details_form").serialize(),
-                          success: function( response ) {
-                            
-                            swal("Success", "Permanent is saved as temporary");
-                            
-                            // window.location='/user_details'
-                          }
+                  if(this.checked){
+                        var a = document.getElementById("id_address_type").value;
+                        var b = document.getElementById("id_address1").value;
+                        var c = document.getElementById("id_address2").value;
+                        var d = document.getElementById("id_city").value;
+                        var e = document.getElementById("id_state").value;
+                        var f = document.getElementById("id_zipcode").value;
+                        
+                        swal({   title: "Are you sure you want to copy your permanent address as temporary address?",
+                          text: "",
+                          type: "warning",
+                          showCancelButton: true,
+                          confirmButtonColor: "#DD6B55",
+                          confirmButtonText: "OK",
+                          cancelButtonText: "Cancel",
+                          closeOnConfirm: true,
+                          closeOnCancel: true
+                          },
+                          function(isConfirm) {
+                            if (isConfirm) {
 
-                        });
+                                      $.ajax( {
+                                        type: "POST",
+                                        url: '/user_details/address_copy',
+                                        data: {'address_type':a,'address1':b,'address2':c,'city':d,'state':e,'zipcode':f},
+                                        success: function( respone ) {
+                                          
+                                          swal("Success", "Permanent is saved as temporary");
+                                          
+                                          
+                                        }
+
+                                      });
+                                    }});
+                        }
                       });
 
 $("#temp_address").click(function (e) {
@@ -438,43 +507,6 @@ $("#temp_address").click(function (e) {
                       });
 
 </script>
-
-<!-- // $("#address").click(function (e) {
-//                   e.preventDefault();
-//                   swal({   title: "Do you want to make your permanent address as temporary address??",
-//                     text: "Press NO if u want add your temporary address manually",
-//                     type: "warning",
-//                     showCancelButton: true,
-//                     confirmButtonColor: "#DD6B55",
-//                     confirmButtonText: "YES",
-//                     cancelButtonText: "NO",
-//                     closeOnConfirm: true,
-//                     closeOnCancel: true,
-//                     timer:3000
-//                     },
-//                     function(isConfirm) {
-//                       if (isConfirm) {
-//                         $.ajax( {
-//                           type: "POST",
-//                           url: '/user_details/address_copy',
-//                           data: $("#user_details_form").serialize(),
-//                           success: function( response ) {
-                            
-//                             swal("Cancelled", "Your imaginary file is safe");
-                            
-//                             // window.location='/user_details'
-//                           }
-
-//                         });
-//                       }else{
-//                           window.location='/user_details/address_tempo'
-//                         }
-//                       });
-//                     });
- -->
-
-
-
 
 
 {% endblock %}

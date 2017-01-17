@@ -87,8 +87,10 @@
     <label class="col-sm-5 control-label">Specialization<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
       {{form.specialization}}
+      
       {{specialization_errors}}
-      {{form.specialization.errors}}
+      
+     <!--  {{form.specialization.errors}} -->
       <div class="help-block with-errors"></div>
     </div>
   </div>
@@ -145,11 +147,12 @@
     </div>
   </div>
 
-  
+  {{marks_card_attachment}}
   <div class="form-group">
     <label class="col-sm-5 control-label">Marks Card<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
       {{form.marks_card_attachment}}
+
       <div class="help-block with-errors"></div>
     </div>
   </div>
@@ -171,6 +174,7 @@
       <ul class="list-wrapper">
       {% for val in education_list %}
         <li id="{{val.qual}},{{val.spec}}"> 
+        <input type="hidden" value="{{val.spec}}" class="speclization">
           <div class="menu-text">{{val.qual}} - <span class="qual-spec">{{val.spec}}</span></div>
           </li>
           <div class="menu-icon vd_red pull-right"><i id ="{{val.qual}},{{val.spec}}" class="glyphicon glyphicon-trash"></i></div>
@@ -197,12 +201,8 @@
               <!-- col-md-12 -->
             </div>
             <!-- row -->
-            
-            
 
             <script type="text/javascript">
-
-
 
             var theObj = 
 
@@ -233,23 +233,35 @@
                 var specialization = theObj[the_id_key]['specialization'];
               }
               
-                $.ajax({
-                  type: "GET",
-                  url : '/user_details/education_delete',
-                  data : {'qualification':qualification,'specialization':specialization},
-                  success : function(data){
-                   window.location='/user_details/education'
-                   // return data;
-                  }
-                  // error: function(xhr, status, error) {
-                  //   alert(xhr.responseText);
-                  // }
-                });
-              
+              swal({   title: "Are you sure you want to delete?",
+                    text: "",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Yes",
+                    cancelButtonText: "No",
+                    closeOnConfirm: true,
+                    closeOnCancel: true
+                    },
+                    function(isConfirm) {
+                      if (isConfirm) {
+                          $.ajax({
+                            type: "GET",
+                            url : '/user_details/education_delete',
+                            data : {'qualification':qualification,'specialization':specialization},
+                            success : function(data){
+                             window.location='/user_details/education'
+                             // return data;
+                            }
+                            // error: function(xhr, status, error) {
+                            //   alert(xhr.responseText);
+                            // }
+                          });
+              }});
           });
+
                 
                             var theObj = 
-
 
                             {
               {%for val in education_list%}
@@ -261,7 +273,6 @@
                             }
 
 
-                     
             $('.content-list li').click(function(){
               // e.preventDefault();
               // debugger;
@@ -291,6 +302,8 @@
                 });
               
           });
+
+
             $("#education_form").submit(function (e) {
                   e.preventDefault();
                   var data = new FormData($('form').get(0));

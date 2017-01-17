@@ -47,15 +47,15 @@
   {% csrf_token %}
   {% if messages %}
 
-                                  {% for message in messages %}
+            {% for message in messages %}
 
-                                <div class="alert alert-danger">
-                                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-cross"></i></button>
-                                  <span class="vd_alert-icon"><i class="fa fa-exclamation-circle vd_red"></i></span><strong>{{message}}</strong></div>
+          <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-cross"></i></button>
+             <span class="vd_alert-icon"><i class="fa fa-exclamation-circle vd_red"></i></span><strong>{{message}}</strong></div>
 
-                                  {% endfor %}
+            {% endfor %}
 
-                              {% endif %}
+         {% endif %}
 
   <div class="form-group">
     <label class="col-sm-5 control-label">Company Name<span class="mandatory-field"> *</span></label>
@@ -229,20 +229,33 @@
                 console.log(theObj[the_id_key]['company_name']);
                 var company_name = theObj[the_id_key]['company_name'];
               }
+
+              swal({   title: "Are you sure you want to delete?",
+                    text: "",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Yes",
+                    cancelButtonText: "No",
+                    closeOnConfirm: true,
+                    closeOnCancel: true
+                    },
+                    function(isConfirm) {
+                      if (isConfirm) {
               
-                $.ajax({
-                  type: "GET",
-                  url : '/user_details/previous_delete',
-                  data : {'company_name':company_name},
-                  success : function(data){
-                   window.location='/user_details/previous_employment'
-                   // return data;
-                  }
-                  // error: function(xhr, status, error) {
-                  //   alert(xhr.responseText);
-                  // }
-                });
-              
+                          $.ajax({
+                            type: "GET",
+                            url : '/user_details/previous_delete',
+                            data : {'company_name':company_name},
+                            success : function(data){
+                             window.location='/user_details/previous_employment'
+                             // return data;
+                            }
+                            // error: function(xhr, status, error) {
+                            //   alert(xhr.responseText);
+                            // }
+                          });
+              }}); 
           });
                 
                             var theObj = 
