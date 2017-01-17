@@ -168,7 +168,7 @@ def user_details(request):
                 context["form"] = form
                 context["lang_form"] = lang_form                
 
-                return render(request, "wizard.html", context)
+                return render(request, "form_templates/wizard.html", context)
                 try:
                     address_type = request.GET.get('address_type','')
                     address = Address.objects.get(employee=request.user, address_type=address_type)
@@ -183,7 +183,7 @@ def user_details(request):
                     'read':employee_lang.read,'write':employee_lang.write})
                     context["form"] = form
                     context["lang_form"] = lang_form
-                    return render(request, "wizard.html", context)
+                    return render(request, "form_templates/wizard.html", context)
 
                 except Address.DoesNotExist:
                     
@@ -204,11 +204,11 @@ def user_details(request):
                             addre = {'address_type':''}
 
                         # print lists
-                        return render(request, "wizard.html", {'form':form,'address_list':lists,'no_of_degree':no_of_degree,
+                        return render(request, "form_templates/wizard.html", {'form':form,'address_list':lists,'no_of_degree':no_of_degree,
                             'employee':request.user})
                     
                     except Address.DoesNotExist:            
-                        return render(request, "wizard.html", context)
+                        return render(request, "form_templates/wizard.html", context)
 
             except Address.DoesNotExist:
                 try:
@@ -226,7 +226,7 @@ def user_details(request):
 
                     context["form"] = form
                     context["lang_form"] = lang_form
-                    return render(request, "wizard.html", context)
+                    return render(request, "form_templates/wizard.html", context)
 
                 except Address.DoesNotExist:
 
@@ -243,7 +243,7 @@ def user_details(request):
 
                     context["form"] = form
                     context["lang_form"] = lang_form
-                    return render(request, "wizard.html", context)
+                    return render(request, "form_templates/wizard.html", context)
             # print employee
         except UserDetails.DoesNotExist:
             context = {"form":""}
@@ -252,7 +252,7 @@ def user_details(request):
             
             context["form"] = form
             context["lang_form"] = lang_form
-            return render(request, "wizard.html", context)
+            return render(request, "form_templates/wizard.html", context)
 
     # instance = UserDetails.objects.get(employee=request.user)
     if request.method == 'POST':
@@ -403,13 +403,13 @@ def user_details(request):
             state_errors = form['state'].errors
             zipcode_errors = form['zipcode'].errors
             
-            return render(request, 'wizard.html', {'form':form, 'name_pan_errors':name_pan_errors,
+            return render(request, 'form_templates/wizard.html', {'form':form, 'name_pan_errors':name_pan_errors,
             'nationality_errors':nationality_errors,'date_of_birth_errors':date_of_birth_errors,'blood_group_errors':blood_group_errors,
             'land_phone_errors':land_phone_errors,'mobile_phone_errors':mobile_phone_errors,'gender_errors':gender_errors,
             'address_type_errors':address_type_errors,'address1_errors':address1_errors,'address2_errors':address2_errors,
             'city_errors':city_errors,'state_errors':state_errors,'zipcode_errors':zipcode_errors})
 
-    return render(request, 'education.html', context)
+    return render(request, 'form_templates/education.html', context)
 
 @login_required
 def family_details(request):
@@ -547,7 +547,7 @@ def family_details(request):
             'emergency_phone1_errors':emergency_phone1_errors,'emergency_phone2_errors':emergency_phone2_errors,'child1_name_errors':child1_name_errors,
             'child2_name_errors':child2_name_errors})
 
-    return render(request, 'education.html', context)
+    return render(request, 'form_templates/education.html', context)
 
 def previous_delete(request):
     
@@ -562,7 +562,7 @@ def previous_delete(request):
         form = PreviousEmploymentForm(request.FILES)
         context["form"] = form
         
-        return render(request, "previous_display.html", context)
+        return render(request, "form_templates/previous_display.html", context)
 
 def education_delete(request):
     #education form
@@ -663,14 +663,14 @@ def address_copy(request):
 
         Address(employee=user, address_type=address_type,address1=address1,address2=address2,city=city,state=state,zipcode=zipcode).save()
         context["form"] = form
-        return render(request, "wizard.html", context,{'address_type':address_type,'address1':address1,'address2':address2,'city':city,'state':state,'zipcode':zipcode})
+        return render(request, "form_templates/wizard.html", context,{'address_type':address_type,'address1':address1,'address2':address2,'city':city,'state':state,'zipcode':zipcode})
 
     if request.method=='GET':
         context = {"form":""}
         form = UserDetailsForm()
         messages.error(request, 'Fill the permanent address before copying that to temporary address')
         context["form"] = form
-        return render(request,'wizard.html', context)
+        return render(request,'form_templates/wizard.html', context)
 
 def checkbox_check(request):
 
@@ -724,10 +724,10 @@ def education(request):
                     lists.append(qual)
                     qual = {'qual':'','spec':''}
                 # print lists
-                return render(request, "education.html", {'form':form,'education_list':lists,'no_of_degree':no_of_degree,'employee':request.user})
+                return render(request, "form_templates/education.html", {'form':form,'education_list':lists,'no_of_degree':no_of_degree,'employee':request.user})
                 
             except Education.DoesNotExist:            
-                return render(request, "education.html", context)
+                return render(request, "form_templates/education.html", context)
 
     if request.method == 'POST':
         # import ipdb; ipdb.set_trace()
@@ -799,7 +799,7 @@ def education(request):
                 overall_marks=overall_marks,
                 marks_card_attachment=marks_card_attachment).save()
                 context['form'] = form
-                return render(request, 'education.html',context)
+                return render(request, 'form_templates/education.html',context)
 
         else:
             print form.is_valid()
@@ -813,7 +813,7 @@ def education(request):
             board_university_errors = form['board_university'].errors
             overall_marks_errors = form['overall_marks'].errors
             
-            return render(request, 'education.html', {'form':form, 'education_type_errors':education_type_errors,
+            return render(request, 'form_templates/education.html', {'form':form, 'education_type_errors':education_type_errors,
             'qualification_errors':qualification_errors,'specialization_errors':specialization_errors,'overall_marks_errors':overall_marks_errors,
             'from_date_errors':from_date_errors,'to_date_errors':to_date_errors,'institute_errors':institute_errors,
             'board_university_errors':board_university_errors})
@@ -843,7 +843,7 @@ def education(request):
     overall_marks=overall_marks,
     marks_card_attachment=marks_card_attachment).save()
     context['form'] = form
-    return render(request, 'education.html',context)
+    return render(request, 'form_templates/education.html',context)
 
 
 @login_required
@@ -863,7 +863,7 @@ def proof(request):
             context = {"form":""}
             form = ProofForm(request.FILES)
             context["form"] = form
-            return render(request, "proof.html", context)
+            return render(request, "form_templates/proof.html", context)
 
         pan = employee.pan
         pan_attachment = employee.pan_attachment
@@ -882,7 +882,7 @@ def proof(request):
         'voter_id':employee.voter_id, 'voter_attachment':employee.voter_attachment})
         
         context["form"] = form
-        return render(request, "proof.html", context)
+        return render(request, "form_templates/proof.html", context)
 
     if request.method == 'POST':
         # import ipdb; ipdb.set_trace()
@@ -959,7 +959,7 @@ def proof(request):
                     else:
                         messages.error(request, 'Please enter min 2 proofs with attachments')
                         context['form'] = form
-                        return render(request,'proof.html',context)
+                        return render(request,'form_templates/proof.html',context)
 
             except Proof.DoesNotExist:
 
@@ -1009,7 +1009,7 @@ def proof(request):
                 else:
                     messages.error(request, 'Please enter min 2 proofs with attachments')
                     context['form'] = form
-                    return render(request,'proof.html',context)
+                    return render(request,'form_templates/proof.html',context)
 
         else:
             print form.is_valid()
@@ -1025,7 +1025,7 @@ def proof(request):
             voter_error = form['voter_id'].errors
             voter_att_error =  form['voter_attachment'].errors
             
-            return render(request, 'proof.html', {'form':form, 'pan_error':pan_error,'pan_att_error':pan_att_error,'aadhar_error':aadhar_error,'addhar_att_error':
+            return render(request, 'form_templates/proof.html', {'form':form, 'pan_error':pan_error,'pan_att_error':pan_att_error,'aadhar_error':aadhar_error,'addhar_att_error':
             addhar_att_error,'dl_error':dl_att_error,'passport_error':passport_error,'pp_att_error':pp_att_error,'voter_error':voter_error,
             'voter_att_error':voter_att_error })
 
@@ -1052,7 +1052,7 @@ def previous_employment(request):
 
             context["form"] = form
 
-            return render(request, "previous_display.html", context)
+            return render(request, "form_templates/previous_display.html", context)
         except PreviousEmployment.DoesNotExist:
             context = {"form":""}
             form = PreviousEmploymentForm()
@@ -1068,11 +1068,11 @@ def previous_employment(request):
                     lists.append(company)
                     company = {'company_name':''}
                 
-                return render(request, "previous.html", {'form':form,'employment_list':lists,'employee':request.user})
+                return render(request, "form_templates/previous.html", {'form':form,'employment_list':lists,'employee':request.user})
             except Education.DoesNotExist:            
-                return render(request, "previous.html", context_data)
+                return render(request, "form_templates/previous.html", context_data)
     #     context["form"] = form
-    #     return render(request, "previous.html", context)
+    #     return render(request, "form_templates/previous.html", context)
 
     if request.method == 'POST':
         # import ipdb; ipdb.set_trace()
@@ -1124,7 +1124,7 @@ def previous_employment(request):
                     
                     details.save()
                     context['form'] = form
-                    return render(request, 'previous.html',context)
+                    return render(request, 'form_templates/previous.html',context)
             except PreviousEmployment.DoesNotExist:
                 user = request.user
                 employee = User.objects.get(username=request.user)
@@ -1157,7 +1157,7 @@ def previous_employment(request):
                 rl_attachment=rl_attachment,
                 offer_letter_attachment=offer_letter_attachment).save()
                 context['form'] = form
-                return render(request, 'previous.html',context)
+                return render(request, 'form_templates/previous.html',context)
 
         else:
             print form.is_valid()
@@ -1170,7 +1170,7 @@ def previous_employment(request):
             last_ctc_errors = form['last_ctc'].errors
             reason_for_exit_errors = form['reason_for_exit'].errors
             
-            return render(request, 'previous.html', {'form':form, 'company_name_errors':company_name_errors,
+            return render(request, 'form_templates/previous.html', {'form':form, 'company_name_errors':company_name_errors,
             'company_address_errors':company_address_errors,'job_type_errors':job_type_errors,'employed_from_errors':employed_from_errors,
             'employed_upto_errors':employed_upto_errors,'last_ctc_errors':last_ctc_errors,'reason_for_exit_errors':reason_for_exit_errors})
 
@@ -1205,7 +1205,7 @@ def previous_employment(request):
     rl_attachment=rl_attachment,
     offer_letter_attachment=offer_letter_attachment).save()
     context['form'] = form
-    return render(request, 'previous.html',context)
+    return render(request, 'form_templates/previous.html',context)
 
 @csrf_exempt
 @login_required
@@ -1226,11 +1226,11 @@ def confirm(request):
                 except Proof.DoesNotExist:
                     messages.error(request, 'Please fill all your proof details before confirming')
                     
-                    return render(request,'confirm.html', context)
+                    return render(request,'form_templates/confirm.html', context)
             except UserDetails.DoesNotExist:
                 messages.error(request, 'Please fill all your User details before confirming')
                 context["form"] = form
-                return render(request,'confirm.html', context)
+                return render(request,'form_templates/confirm.html', context)
 
             name_pan = employee.name_pan
             nationality = employee.nationality
@@ -1251,7 +1251,7 @@ def confirm(request):
 
             context.update(csrf(request))
 
-            return render(request, 'confirm.html',context)
+            return render(request, 'form_templates/confirm.html',context)
     else:
         return HttpResponseRedirect('/login')
 
