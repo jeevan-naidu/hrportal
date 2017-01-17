@@ -197,10 +197,10 @@
                       if (isConfirm) {
                           $.ajax({
                             type: "GET",
-                            url : '/user_details/form_templates/education_delete',
+                            url : '/user_details/education_delete',
                             data : {'qualification':qualification,'specialization':specialization},
                             success : function(data){
-                             window.location='/user_details/form_templates/education'
+                             window.location='/user_details/education'
                              // return data;
                             }
                             // error: function(xhr, status, error) {
@@ -240,7 +240,7 @@
               
                 $.ajax({
                   type: "GET",
-                  url : '/user_details/form_templates/education',
+                  url : '/user_details/education',
                   data : {'qualification':qualification,'specialization':specialization},
                   success : function(data){
                    $("#education_form").html(data);
@@ -271,26 +271,26 @@
                       if (isConfirm) {
                         $.ajax( {
                           type: "POST",
-                          url: '/user_details/form_templates/education',
+                          url: '/user_details/education',
                           data: data,
                           cache: false,
                           processData: false,
                           contentType: false,
                           success: function( response ) {
                               
-                             window.location='/user_details/form_templates/education'
+                             window.location='/user_details/education'
                           }
                         });
                       }else{
                           $.ajax( {
                             type: "POST",
-                            url: '/user_details/form_templates/education',
+                            url: '/user_details/education',
                             data: data,
                             cache: false,
                             processData: false,
                             contentType: false,
                             success: function( response ) {
-                               window.location='/user_details/form_templates/previous_employment'
+                               window.location='/user_details/previous_employment'
                         }
                       });}});
                     });
