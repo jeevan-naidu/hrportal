@@ -569,8 +569,7 @@ def family_details(request):
 
     return render(request, 'form_templates/education.html', context)
 
-<<<<<<< HEAD
-=======
+
 def previous_delete(request):
     
     # import ipdb; ipdb.set_trace()
@@ -659,6 +658,8 @@ def address_tempo(request):
             messages.error(request, 'Fill the permanent address before copying that to temporary address')
             context["form"] = form
             return render(request,'address_tempo.html', context)
+
+from django.views.decorators.csrf import csrf_exempt
 @csrf_exempt
 def address_copy(request):
     # import ipdb; ipdb.set_trace()
@@ -707,7 +708,7 @@ def checkbox_check(request):
 
     return HttpResponse(valid) 
 
->>>>>>> 98e99ba66a347d32c7251ef98e8d600822c1a5bb
+
 @login_required
 def education(request):
     #education form
