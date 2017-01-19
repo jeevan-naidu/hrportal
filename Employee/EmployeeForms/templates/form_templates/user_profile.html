@@ -1,61 +1,7 @@
 {% extends 'form_master.html' %}
 {% block siteTitle %}Main Details{% endblock %}
 {% block form_content %}
-                          <div id="lang_add" class ="hidden">
-                           <table id="table_add0">
-                           <tr>
-                           <th><label class="col-sm-2 control-label">Language<span class="mandatory-field"> *</span></label></th>
-                           <th><label class="col-sm-2 control-label">Speak<span class="mandatory-field"> *</span></label></th>
-                           <th><label class="col-sm-2 control-label">Read<span class="mandatory-field"> *</span></label></th>
-                           <th><label class="col-sm-2 control-label">Write<span class="mandatory-field"> *</span></label></th>
-                           </tr>
-                           <tr>
-                           <td>
-                            <div class="form-group">
-                              
-                              <div class="col-sm-30 controls" name="language0">
-                                {{form.language_known}}
-                                
-                                <div class="help-block with-errors"></div>
-                              </div>
-                            </div>
-                            </td>
-                            <td>
-                            <div class="form-group">
-                              
-                              <div class="col-sm-15 controls" name="speak0">
-                                {{form.speak}}
-                                
-                                <div class="help-block with-errors"></div>                                
-                              </div>
-                            </div>
-                            </td>
-                            <td>
-                            <div class="form-group">
-                              
-                              <div class="col-sm-15 controls" name="read0">
-                                {{form.read}}
-                                
-                                <div class="help-block with-errors"></div>                                
-                              </div>
-                            </div>
-                            </td>
-                            <td>
-                            <div class="form-group">
-                              
-                              <div class="col-sm-15 controls" name="write0">
-                                  {{form.write}}
-                                  
-
-                              <div class="help-block with-errors"></div>                                
-                              </div>
-                            </div>
-                            </td>
-                            <td><input type="button" class="btn btn-danger" value="remove" id="remove"></td>
-                            </tr>
-                            </table>
-                            <input type="button" class="btn btn-danger" id="remove_lang" value="Remove">
-                            </div>
+                          
                         <form id="user_details_form" method="post" class="form-horizontal" enctype="multipart/form-data" data-toggle="validator">
                         {{success}}
                         {% csrf_token %}
@@ -211,6 +157,91 @@
 
                               </div>
                             </div>
+
+                            <div class="form-group">
+                              <label class="col-sm-3 control-label">Zip Code<span class="mandatory-field"> *</span></label>
+                              <div class="col-sm-7 controls">
+
+
+
+
+
+
+
+
+<div id="lang_add" class ="hidden">
+                           <div id="table_add0">
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+
+                            <div class="form-group">
+                              <label class="col-sm-3 control-label">Language<span class="mandatory-field"> *</span></label>
+                              <div class="col-sm-7 controls" name="language0">
+                                {{form.language_known}}
+                                
+                                <div class="help-block with-errors"></div>
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <label class="col-sm-3 control-label">Speak<span class="mandatory-field"> *</span></label>
+                              <div class="col-sm-7 controls" name="speak0">
+                                {{form.speak}}
+                                
+                                <div class="help-block with-errors"></div>                                
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <label class="col-sm-3 control-label">Read<span class="mandatory-field"> *</span></label>
+                              <div class="col-sm-7 controls" name="read0">
+                                {{form.read}}
+                                
+                                <div class="help-block with-errors"></div>                                
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <label class="col-sm-3 control-label">Write<span class="mandatory-field"> *</span></label>
+                              <div class="col-sm-7 controls" name="write0">
+                                  {{form.write}}
+                                  
+
+                              <div class="help-block with-errors"></div>                                
+                              </div>
+                            </div>
+<input type="button" class="btn btn-danger" value="remove" id="remove">
+                            
+                            </div>
+                            <input type="button" class="btn btn-danger" id="remove_lang" value="Remove">
+                            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+                              </div><!-- ./col-sm-7 -->
+                              
+
+                              </div>
+                            </div>
+
+
+
+
+
                           </div>
                           
                           <input type="button" class="btn btn-danger" value="Add Language" id="add">
