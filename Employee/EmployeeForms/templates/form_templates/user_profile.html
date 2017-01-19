@@ -13,8 +13,8 @@
                            <td>
                             <div class="form-group">
                               
-                              <div class="col-sm-30 controls" name="language0">
-                                {{form.language_known}}
+                              <div class="col-sm-30 controls">
+                                {{form.language}}
                                 
                                 <div class="help-block with-errors"></div>
                               </div>
@@ -54,7 +54,7 @@
                             <td><input type="button" value="remove" id="remove"></td>
                             </tr>
                             </table>
-                            <input type="button" id="remove_lang" value="Remove">
+                            
                             </div>
                         <form id="user_details_form" method="post" class="form-horizontal" enctype="multipart/form-data" data-toggle="validator">
                         {{success}}
@@ -253,6 +253,13 @@ $(window).load(function() {
 
 })
 
+
+            $("body").on('click','.language',function(){
+            
+             $(this).val(this.checked ? 1 : 0);
+            });
+
+
    $('#id_address_type').on('change', function() {
         value =  this.value 
   
@@ -361,8 +368,18 @@ $(window).load(function() {
      $(element).attr('id', newId);
      
      $(element).val(newId); // for demo use, change to '' to reset value
+}
+
+    function ReplaceName(element, suffix) {
+         // console.log(element.id +'-'+ element.name) ;
+     var newName = element.name+'_'+suffix; 
+     $(element).attr('name', newName);
+     
+     $(element).val(newName);
     }
      formNewId = 1;
+     formNewName = 1;
+     
     $("#add").on('click', function(){
   
         var newForm = $("#table_add0").clone();
@@ -370,10 +387,15 @@ $(window).load(function() {
         $('input', newForm).not(':input[type=button]').each(function(index,element){
             // iterate input element inside the form
             ReplaceID(this, formNewId); // replace id
+            ReplaceName(this, formNewName); // replace id
+            
             $(this).val('');
 
         }); 
         ReplaceID(newForm, formNewId); // replace the id of cloned form
+        $("#user_details_form").append(newForm);
+
+        ReplaceID(newForm, formNewName); // replace the id of cloned form
         $("#user_details_form").append(newForm);
 
         if (formNewId == 5){
@@ -381,6 +403,7 @@ $(window).load(function() {
         }
 
             formNewId++;
+            formNewName++;
 
 });
 

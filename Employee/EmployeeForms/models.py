@@ -130,12 +130,16 @@ class LanguageProficiency(models.Model):
 
     employee = models.ForeignKey(User, blank=True, null=True)
     language_known = models.CharField(verbose_name='Language Known',max_length=50, null = True, blank=True)
-    speak = models.BooleanField(verbose_name='Speak', default = False)
-    write = models.BooleanField(verbose_name='Write', default = False)
-    read = models.BooleanField(verbose_name='Read', default =False)
+    speak = models.NullBooleanField(verbose_name='Speak', default = False)
+    write = models.NullBooleanField(verbose_name='Write', default = False)
+    read = models.NullBooleanField(verbose_name='Read', default =False)
     def __unicode__(self):
         return u'{0}'.format(
             self.employee)
+
+    class Meta:
+        verbose_name = 'Language Proficiency'
+        unique_together = ('language_known', 'employee')
 
 class FamilyDetails(models.Model):
     employee = models.ForeignKey(User, blank=True, null=True)

@@ -71,10 +71,10 @@ class UserDetailsForm(forms.ModelForm):
 	zipcode = forms.RegexField(max_length=6,required=False, regex=r'^\+?1?\d{5,6}$',
                                    widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','type': 'tel', 'pattern':'^\+?1?\d{5,6}$'}))
 
-	language_known = forms.CharField(required=False,max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control'}))
-	speak = forms.BooleanField(required=False,initial=False)
-	read = forms.BooleanField(required=False,initial=False)
-	write = forms.BooleanField(required=False,initial=False)
+	language = forms.CharField(label="language",required=False,max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control language'}))
+	speak = forms.BooleanField(required=False,initial=False,widget=forms.CheckboxInput(attrs={'class': 'width-50 input-sm form-control language'}))
+	read = forms.BooleanField(required=False,initial=False,widget=forms.CheckboxInput(attrs={'class': 'width-50 input-sm form-control language'}))
+	write = forms.BooleanField(required=False,initial=False,widget=forms.CheckboxInput(attrs={'class': 'width-50 input-sm form-control language'}))
 
 
 	class Meta:
