@@ -448,13 +448,13 @@ def family_details(request):
             'emergency_phone2':employee.emergency_phone2,'child1_name':employee.child1_name,'child2_name':employee.child2_name})
 
             context["form"] = form
-            return render(request, "family_details.html", context)
+            return render(request, "form_templates/family_details.html", context)
             # print employee
         except FamilyDetails.DoesNotExist:
             context = {"form":""}
             form = FamilyDetailsForm()
             context["form"] = form
-            return render(request, "family_details.html", context)
+            return render(request, "form_templates/family_details.html", context)
     
     if request.method == 'POST':
         # import ipdb; ipdb.set_trace()
@@ -560,7 +560,7 @@ def family_details(request):
             child1_name_errors = form['child1_name'].errors
             child2_name_errors = form['child2_name'].errors
             
-            return render(request, 'family_details.html', {'form':form, 'marital_status_errors':marital_status_errors,
+            return render(request, 'form_templates/family_details.html', {'form':form, 'marital_status_errors':marital_status_errors,
             'wedding_date_errors':wedding_date_errors,'spouse_name_errors':spouse_name_errors,'no_of_children_errors':no_of_children_errors,
             'mother_name_errors':mother_name_errors,'mother_dob_errors':mother_dob_errors,'mother_profession_errors':mother_profession_errors,
             'father_name_errors':father_name_errors,'father_dob_errors':father_dob_errors,'father_profession_errors':father_profession_errors,
@@ -569,6 +569,145 @@ def family_details(request):
 
     return render(request, 'form_templates/education.html', context)
 
+<<<<<<< HEAD
+=======
+def previous_delete(request):
+    
+    # import ipdb; ipdb.set_trace()
+    if request.method == 'GET':
+
+        
+        user = request.user
+        company_name = request.GET.get('company_name', '')
+        employee = PreviousEmployment.objects.filter(employee=request.user,company_name=company_name).delete()
+        context = {"form":""}
+        form = PreviousEmploymentForm(request.FILES)
+        context["form"] = form
+        
+        return render(request, "form_templates/previous_display.html", context)
+
+def education_delete(request):
+    #education form
+    # import ipdb; ipdb.set_trace()
+    if request.method == 'GET':
+
+        
+        user = request.user
+        qualification = request.GET.get('qualification', '')
+        specialization = request.GET.get('specialization', '')
+        employee = Education.objects.filter(employee=request.user,
+            qualification=qualification, specialization=specialization).delete()
+        context = {"form":""}
+        form = EducationForm(request.FILES)
+        context["form"] = form
+        
+          
+        return render(request, "form_templates/education_display.html", context)
+        #return HttpResponseRedirect('/user_details/education')
+
+def address_tempo(request):
+    # import ipdb; ipdb.set_trace()
+    if request.method=='GET':
+        context = {"form":""}
+        form = UserDetailsForm()
+       
+        user = request.user
+        try:
+            employee = UserDetails.objects.get(employee=request.user)
+
+            form = UserDetailsForm(initial = {'name_pan':employee.name_pan,
+            'nationality':employee.nationality,'date_of_birth':employee.date_of_birth,
+            'blood_group':employee.blood_group,'land_phone':employee.land_phone,
+            'mobile_phone':employee.mobile_phone,'gender':employee.gender})
+        
+            messages.warning(request,"please fill only temporary address here")
+            context["form"] = form
+            return render(request, "address_tempo.html", context)
+        except UserDetails.DoesNotExist:
+            context = {"form":""}
+            form = UserDetailsForm()
+            context["form"] = form
+            return HttpResponseRedirect('/user_details')
+
+    if request.method=='POST':
+        context = {"form":""}
+        
+        # form = UserDetailsForm(request.POST)  
+        user = request.user      
+        employee = UserDetails.objects.get(employee=request.user)
+
+        form = UserDetailsForm(initial = {'name_pan':employee.name_pan,
+        'nationality':employee.nationality,'date_of_birth':employee.date_of_birth,
+        'blood_group':employee.blood_group,'land_phone':employee.land_phone,
+        'mobile_phone':employee.mobile_phone,'gender':employee.gender})
+        context = {"form":""}
+        form = UserDetailsForm(request.POST)
+        
+        if form.is_valid():
+            address = Address.objects.get(employee=request.user, address_type='PR')
+            address_type = 'TM'
+            address1 = form.cleaned_data['address1']
+            address2 = form.cleaned_data['address2']
+            city = form.cleaned_data['city']
+            state = form.cleaned_data['state']
+            zipcode = form.cleaned_data['zipcode']
+            Address(employee=user, address_type=address_type,address1=address1,address2=address2,city=city,state=state,zipcode=zipcode).save()
+            context["form"] = form
+            return render(request, "address_tempo.html", context)
+        else:
+            
+            messages.error(request, 'Fill the permanent address before copying that to temporary address')
+            context["form"] = form
+            return render(request,'address_tempo.html', context)
+@csrf_exempt
+def address_copy(request):
+    # import ipdb; ipdb.set_trace()
+    if request.method=='POST':
+        context = {"form":""}
+        
+        # form = UserDetailsForm(request.POST)  
+        user = request.user
+        form = UserDetailsForm(request.POST)
+   
+        a = request.POST.get('address_type')
+        b = request.POST.get('address1')
+        C = request.POST.get('address2')
+        d = request.POST.get('city')
+        e = request.POST.get('state')
+        f = request.POST.get('zipcode')
+        address = Address.objects.filter(employee=request.user, address_type=a)
+        address_type = 'TM'
+        address1 = b
+        address2 = C
+        city = d
+        state = e
+        zipcode = f
+
+        Address(employee=user, address_type=address_type,address1=address1,address2=address2,city=city,state=state,zipcode=zipcode).save()
+        context["form"] = form
+        return render(request, "form_templates/user_profile.html", context,{'address_type':address_type,'address1':address1,'address2':address2,'city':city,'state':state,'zipcode':zipcode})
+
+    if request.method=='GET':
+        context = {"form":""}
+        form = UserDetailsForm()
+        messages.error(request, 'Fill the permanent address before copying that to temporary address')
+        context["form"] = form
+        return render(request,'form_templates/user_profile.html', context)
+
+def checkbox_check(request):
+
+    id = request.GET['id']
+
+    employee = Address.objects.filter(employee = id, address_type='TM')
+
+    if employee:
+        valid = True
+    else:
+        valid = False
+
+    return HttpResponse(valid) 
+
+>>>>>>> 98e99ba66a347d32c7251ef98e8d600822c1a5bb
 @login_required
 def education(request):
     #education form
