@@ -5,7 +5,8 @@ from axes.decorators import watch_login
 from EmployeeForms import views
 
 urlpatterns = [
-                       url(r'^$', (views.EmployeeWelcome), name=u'employee'),
+                       # url(r'^$', (views.EmployeeWelcome), name=u'employee'),
+                       url(r'^$', (views.register), name=u'employee'),
                        url(r'^confirmation/(?P<confirmation_code>\w+)/(?P<username>\w+)$', views.confirmation),
                        url(r'^user$', watch_login(login)),
                        url(r'^auth$', views.auth_view),
