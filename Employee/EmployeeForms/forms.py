@@ -70,8 +70,13 @@ class UserDetailsForm(forms.ModelForm):
 	state = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','required': 'True'}))
 	zipcode = forms.RegexField(max_length=6,required=False, regex=r'^\+?1?\d{5,6}$',
                                    widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','type': 'tel', 'pattern':'^\+?1?\d{5,6}$'}))
-		
-	
+
+	language_known = forms.CharField(required=False,max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control'}))
+	speak = forms.BooleanField(required=False,initial=False)
+	read = forms.BooleanField(required=False,initial=False)
+	write = forms.BooleanField(required=False,initial=False)
+
+
 	class Meta:
 		model = UserDetails
 
@@ -82,15 +87,6 @@ class UserDetailsForm(forms.ModelForm):
 	class Meta:
 		model = Address
 		fields = ['address_type', 'address1', 'address2', 'city', 'state', 'zipcode' ]
-
-	
-class LanguageProficiencyForm(forms.ModelForm):
-
-	employee = forms.CharField(required=False)
-	language_known = forms.CharField(required=False,max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control'}))
-	speak = forms.BooleanField(required=False,initial=False)
-	read = forms.BooleanField(required=False,initial=False)
-	write = forms.BooleanField(required=False,initial=False)
 
 	class Meta:
 		model = LanguageProficiency
@@ -130,13 +126,13 @@ class EducationForm(forms.ModelForm):
 	employee = forms.CharField(required=False)
 	education_type = forms.ChoiceField(choices=EDUCATION_TYPE, widget=forms.Select(attrs={'class': 'width-100 input-sm form-control','required': 'True'}))
 	qualification = forms.ChoiceField(choices=QUALIFICATION, widget=forms.Select(attrs={'class': 'width-100 input-sm form-control','required': 'True'}))
-	specialization = forms.ChoiceField(choices=SPECIALIZATION, widget=forms.Select(attrs={'class':'form-control'}))
+	specialization = forms.ChoiceField(required=False,choices=SPECIALIZATION, widget=forms.Select(attrs={'class':'form-control'}))
 	from_date = forms.DateField(label="From date",widget=DateTimePicker(options=dateTimeOption),)
 	from_date.widget.attrs = {'class': 'form-control filter_class', 'required':'true'}
 	to_date = forms.DateField(label="To date",widget=DateTimePicker(options=dateTimeOption),)
 	to_date.widget.attrs = {'class': 'form-control filter_class', 'required':'true'}
-	institute = forms.ChoiceField(choices=INSTITUTE,widget=forms.Select(attrs={'class':'form-control'}))
-	board_university = forms.ChoiceField(choices=BOARD_UNIVERSITY, widget=forms.Select(attrs={'class':'form-control'}))
+	institute = forms.ChoiceField(required=False,choices=INSTITUTE,widget=forms.Select(attrs={'class':'form-control'}))
+	board_university = forms.ChoiceField(required=False,choices=BOARD_UNIVERSITY, widget=forms.Select(attrs={'class':'form-control'}))
 	overall_marks = forms.FloatField(required=True, widget=forms.NumberInput(attrs={'min': '0', 'max': '100','placeholder': 'Marks float','data-error': 'Please enter marks in float and it should be below 100'}))
 	marks_card_attachment = forms.FileField(required=False, help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"))
     # Add Bootstrap widgets
@@ -146,8 +142,6 @@ class EducationForm(forms.ModelForm):
 		model = Education
 		fields = ['education_type','qualification', 'specialization', 'from_date', 'to_date', 'institute', 'board_university', 'overall_marks', 'marks_card_attachment']
 		exclude = ['employee']
-
-	
 
 class PreviousEmploymentForm(forms.ModelForm):
 
@@ -177,9 +171,9 @@ class PreviousEmploymentForm(forms.ModelForm):
 
 class ProofForm(forms.ModelForm):
 
-	pan = forms.RegexField(max_length=10,required=True,regex=r'^[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}$',
+	pan = forms.RegexField(max_length=10,required=False,regex=r'^[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}$',
                     widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','type': 'tel', 'pattern':'^[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}$'}))
-	pan_attachment = forms.FileField(required=True, label='Pan Attachment', help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"))
+	pan_attachment = forms.FileField(required=False, label='Pan Attachment', help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"))
     # Add Bootstrap widgets
 	pan_attachment.widget.attrs = {'class':'bare', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
 	aadhar_card = forms.RegexField(max_length=12, required=False,regex=r'^[0-9]{12}$',
@@ -196,7 +190,7 @@ class ProofForm(forms.ModelForm):
 	passport_attachment = forms.FileField(label='Passport Attachment', required=False, help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"))
     # Add Bootstrap widgets
 	passport_attachment.widget.attrs = {'class':'bare', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
-	voter_id = forms.RegexField(max_length=10, regex=r'^[A-Za-z]{3}[0-9]{7}$',required=False, 
+	voter_id = forms.RegexField( max_length=10, regex=r'^[A-Za-z]{3}[0-9]{7}$',required=False, 
                     widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','type': 'tel', 'pattern':'^[A-Za-z]{3}[0-9]{7}$'}))
 	voter_attachment = forms.FileField(label='Voter ID Attachment', required=False, help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"))
     # Add Bootstrap widgets
