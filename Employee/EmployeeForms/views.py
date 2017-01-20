@@ -267,7 +267,7 @@ def user_details(request):
         
         # LanguageProficiency(employee=request.user).save()
        
-        # import ipdb; ipdb.set_trace()
+        import ipdb; ipdb.set_trace()
         language = {}
         speak = {}
         read ={}
@@ -347,8 +347,12 @@ def user_details(request):
         except:
             user = request.user
         form = UserDetailsForm(request.POST, request.FILES)
-
-        if form.is_valid():
+        photo = request.FILES.get('photo',"")
+        if request.FILES.get('photo', ""):
+            if request.FILES['photo'].name.split(".")[-1] not in AllowedFileTypes:
+                context['errors'].append('Attachment : File type not allowed. Please select a valid file type and then submit again')
+        
+        if form.is_valid() and not context['errors']:
             try:
                 if UserDetails.objects.get(employee=request.user):
                     user = request.user
@@ -496,7 +500,7 @@ def user_details(request):
             state_errors = form['state'].errors
             zipcode_errors = form['zipcode'].errors
             
-            return render(request, 'form_templates/user_profile.html', {'form':form, 'name_pan_errors':name_pan_errors,
+            return render(request, 'form_templates/user_profile.html', {'errors':errors,'form':form, 'name_pan_errors':name_pan_errors,
             'nationality_errors':nationality_errors,'date_of_birth_errors':date_of_birth_errors,'blood_group_errors':blood_group_errors,
             'land_phone_errors':land_phone_errors,'mobile_phone_errors':mobile_phone_errors,'gender_errors':gender_errors,
             'address_type_errors':address_type_errors,'address1_errors':address1_errors,'address2_errors':address2_errors,
@@ -788,7 +792,7 @@ def education(request):
     # import ipdb; ipdb.set_trace()
     if request.method == 'GET':
 
-        context = {"form":""}
+        context = {"form":"", 'errors':[]}
         form = EducationForm(request.FILES)
         context["form"] = form
         # import ipdb; ipdb.set_trace()
@@ -831,10 +835,12 @@ def education(request):
         #print request.POST
         
         form = EducationForm(request.POST, request.FILES)
-        context = {"form":""}
+        context = {"form":"", 'errors':[]}
         marks_card_attachment = request.FILES.get('marks_card_attachment',"")
-
-        if form.is_valid():
+        if request.FILES.get('marks_card_attachment', ""):
+            if request.FILES['marks_card_attachment'].name.split(".")[-1] not in AllowedFileTypes:
+                context['errors'].append('Attachment : File type not allowed. Please select a valid file type and then submit again')
+        if form.is_valid() and not context['errors'] :
 
             try:
                 # Education.objects.get(employee=request.user,qualification=qualification,specialization=specialization)
@@ -918,7 +924,7 @@ def education(request):
             board_university_errors = form['board_university'].errors
             overall_marks_errors = form['overall_marks'].errors
             
-            return render(request, 'form_templates/education.html', {'form':form, 'education_type_errors':education_type_errors,
+            return render(request, 'form_templates/education.html', {'errors':errors, 'form':form, 'education_type_errors':education_type_errors,
             'qualification_errors':qualification_errors,'specialization_errors':specialization_errors,'overall_marks_errors':overall_marks_errors,
             'from_date_errors':from_date_errors,'to_date_errors':to_date_errors,'institute_errors':institute_errors,
             'board_university_errors':board_university_errors})
@@ -993,8 +999,27 @@ def proof(request):
         user = request.user
 
         form = ProofForm(request.POST, request.FILES)
+        if request.FILES.get('pan_attachment', ""):
+            if request.FILES['pan_attachment'].name.split(".")[-1] not in AllowedFileTypes:
+                context['errors'].append('Attachment : File type not allowed. Please select a valid file type and then submit again')
         
-        if form.is_valid():
+        if request.FILES.get('aadhar_attachment', ""):
+            if request.FILES['aadhar_attachment'].name.split(".")[-1] not in AllowedFileTypes:
+                context['errors'].append('Attachment : File type not allowed. Please select a valid file type and then submit again')
+        
+        if request.FILES.get('dl_attachment', ""):
+            if request.FILES['dl_attachment'].name.split(".")[-1] not in AllowedFileTypes:
+                context['errors'].append('Attachment : File type not allowed. Please select a valid file type and then submit again')
+        
+        if request.FILES.get('passport_attachment', ""):
+            if request.FILES['passport_attachment'].name.split(".")[-1] not in AllowedFileTypes:
+                context['errors'].append('Attachment : File type not allowed. Please select a valid file type and then submit again')
+        
+        if request.FILES.get('voter_attachment', ""):
+            if request.FILES['voter_attachment'].name.split(".")[-1] not in AllowedFileTypes:
+                context['errors'].append('Attachment : File type not allowed. Please select a valid file type and then submit again')
+        
+        if form.is_valid() and not context['errors']:
             try:
                 if Proof.objects.get(employee=request.user):
                     user = request.user
@@ -1158,7 +1183,7 @@ def proof(request):
             voter_error = form['voter_id'].errors
             voter_att_error =  form['voter_attachment'].errors
             
-            return render(request, 'form_templates/proof.html', {'form':form, 'pan_error':pan_error,'pan_att_error':pan_att_error,'aadhar_error':aadhar_error,'addhar_att_error':
+            return render(request, 'form_templates/proof.html', {'errors':errors,'form':form, 'pan_error':pan_error,'pan_att_error':pan_att_error,'aadhar_error':aadhar_error,'addhar_att_error':
             addhar_att_error,'dl_error':dl_att_error,'passport_error':passport_error,'pp_att_error':pp_att_error,'voter_error':voter_error,
             'voter_att_error':voter_att_error })
 
@@ -1202,7 +1227,7 @@ def previous_employment(request):
                 
                 return render(request, "form_templates/previous.html", {'form':form,'employment_list':lists,'employee':request.user})
             except Education.DoesNotExist:            
-                return render(request, "form_templates/previous.html", context_data)
+                return render(request, "form_templates/previous.html", context)
     #     context["form"] = form
     #     return render(request, "form_templates/previous.html", context)
 
@@ -1214,8 +1239,18 @@ def previous_employment(request):
         ps_attachment = request.FILES.get('ps_attachment',"")
         rl_attachment = request.FILES.get('rl_attachment',"")
         offer_letter_attachment = request.FILES.get('offer_letter_attachment',"")
+        if request.FILES.get('ps_attachment', ""):
+            if request.FILES['ps_attachment'].name.split(".")[-1] not in AllowedFileTypes:
+                context['errors'].append('Attachment : File type not allowed. Please select a valid file type and then submit again')
 
-        if form.is_valid():
+        if request.FILES.get('rl_attachment', ""):
+            if request.FILES['rl_attachment'].name.split(".")[-1] not in AllowedFileTypes:
+                context['errors'].append('Attachment : File type not allowed. Please select a valid file type and then submit again')
+
+        if request.FILES.get('offer_letter_attachment', ""):
+            if request.FILES['offer_letter_attachment'].name.split(".")[-1] not in AllowedFileTypes:
+                context['errors'].append('Attachment : File type not allowed. Please select a valid file type and then submit again')
+        if form.is_valid() and not context['errors']:
             try:
                 # PreviousEmployment.objects.get(employee=request.user)
                 user = request.user
@@ -1326,7 +1361,7 @@ def previous_employment(request):
             last_ctc_errors = form['last_ctc'].errors
             reason_for_exit_errors = form['reason_for_exit'].errors
             
-            return render(request, 'form_templates/previous.html', {'form':form, 'company_name_errors':company_name_errors,
+            return render(request, 'form_templates/previous.html', {'errors':errors, 'form':form, 'company_name_errors':company_name_errors,
             'company_address_errors':company_address_errors,'job_type_errors':job_type_errors,'employed_from_errors':employed_from_errors,
             'employed_upto_errors':employed_upto_errors,'last_ctc_errors':last_ctc_errors,'reason_for_exit_errors':reason_for_exit_errors})
 
