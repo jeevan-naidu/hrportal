@@ -54,11 +54,11 @@
                             <td><input type="button" class="btn btn-danger" value="remove" id="remove"></td>
                             </tr>
                             </table>
-<<<<<<< HEAD
+
                             
-=======
+
                             <input type="button" class="btn btn-danger" id="remove_lang" value="Remove">
->>>>>>> 80081a890ed25f5cf42c5b9e28f8e0ffe09c138c
+
                             </div>
                         <form id="user_details_form" method="post" class="form-horizontal" enctype="multipart/form-data" data-toggle="validator">
                         {{success}}
@@ -232,6 +232,8 @@
 {% block form_scripts %}
 
 
+
+
 <script type="text/javascript">
 $(window).load(function() {
   var id = {{request.user.id}}
@@ -333,9 +335,7 @@ $(window).load(function() {
           });
                 
             $("#user_details_form").submit(function (e) {
-                    
-
-                    
+                                        
                   e.preventDefault();
                   
                   var data = new FormData($('form').get(0));

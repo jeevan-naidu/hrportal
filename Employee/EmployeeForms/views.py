@@ -263,10 +263,6 @@ def user_details(request):
 
     # instance = UserDetails.objects.get(employee=request.user)
 
-
-
-
-
     if request.method == 'POST':
         
         # LanguageProficiency(employee=request.user).save()
@@ -298,7 +294,7 @@ def user_details(request):
             tab_id = k.split('_')
             write[tab_id[1]] = v
 
-        context = {"form":""}
+        context = {"form":"", 'errors' : []}
         user = request.user
         
         for k,v in language.iteritems():
@@ -351,7 +347,6 @@ def user_details(request):
         except:
             user = request.user
         form = UserDetailsForm(request.POST, request.FILES)
-   
 
         if form.is_valid():
             try:
@@ -998,7 +993,7 @@ def proof(request):
         user = request.user
 
         form = ProofForm(request.POST, request.FILES)
-        employee = Proof.objects.get(employee=request.user)
+        
         if form.is_valid():
             try:
                 if Proof.objects.get(employee=request.user):
@@ -1382,7 +1377,13 @@ def confirm(request):
             try:
                 employee=UserDetails.objects.get(employee=request.user)
                 try:
-                    proof=Proof.objects.get(employee=request.user)   
+                    proof=Proof.objects.get(employee=request.user)
+                    try:
+                        education=Education.objects.get(employee=request.user)
+                    except Education.DoesNotExist:
+                        messages.error(request, 'Please fill all your education details before confirming')
+                    
+                        return render(request,'form_templates/confirm.html', context)
                 except Proof.DoesNotExist:
                     messages.error(request, 'Please fill all your proof details before confirming')
                     
@@ -1594,140 +1595,24 @@ def print_candidate_information(request):
 
     return render(request, 'print.html',context)
 
-def previous_delete(request):
-    
-    # import ipdb; ipdb.set_trace()
+
+def finish(request):
+    import ipdb; ipdb.set_trace()
     if request.method == 'GET':
 
-        
-        user = request.user
-        company_name = request.GET.get('company_name', '')
-        employee = PreviousEmployment.objects.filter(employee=request.user,company_name=company_name).delete()
-        context = {"form":""}
-        form = PreviousEmploymentForm(request.FILES)
-        context["form"] = form
-        
-        return render(request, "form_templates/previous_display.html", context)
-
-def education_delete(request):
-    #education form
-    # import ipdb; ipdb.set_trace()
-    if request.method == 'GET':
-
-        
-        user = request.user
-        qualification = request.GET.get('qualification', '')
-        specialization = request.GET.get('specialization', '')
-        employee = Education.objects.filter(employee=request.user,
-            qualification=qualification, specialization=specialization).delete()
-        context = {"form":""}
-        form = EducationForm(request.FILES)
-        context["form"] = form
-        
-          
-        return render(request, "form_templates/education_display.html", context)
-        #return HttpResponseRedirect('/user_details/education')
-
-def address_tempo(request):
-    # import ipdb; ipdb.set_trace()
-    if request.method=='GET':
-        context = {"form":""}
-        form = UserDetailsForm()
-       
-        user = request.user
-        try:
-            employee = UserDetails.objects.get(employee=request.user)
-
-            form = UserDetailsForm(initial = {'name_pan':employee.name_pan,
-            'nationality':employee.nationality,'date_of_birth':employee.date_of_birth,
-            'blood_group':employee.blood_group,'land_phone':employee.land_phone,
-            'mobile_phone':employee.mobile_phone,'gender':employee.gender})
-        
-            messages.warning(request,"please fill only temporary address here")
-            context["form"] = form
-            return render(request, "address_tempo.html", context)
-        except UserDetails.DoesNotExist:
-            context = {"form":""}
-            form = UserDetailsForm()
-            context["form"] = form
-            return HttpResponseRedirect('/user_details')
-
-    if request.method=='POST':
-        context = {"form":""}
-        
-        # form = UserDetailsForm(request.POST)  
-        user = request.user      
-        employee = UserDetails.objects.get(employee=request.user)
-
-        form = UserDetailsForm(initial = {'name_pan':employee.name_pan,
-        'nationality':employee.nationality,'date_of_birth':employee.date_of_birth,
-        'blood_group':employee.blood_group,'land_phone':employee.land_phone,
-        'mobile_phone':employee.mobile_phone,'gender':employee.gender})
-        context = {"form":""}
-        form = UserDetailsForm(request.POST)
-        
-        if form.is_valid():
-            address = Address.objects.get(employee=request.user, address_type='PR')
-            address_type = 'TM'
-            address1 = form.cleaned_data['address1']
-            address2 = form.cleaned_data['address2']
-            city = form.cleaned_data['city']
-            state = form.cleaned_data['state']
-            zipcode = form.cleaned_data['zipcode']
-            Address(employee=user, address_type=address_type,address1=address1,address2=address2,city=city,state=state,zipcode=zipcode).save()
-            context["form"] = form
-            return render(request, "address_tempo.html", context)
+        if UserDetails.objects.filter(employee=request.user) != '':
+            if Address.objects.filter(employee=request.user) != '':
+                if FamilyDetails.objects.filter(employee=request.user) != '':
+                    if Education.objects.filter(employee=request.user) != '':
+                        if Proof.objects.filter(employee=request.user) != '':
+                            return render(request, 'form_templates/finish.html', {})
+                        else:
+                            return render(request, 'form_templates/proof.html', {})
+                    else:
+                        return render(request, 'form_templates/education.html', {})
+                else:
+                    return render(request, 'form_templates/family_details.html', {})
+            else:
+                return render(request, 'form_templates/user_details.html', {})
         else:
-            
-            messages.error(request, 'Fill the permanent address before copying that to temporary address')
-            context["form"] = form
-            return render(request,'address_tempo.html', context)
-
-from django.views.decorators.csrf import csrf_exempt
-@csrf_exempt
-def address_copy(request):
-    # import ipdb; ipdb.set_trace()
-    if request.method=='POST':
-        context = {"form":""}
-        
-        # form = UserDetailsForm(request.POST)  
-        user = request.user
-        form = UserDetailsForm(request.POST)
-   
-        a = request.POST.get('address_type')
-        b = request.POST.get('address1')
-        C = request.POST.get('address2')
-        d = request.POST.get('city')
-        e = request.POST.get('state')
-        f = request.POST.get('zipcode')
-        address = Address.objects.filter(employee=request.user, address_type=a)
-        address_type = 'TM'
-        address1 = b
-        address2 = C
-        city = d
-        state = e
-        zipcode = f
-
-        Address(employee=user, address_type=address_type,address1=address1,address2=address2,city=city,state=state,zipcode=zipcode).save()
-        context["form"] = form
-        return render(request, "form_templates/user_profile.html", context,{'address_type':address_type,'address1':address1,'address2':address2,'city':city,'state':state,'zipcode':zipcode})
-
-    if request.method=='GET':
-        context = {"form":""}
-        form = UserDetailsForm()
-        messages.error(request, 'Fill the permanent address before copying that to temporary address')
-        context["form"] = form
-        return render(request,'form_templates/user_profile.html', context)
-
-def checkbox_check(request):
-
-    id = request.GET['id']
-
-    employee = Address.objects.filter(employee = id, address_type='TM')
-
-    if employee:
-        valid = True
-    else:
-        valid = False
-
-    return HttpResponse(valid)
+            return render(request, 'form_templates/user_details.html', {})
