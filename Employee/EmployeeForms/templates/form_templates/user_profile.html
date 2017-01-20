@@ -34,7 +34,7 @@
 
                             <div class="form-group">
                               <label class="col-sm-3 control-label">Name (as per PAN card)<span class="mandatory-field"> *</span></label>
-                              <div class="col-sm-7 controls">
+                              <div class="col-sm-3 controls">
                                 {{form.name_pan}}
                                 {{name_pan_errors}}
                                 <div class="help-block with-errors"></div>
@@ -43,7 +43,7 @@
 
                             <div class="form-group">
                               <label class="col-sm-3 control-label">Passport Size Photo<span class="mandatory-field"> *</span></label>
-                              <div class="col-sm-7 controls">
+                              <div class="col-sm-3 controls">
                                 {{form.photo}}
 
                                 <div class="help-block with-errors"></div>
@@ -63,7 +63,7 @@
 
                             <div class="form-group">
                               <label class="col-sm-3 control-label">Nationality<span class="mandatory-field"> *</span></label>
-                              <div class="col-sm-7 controls">
+                              <div class="col-sm-3 controls">
                                 {{form.nationality}}
                                 {{nationality_errors}}
                                 <div class="help-block with-errors"></div>
@@ -75,7 +75,7 @@
 
                             <div class="form-group">
                               <label class="col-sm-3 control-label">Date of Birth<span class="mandatory-field"> *</span></label>
-                              <div class="col-sm-7 controls">
+                              <div class="col-sm-3 controls">
                                 {{form.date_of_birth}}
                                 {{date_of_birth_errors}}
                                 <div class="help-block with-errors"></div>
@@ -93,7 +93,7 @@
 
                             <div class="form-group">
                               <label class="col-sm-3 control-label">Land Phone</label>
-                              <div class="col-sm-7 controls">
+                              <div class="col-sm-3 controls">
                                 {{form.land_phone}}
                                 {{land_phone_errors}}
                                 <div class="help-block with-errors"></div>
@@ -104,7 +104,7 @@
 
                             <div class="form-group">
                               <label class="col-sm-3 control-label">Mobile Phone<span class="mandatory-field"> *</span></label>
-                              <div class="col-sm-7 controls">
+                              <div class="col-sm-3 controls">
                                 {{form.mobile_phone}}
                                 {{mobile_phone_errors}}
                                 <div class="help-block with-errors"></div>
@@ -113,7 +113,7 @@
                             <div id="temp_add">
                             <div class="form-group">
                               <label class="col-sm-3 control-label">Address Type<span class="mandatory-field"> *</span></label>
-                              <div class="col-sm-7 controls">
+                              <div class="col-sm-3 controls">
                                 {{form.address_type}}
                                 {{address_type_errors}}
                                 <div class="help-block with-errors"></div>
@@ -124,7 +124,7 @@
 
                             <div class="form-group">
                               <label class="col-sm-3 control-label">Street<span class="mandatory-field"> *</span></label>
-                                  <div class="col-sm-7 controls">
+                                  <div class="col-sm-3 controls">
                                     {{form.address1}}
                                     {{address1_errors}}
                                 <div class="help-block with-errors"></div>
@@ -133,7 +133,7 @@
 
                             <div class="form-group">
                               <label class="col-sm-3 control-label">Lane</label>
-                              <div class="col-sm-7 controls">
+                              <div class="col-sm-3 controls">
                                 {{form.address2}}
                                 {{address2_errors}}
                                 <div class="help-block with-errors"></div>
@@ -142,7 +142,7 @@
 
                             <div class="form-group">
                               <label class="col-sm-3 control-label">City<span class="mandatory-field"> *</span></label>
-                              <div class="col-sm-7 controls">
+                              <div class="col-sm-3 controls">
                                 {{form.city}}
                                 {{city_errors}}
                                 <div class="help-block with-errors"></div>                                
@@ -151,7 +151,7 @@
 
                               <div class="form-group">
                               <label class="col-sm-3 control-label">State<span class="mandatory-field"> *</span></label>
-                              <div class="col-sm-7 controls">
+                              <div class="col-sm-3 controls">
                                 {{form.state}}
                                 {{state_errors}}
                                 <div class="help-block with-errors"></div>
@@ -160,7 +160,7 @@
 
                             <div class="form-group">
                               <label class="col-sm-3 control-label">Zip Code<span class="mandatory-field"> *</span></label>
-                              <div class="col-sm-7 controls">
+                              <div class="col-sm-3 controls">
                                 {{form.zipcode}}
                                 {{zipcode_errors}}
                                 <div class="help-block with-errors"></div>                                
@@ -210,7 +210,7 @@ Write : {{form.write}}
 
                           </div>
                           
-                          <input type="button" class="btn btn-danger" value="Add Language" id="add">
+                          <input type="button" class="btn btn-danger hidden" value="Add Language" id="add">
                           
 
                             <div class="form-group">

@@ -42,7 +42,7 @@ input[type="file"].bare{
 
 /* User Profile */
 
-#id_wedding_date_pickers, #id_date_of_birth_pickers{width: 50%}
+/*#id_wedding_date_pickers, #id_date_of_birth_pickers{width: 50%}*/
 
 
 /* Footer hardcoded fix */
@@ -93,3 +93,7 @@ input[type="file"].bare{
 #user-list .content-list .list-wrapper>li:last-child{
     border-bottom: 1px solid #EEE
 }
+
+/* Dangerous Styles */
+
+#wizard-2 .form-group{margin-bottom: 0px;}
