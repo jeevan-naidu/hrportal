@@ -56,7 +56,7 @@ class UserDetailsForm(forms.ModelForm):
 	photo.widget.attrs = {'class':'bare', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
 	nationality = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','required': 'True'}))
 	date_of_birth = forms.DateField(label="Date of Birth",widget=DateTimePicker(options=dateTimeOption),)
-	date_of_birth.widget.attrs = {'class': 'width-60 form-control filter_class', 'required':'true'}
+	date_of_birth.widget.attrs = {'class': 'form-control filter_class', 'required':'true'}
 	blood_group = forms.ChoiceField(choices=BLOOD_GROUP_CHOICES, widget=forms.Select(attrs={'class': 'width-50 input-sm form-control','required': 'False'}))
 	land_phone = forms.RegexField(max_length=10,required=False, regex=r'^\+?1?\d{9,15}$',
                                    widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','type': 'tel', 'pattern':'^\+?1?\d{9,15}$'}))
@@ -71,10 +71,10 @@ class UserDetailsForm(forms.ModelForm):
 	zipcode = forms.RegexField(max_length=6,required=False, regex=r'^\+?1?\d{5,6}$',
                                    widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','type': 'tel', 'pattern':'^\+?1?\d{5,6}$'}))
 
-	language = forms.CharField(label="language",required=False,max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control language'}))
-	speak = forms.BooleanField(required=False,initial=False,widget=forms.CheckboxInput(attrs={'class': 'width-50 input-sm form-control language'}))
-	read = forms.BooleanField(required=False,initial=False,widget=forms.CheckboxInput(attrs={'class': 'width-50 input-sm form-control language'}))
-	write = forms.BooleanField(required=False,initial=False,widget=forms.CheckboxInput(attrs={'class': 'width-50 input-sm form-control language'}))
+	language = forms.CharField(label="language",required=False,max_length=50, widget=forms.TextInput(attrs={'class': 'language input-sm form-control width-20'}))
+	speak = forms.BooleanField(required=False,initial=False,widget=forms.CheckboxInput(attrs={'class': 'language'}))
+	read = forms.BooleanField(required=False,initial=False,widget=forms.CheckboxInput(attrs={'class': 'language'}))
+	write = forms.BooleanField(required=False,initial=False,widget=forms.CheckboxInput(attrs={'class': 'language'}))
 
 
 	class Meta:
