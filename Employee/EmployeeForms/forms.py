@@ -50,19 +50,19 @@ class UserRegistrationForm(UserCreationForm):
 class UserDetailsForm(forms.ModelForm):
 
 	employee = forms.CharField(required=False)
-	name_pan = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control',
+	name_pan = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control',
 		'required': 'True', 'data-error': 'Please enter your first name'}))
 	photo = forms.FileField(required=False, help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"))
 	photo.widget.attrs = {'class':'bare', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
-	nationality = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control','required': 'True'}))
+	nationality = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','required': 'True'}))
 	date_of_birth = forms.DateField(label="Date of Birth",widget=DateTimePicker(options=dateTimeOption),)
-	date_of_birth.widget.attrs = {'class': 'form-control filter_class', 'required':'true'}
+	date_of_birth.widget.attrs = {'class': 'width-60 form-control filter_class', 'required':'true'}
 	blood_group = forms.ChoiceField(choices=BLOOD_GROUP_CHOICES, widget=forms.Select(attrs={'class': 'width-50 input-sm form-control','required': 'False'}))
 	land_phone = forms.RegexField(max_length=10,required=False, regex=r'^\+?1?\d{9,15}$',
                                    widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','type': 'tel', 'pattern':'^\+?1?\d{9,15}$'}))
 	mobile_phone = forms.RegexField(max_length=10,regex=r'^\+?1?\d{9,15}$',
                                    widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','type': 'tel', 'pattern':'^\+?1?\d{9,15}$'}))
-	gender = forms.ChoiceField(choices=GENDER_CHOICES, widget=forms.Select(attrs={'class': 'input-sm form-control','required': 'False'}))
+	gender = forms.ChoiceField(choices=GENDER_CHOICES, widget=forms.Select(attrs={'class': 'width-50 input-sm form-control','required': 'False'}))
 	address_type = forms.ChoiceField(choices=ADDRESSTYPE_CHOICES, widget=forms.Select(attrs={'class': 'width-30 input-sm form-control','required': 'True'}))
 	address1 = forms.CharField(max_length=200, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control','required': 'True'}))
 	address2 = forms.CharField(max_length=200, required=False, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control'}))
@@ -71,10 +71,10 @@ class UserDetailsForm(forms.ModelForm):
 	zipcode = forms.RegexField(max_length=6,required=False, regex=r'^\+?1?\d{5,6}$',
                                    widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','type': 'tel', 'pattern':'^\+?1?\d{5,6}$'}))
 
-	language_known = forms.CharField(required=False,max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control'}))
-	speak = forms.BooleanField(required=False,initial=False)
-	read = forms.BooleanField(required=False,initial=False)
-	write = forms.BooleanField(required=False,initial=False)
+	language = forms.CharField(label="language",required=False,max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control language'}))
+	speak = forms.BooleanField(required=False,initial=False,widget=forms.CheckboxInput(attrs={'class': 'width-50 input-sm form-control language'}))
+	read = forms.BooleanField(required=False,initial=False,widget=forms.CheckboxInput(attrs={'class': 'width-50 input-sm form-control language'}))
+	write = forms.BooleanField(required=False,initial=False,widget=forms.CheckboxInput(attrs={'class': 'width-50 input-sm form-control language'}))
 
 
 	class Meta:
@@ -98,23 +98,23 @@ class FamilyDetailsForm(forms.ModelForm):
 	employee = forms.CharField(required=False)
 	marital_status = forms.ChoiceField(choices=MARITAL_CHOICES,  required=False, widget=forms.Select(attrs={'class': 'width-50 input-sm form-control','required': 'False'}))
 	wedding_date = forms.DateField(label="Wedding Date", required=False, widget=DateTimePicker(options=dateTimeOption),)
-	wedding_date.widget.attrs = {'class': 'form-control filter_class'}
-	spouse_name = forms.CharField(required=False,max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control'}))
-	no_of_children = forms.CharField(required=False,max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control'}))
-	mother_name = forms.CharField(required=True,max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control'}))
+	wedding_date.widget.attrs = {'class': 'width-30 form-control filter_class'}
+	spouse_name = forms.CharField(required=False,max_length=50, widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control'}))
+	no_of_children = forms.CharField(required=False,max_length=50, widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control'}))
+	mother_name = forms.CharField(required=True,max_length=50, widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control'}))
 	mother_dob = forms.DateField(label="Mother Date of birth", required=False, widget=DateTimePicker(options=dateTimeOption),)
-	mother_dob.widget.attrs = {'class': 'form-control filter_class'}
-	mother_profession = forms.CharField(required=False,max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control'}))
-	father_name = forms.CharField(required=True,max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control'}))
+	mother_dob.widget.attrs = {'class': 'width-50 form-control filter_class'}
+	mother_profession = forms.CharField(required=False,max_length=50, widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control'}))
+	father_name = forms.CharField(required=True,max_length=50, widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control'}))
 	father_dob = forms.DateField(label="Father Date of birth", required=False, widget=DateTimePicker(options=dateTimeOption),)
-	father_dob.widget.attrs = {'class': 'form-control filter_class'}
-	father_profession = forms.CharField(required=False,max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control'}))
+	father_dob.widget.attrs = {'class': 'width-30 form-control filter_class'}
+	father_profession = forms.CharField(required=False,max_length=50, widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control'}))
 	emergency_phone1 = forms.RegexField(max_length=10,regex=r'^\+?1?\d{9,15}$',
                                    widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','type': 'tel', 'pattern':'^\+?1?\d{9,15}$'}))
 	emergency_phone2 = forms.RegexField(max_length=10,regex=r'^\+?1?\d{9,15}$',
                                    widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control','type': 'tel', 'pattern':'^\+?1?\d{9,15}$'}))
-	child1_name = forms.CharField(required=False,max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control'}))
-	child2_name = forms.CharField(required=False,max_length=50, widget=forms.TextInput(attrs={'class': 'width-50 input-sm form-control'}))
+	child1_name = forms.CharField(required=False,max_length=50, widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control'}))
+	child2_name = forms.CharField(required=False,max_length=50, widget=forms.TextInput(attrs={'class': 'width-30 input-sm form-control'}))
 
 	class Meta:
 		model = FamilyDetails

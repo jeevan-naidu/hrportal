@@ -149,8 +149,20 @@ def user_details(request):
         try:
             employee = UserDetails.objects.get(employee=request.user)
             try:
-                employee_lang = LanguageProficiency.objects.get(employee=request.user)
-                
+                employee_lang = LanguageProficiency.objects.filter(employee_id=request.user.id)
+                no_of_lang = employee_lang
+                lang_lists = []
+                lang = {'language_known':'','speak':'','read':'','write':''}
+                for emp in employee_lang:
+                    lang['language_known'] = emp.language_known
+                    lang['speak'] = emp.speak
+                    lang['language'] = emp.read
+                    lang['language'] = emp.write
+                                
+                    lang_lists.append(lang)
+                    lang = {'language_known':'','speak':'','read':'','write':''}
+
+                print lang_lists
                 try:
                     address_type = request.GET.get('address_type','')
                     address = Address.objects.get(employee=request.user, address_type=address_type)
@@ -158,11 +170,10 @@ def user_details(request):
                     'nationality':employee.nationality,'date_of_birth':employee.date_of_birth,'blood_group':employee.blood_group,
                     'land_phone':employee.land_phone,'mobile_phone':employee.mobile_phone,'gender':employee.gender,
                     'address_type':address.address_type,'address1':address.address1,'address2':address.address2,
-                    'city':address.city,'state':address.state,'zipcode':address.zipcode,'language_known':employee_lang.language_known,'speak':employee_lang.speak,
-                    'read':employee_lang.read,'write':employee_lang.write})
+                    'city':address.city,'state':address.state,'zipcode':address.zipcode})
 
                     context["form"] = form
-                    
+                    context["lang_lists"] = lang_lists
                     return render(request, "form_templates/user_profile.html", context)
                     try:
                         address_type = request.GET.get('address_type','')
@@ -173,9 +184,9 @@ def user_details(request):
                         'blood_group':employee.blood_group,'land_phone':employee.land_phone,
                         'mobile_phone':employee.mobile_phone,'gender':employee.gender,'address_type':address.address_type,
                         'address1':address.address1,'address2':address.address2,'city':address.city,'state':address.state,
-                        'zipcode':address.zipcode,'language_known':employee_lang.language_known,'speak':employee_lang.speak,
-                        'read':employee_lang.read,'write':employee_lang.write})
+                        'zipcode':address.zipcode})
                         context["form"] = form
+                        context["lang_lists"] = lang_lists
                         return render(request, "form_templates/user_profile.html", context)
 
                     except Address.DoesNotExist:
@@ -212,12 +223,11 @@ def user_details(request):
                         'nationality':employee.nationality,'date_of_birth':employee.date_of_birth,'blood_group':employee.blood_group,
                         'land_phone':employee.land_phone,'mobile_phone':employee.mobile_phone,'gender':employee.gender,
                         'address_type':address.address_type,'address1':address.address1,'address2':address.address2,
-                        'city':address.city,'state':address.state,'zipcode':address.zipcode,'language_known':employee_lang.language_known,'speak':employee_lang.speak,
-                            'read':employee_lang.read,'write':employee_lang.write})
+                        'city':address.city,'state':address.state,'zipcode':address.zipcode})
                         
 
                         context["form"] = form
-                     
+                        context["lang_lists"] = lang_lists
                         return render(request, "form_templates/user_profile.html", context)
 
                     except Address.DoesNotExist:
@@ -228,19 +238,17 @@ def user_details(request):
                         'nationality':employee.nationality,'date_of_birth':employee.date_of_birth,'blood_group':employee.blood_group,
                         'land_phone':employee.land_phone,'mobile_phone':employee.mobile_phone,'gender':employee.gender,
                         'address_type':address.address_type,'address1':address.address1,'address2':address.address2,
-                        'city':address.city,'state':address.state,'zipcode':address.zipcode,'language_known':employee_lang.language_known,'speak':employee_lang.speak,
-                            'read':employee_lang.read,'write':employee_lang.write})
+                        'city':address.city,'state':address.state,'zipcode':address.zipcode})
                         
-
                         context["form"] = form
-               
+                        context["lang_lists"] = lang_lists
                         return render(request, "form_templates/user_profile.html", context)
             except LanguageProficiency.DoesNotExist:
                 context = {"form":""}
                 form = UserDetailsForm(request.FILES)
                 
                 context["form"] = form
-                
+                context["lang_lists"] = lang_lists
                 return render(request, "form_templates/user_profile.html", context)
 
 
@@ -254,10 +262,85 @@ def user_details(request):
             return render(request, "form_templates/user_profile.html", context)
 
     # instance = UserDetails.objects.get(employee=request.user)
+
+
+
+
+
     if request.method == 'POST':
-        import ipdb; ipdb.set_trace()
+        
+        # LanguageProficiency(employee=request.user).save()
+       
+        # import ipdb; ipdb.set_trace()
+        language = {}
+        speak = {}
+        read ={}
+        write = {}
+
+        languages = {k: v for k, v in request.POST.items() if k.startswith('language_')}
+        speaks = {k: v for k, v in request.POST.items() if k.startswith('speak_')}
+        reads = {k: v for k, v in request.POST.items() if k.startswith('read_')}
+        writes = {k: v for k, v in request.POST.items() if k.startswith('write_')}
+
+        for k, v in languages.items():
+            tab_id = k.split('_')
+            language[tab_id[1]] = v
+
+        for k, v in speaks.items():
+            tab_id = k.split('_')
+            speak[tab_id[1]] = v
+
+        for k, v in reads.items():
+            tab_id = k.split('_')
+            read[tab_id[1]] = v
+       
+        for k, v in writes.items():
+            tab_id = k.split('_')
+            write[tab_id[1]] = v
+
         context = {"form":""}
         user = request.user
+        
+        for k,v in language.iteritems():
+            
+            if speak == {}:
+                speak[k] = 0
+            
+            if speak != u'2':
+                speak[k] = 0
+            elif speak != u'3':
+                speak[k] = 0
+            elif speak != u'4':
+                speak[k] = 0
+            elif speak != u'5':
+                speak[k] = 0
+
+            if write == {}:
+                write[k] = 0
+
+            if write != u'2':
+                write[k] = 0
+            elif write != u'3':
+                write[k] = 0
+            elif write != u'4':
+                write[k] = 0
+            elif write != u'5':
+                write[k] = 0
+                
+            if read == {}:
+                read[k] = 0
+
+            if read != u'2':
+                read[k] = 0
+            elif read != u'3':
+                read[k] = 0
+            elif read != u'4':
+                read[k] = 0
+            elif read != u'5':
+                read[k] = 0
+                
+               
+            LanguageProficiency(employee_id=request.user.id, language_known=language[k],speak=speak[k],read=read[k],write=write[k]).save()
 
         try:
             UserDetails.objects.get(employee=user.id)
@@ -300,10 +383,7 @@ def user_details(request):
                     city = form.cleaned_data['city']
                     state = form.cleaned_data['state']
                     zipcode = form.cleaned_data['zipcode']
-                    language_known = form.cleaned_data['language_known']
-                    speak = form.cleaned_data['speak']
-                    read = form.cleaned_data['read']
-                    write = form.cleaned_data['write']
+                    
 
                     userdata = UserDetails.objects.get(employee=user.id)
                     try:
@@ -323,7 +403,7 @@ def user_details(request):
                         userdata1.city=city
                         userdata1.state=state
                         userdata1.zipcode=zipcode
-                        # userdata2.language_known=language_known
+                        # userdata2.language=language
                         # userdata2.speak=speak
                         # userdata2.read=read
                         # userdata2.write=write
@@ -335,7 +415,7 @@ def user_details(request):
                         # userdata2.save()
                         
                         context['form'] = form
-                        return HttpResponseRedirect('/user_details/education')
+                        return HttpResponseRedirect('/user_details/family_details')
 
                     except Address.DoesNotExist:
                         userdata1 = Address.objects.get(employee=user.id, address_type='TM')
@@ -361,7 +441,7 @@ def user_details(request):
                         userdata1.save()
                         
                         context['form'] = form
-                        return HttpResponseRedirect('/user_details/education')
+                        return HttpResponseRedirect('/user_details/family_details')
 
             except UserDetails.DoesNotExist:
                 
@@ -385,25 +465,23 @@ def user_details(request):
                 city = form.cleaned_data['city']
                 state = form.cleaned_data['state']
                 zipcode = form.cleaned_data['zipcode']
-                # language_known = request.POST.get('language_known', '')
-                # speak = request.POST.get('speak', '')
-                # read = request.POST.get('read', '')
-                # write = request.POST.get('write', '')
-                language_known = form.cleaned_data['language_known']
-                speak = form.cleaned_data['speak']
+                language = form.cleaned_data['language']
                 read = form.cleaned_data['read']
                 write = form.cleaned_data['write']
-
+                speak = form.cleaned_data['speak']
+                
+                        
+                
                 UserDetails(employee = employee,name_pan=name_pan,photo=photo,nationality=nationality,
                 date_of_birth=date_of_birth,blood_group=blood_group,land_phone=land_phone,
                 mobile_phone=mobile_phone,gender=gender).save()
                 print employee
                 Address(employee=employee, address_type=address_type,address1=address1,address2=address2,
                     city=city,state=state,zipcode=zipcode).save()
-                LanguageProficiency(employee=employee, language_known=language_known,speak=speak,read=read,write=write).save()
+                LanguageProficiency(employee=employee, language_known=language,speak=speak,read=read,write=write).save()
 
                 context['form'] = form
-                return HttpResponseRedirect('/user_details/education')
+                return HttpResponseRedirect('/user_details/family_details')
 
         else:
             
@@ -429,7 +507,7 @@ def user_details(request):
             'address_type_errors':address_type_errors,'address1_errors':address1_errors,'address2_errors':address2_errors,
             'city_errors':city_errors,'state_errors':state_errors,'zipcode_errors':zipcode_errors})
 
-    return render(request, 'form_templates/education.html', context)
+    return render(request, 'form_templates/family_details.html', context)
 
 @login_required
 def family_details(request):
