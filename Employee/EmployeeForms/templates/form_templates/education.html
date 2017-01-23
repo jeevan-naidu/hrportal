@@ -3,6 +3,7 @@
 
 {% block form_content %}
 
+
   <form id="education_form" enctype="multipart/form-data" method="post" class="form-horizontal col-sm-7" enctype="multipart/form-data" data-toggle="validator">
 
   {% csrf_token %}
@@ -17,6 +18,8 @@
                                   {% endfor %}
 
                               {% endif %}
+
+
   <!-- <div class="form-group">
     <label class="col-sm-5 control-label">Employee</label>
     <div class="col-sm-7 controls">
@@ -99,7 +102,7 @@
     </div>
   </div>
   <div class="form-group">
-    <label class="col-sm-5 control-label">Overall Marks<span class="mandatory-field"> *</span></label>
+    <label class="col-sm-5 control-label">Overall percentage/CPGA<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
       {{form.overall_marks}}
       {{overall_marks_errors}}
@@ -113,7 +116,7 @@
     <label class="col-sm-5 control-label">Marks Card<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
       {{form.marks_card_attachment}}
-
+      
       <div class="help-block with-errors"></div>
     </div>
   </div>
@@ -256,6 +259,7 @@
 
             $("#education_form").submit(function (e) {
                   e.preventDefault();
+                 
                   var data = new FormData($('form').get(0));
                   swal({   title: "Do you want to add again?",
                     text: "",
@@ -276,9 +280,10 @@
                           cache: false,
                           processData: false,
                           contentType: false,
-                          success: function( response ) {
-                              
+                          success: function( data ) {
+                            
                              window.location='/user_details/education'
+                             
                           }
                         });
                       }else{

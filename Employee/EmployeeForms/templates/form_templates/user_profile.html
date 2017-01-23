@@ -3,19 +3,7 @@
 {% block form_content %}
 
 
-                              <div class="help-block with-errors"></div>                                
-                              </div>
-                            </div>
-                            </td>
-                            <td><input type="button" class="btn btn-danger" value="remove" id="remove"></td>
-                            </tr>
-                            </table>
 
-                            
-
-                            <input type="button" class="btn btn-danger" id="remove_lang" value="Remove">
-
-                            </div>
 
                         <form id="user_details_form" method="post" class="form-horizontal" enctype="multipart/form-data" data-toggle="validator">
                         {{success}}
@@ -225,8 +213,6 @@ Write : {{form.write}}
 {% block form_scripts %}
 
 
-
-
 <script type="text/javascript">
 $(window).load(function() {
   var id = {{request.user.id}}
@@ -328,7 +314,9 @@ $(window).load(function() {
           });
                 
             $("#user_details_form").submit(function (e) {
-                                        
+                    
+
+                    
                   e.preventDefault();
                   
                   var data = new FormData($('form').get(0));

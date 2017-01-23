@@ -27,6 +27,9 @@ class ConfirmationCodeAdmin(admin.ModelAdmin):
 class LanguageProfAdmin(admin.ModelAdmin):
 	list_display = [ 'language_known', 'employee']
 
+class FamilyDetailsAdmin(admin.ModelAdmin):
+	list_display = [ 'employee']
+
 class EduSpecAdmin(admin.ModelAdmin):
 	list_display = [ 'specialization']
 
@@ -46,3 +49,4 @@ admin.site.register(LanguageProficiency, LanguageProfAdmin)
 admin.site.register(EducationUniversity, EduUniAdmin)
 admin.site.register(EducationSpecialization, EduSpecAdmin)
 admin.site.register(EducationInstitute, EduInsAdmin)
+admin.site.register(FamilyDetails, FamilyDetailsAdmin)

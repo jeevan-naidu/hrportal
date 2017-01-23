@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'bootstrap3',  # Django Bootstrap3
     'bootstrap3_datetime',
     'axes',
+    'honeypot',
 ]
 
 MIDDLEWARE_CLASSES = [
