@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 import datetime
 import calendar
+import os
 from django.contrib.auth.forms import UserCreationForm
 from bootstrap3_datetime.widgets import DateTimePicker
 from django.utils.safestring import mark_safe
@@ -10,6 +11,7 @@ from django.forms.widgets import ClearableFileInput, CheckboxInput
 from django.utils.html import escape, conditional_escape
 from django.utils.encoding import force_unicode
 from django.utils.safestring import mark_safe
+from cgi import escape
 from models import Address, UserDetails, Education, PreviousEmployment, Proof, FamilyDetails, LanguageProficiency, EducationUniversity, EducationSpecialization, EducationInstitute, GENDER_CHOICES,BLOOD_GROUP_CHOICES,MARITAL_CHOICES,QUALIFICATION,ADDRESSTYPE_CHOICES, JOB_TYPE, EDUCATION_TYPE
 dateTimeOption = {"format": "MM/DD/YYYY", "pickTime": False}
 
@@ -17,6 +19,14 @@ dateTimeOption = {"format": "MM/DD/YYYY", "pickTime": False}
 SPECIALIZATION = (('','........'),) + tuple([(dep['specialization'], dep['specialization']) for dep in EducationSpecialization.objects.filter().values('specialization').distinct()])
 INSTITUTE = (('','........'),) + tuple([(dep['institute'], dep['institute']) for dep in EducationInstitute.objects.filter().values('institute').distinct()])
 BOARD_UNIVERSITY = (('','........'),) + tuple([(dep['board_university'], dep['board_university']) for dep in EducationUniversity.objects.filter().values('board_university').distinct()])
+
+class CustomClearableFileInput(ClearableFileInput):
+    template_with_initial = (
+        '<a href="%(initial_url)s">%(initial)s</a> '
+        '%(input)s'
+
+    )
+
 
 class UserRegistrationForm(UserCreationForm):
 	username = forms.CharField(required=True, widget=forms.TextInput())
@@ -52,7 +62,7 @@ class UserDetailsForm(forms.ModelForm):
 	employee = forms.CharField(required=False)
 	name_pan = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'input-sm form-control',
 		'required': 'True', 'data-error': 'Please enter your first name'}))
-	photo = forms.FileField(required=False, help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"))
+	photo = forms.FileField(required=False, widget = CustomClearableFileInput)
 	photo.widget.attrs = {'class':'bare', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
 	nationality = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'input-sm form-control','required': 'True'}))
 	date_of_birth = forms.DateField(label="Date of Birth",widget=DateTimePicker(options=dateTimeOption),)
@@ -134,7 +144,7 @@ class EducationForm(forms.ModelForm):
 	institute = forms.ChoiceField(required=False,choices=INSTITUTE,widget=forms.Select(attrs={'class':'form-control'}))
 	board_university = forms.ChoiceField(required=False,choices=BOARD_UNIVERSITY, widget=forms.Select(attrs={'class':'form-control'}))
 	overall_marks = forms.FloatField(required=True, widget=forms.NumberInput(attrs={'min': '0', 'max': '100','placeholder': 'Marks float','data-error': 'Please enter marks in float and it should be below 100', 'class':'form-control'}))
-	marks_card_attachment = forms.FileField(required=False, help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"))
+	marks_card_attachment = forms.FileField(required=False,widget = CustomClearableFileInput)
     # Add Bootstrap widgets
 	marks_card_attachment.widget.attrs = {'class':'bare', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
 
@@ -154,13 +164,13 @@ class PreviousEmploymentForm(forms.ModelForm):
 	employed_upto.widget.attrs = {'class': 'form-control filter_class', 'required':'true'}
 	last_ctc = forms.FloatField(required=False, widget=forms.NumberInput(attrs={'placeholder': 'CTC float','data-error': 'Please enter your CTC in float'}))
 	reason_for_exit = forms.CharField(max_length=200, widget=forms.TextInput(attrs={'class': 'input-sm form-control','required': 'False'}))
-	ps_attachment = forms.FileField(label='Pay slips Attachment', required=False, help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"))
+	ps_attachment = forms.FileField(label='Pay slips Attachment',widget = CustomClearableFileInput)
     # Add Bootstrap widgets
 	ps_attachment.widget.attrs = {'class':'bare', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
-	rl_attachment = forms.FileField(label='Relieveing Letter Attachment', required=False, help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"))
+	rl_attachment = forms.FileField(label='Relieveing Letter Attachment', required=False,widget = CustomClearableFileInput)
     # Add Bootstrap widgets
 	rl_attachment.widget.attrs = {'class':'bare', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
-	offer_letter_attachment = forms.FileField(label='Offer Letter Attachment', required=False, help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"))
+	offer_letter_attachment = forms.FileField(label='Offer Letter Attachment', required=False,widget = CustomClearableFileInput)
     # Add Bootstrap widgets
 	offer_letter_attachment.widget.attrs = {'class':'bare', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
 
@@ -173,26 +183,26 @@ class ProofForm(forms.ModelForm):
 
 	pan = forms.RegexField(max_length=10,required=False,regex=r'^[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}$',
                     widget=forms.TextInput(attrs={'class': 'input-sm form-control','type': 'tel', 'pattern':'^[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}$'}))
-	pan_attachment = forms.FileField(required=False, label='Pan Attachment', help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"))
+	pan_attachment = forms.FileField(required=False, label='Pan Attachment',widget = CustomClearableFileInput)
     # Add Bootstrap widgets
 	pan_attachment.widget.attrs = {'class':'bare', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
 	aadhar_card = forms.RegexField(max_length=12, required=False,regex=r'^[0-9]{12}$',
                     widget=forms.TextInput(attrs={'class': 'input-sm form-control','type': 'tel', 'pattern':'^[0-9]{12}$'}))
-	aadhar_attachment = forms.FileField(label='Aadhar Card Attachment', required=False, help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"))
+	aadhar_attachment = forms.FileField(label='Aadhar Card Attachment', required=False, widget = CustomClearableFileInput)
     # Add Bootstrap widgets
 	aadhar_attachment.widget.attrs = {'class':'bare', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
 	dl = forms.CharField(max_length=15, required=False, widget=forms.TextInput(attrs={'class': 'input-sm form-control'}))
-	dl_attachment = forms.FileField(label='DL Attachment', required=False, help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"))
+	dl_attachment = forms.FileField(label='DL Attachment', required=False, widget = CustomClearableFileInput)
     # Add Bootstrap widgets
 	dl_attachment.widget.attrs = {'class':'bare', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
 	passport = forms.RegexField(max_length=8, regex=r'^[A-Za-z]{1}[0-9]{7}$',required=False, 
                     widget=forms.TextInput(attrs={'class': 'input-sm form-control','type': 'tel', 'pattern':'^[A-Za-z]{1}[0-9]{7}$'}))
-	passport_attachment = forms.FileField(label='Passport Attachment', required=False, help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"))
+	passport_attachment = forms.FileField(label='Passport Attachment', required=False, widget = CustomClearableFileInput)
     # Add Bootstrap widgets
 	passport_attachment.widget.attrs = {'class':'bare', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
 	voter_id = forms.RegexField( max_length=10, regex=r'^[A-Za-z]{3}[0-9]{7}$',required=False, 
                     widget=forms.TextInput(attrs={'class': 'input-sm form-control','type': 'tel', 'pattern':'^[A-Za-z]{3}[0-9]{7}$'}))
-	voter_attachment = forms.FileField(label='Voter ID Attachment', required=False, help_text=mark_safe("Allowed file types: jpg, csv, png, pdf, xls, xlsx, doc, docx, jpeg.<br>Maximum allowed file size: 1MB"))
+	voter_attachment = forms.FileField(label='Voter ID Attachment', required=False, widget = CustomClearableFileInput)
     # Add Bootstrap widgets
 	voter_attachment.widget.attrs = {'class':'bare', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
 

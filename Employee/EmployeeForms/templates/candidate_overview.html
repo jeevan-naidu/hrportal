@@ -31,8 +31,8 @@
                   </div>
                   <div class="panel-body">
 
-
-
+                      
+                          
 
 
 
@@ -50,11 +50,17 @@
                           <th>Action</th>
                         </tr>
                       </thead>
-                      <tbody>
+                     <!--  {% for val in employee %}
+                            <li id="{{val.username}}"> 
+                            <input type="hidden" value="{{val.username}}" class="candidate">
+                              <div class="menu-text">{{val.username}}</div>
+                              </li>
+                              
+                           {% endfor %}
+  -->                     <tbody>
                         <tr class="odd gradeX">
-                          <td>234</td>
-                          <td>Tony Stark</td>
-                          <td>Lorem Ipsum</td>
+                          <td>{{val.username}}</td>
+                          <td>{{name_pan}}</td>
                           <td class="menu-action">
                           <a data-original-title="view" data-toggle="tooltip" data-placement="top" class="btn menu-icon vd_bd-green vd_green" onclick="window.open('/print_candidate_information')"> 
                           <i class="fa fa-eye"></i> 

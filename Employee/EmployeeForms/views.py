@@ -23,7 +23,7 @@ from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from models import Address, UserDetails, Education, PreviousEmployment, Proof, ConfirmationCode, FamilyDetails, LanguageProficiency,EducationUniversity, EducationSpecialization, EducationInstitute
 from forms import UserDetailsForm, EducationForm, PreviousEmploymentForm, ProofForm, UserRegistrationForm, FamilyDetailsForm
 
-AllowedFileTypes = ['jpg', 'csv','png', 'pdf', 'xlsx', 'xls', 'docx', 'doc', 'jpeg', 'eml']
+AllowedFileTypes = ['jpg', 'csv','png', 'pdf', 'xlsx', 'xls', 'docx', 'doc', 'jpeg', 'eml', 'zip']
 # Create your views here.
 def EmployeeWelcome(request):
     return render(request, 'welcome.html',{})
@@ -267,7 +267,7 @@ def user_details(request):
         
         # LanguageProficiency(employee=request.user).save()
        
-        import ipdb; ipdb.set_trace()
+        # import ipdb; ipdb.set_trace()
         language = {}
         speak = {}
         read ={}
@@ -835,7 +835,7 @@ def education(request):
         #print request.POST
         
         form = EducationForm(request.POST, request.FILES)
-        context = {"form":"", 'errors':[]}
+        context = {"form":"", "errors":[]}
         marks_card_attachment = request.FILES.get('marks_card_attachment',"")
         if request.FILES.get('marks_card_attachment', ""):
             if request.FILES['marks_card_attachment'].name.split(".")[-1] not in AllowedFileTypes:
@@ -915,6 +915,8 @@ def education(request):
         else:
             print form.is_valid()
             # import ipdb; ipdb.set_trace()
+            error = context['errors']
+            errors = error[0]
             education_type_errors = form['education_type'].errors
             qualification_errors = form['qualification'].errors
             specialization_errors = form['specialization'].errors
@@ -923,11 +925,13 @@ def education(request):
             institute_errors = form['institute'].errors
             board_university_errors = form['board_university'].errors
             overall_marks_errors = form['overall_marks'].errors
-            
-            return render(request, 'form_templates/education.html', {'errors':errors, 'form':form, 'education_type_errors':education_type_errors,
+            messages.error(request, 'Attachment : File type not allowed. Please select a valid file type and then submit again')
+            context = {'errors':error[0], 'form':form, 'education_type_errors':education_type_errors,
             'qualification_errors':qualification_errors,'specialization_errors':specialization_errors,'overall_marks_errors':overall_marks_errors,
             'from_date_errors':from_date_errors,'to_date_errors':to_date_errors,'institute_errors':institute_errors,
-            'board_university_errors':board_university_errors})
+            'board_university_errors':board_university_errors}
+
+            return render(request, 'form_templates/education.html', context)
 
     user = request.user
     employee = User.objects.get(username=request.user)
@@ -1182,7 +1186,7 @@ def proof(request):
             pp_att_error = form['passport_attachment'].errors
             voter_error = form['voter_id'].errors
             voter_att_error =  form['voter_attachment'].errors
-            
+           
             return render(request, 'form_templates/proof.html', {'errors':errors,'form':form, 'pan_error':pan_error,'pan_att_error':pan_att_error,'aadhar_error':aadhar_error,'addhar_att_error':
             addhar_att_error,'dl_error':dl_att_error,'passport_error':passport_error,'pp_att_error':pp_att_error,'voter_error':voter_error,
             'voter_att_error':voter_att_error })
@@ -1235,7 +1239,7 @@ def previous_employment(request):
         # import ipdb; ipdb.set_trace()
 
         form = PreviousEmploymentForm(request.POST, request.FILES)
-        context = {"form":""}
+        context = {"form":"", 'errors':[]}
         ps_attachment = request.FILES.get('ps_attachment',"")
         rl_attachment = request.FILES.get('rl_attachment',"")
         offer_letter_attachment = request.FILES.get('offer_letter_attachment',"")
@@ -1250,6 +1254,7 @@ def previous_employment(request):
         if request.FILES.get('offer_letter_attachment', ""):
             if request.FILES['offer_letter_attachment'].name.split(".")[-1] not in AllowedFileTypes:
                 context['errors'].append('Attachment : File type not allowed. Please select a valid file type and then submit again')
+        
         if form.is_valid() and not context['errors']:
             try:
                 # PreviousEmployment.objects.get(employee=request.user)
@@ -1414,7 +1419,7 @@ def confirm(request):
                 try:
                     proof=Proof.objects.get(employee=request.user)
                     try:
-                        education=Education.objects.get(employee=request.user)
+                        education=Education.objects.filter(employee=request.user)
                     except Education.DoesNotExist:
                         messages.error(request, 'Please fill all your education details before confirming')
                     
@@ -1455,7 +1460,19 @@ def download_form(request):
     return render(request, 'download_forms.html',{})
 
 def candidate_overview(request):
-    return render(request, 'candidate_overview.html',{})
+    # import ipdb; ipdb.set_trace()
+    if request.method == 'GET':
+        employee = User.objects.all()
+        no_of_candidate = len(employee)
+        lists = []
+        username = {'username':''}
+        for emp in employee:
+            username['username'] = emp.username
+            
+            lists.append(username)
+            username = {'username':''}
+                 
+    return render(request, 'candidate_overview.html',{'employee':employee})
 
 def print_candidate_information(request):
 
@@ -1630,9 +1647,8 @@ def print_candidate_information(request):
 
     return render(request, 'print.html',context)
 
-
 def finish(request):
-    import ipdb; ipdb.set_trace()
+    # import ipdb; ipdb.set_trace()
     if request.method == 'GET':
 
         if UserDetails.objects.filter(employee=request.user) != '':

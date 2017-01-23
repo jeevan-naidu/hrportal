@@ -78,14 +78,19 @@
     <label class="col-sm-5 control-label">Overall Marks<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
       {{form.overall_marks}}
-
       {{form.overall_marks.errors}}
-
-      {{form.marks_card_attachment}}
       <div class="help-block with-errors"></div>
     </div>
   </div>
 
+<div class="form-group">
+    <label class="col-sm-5 control-label">Marks Card<span class="mandatory-field"> *</span></label>
+    <div class="col-sm-7 controls">
+      {{form.marks_card_attachment}}
+      
+      <div class="help-block with-errors"></div>
+    </div>
+  </div>
   
   <div class="form-group">
 
@@ -94,5 +99,4 @@
         </h3>
 
   </div>
-            
-
+    
