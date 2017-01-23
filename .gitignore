@@ -17,3 +17,5 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
+Employee/media/
+Employee/EmployeeForms/migrations/
