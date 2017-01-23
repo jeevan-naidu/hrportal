@@ -267,7 +267,7 @@ def user_details(request):
         
         # LanguageProficiency(employee=request.user).save()
        
-        # import ipdb; ipdb.set_trace()
+        import ipdb; ipdb.set_trace()
         language = {}
         speak = {}
         read ={}
@@ -999,7 +999,7 @@ def proof(request):
 
     if request.method == 'POST':
         # import ipdb; ipdb.set_trace()
-        context = {"form":""}
+        context = {"form":"", "errors":""}
         user = request.user
 
         form = ProofForm(request.POST, request.FILES)
@@ -1023,7 +1023,7 @@ def proof(request):
             if request.FILES['voter_attachment'].name.split(".")[-1] not in AllowedFileTypes:
                 context['errors'].append('Attachment : File type not allowed. Please select a valid file type and then submit again')
         
-        if form.is_valid() and not context['errors']:
+        if form.is_valid():
             try:
                 if Proof.objects.get(employee=request.user):
                     user = request.user
@@ -1187,7 +1187,7 @@ def proof(request):
             voter_error = form['voter_id'].errors
             voter_att_error =  form['voter_attachment'].errors
            
-            return render(request, 'form_templates/proof.html', {'errors':errors,'form':form, 'pan_error':pan_error,'pan_att_error':pan_att_error,'aadhar_error':aadhar_error,'addhar_att_error':
+            return render(request, 'form_templates/proof.html', {'form':form, 'pan_error':pan_error,'pan_att_error':pan_att_error,'aadhar_error':aadhar_error,'addhar_att_error':
             addhar_att_error,'dl_error':dl_att_error,'passport_error':passport_error,'pp_att_error':pp_att_error,'voter_error':voter_error,
             'voter_att_error':voter_att_error })
 
@@ -1429,7 +1429,7 @@ def confirm(request):
                     
                     return render(request,'form_templates/confirm.html', context)
             except UserDetails.DoesNotExist:
-                messages.error(request, 'Please fill all your User details before confirming')
+                messages.error(request, 'Please fill all your User profile before confirming')
                 context["form"] = form
                 return render(request,'form_templates/confirm.html', context)
 

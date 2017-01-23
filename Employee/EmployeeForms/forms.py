@@ -200,7 +200,7 @@ class ProofForm(forms.ModelForm):
 	passport_attachment = forms.FileField(label='Passport Attachment', required=False, widget = CustomClearableFileInput)
     # Add Bootstrap widgets
 	passport_attachment.widget.attrs = {'class':'bare', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
-	voter_id = forms.RegexField( max_length=10, regex=r'^[A-Za-z]{3}[0-9]{7}$',required=False, 
+	voter_id = forms.RegexField( max_length=10, regex=r'^[A-Za-z]{3}[0-9]{7}$',required=False,
                     widget=forms.TextInput(attrs={'class': 'input-sm form-control','type': 'tel', 'pattern':'^[A-Za-z]{3}[0-9]{7}$'}))
 	voter_attachment = forms.FileField(label='Voter ID Attachment', required=False, widget = CustomClearableFileInput)
     # Add Bootstrap widgets

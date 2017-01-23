@@ -180,7 +180,6 @@ class PreviousEmployment(models.Model):
         str(self.employed_from) + ' ~ ' + str(self.employed_upto)
 
 
-
 class Education(models.Model):
     employee = models.ForeignKey(User, blank=True, null=True)
     education_type = models.CharField('Education Type', choices= EDUCATION_TYPE, max_length=5, default='FT')
@@ -229,7 +228,7 @@ class Proof(models.Model):
     dl_attachment = models.FileField(upload_to=content_file_name,blank=True, null=True, verbose_name="DL Attachment")
     passport = models.CharField("Passport", max_length=10,blank=True,null=True)
     passport_attachment = models.FileField(upload_to=content_file_name,blank=True, null=True, verbose_name="Passport Attachment")
-    voter_id = models.CharField("Voter ID", max_length=10,blank=True, null=True)
+    voter_id = models.CharField("Voter ID", max_length=10, blank=True, null=True)
     voter_attachment = models.FileField(upload_to=content_file_name,blank=True, null=True, verbose_name="Voter ID Attachment")
     def __unicode__(self):
         return u'{0}'.format(
