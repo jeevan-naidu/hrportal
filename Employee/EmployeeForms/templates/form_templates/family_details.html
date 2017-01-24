@@ -1,5 +1,8 @@
 {% extends 'form_master.html' %}
+{% block siteTitle %}Family Details{% endblock %}
 {% block form_content %}
+{% load honeypot %}
+
 
                         <form id="family_details_form" method="post" class="form-horizontal" enctype="multipart/form-data" data-toggle="validator">
 
@@ -146,7 +149,7 @@
 
                               </div>
                             </div>
-
+                            {% render_honeypot_field "child3" %}
                             <div class="form-group">
                                 <h3 class="col-sm-12 text-right"><input type="submit" id="submit" class="btn vd_bg-green vd_white width-10" value="Save"/></h3>
                             </div>

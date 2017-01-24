@@ -86,7 +86,6 @@ class UserDetailsForm(forms.ModelForm):
 	read = forms.BooleanField(required=False,initial=False,widget=forms.CheckboxInput(attrs={'class': 'language'}))
 	write = forms.BooleanField(required=False,initial=False,widget=forms.CheckboxInput(attrs={'class': 'language'}))
 
-
 	class Meta:
 		model = UserDetails
 

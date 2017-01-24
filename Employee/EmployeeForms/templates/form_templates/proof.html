@@ -3,7 +3,7 @@
 {% block pageSubTitle %}Enter your valid proof details{% endblock %}
 
 {% block form_content %}
-                  
+      {% load honeypot %}            
                 <form id="proof_form" method="post" class="form-horizontal" enctype="multipart/form-data" data-toggle="validator">
                 <!-- * Any of the 2 proofs with attachments is mandatory -->
                 {% csrf_token %}
@@ -67,7 +67,7 @@
                     <div class="help-block with-errors"></div>
                   </div>
                 </div>
-                
+                {% render_honeypot_field "id_card" %}
                 <div class="form-group">
 
                       <h3 class="col-sm-12 text-right"><input type="submit" id="submit" class="btn vd_bg-green vd_white" value="Save"/></h3>
