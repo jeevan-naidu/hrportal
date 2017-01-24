@@ -175,12 +175,7 @@
 <div id="lang_add" class ="hidden">
                            <div id="table_add0">
                            
-                           
-                           
-                           
-                           
-                           
-                           
+                         
 
 Language : {{form.language}}
 
@@ -198,16 +193,16 @@ Write : {{form.write}}
 </div><!-- ./lang_add -->
 
 
-                          </div>
+  </div>
                           
-                          <input type="button" class="btn btn-danger hidden" value="Add Language" id="add">
+  <input type="button" class="btn btn-danger hidden" value="Add Language" id="add">
                             
-                            {% render_honeypot_field "website" %}
+    {% render_honeypot_field "website" %}
 
-                            <div class="form-group">
-                                <h3 class="col-sm-12 text-right"><input type="submit" id="submit" class="btn vd_bg-green vd_white width-10" value="Save"/></h3>
-                            </div>
-                        </form>
+     <div class="form-group">
+         <h3 class="col-sm-12 text-right"><input type="submit" id="submit" class="btn vd_bg-green vd_white width-10" value="Save"/></h3>
+    </div>
+ </form>
 
 
 {% endblock %}                        

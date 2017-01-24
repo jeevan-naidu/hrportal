@@ -19,7 +19,7 @@ from django.core.mail import send_mail
 from django.views.decorators.csrf import csrf_protect
 from django.template import RequestContext
 from django.contrib.auth.models import User
-from honeypot.decorators import check_honeypot
+from honeypot.decorators import check_honeypot, verify_honeypot_value
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from models import Address, UserDetails, Education, PreviousEmployment, Proof, ConfirmationCode, FamilyDetails, LanguageProficiency,EducationUniversity, EducationSpecialization, EducationInstitute
 from forms import UserDetailsForm, EducationForm, PreviousEmploymentForm, ProofForm, UserRegistrationForm, FamilyDetailsForm
