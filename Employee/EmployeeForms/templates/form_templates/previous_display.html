@@ -1,3 +1,4 @@
+{% load honeypot %}
                 {% csrf_token %}
                 <div class="form-group">
                   <label class="col-sm-5 control-label">Company Name</label>
@@ -91,7 +92,7 @@
                 {{form.offer_letter_attachment}}
                 <div class="help-block with-errors"></div>
               </div>
-
+              {% render_honeypot_field "designation" %}
                 <div class="form-group">
 
                     <h3 class="col-sm-12 text-right"><input type="submit" id="submit" class="btn vd_bg-green vd_white" value="Update"/></h3>
