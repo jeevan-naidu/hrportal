@@ -267,7 +267,7 @@ def user_details(request):
         
         # LanguageProficiency(employee=request.user).save()
        
-        import ipdb; ipdb.set_trace()
+        # import ipdb; ipdb.set_trace()
         language = {}
         speak = {}
         read ={}
