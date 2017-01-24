@@ -63,7 +63,7 @@ class UserDetailsForm(forms.ModelForm):
 	name_pan = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'input-sm form-control',
 		'required': 'True', 'data-error': 'Please enter your first name'}))
 	photo = forms.FileField(required=False, widget = CustomClearableFileInput)
-	photo.widget.attrs = {'class':'bare', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
+	photo.widget.attrs = {'class':'bare filestyle', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
 	nationality = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'input-sm form-control','required': 'True'}))
 	date_of_birth = forms.DateField(label="Date of Birth",widget=DateTimePicker(options=dateTimeOption),)
 	date_of_birth.widget.attrs = {'class': 'form-control filter_class', 'required':'true'}
