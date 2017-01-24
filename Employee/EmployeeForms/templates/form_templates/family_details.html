@@ -188,7 +188,8 @@ $("#family_details_form").submit(function (e) {
 
 
 
-$('select#id_marital_status').change(function(){
+
+$('select#id_marital_status').on('change' ,function(){
   if($(this).val() == 'MA'){
     $('.wedding_date_form_group').removeClass('hidden');
     $('#id_wedding_date').attr('required', true);
@@ -215,6 +216,35 @@ $('select#id_marital_status').change(function(){
     $('#id_child2_name').removeAttr('required');
       
   }
+})
+
+$(window).load(function(){
+  if($('select#id_marital_status').val() == 'MA'){
+    $('.wedding_date_form_group').removeClass('hidden');
+    $('#id_wedding_date').attr('required', true);
+    $('.spouse_name_form_group').removeClass('hidden');
+    $('#id_spouse_name').attr('required', true);
+    $('.child1_name_form_group').removeClass('hidden');
+    $('#id_child1_name').attr('required', true);
+    $('.child2_name_form_group').removeClass('hidden');
+    $('#id_child2_name').attr('required', true);
+    
+    $('.no_of_children_form_group').removeClass('hidden');
+    $('#id_child2_name').attr('required', true);
+  }else if($('select#id_marital_status').val() !== 'MA'){
+    $('.wedding_date_form_group').addClass('hidden');
+    $('#id_wedding_date').removeAttr('required');
+    $('.spouse_name_form_group').addClass('hidden');
+    $('#id_spouse_name').removeAttr('required');
+    $('.child1_name_form_group').addClass('hidden');
+    $('#id_child1_name').removeAttr('required');
+    $('.child2_name_form_group').addClass('hidden');
+    $('#id_child2_name').removeAttr('required');
+    
+    $('.no_of_children_form_group').addClass('hidden');
+    $('#id_child2_name').removeAttr('required');
+      
+  }  
 })
 
 

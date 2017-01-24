@@ -30,7 +30,7 @@ MARITAL_CHOICES = (
     ('SG', 'Single'),
     ('SE', 'Seperated'),
     ('DV', 'Divorced'),
-    ('WD', 'Windowed'),
+    ('WD', 'Widowed'),
     )
 
 JOB_TYPE = (
