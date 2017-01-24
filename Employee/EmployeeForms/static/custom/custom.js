@@ -28,6 +28,22 @@ jQuery(document).ready(function($){
 	}
 
 
+	// File Upload Validations (File size and extension)
+				var fileExtension = ['jpg', 'csv','png', 'pdf', 'xlsx', 'xls', 'docx', 'doc', 'jpeg', 'eml'];
+				$('.filestyle').bind('change', function() {
+				if (this.files[0].size > 1000000) {
+					alert("File size greater than 1MB not allowed");
+					$('.filestyle').val('')
+				}
+				else
+				{
+					if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+                    alert("Allowed file types : "+fileExtension.join(', '));
+										$('.filestyle').val('')
+                }
+				}
+				});
+
 	// Function Calls
 
 
