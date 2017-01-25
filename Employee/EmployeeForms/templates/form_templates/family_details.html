@@ -163,7 +163,7 @@
 $("#family_details_form").submit(function (e) {
   // debugger;
               e.preventDefault();
-              if (document.getElementsByName("child3") == '' ){
+              // if (document.getElementsByName("child3") == '' ){
                  
                   swal({   title: "Thank you for filling your family details",
                     text: "Keep your education documents and fill the next form",
@@ -187,10 +187,10 @@ $("#family_details_form").submit(function (e) {
                       }else{
                           swal("There was some problem with your data")
                         }});
-                  }
-                else{
-                  window.location='/user_details/sorry'
-                }
+                //   }
+                // else{
+                //   window.location='/user_details/sorry'
+                // }
 
                     });
 

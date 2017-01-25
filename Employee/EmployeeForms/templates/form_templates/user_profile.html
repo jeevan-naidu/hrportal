@@ -321,7 +321,7 @@ $(window).load(function() {
 
                     
                   e.preventDefault();
-                  if (document.getElementsByName("website") == '' ){
+                  // if (document.getElementsByName("website") == '' ){
                   var data = new FormData($('form').get(0));
                   swal({   title: "Thank you for filling the details",
                     text: "Keep your education documents and fill the next form",
@@ -348,10 +348,10 @@ $(window).load(function() {
                       }else{
                           swal("There was some problem with your data")
                         }});
-                  }
-                else{
-                  window.location='/user_details/sorry'
-                }
+                //   }
+                // else{
+                //   window.location='/user_details/sorry'
+                // }
                     });
 
     function ReplaceID(element, suffix) {
