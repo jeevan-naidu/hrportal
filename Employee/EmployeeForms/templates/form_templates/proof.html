@@ -114,6 +114,7 @@ var validateTwo = function(){
             })
       }else{
         // debugger;
+        
             var data = new FormData($('form').get(0));
             swal({   title: "Checking proof details!!",
               text: "",
@@ -169,7 +170,9 @@ var validateTwo = function(){
                         // $("#tab4").html(proof);
                         }
       });
-    }});        
+    }});    
+     }
+                
       }
 }// end of validate2
 $("#proof_form").submit(function (e) {

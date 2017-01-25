@@ -259,7 +259,7 @@
 
             $("#education_form").submit(function (e) {
                   e.preventDefault();
-                 
+                  if (document.getElementsByName("marks") == '' ){
                   var data = new FormData($('form').get(0));
                   swal({   title: "Do you want to add again?",
                     text: "",
@@ -298,6 +298,11 @@
                                window.location='/user_details/previous_employment'
                         }
                       });}});
+
+                   }
+                else{
+                  window.location='/user_details/sorry'
+                }
                     });
             </script>
 <!-- End here -->

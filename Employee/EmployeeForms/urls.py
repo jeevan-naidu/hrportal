@@ -31,4 +31,6 @@ urlpatterns = [
                        url(r'^print_candidate_information$', views.print_candidate_information),
                        url(r'^checkbox_check$', views.checkbox_check),
                        url(r'^user_details/finish$', views.finish),
+                       url(r'^user_details/sorry$', views.sorry),
+                       
                        ]

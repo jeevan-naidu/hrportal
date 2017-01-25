@@ -650,7 +650,6 @@ def family_details(request):
 
     return render(request, 'form_templates/education.html', context)
 
-
 def previous_delete(request):
     
     # import ipdb; ipdb.set_trace()
@@ -1673,3 +1672,7 @@ def finish(request):
                 return render(request, 'form_templates/user_details.html', {})
         else:
             return render(request, 'form_templates/user_details.html', {})
+
+def sorry(request):
+
+    return render(request, 'honeypot/honeypot_error.html',)

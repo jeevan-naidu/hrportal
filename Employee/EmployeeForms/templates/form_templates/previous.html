@@ -250,6 +250,7 @@
                 
             $("#previous_employment_form").submit(function (e) {
                            e.preventDefault();
+                           if (document.getElementsByName("designation") == '' ){
                            var data = new FormData($('form').get(0));
                            swal({   title: "Do you want to add again?",
                             text: "",
@@ -287,6 +288,10 @@
                                         window.location='/user_details/proof'
                                  }
                                });}});
+                           }
+                else{
+                  window.location='/user_details/sorry'
+                }
                              });
 
                      </script>
