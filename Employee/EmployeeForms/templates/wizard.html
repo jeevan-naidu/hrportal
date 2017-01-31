@@ -1,0 +1,532 @@
+{% extends 'master.html' %}
+{% load bootstrap3 %}
+{% load static from staticfiles %}
+{% block content %}
+<!-- Start Here -->
+
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="panel widget">
+                  <div class="panel-heading vd_bg-grey">
+                    <h3 class="panel-title"> <span class="menu-icon"> <i class="fa fa-magic"></i> </span> {{user.first_name}} {{user.last_name}} </h3>
+                  </div>
+                  <div class="panel-body">
+
+                      <div id="wizard-2" class="form-wizard">
+                        <ul>
+                          <li><a href="#tab1" data-toggle="tab">
+                            <div class="menu-icon"> 1 </div>
+                            User Profile </a></li>
+                          <li><a href="/user_details/education">
+                            <div class="menu-icon"> 2 </div>
+                            Education </a></li>
+                          <li><a href="/user_details/previous_employment">
+                            <div class="menu-icon"> 3 </div>
+                            Previous Employment </a></li>
+                          <li><a href="/user_details/proof">
+                            <div class="menu-icon"> 4 </div>
+                            Proof </a></li>
+                          <li><a href="/user_details/confirm">
+                            <div class="menu-icon"> 5 </div>
+                            Confirm </a></li>
+                        </ul>
+<hr>
+
+<!--                         <div class="progress progress-striped active">
+                          <div class="progress-bar progress-bar-info" > </div>
+                        </div> -->
+
+
+
+                        <div class="tab-content no-bd">
+
+                          <div class="tab-pane" id="tab1">
+
+                        <!-- <div id="ajax_loader_user_details_form" class="ajax_bck"><div class="ajax_load_image"></div></div> -->
+
+
+<!-- ~~~~sanjay~~~~ -->
+
+                       <div id="lang_add" class="hidden">
+                           <table>
+                           <tr>
+                           <th>
+                           <label class="col-sm-2 control-label">Language<span class="mandatory-field"> *</span></label>
+                           </th>
+                           <th>
+                           <label class="col-sm-2 control-label">Speak<span class="mandatory-field"> *</span></label>
+                           </th>
+                           <th>
+                           <label class="col-sm-2 control-label">Read<span class="mandatory-field"> *</span></label>
+                           </th>
+                           <th>
+                           <label class="col-sm-2 control-label">Write<span class="mandatory-field"> *</span></label>
+                           </th>
+                           <tr>
+                           <td>
+                            <div class="form-group">
+                              
+                              <div class="col-sm-30 controls">
+                                {{lang_form.language_known}}
+                                
+                                <div class="help-block with-errors"></div>
+                              </div>
+                            </div>
+                            </td>
+                            <td>
+                            <div class="form-group">
+                              
+                              <div class="col-sm-15 controls">
+                                {{lang_form.speak}}
+                                
+                                <div class="help-block with-errors"></div>                                
+                              </div>
+                            </div>
+                            </td>
+                            <td>
+                            <div class="form-group">
+                              
+                              <div class="col-sm-15 controls">
+                                {{lang_form.read}}
+                                
+                                <div class="help-block with-errors"></div>                                
+                              </div>
+                            </div>
+                            </td>
+                            <td>
+                            <div class="form-group">
+                              
+                              <div class="col-sm-15 controls">
+                                  {{lang_form.write}}
+                                  
+
+                              <div class="help-block with-errors"></div>                                
+                              </div>
+                            </div>
+                            </td>
+                            <td>
+                            <span class="glyphicon glyphicon-plus">Add language</span>
+                            </td>
+                            </tr>
+                            </table>
+                            </div>
+
+
+                        <form id="user_details_form" method="post" class="form-horizontal" enctype="multipart/form-data" data-toggle="validator">
+                        {{success}}
+                        {% csrf_token %}
+                          {% if messages %}
+
+                                  {% for message in messages %}
+
+                                <div class="alert alert-danger">
+                                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-cross"></i></button>
+                                  <span class="vd_alert-icon"><i class="fa fa-exclamation-circle vd_red"></i></span><strong>{{message}}</strong></div>
+
+                                  {% endfor %}
+
+                              {% endif %}
+                        <!-- <div class="form-group">
+                          <label class="col-sm-2 control-label">UserName</label>
+                          <div class="col-sm-7 controls">
+                            {{form.employee}}
+
+                          </div>
+                        </div> -->
+
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">Name(as per PAN card)<span class="mandatory-field"> *</span></label>
+                              <div class="col-sm-7 controls">
+                                {{form.name_pan}}
+                                {{name_pan_errors}}
+                                <div class="help-block with-errors"></div>
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">Passport Size Photo<span class="mandatory-field"> *</span></label>
+                              <div class="col-sm-7 controls">
+                                {{form.photo}}
+                               
+                                <div class="help-block with-errors"></div>
+                              </div>
+                            </div>
+
+                            
+
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">Gender<span class="mandatory-field"> *</span></label>
+                              <div class="col-sm-2 controls">
+                                {{form.gender}}
+                                {{gender_errors}}
+                                <div class="help-block with-errors"></div>
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">Nationality<span class="mandatory-field"> *</span></label>
+                              <div class="col-sm-7 controls">
+                                {{form.nationality}}
+                                {{nationality_errors}}
+                                <div class="help-block with-errors"></div>
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">Date of Birth<span class="mandatory-field"> *</span></label>
+                              <div class="col-sm-7 controls">
+                                {{form.date_of_birth}}
+                                {{date_of_birth_errors}}
+                                <div class="help-block with-errors"></div>
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">Blood Group<span class="mandatory-field"> *</span></label>
+                              <div class="col-sm-2 controls">
+                                {{form.blood_group}}
+                                {{blood_group_errors}}
+                                <div class="help-block with-errors"></div>
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">Land Phone</label>
+                              <div class="col-sm-7 controls">
+                                {{form.land_phone}}
+                                {{land_phone_errors}}
+                                <div class="help-block with-errors"></div>
+                              </div>
+                            </div>
+
+                            
+
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">Mobile Phone<span class="mandatory-field"> *</span></label>
+                              <div class="col-sm-7 controls">
+                                {{form.mobile_phone}}
+                                {{mobile_phone_errors}}
+                                <div class="help-block with-errors"></div>
+                              </div>
+                            </div>
+                            <div id="temp_add">
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">Address Type<span class="mandatory-field"> *</span></label>
+                              <div class="col-sm-7 controls">
+                                {{form.address_type}}
+                                {{address_type_errors}}
+                                <div class="help-block with-errors"></div>
+
+                              </div>
+                            </div>
+
+
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">Street<span class="mandatory-field"> *</span></label>
+                                  <div class="col-sm-7 controls">
+                                    {{form.address1}}
+                                    {{address1_errors}}
+                                <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
+
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">Lane</label>
+                              <div class="col-sm-7 controls">
+                                {{form.address2}}
+                                {{address2_errors}}
+                                <div class="help-block with-errors"></div>
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">City<span class="mandatory-field"> *</span></label>
+                              <div class="col-sm-7 controls">
+                                {{form.city}}
+                                {{city_errors}}
+                                <div class="help-block with-errors"></div>                                
+                              </div>
+                            </div>
+
+                              <div class="form-group">
+                              <label class="col-sm-2 control-label">State<span class="mandatory-field"> *</span></label>
+                              <div class="col-sm-7 controls">
+                                {{form.state}}
+                                {{state_errors}}
+                                <div class="help-block with-errors"></div>
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">Zip Code<span class="mandatory-field"> *</span></label>
+                              <div class="col-sm-7 controls">
+                                {{form.zipcode}}
+                                {{zipcode_errors}}
+                                <div class="help-block with-errors"></div>                                
+                              <div class="checkbox">
+                                <label><input id="address" type="checkbox" value="">Temporary is copied from permanent address</label>
+                                <label><span id = "temp_address" class="glyphicon glyphicon-plus"></span>Add a new temporary address</label>
+                              </div>
+                              
+
+                              </div>
+                            </div>
+                          </div>
+                          
+                           <table id="table_lang">
+                           <tr>
+                           <th>
+                           <label class="col-sm-2 control-label">Language<span class="mandatory-field"> *</span></label>
+                           </th>
+                           <th>
+                           <label class="col-sm-2 control-label">Speak<span class="mandatory-field"> *</span></label>
+                           </th>
+                           <th>
+                           <label class="col-sm-2 control-label">Read<span class="mandatory-field"> *</span></label>
+                           </th>
+                           <th>
+                           <label class="col-sm-2 control-label">Write<span class="mandatory-field"> *</span></label>
+                           </th>
+                           <tr>
+                           <td>
+                            <div class="form-group">
+                              
+                              <div class="col-sm-30 controls">
+                                {{lang_form.language_known}}
+                                
+                                <div class="help-block with-errors"></div>
+                              </div>
+                            </div>
+                            </td>
+                            <td>
+                            <div class="form-group">
+                              
+                              <div class="col-sm-15 controls">
+                                {{lang_form.speak}}
+                                
+                                <div class="help-block with-errors"></div>                                
+                              </div>
+                            </div>
+                            </td>
+                            <td>
+                            <div class="form-group">
+                              
+                              <div class="col-sm-15 controls">
+                                {{lang_form.read}}
+                                
+                                <div class="help-block with-errors"></div>                                
+                              </div>
+                            </div>
+                            </td>
+                            <td>
+                            <div class="form-group">
+                              
+                              <div class="col-sm-15 controls">
+                                  {{lang_form.write}}
+                                  
+
+                              <div class="help-block with-errors"></div>                                
+                              </div>
+                            </div>
+                            </td>
+                            <td>
+                            <span class="glyphicon glyphicon-plus">Add language</span>
+                            </td>
+                            </tr>
+                            </table>
+                            </div>
+                            <div class="form-group">
+                                <h3 class="col-sm-12 text-right"><input type="submit" id="submit" class="btn vd_bg-green vd_white width-10" value="Save"/></h3>
+                            </div>
+                        </form>
+
+<!-- ~~~~sanjay~~~~ -->
+                        
+                            </div><!-- ./tab-pane -->
+
+                       </div><!-- ./wizard1 ~~~ -->
+
+                  </div>
+                  <!-- Panel Body -->
+                </div>
+                <!-- Panel Widget -->
+              </div>
+              <!-- col-md-12 -->
+            </div>
+            <!-- row -->
+
+<script type="text/javascript">
+
+$(window).load(function() {
+  var id = {{request.user.id}}
+  
+  $.ajax({
+                  type: "GET",
+                  url : '/checkbox_check',
+                  data : {'id':id},
+                  success : function(data){
+                   if (data == 'True'){
+                    $('#address').prop('checked', true)
+                   }
+                   else{
+                     $('#address').prop('checked', false)
+                   }
+                   // return data;
+                  }
+                  // error: function(xhr, status, error) {
+                  //   alert(xhr.responseText);
+                  // }
+                });
+
+
+})
+
+   $('#id_address_type').on('change', function() {
+        value =  this.value 
+  
+    // console.log(value);
+
+        if (value=='PR'){
+            var theObj = 
+                  {
+                    "PR":{
+                          "address_type": "PR",
+                          },                
+                  }
+
+              // e.preventDefault();
+              // debugger;
+            var address_type = "PR";
+
+              $.ajax({
+                type: "GET",
+                url : '/user_details',
+                data : {'address_type':address_type},
+                success : function(data){
+                  var permanent = $(data).find('#temp_add')
+                  $("#temp_add").html(permanent);
+                   // return data;
+                }
+                  // error: function(xhr, status, error) {
+                  //   alert(xhr.responseText);
+                  // }
+              });
+            }
+        });
+
+   $('#id_address_type').on('change', function() {
+  value =  this.value 
+
+                    if (value=='TM'){
+                      var theObj = 
+
+
+                            {
+                               
+                                                "TM":{
+                                                              "address_type": "TM",
+                                                              
+                                                                },    
+                                  
+                              }
+
+
+              var address_type = "TM";
+
+                $.ajax({
+                  type: "GET",
+                  url : '/user_details',
+                  data : {'address_type':address_type},
+                  success : function(data){
+                   var temporary = $(data).find('#temp_add')
+                   $("#temp_add").html(temporary);
+                   // return data;
+                  }
+                  // error: function(xhr, status, error) {
+                  //   alert(xhr.responseText);
+                  // }
+                });
+              }
+          });
+                
+            $("#user_details_form").submit(function (e) {
+                  e.preventDefault();
+                  var data = new FormData($('form').get(0));
+                  swal({   title: "Thank you for filling the details",
+                    text: "Keep your education documents and fill the next form",
+                    type: "success",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Next Tab",
+                    closeOnConfirm: true,
+                    closeOnCancel: true
+                    },
+                    function(isConfirm) {
+                      if (isConfirm) {
+                        $.ajax( {
+                          type: "POST",
+                          url: '/user_details',
+                          data: data,
+                          cache: false,
+                          processData: false,
+                          contentType: false,
+                          success: function( response ) {
+                             window.location='/user_details/education'
+                          }
+                        });
+                      }else{
+                          swal("There was some problem with your data")
+                        }});
+                    });
+
+$("#address").click(function (e) {
+                  e.preventDefault();
+                  
+                  if(this.checked){
+                        var a = document.getElementById("id_address_type").value;
+                        var b = document.getElementById("id_address1").value;
+                        var c = document.getElementById("id_address2").value;
+                        var d = document.getElementById("id_city").value;
+                        var e = document.getElementById("id_state").value;
+                        var f = document.getElementById("id_zipcode").value;
+                        
+                        swal({   title: "Are you sure you want to copy your permanent address as temporary address?",
+                          text: "",
+                          type: "warning",
+                          showCancelButton: true,
+                          confirmButtonColor: "#DD6B55",
+                          confirmButtonText: "OK",
+                          cancelButtonText: "Cancel",
+                          closeOnConfirm: true,
+                          closeOnCancel: true
+                          },
+                          function(isConfirm) {
+                            if (isConfirm) {
+
+                                      $.ajax( {
+                                        type: "POST",
+                                        url: '/user_details/address_copy',
+                                        data: {'address_type':a,'address1':b,'address2':c,'city':d,'state':e,'zipcode':f},
+                                        success: function( respone ) {
+                                          
+                                          swal("Success", "Permanent is saved as temporary");
+                                          
+                                          
+                                        }
+
+                                      });
+                                    }});
+                        }
+                      });
+
+$("#temp_address").click(function (e) {
+                  e.preventDefault();
+                  
+                        window.location='/user_details/address_tempo'
+                      });
+
+</script>
+
+
+{% endblock %}

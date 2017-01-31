@@ -3,9 +3,6 @@
 {% block pageTitle %}Candidate Overview{% endblock %}
 {% block pageSubTitle %}The list of candidate with the essential details{% endblock %}
 
-
-<!--            -->
-
           {% block title_section %}
           <div class="vd_title-section clearfix">
             <div class="vd_panel-header">
@@ -14,14 +11,9 @@
           </div>
           {% endblock %}
 
-
 {% block content %}
 
-
 <link href="/static/plugins/dataTables/css/dataTables.bootstrap.css" rel="stylesheet" type="text/css">
-
-
-
 
             <div class="row">
               <div class="col-md-12">
@@ -29,62 +21,35 @@
                   <div class="panel-heading vd_bg-grey">
                     <h3 class="panel-title">List of Candidates</h3>
                   </div>
-                  <div class="panel-body">
-
-                      
-                          
-
-
-
-
-
-
-
-
-                    <table class="table table-striped" id="data-tables">
+                  
+                <table class="table table-striped">
                       <thead>
                         <tr>
                           <th>MRF</th>
                           <th>Name</th>
-                          <th>Department</th>
-                          <th>Action</th>
+                          <th>data</th>
                         </tr>
                       </thead>
-                     <!--  {% for val in employee %}
-                            <li id="{{val.username}}"> 
-                            <input type="hidden" value="{{val.username}}" class="candidate">
-                              <div class="menu-text">{{val.username}}</div>
-                              </li>
-                              
-                           {% endfor %}
-  -->                     <tbody>
-                        <tr class="odd gradeX">
-                          <td>{{val.username}}</td>
-                          <td>{{name_pan}}</td>
-                          <td class="menu-action">
-                          <a data-original-title="view" data-toggle="tooltip" data-placement="top" class="btn menu-icon vd_bd-green vd_green" onclick="window.open('/print_candidate_information')"> 
-                          <i class="fa fa-eye"></i> 
-                          </a> 
-                          </td>
-                        </tr>
+
+                  {% for val in lists %}
+            
+                    <div class="panel-body">
+                     <tbody>
+                       
                         <tr class="even gradeC">
                           <td>147</td>
-                          <td>Captain America</td>
-                          <td>Dolor sit amet</td>
-                          <td class="menu-action">
-                          <a data-original-title="view" data-toggle="tooltip" data-placement="top" class="btn menu-icon vd_bd-green vd_green" onclick="window.open('/print_candidate_information')"> 
-                          <i class="fa fa-eye"></i> 
+                          <td>{{val.first_name}} {{val.last_name}}</td>
+                          <!-- <td class="menu-action"> -->
+                           
+                           <!--<a data-original-title="view" data-toggle="tooltip" data-placement="top" class="btn menu-icon vd_bd-green vd_green" onclick="window.open('/print_candidate_information')"> 
+                          <i class="fa fa-eye"></i> --> 
+
                           </a> 
                           </td>
                         </tr>
                       </tbody>
+                      {% endfor %}
                     </table>
-
-
-
-
-
-
 
                   </div>
                  </div>
@@ -93,12 +58,11 @@
 
 
 
-
 <script type="text/javascript" src="/static/plugins/dataTables/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/static/js/dataTables.bootstrap.js"></script>
 
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 	
 $(document).ready(function(){
 
@@ -108,7 +72,45 @@ $(document).ready(function(){
         });
 
 })// ./dom.ready
+</script> -->
 
+
+<script type="text/javascript">
+    var theObj = 
+                                {
+                  {%for val in lists%}
+                                  "{{val.first_name}},{{val.last_name}}":{
+                                                "first_name": "{{val.first_name}}",
+                                                "last_name": "{{val.last_name}}"
+                                                  },    
+                  {%endfor%}   
+                                }
+
+$('#data').click(function(){
+              // e.preventDefault();
+              debugger;
+        var first_name;
+        var last_name;
+        for (var key in theObj[the_id_key]) {
+                console.log(theObj[the_id_key]['first_name']);
+                var first_name = theObj[the_id_key]['first_name'];
+                console.log(theObj[the_id_key]['last_name']);
+                var last_name = theObj[the_id_key]['last_name'];
+              }
+        $.ajax({
+          type: "GET",
+          url : '/candidate',
+          data : {'first_name':first_name,'last_name':last_name},
+          success : function(data){
+            window.location='/user_details/print_candidate_information'
+                             // return data;
+           }
+                            // error: function(xhr, status, error) {
+                            //   alert(xhr.responseText);
+                            // }
+        });
+      });
+             
 </script>
 
 

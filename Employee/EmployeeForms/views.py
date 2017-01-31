@@ -66,6 +66,8 @@ def loggedin(request):
 def invalid_login(request):
     return render_to_response('invalid.html')
 
+from django.views.decorators.csrf import csrf_exempt
+@csrf_exempt
 def register(request):
     # import ipdb; ipdb.set_trace()
     if request.method == 'POST':
@@ -1195,7 +1197,7 @@ def proof(request):
             addhar_att_error,'dl_error':dl_att_error,'passport_error':passport_error,'pp_att_error':pp_att_error,'voter_error':voter_error,
             'voter_att_error':voter_att_error })
 
-@check_honeypot(field_name='desgination')
+# @check_honeypot(field_name='desgination')
 @login_required
 def previous_employment(request):
     #previous_employment form
@@ -1470,27 +1472,22 @@ def candidate_overview(request):
         employee = User.objects.all()
         no_of_candidate = len(employee)
         lists = []
-        username = {'username':''}
+        username = {'last_name':'','first_name':''}
         for emp in employee:
-            username['username'] = emp.username
-            
+            username['last_name'] = emp.last_name
+            username['first_name'] = emp.first_name
             lists.append(username)
-            username = {'username':''}
+            username = {'last_name':'', 'first_name':''}
                  
-    return render(request, 'candidate_overview.html',{'employee':employee})
+    return render(request, 'candidate_overview.html',{'employee':employee, 'lists':lists})
 
 def print_candidate_information(request):
 
     if request.method == 'GET':
         # import ipdb; ipdb.set_trace()
-        context = {"form":"","education_form":"","previous_employment_form":"","proof_form":""}
-        form = UserDetailsForm()
-        education_form = EducationForm()
-        previous_employment_form = PreviousEmploymentForm()
-        proof_form = ProofForm()
-        context["form","education_form","previous_employment_form","proof_form"] = form,education_form,previous_employment_form,proof_form
+        context = {}
         
-        try:
+        if UserDetails.objects.filter(employee=request.user).exists():
             employee = UserDetails.objects.get(employee=request.user)
             name_pan = employee.name_pan
             nationality = employee.nationality
@@ -1499,13 +1496,8 @@ def print_candidate_information(request):
             land_phone = employee.land_phone
             mobile_phone = employee.mobile_phone
             gender = employee.gender
-        except UserDetails.DoesNotExist:
-            messages.error(request, 'Please fill all your user details before printing')
-            
-            return HttpResponseRedirect('/user_details')
-
-        try:
-            
+        
+        if Address.objects.filter(employee=request.user, address_type ='PR').exists():
             address = Address.objects.get(employee=request.user, address_type ='PR')
             address_type = address.address_type
             address1 = address.address1
@@ -1513,25 +1505,33 @@ def print_candidate_information(request):
             city = address.city
             state = address.state
             zipcode = address.zipcode
-            try:
-                address_t = Address.objects.get(employee=request.user, address_type='TM')
-                address_type = address_t.address_type
-                address1 = address_t.address1
-                address2 = address_t.address2
-                city = address_t.city
-                state = address_t.state
-                zipcode = address_t.zipcode
+        else:
+            address_type = {}
+            address1 = {}
+            address2 = {}
+            city = {}
+            state = {}
+            zipcode = {}
+          
 
-            except Address.DoesNotExist:
-                messages.error(request, 'Please fill all your address details before printing')
-                
-                return HttpResponseRedirect('/user_details')
-        except Address.DoesNotExist:
-            messages.error(request, 'Please fill all your address details before printing')
-                
-            return HttpResponseRedirect('/user_details')
+        if Address.objects.filter(employee=request.user, address_type='TM').exists():
+            address_t = Address.objects.get(employee=request.user, address_type='TM')
+            address_type_t = address_t.address_type
+            address1_t = address_t.address1
+            address2_t = address_t.address2
+            city_t = address_t.city
+            state_t = address_t.state
+            zipcode_t = address_t.zipcode
+        else:
+            address_type_t = ''
+            address1_t = ''
+            address2_t = ''
+            city_t = ''
+            state_t = ''
+            zipcode_t = ''
 
-        try:
+       
+        if FamilyDetails.objects.filter(employee=request.user).exists():
             family = FamilyDetails.objects.get(employee=request.user)
             marital_status = family.marital_status
             wedding_date = family.wedding_date
@@ -1547,13 +1547,9 @@ def print_candidate_information(request):
             emergency_phone2 = family.emergency_phone2
             child1_name = family.child1_name
             child2_name = family.child2_name
-        except FamilyDetails.DoesNotExist:
-            messages.error(request, 'Please fill all your family details before printing')
+       
+        if Education.objects.filter(employee=request.user, qualification='SSC').exists():
             
-            return HttpResponseRedirect('/user_details/family_details')
-
-        try:
-            # import ipdb; ipdb.set_trace()
             education = Education.objects.get(employee=request.user, qualification='SSC')
             education_type = education.education_type
             qualification = education.qualification
@@ -1563,13 +1559,102 @@ def print_candidate_information(request):
             institute = education.institute
             board_university = education.board_university
             overall_marks = education.overall_marks
-        except Education.DoesNotExist:
-            messages.error(request, 'Please fill all your education details before printing')
+        else:
+            education_type = ''
+            qualification = ''
+            specialization = ''
+            from_date = ''
+            to_date = ''
+            institute = ''
+            board_university = ''
+            overall_marks = ''
             
-            return HttpResponseRedirect('/user_details/education')
+        if Education.objects.filter(employee=request.user, qualification='HSC').exists():
+            
+            education_h = Education.objects.get(employee=request.user, qualification='HSC')
+            education_type_h = education_h.education_type
+            qualification_h = education_h.qualification
+            specialization_h = education_h.specialization
+            from_date_h = education_h.from_date
+            to_date_h = education_h.to_date
+            institute_h = education_h.institute
+            board_university_h = education_h.board_university
+            overall_marks_h = education_h.overall_marks
+        else:
+            education_type_h = ''
+            qualification_h = ''
+            specialization_h = ''
+            from_date_h = ''
+            to_date_h = ''
+            institute_h = ''
+            board_university_h = ''
+            overall_marks_h = ''
 
-        try:
-            previous = PreviousEmployment.objects.get(employee=request.user)
+        if Education.objects.filter(employee=request.user, qualification='GRAD').exists():
+            
+            education_g = Education.objects.get(employee=request.user, qualification='GRAD')
+            education_type_g = education_g.education_type
+            qualification_g = education_g.qualification
+            specialization_g = education_g.specialization
+            from_date_g = education_g.from_date
+            to_date_g = education_g.to_date
+            institute_g = education_g.institute
+            board_university_g = education_g.board_university
+            overall_marks_g = education_g.overall_marks
+        else:
+            education_type_g = ''
+            qualification_g = ''
+            specialization_g = ''
+            from_date_g = ''
+            to_date_g = ''
+            institute_g = ''
+            board_university_g = ''
+            overall_marks_g = ''
+
+        if Education.objects.filter(employee=request.user, qualification='PhD').exists():
+            
+            education_phd = Education.objects.get(employee=request.user, qualification='PhD')
+            education_type_phd = education_phd.education_type
+            qualification_phd = education_phd.qualification
+            specialization_phd = education_phd.specialization
+            from_date_phd = education_phd.from_date
+            to_date_phd = education_phd.to_date
+            institute_phd = education_phd.institute
+            board_university_phd = education_phd.board_university
+            overall_marks_phd = education_phd.overall_marks
+        else:
+            education_type_phd = ''
+            qualification_phd = ''
+            specialization_phd = ''
+            from_date_phd = ''
+            to_date_phd = ''
+            institute_phd = ''
+            board_university_phd = ''
+            overall_marks_phd = ''
+
+        if Education.objects.filter(employee=request.user, qualification='PG').exists():
+            
+            education_pg = Education.objects.get(employee=request.user, qualification='PG')
+            education_type_pg = education_pg.education_type
+            qualification_pg = education_pg.qualification
+            specialization_pg = education_pg.specialization
+            from_date_pg = education_pg.from_date
+            to_date_pg = education_pg.to_date
+            institute_pg = education_pg.institute
+            board_university_pg = education_pg.board_university
+            overall_marks_pg = education_pg.overall_marks
+        else:
+            education_type_pg = ''
+            qualification_pg = ''
+            specialization_pg = ''
+            from_date_pg = ''
+            to_date_pg = ''
+            institute_pg = ''
+            board_university_pg = ''
+            overall_marks_pg = ''
+
+        if PreviousEmployment.objects.filter(employee=request.user).exists():
+            previous = PreviousEmployment.objects.filter(employee=request.user).order_by('-id')[0]
             company_name = previous.company_name
             company_address = previous.company_name
             job_type = previous.job_type
@@ -1577,22 +1662,23 @@ def print_candidate_information(request):
             employed_upto = previous.employed_upto
             last_ctc = previous.last_ctc
             reason_for_exit = previous.reason_for_exit
-        except PreviousEmployment.DoesNotExist:
-            messages.error(request, 'Please fill all your previous employment details before printing')
-            
-            return HttpResponseRedirect('/user_details/previous_employment')
 
-        try:
+            previous_1 = PreviousEmployment.objects.filter(employee=request.user).order_by('-id')[1]
+            company_name_1 = previous_1.company_name
+            company_address_1 = previous_1.company_name
+            job_type_1 = previous_1.job_type
+            employed_from_1 = previous_1.employed_from
+            employed_upto_1 = previous_1.employed_upto
+            last_ctc_1 = previous_1.last_ctc
+            reason_for_exit_1 = previous_1.reason_for_exit
+
+        if Proof.objects.filter(employee=request.user).exists():
             proof = Proof.objects.get(employee=request.user)
             pan = proof.pan
             aadhar_card = proof.aadhar_card
             dl = proof.dl
             passport = proof.passport
             voter_id = proof.voter_id
-        except Proof.DoesNotExist:
-            messages.error(request, 'Please fill all your proof details before printing')
-            
-            return HttpResponseRedirect('/user_details/proof')
         
         context = {'employee':employee,'address':address,
             'name_pan':name_pan,
@@ -1610,6 +1696,13 @@ def print_candidate_information(request):
             'state':state,
             'zipcode':zipcode,
 
+            'address_type_t':address_type_t,
+            'address1_t':address1_t,
+            'address2_t':address2_t,
+            'city_t':city_t,
+            'state_t':state_t,
+            'zipcode_t':zipcode_t,
+
             'education_type':education_type,
             'qualification':qualification,
             'specialization':specialization,
@@ -1618,6 +1711,42 @@ def print_candidate_information(request):
             'institute':institute,
             'board_university':board_university,
             'overall_marks':overall_marks,
+
+            'education_type_h':education_type_h,
+            'qualification_h':qualification_h,
+            'specialization_h':specialization_h,
+            'from_date_h':from_date_h,
+            'to_date_h':to_date_h,
+            'institute_h':institute_h,
+            'board_university_h':board_university_h,
+            'overall_marks_h':overall_marks_h,
+
+            'education_type_g':education_type_g,
+            'qualification_g':qualification_g,
+            'specialization_g':specialization_g,
+            'from_date_g':from_date_g,
+            'to_date_g':to_date_g,
+            'institute_g':institute_g,
+            'board_university_g':board_university_g,
+            'overall_marks_g':overall_marks_g,
+
+            'education_type_phd':education_type_phd,
+            'qualification_phd':qualification_phd,
+            'specialization_phd':specialization_phd,
+            'from_date_phd':from_date_phd,
+            'to_date_phd':to_date_phd,
+            'institute_phd':institute_phd,
+            'board_university_phd':board_university_phd,
+            'overall_marks_phd':overall_marks_phd,
+
+            'education_type_pg':education_type_pg,
+            'qualification_pg':qualification_pg,
+            'specialization_pg':specialization_pg,
+            'from_date_pg':from_date_pg,
+            'to_date_pg':to_date_pg,
+            'institute_pg':institute_pg,
+            'board_university_pg':board_university_pg,
+            'overall_marks_pg':overall_marks_pg,
 
             'marital_status':marital_status,
             'wedding_date':wedding_date,
@@ -1641,6 +1770,14 @@ def print_candidate_information(request):
             'employed_upto' : employed_upto,
             'last_ctc' : last_ctc,
             'reason_for_exit' : reason_for_exit,
+
+            'company_name_1' : company_name_1,
+            'company_address_1' : company_address_1,
+            'job_type_1' : job_type_1,
+            'employed_from_1' : employed_from_1,
+            'employed_upto_1' : employed_upto_1,
+            'last_ctc_1' : last_ctc_1,
+            'reason_for_exit_1' : reason_for_exit_1,
 
             'pan' : pan,
             'aadhar_card' : aadhar_card,
