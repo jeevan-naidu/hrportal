@@ -1,25 +1,61 @@
-{% extends 'form_master.html' %}
+{% extends 'master.html' %}
 {% block pageTitle %}Education Details{% endblock %}
-{% block siteTitle %}Education Details{% endblock %}
-{% block form_content %}
 
-{% load honeypot %}
+{%block content %}
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel widget">
+        <div class="panel-heading vd_bg-grey">
+          <h3 class="panel-title"> <span class="menu-icon"> <i class="fa fa-magic"></i> </span> {{user.first_name}} {{user.last_name}} </h3>
+        </div>
+        <div class="panel-body">
+
+            <div id="wizard-2" class="form-wizard">
+              <ul>
+                <li><a href="/user_details">
+                  <div class="menu-icon"> 1 </div>
+                  User Profile </a></li>
+                <li class="active"><a href="#tab2" data-toggle="tab">
+                  <div class="menu-icon"> 2 </div>
+                  Education </a></li>
+                <li><a href="/user_details/previous_employment">
+                  <div class="menu-icon"> 3 </div>
+                  Previous Employment </a></li>
+                <li><a href="/user_details/proof">
+                  <div class="menu-icon"> 4 </div>
+                  Proof </a></li>
+                <li><a href="/user_details/confirm">
+                  <div class="menu-icon"> 5 </div>
+                  Confirm </a></li>
+              </ul>
+<hr>
+
+<!--               <div class="progress progress-striped active">
+                <div class="progress-bar progress-bar-info" > </div>
+              </div> -->
+
+
+
+<div class="tab-pane" id="tab2">
+
   <form id="education_form" enctype="multipart/form-data" method="post" class="form-horizontal col-sm-7" enctype="multipart/form-data" data-toggle="validator">
 
   {% csrf_token %}
   {% if messages %}
 
-      {% for message in messages %}
+                                  {% for message in messages %}
 
-    <div class="alert alert-danger">
-      <button type="button" class="close" data-dismiss="alert" aria-hidden="true</button>
-      <span class="vd_alert-icon"><i class="fa fa-exclamation-circle vd_red"></i></span><strong>{{message}}</strong></div>
+                                <div class="alert alert-danger">
+                                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-cross"></i></button>
+                                  <span class="vd_alert-icon"><i class="fa fa-exclamation-circle vd_red"></i></span><strong>{{message}}</strong></div>
 
-      {% endfor %}
+                                  {% endfor %}
 
-  {% endif %}
-
-
+                              {% endif %}
   <!-- <div class="form-group">
     <label class="col-sm-5 control-label">Employee</label>
     <div class="col-sm-7 controls">
@@ -102,7 +138,7 @@
     </div>
   </div>
   <div class="form-group">
-    <label class="col-sm-5 control-label">Overall percentage/CPGA<span class="mandatory-field"> *</span></label>
+    <label class="col-sm-5 control-label">Overall Marks<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
       {{form.overall_marks}}
       {{overall_marks_errors}}
@@ -116,19 +152,19 @@
     <label class="col-sm-5 control-label">Marks Card<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
       {{form.marks_card_attachment}}
-      
+
       <div class="help-block with-errors"></div>
     </div>
   </div>
-  {% render_honeypot_field "marks" %}
+
   
   <div class="form-group">
 
         <h3 class="col-sm-12 text-right"><input type="submit" id="submit" class="btn vd_bg-green vd_white" value="Save"/></h3>
 
   </div>
-
 </form>
+
 
 <div id="user-list" class="col-sm-5">
 <!--   <input type="button" id="vivek1" class="btn vd_bg-green vd_white width-10" value="vivek1"/>
@@ -150,10 +186,21 @@
   </div><!-- ./ user-list -->
 
 
-{% endblock %}
+
+</div><!-- ./tab-content -->
 
 
-{% block form_scripts %}
+
+                       </div><!-- ./wizard1 ~~~ -->
+
+                  </div>
+                  <!-- Panel Body -->
+                </div>
+                <!-- Panel Widget -->
+              </div>
+              <!-- col-md-12 -->
+            </div>
+            <!-- row -->
 
             <script type="text/javascript">
 
@@ -259,7 +306,6 @@
 
             $("#education_form").submit(function (e) {
                   e.preventDefault();
-                  // if (document.getElementsByName("marks") == '' ){
                   var data = new FormData($('form').get(0));
                   swal({   title: "Do you want to add again?",
                     text: "",
@@ -280,10 +326,9 @@
                           cache: false,
                           processData: false,
                           contentType: false,
-                          success: function( data ) {
-                            
+                          success: function( response ) {
+                              
                              window.location='/user_details/education'
-                             
                           }
                         });
                       }else{
@@ -298,11 +343,6 @@
                                window.location='/user_details/previous_employment'
                         }
                       });}});
-
-                //    }
-                // else{
-                //   window.location='/user_details/sorry'
-                // }
                     });
             </script>
 <!-- End here -->

@@ -29,7 +29,7 @@ jQuery(document).ready(function($){
 
 
 	// File Upload Validations (File size and extension)
-				var fileExtension = ['jpg', 'csv','png', 'pdf', 'xlsx', 'xls', 'docx', 'doc', 'jpeg', 'eml'];
+				var fileExtension = ['jpg', 'csv','png', 'pdf', 'xlsx', 'xls', 'docx', 'doc', 'jpeg', 'eml','zip'];
 				$('.filestyle').bind('change', function() {
 				if (this.files[0].size > 1000000) {
 					alert("File size greater than 1MB not allowed");

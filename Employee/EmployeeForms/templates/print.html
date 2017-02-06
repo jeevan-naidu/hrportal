@@ -44,20 +44,25 @@
 <div class="print-div"><span>Land Phone</span> {{land_phone}} </div>
 <div class="print-div"><span>Mobile Phone</span> {{mobile_phone}} </div>
 <br>
+{% if address_type != '' %}
 <div class="print-div"><span>Address Type</span> {{address_type}} </div>
 <div class="print-div"><span>Street</span> {{address1}} </div>
 <div class="print-div"><span>Lane</span> {{address2}} </div>
 <div class="print-div"><span>City</span> {{city}} </div>
 <div class="print-div"><span>State</span> {{state}} </div>
 <div class="print-div"><span>Zip Code</span> {{zipcode}} </div>
+{% endif %}
 <br>
-<div class="print-div"><span>Address Type</span> {{address_type}} </div>
-<div class="print-div"><span>Street</span> {{address1}} </div>
-<div class="print-div"><span>Lane</span> {{address2}} </div>
-<div class="print-div"><span>City</span> {{city}} </div>
-<div class="print-div"><span>State</span> {{state}} </div>
-<div class="print-div"><span>Zip Code</span> {{zipcode}} </div>
+{% if address_type_t != '' %}
+<div class="print-div"><span>Address Type</span> {{address_type_t}} </div>
+<div class="print-div"><span>Street</span> {{address1_t}} </div>
+<div class="print-div"><span>Lane</span> {{address2_t}} </div>
+<div class="print-div"><span>City</span> {{city_t}} </div>
+<div class="print-div"><span>State</span> {{state_t}} </div>
+<div class="print-div"><span>Zip Code</span> {{zipcode_t}} </div>
+{% endif %}
 <br>
+{% if marital_status != '' %}
 <div class="print-div"><span>Marital Status</span> {{marital_status}} </div>
 <div class="print-div"><span>Wedding Date</span> {{wedding_date}} </div>
 <div class="print-div"><span>Spouse Name</span> {{spouse_name}} </div>
@@ -72,7 +77,9 @@
 <div class="print-div"><span>Emergency Phone(Secondary)</span> {{emergency_phone2}} </div>
 <div class="print-div"><span>Child1 Name</span> {{child1_name}} </div>
 <div class="print-div"><span>Child2 Name</span> {{child2_name}} </div>
+{% endif %}
 <br>
+{% if education_type != '' %}
 <div class="print-div"><span>Education Type</span> {{education_type}} </div>
 <div class="print-div"><span>Qualfication</span> {{qualification}} </div>
 <div class="print-div"><span>Specialization</span> {{specialization}} </div>
@@ -81,31 +88,72 @@
 <div class="print-div"><span>Institution</span> {{institute}} </div>
 <div class="print-div"><span>Board/University</span> {{board_university}} </div>
 <div class="print-div"><span>Overall Marks</span> {{overall_marks}} </div>
+{% endif %}
 <br>
-<div class="print-div"><span>Education Type</span> {{education_type}} </div>
-<div class="print-div"><span>Qualfication</span> {{qualification}} </div>
-<div class="print-div"><span>Specialization</span> {{specialization}} </div>
-<div class="print-div"><span>From Date</span> {{from_date}} </div>
-<div class="print-div"><span>To Date</span> {{to_date}} </div>
+{% if education_type_h != '' %}
+<div class="print-div"><span>Education Type</span> {{education_type_h}} </div>
+<div class="print-div"><span>Qualfication</span> {{qualification_h}} </div>
+<div class="print-div"><span>Specialization</span> {{specialization_h}} </div>
+<div class="print-div"><span>From Date</span> {{from_date_h}} </div>
+<div class="print-div"><span>To Date</span> {{to_date_h}} </div>
+<div class="print-div"><span>Institution</span> {{institute_h}} </div>
+<div class="print-div"><span>Board/University</span> {{board_university_h}} </div>
+<div class="print-div"><span>Overall Marks</span> {{overall_marks_h}} </div>
+{% endif %}
+<br>
+
+{% if education_type_g != '' %}
+<div class="print-div"><span>Education Type</span> {{education_type_g}} </div>
+<div class="print-div"><span>Qualfication</span> {{qualification_g}} </div>
+<div class="print-div"><span>Specialization</span> {{specialization_g}} </div>
+<div class="print-div"><span>From Date</span> {{from_date_g}} </div>
+<div class="print-div"><span>To Date</span> {{to_date_g}} </div>
+<div class="print-div"><span>Institution</span> {{institute_g}} </div>
+<div class="print-div"><span>Board/University</span> {{board_university_g}} </div>
+<div class="print-div"><span>Overall Marks</span> {{overall_marks_g}} </div>
+{% endif %}
+<br>
+{% if education_type_pg != '' %}
+<div class="print-div"><span>Education Type</span> {{education_type_pg}} </div>
+<div class="print-div"><span>Qualfication</span> {{qualification_pg}} </div>
+<div class="print-div"><span>Specialization</span> {{specialization_pg}} </div>
+<div class="print-div"><span>From Date</span> {{from_date_pg}} </div>
+<div class="print-div"><span>To Date</span> {{to_date_pg}} </div>
 <div class="print-div"><span>Institution</span> {{institute}} </div>
-<div class="print-div"><span>Board/University</span> {{board_university}} </div>
-<div class="print-div"><span>Overall Marks</span> {{overall_marks}} </div>
+<div class="print-div"><span>Board/University</span> {{board_university_pg}} </div>
+<div class="print-div"><span>Overall Marks</span> {{overall_marks_pg}} </div>
+{% endif %}
 <br>
+{% if education_type_phd != '' %}
+<div class="print-div"><span>Education Type</span> {{education_type_phd}} </div>
+<div class="print-div"><span>Qualfication</span> {{qualification_phd}} </div>
+<div class="print-div"><span>Specialization</span> {{specialization_phd}} </div>
+<div class="print-div"><span>From Date</span> {{from_date_phd}} </div>
+<div class="print-div"><span>To Date</span> {{to_date_phd}} </div>
+<div class="print-div"><span>Institution</span> {{institute_phd}} </div>
+<div class="print-div"><span>Board/University</span> {{board_university_phd}} </div>
+<div class="print-div"><span>Overall Marks</span> {{overall_marks_phd}} </div>
+{% endif %}
+<br>
+{% if company_name != '' %}
 <div class="print-div"><span>Company Name</span> {{company_name}} </div>
 <div class="print-div"><span>Company Address</span> {{company_address}} </div>
 <div class="print-div"><span>Job Type</span> {{job_type}} </div>
 <div class="print-div"><span>Employed From</span> {{employed_from}} </div>
-<div class="print-div"><span>Employed To</span> {{employed_to}} </div>
+<div class="print-div"><span>Employed To</span> {{employed_upto}} </div>
 <div class="print-div"><span>Last CTC</span> {{last_ctc}} </div>
 <div class="print-div"><span>Reason for Exit</span> {{reason_for_exit}} </div>
+{% endif %}
 <br>
-<div class="print-div"><span>Company Name</span> {{company_name}} </div>
-<div class="print-div"><span>Company Address</span> {{company_address}} </div>
-<div class="print-div"><span>Job Type</span> {{job_type}} </div>
-<div class="print-div"><span>Employed From</span> {{employed_from}} </div>
-<div class="print-div"><span>Employed To</span> {{employed_to}} </div>
-<div class="print-div"><span>Last CTC</span> {{last_ctc}} </div>
-<div class="print-div"><span>Reason for Exit</span> {{reason_for_exit}} </div>
+{% if company_name_1 != '' %}
+<div class="print-div"><span>Company Name</span> {{company_name_1}} </div>
+<div class="print-div"><span>Company Address</span> {{company_address_1}} </div>
+<div class="print-div"><span>Job Type</span> {{job_type_1}} </div>
+<div class="print-div"><span>Employed From</span> {{employed_from_1}} </div>
+<div class="print-div"><span>Employed To</span> {{employed_upto_1}} </div>
+<div class="print-div"><span>Last CTC</span> {{last_ctc_1}} </div>
+<div class="print-div"><span>Reason for Exit</span> {{reason_for_exit_1}} </div>
+{% endif %}
 <br>
 <div class="print-div"><span>PAN card Number</span> {{pan}} </div>
 <div class="print-div"><span>Aadhar card Number</span> {{aadhar_card}} </div>

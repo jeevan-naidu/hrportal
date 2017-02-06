@@ -1,3 +1,4 @@
+
 /*
  * Flot plugin to order bars side by side.
  * 

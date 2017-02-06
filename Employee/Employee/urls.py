@@ -19,6 +19,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+    url(r'^admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
+    url(r'^subbu/', admin.site.urls),
     url(r'^', include('EmployeeForms.urls'))
 	] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
