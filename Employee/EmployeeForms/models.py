@@ -1,10 +1,12 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from sorl.thumbnail import ImageField
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator
 from django.core.exceptions import ObjectDoesNotExist
 import datetime, os
+
 from django.core.files.storage import FileSystemStorage
 
 # Create your models here.
@@ -104,7 +106,7 @@ class Address(models.Model):
 class UserDetails(models.Model):
     employee = models.ForeignKey(User, blank=True, null=True)
     name_pan = models.CharField("Name(as per PAN)", max_length=30, blank=True, null=True)
-    photo = models.FileField(upload_to=content_file_name,blank=True, null=True, verbose_name="Photo")
+    photo = models.ImageField(upload_to=content_file_name,blank=True, null=True, verbose_name="Photo")
     gender = models.CharField("Gender", max_length=2,choices=GENDER_CHOICES,blank=False)
     nationality = models.CharField("Nationality", max_length=30, blank=False)
     date_of_birth = models.DateField(verbose_name='Date of Birth',null=True,blank=True)

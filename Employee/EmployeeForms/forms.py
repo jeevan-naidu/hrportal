@@ -70,7 +70,7 @@ class UserDetailsForm(forms.ModelForm):
 	blood_group = forms.ChoiceField(choices=BLOOD_GROUP_CHOICES, widget=forms.Select(attrs={'class': 'input-sm form-control','required': 'False'}))
 	land_phone = forms.RegexField(max_length=10,required=False, regex=r'^\+?1?\d{9,15}$',
                                    widget=forms.TextInput(attrs={'class': 'input-sm form-control','type': 'tel', 'pattern':'^\+?1?\d{9,15}$'}))
-	mobile_phone = forms.RegexField(max_length=10,regex=r'^\+?1?\d{9,15}$',
+	mobile_phone = forms.RegexField(max_length=10,required=True, regex=r'^\+?1?\d{9,15}$',
                                    widget=forms.TextInput(attrs={'class': 'input-sm form-control','type': 'tel', 'pattern':'^\+?1?\d{9,15}$'}))
 	gender = forms.ChoiceField(choices=GENDER_CHOICES, widget=forms.Select(attrs={'class': 'input-sm form-control','required': 'False'}))
 	address_type = forms.ChoiceField(choices=ADDRESSTYPE_CHOICES, widget=forms.Select(attrs={'class': 'input-sm form-control','required': 'True'}))

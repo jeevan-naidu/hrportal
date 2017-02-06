@@ -9,10 +9,7 @@
               <h1>List of candidates</h1>
                </div>
           </div>
-          {% endblock %}
-
-{% block content %}
-
+  
 <link href="/static/plugins/dataTables/css/dataTables.bootstrap.css" rel="stylesheet" type="text/css">
 
             <div class="row">
@@ -38,14 +35,17 @@
                        
                         <tr class="even gradeC">
                           <td>147</td>
-                          <td>{{val.first_name}} {{val.last_name}}</td>
-                          <!-- <td class="menu-action"> -->
-                           
-                           <!--<a data-original-title="view" data-toggle="tooltip" data-placement="top" class="btn menu-icon vd_bd-green vd_green" onclick="window.open('/print_candidate_information')"> 
-                          <i class="fa fa-eye"></i> --> 
+                          <td id="data">{{val.first_name}} {{val.last_name}}</td>
 
-                          </a> 
+                         <!-- <div id="data"> <td class="menu-action">
+                           
+                           <a data-original-title="view" data-toggle="tooltip" data-placement="top" class="btn menu-icon vd_bd-green vd_green" onclick="window.open('/print_candidate_information')"> 
+                          <i class="fa fa-eye"></i>  
+
+                          </a>  -->
+                          
                           </td>
+                        </div>                        
                         </tr>
                       </tbody>
                       {% endfor %}
