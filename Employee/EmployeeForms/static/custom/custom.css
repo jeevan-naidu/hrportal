@@ -15,6 +15,10 @@
     top: -4px;
 }
 
+/* Added */
+
+.input-mw{max-width: 250px;}
+
 /* forms section */
 
 input[type="file"].bare{
