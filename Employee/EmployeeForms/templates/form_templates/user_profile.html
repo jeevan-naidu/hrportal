@@ -21,21 +21,25 @@
 
                               {% endif %}
 
+
                             <div class="form-group">
-                              <label class="col-sm-3 control-label">Name (as per PAN card)<span class="mandatory-field"> *</span></label>
-                              <div class="col-sm-3 controls">
+                              <label class="col-sm-4 control-label">Name (as per PAN card)<span class="mandatory-field"> *</span></label>
+                              <div class="col-sm-7 controls">
                                 {{form.name_pan}}
                                 {{name_pan_errors}}
+                                <span class="help-inline">Some hint here</span>
                                 <div class="help-block with-errors"></div>
                               </div>
                             </div>
 
                             <div class="form-group">
-                              <label class="col-sm-3 control-label">Passport Size Photo<span class="mandatory-field"> *</span></label>
-                              <div class="col-sm-3 controls" style="position:relative">
+                              <label class="col-sm-4 control-label">Passport Size Photo<span class="mandatory-field"> *</span></label>
+                              <div class="col-sm-7 controls" style="position:relative">
                               <img src="/static/img/master-chief.jpg" style="width: 50px;display: block;">
                                 {{form.photo}}
-                                
+
+                                <span class="help-inline">Some hint here</span>
+
                                 <div class="help-block with-errors"></div>
                               </div>
                             </div>
@@ -43,19 +47,21 @@
                             
 
                             <div class="form-group">
-                              <label class="col-sm-3 control-label">Gender<span class="mandatory-field"> *</span></label>
-                              <div class="col-sm-3 controls">
+                              <label class="col-sm-4 control-label">Gender<span class="mandatory-field"> *</span></label>
+                              <div class="col-sm-7 controls">
                                 {{form.gender}}
                                 {{gender_errors}}
+                                <span class="help-inline">Some hint here</span>
                                 <div class="help-block with-errors"></div>
                               </div>
                             </div>
 
                             <div class="form-group">
-                              <label class="col-sm-3 control-label">Nationality<span class="mandatory-field"> *</span></label>
-                              <div class="col-sm-3 controls">
+                              <label class="col-sm-4 control-label">Nationality<span class="mandatory-field"> *</span></label>
+                              <div class="col-sm-7 controls">
                                 {{form.nationality}}
                                 {{nationality_errors}}
+                                <span class="help-inline">Some hint here</span>
                                 <div class="help-block with-errors"></div>
                               </div>
                             </div>
@@ -64,7 +70,7 @@
 
 
                             <div class="form-group">
-                              <label class="col-sm-3 control-label">Date of Birth<span class="mandatory-field"> *</span></label>
+                              <label class="col-sm-4 control-label">Date of Birth<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-3 controls">
                                 {{form.date_of_birth}}
                                 {{date_of_birth_errors}}
@@ -73,19 +79,21 @@
                             </div>
 
                             <div class="form-group">
-                              <label class="col-sm-3 control-label">Blood Group<span class="mandatory-field"> *</span></label>
-                              <div class="col-sm-3 controls">
+                              <label class="col-sm-4 control-label">Blood Group<span class="mandatory-field"> *</span></label>
+                              <div class="col-sm-7 controls">
                                 {{form.blood_group}}
                                 {{blood_group_errors}}
+                                <span class="help-inline">Some hint here</span>
                                 <div class="help-block with-errors"></div>
                               </div>
                             </div>
 
                             <div class="form-group">
-                              <label class="col-sm-3 control-label">Land Phone</label>
-                              <div class="col-sm-3 controls">
+                              <label class="col-sm-4 control-label">Land Phone</label>
+                              <div class="col-sm-7 controls">
                                 {{form.land_phone}}
                                 {{land_phone_errors}}
+                                <span class="help-inline">Some hint here</span>
                                 <div class="help-block with-errors"></div>
                               </div>
                             </div>
@@ -94,19 +102,21 @@
                             
 
                             <div class="form-group">
-                              <label class="col-sm-3 control-label">Mobile Phone<span class="mandatory-field"> *</span></label>
-                              <div class="col-sm-3 controls">
+                              <label class="col-sm-4 control-label">Mobile Phone<span class="mandatory-field"> *</span></label>
+                              <div class="col-sm-7 controls">
                                 {{form.mobile_phone}}
                                 {{mobile_phone_errors}}
+                                <span class="help-inline">Some hint here</span>
                                 <div class="help-block with-errors"></div>
                               </div>
                             </div>
                             <div id="temp_add">
                             <div class="form-group">
-                              <label class="col-sm-3 control-label">Address Type<span class="mandatory-field"> *</span></label>
-                              <div class="col-sm-3 controls">
+                              <label class="col-sm-4 control-label">Address Type<span class="mandatory-field"> *</span></label>
+                              <div class="col-sm-7 controls">
                                 {{form.address_type}}
                                 {{address_type_errors}}
+                                <span class="help-inline">Some hint here</span>
                                 <div class="help-block with-errors"></div>
 
                               </div>
@@ -114,46 +124,51 @@
                             
 
                             <div class="form-group">
-                              <label class="col-sm-3 control-label">Street<span class="mandatory-field"> *</span></label>
-                                  <div class="col-sm-3 controls">
+                              <label class="col-sm-4 control-label">Street<span class="mandatory-field"> *</span></label>
+                                  <div class="col-sm-7 controls">
                                     {{form.address1}}
                                     {{address1_errors}}
+                                <span class="help-inline">Some hint here</span>
                                 <div class="help-block with-errors"></div>
                                     </div>
                                 </div>
 
                             <div class="form-group">
-                              <label class="col-sm-3 control-label">Lane</label>
-                              <div class="col-sm-3 controls">
+                              <label class="col-sm-4 control-label">Lane</label>
+                              <div class="col-sm-7 controls">
                                 {{form.address2}}
                                 {{address2_errors}}
+                                <span class="help-inline">Some hint here</span>
                                 <div class="help-block with-errors"></div>
                               </div>
                             </div>
 
                             <div class="form-group">
-                              <label class="col-sm-3 control-label">City<span class="mandatory-field"> *</span></label>
-                              <div class="col-sm-3 controls">
+                              <label class="col-sm-4 control-label">City<span class="mandatory-field"> *</span></label>
+                              <div class="col-sm-7 controls">
                                 {{form.city}}
                                 {{city_errors}}
+                                <span class="help-inline">Some hint here</span>
                                 <div class="help-block with-errors"></div>                                
                               </div>
                             </div>
 
                               <div class="form-group">
-                              <label class="col-sm-3 control-label">State<span class="mandatory-field"> *</span></label>
-                              <div class="col-sm-3 controls">
+                              <label class="col-sm-4 control-label">State<span class="mandatory-field"> *</span></label>
+                              <div class="col-sm-7 controls">
                                 {{form.state}}
                                 {{state_errors}}
+                                <span class="help-inline">Some hint here</span>
                                 <div class="help-block with-errors"></div>
                               </div>
                             </div>
 
                             <div class="form-group">
-                              <label class="col-sm-3 control-label">Zip Code<span class="mandatory-field"> *</span></label>
-                              <div class="col-sm-3 controls">
+                              <label class="col-sm-4 control-label">Zip Code<span class="mandatory-field"> *</span></label>
+                              <div class="col-sm-7 controls">
                                 {{form.zipcode}}
                                 {{zipcode_errors}}
+                                <span class="help-inline">Some hint here</span>
                                 <div class="help-block with-errors"></div>                                
                               <div class="checkbox">
                                 <label><input id="address" type="checkbox" value="">Temporary is copied from permanent address</label>
