@@ -1091,6 +1091,34 @@ def proof(request):
                             voter_attachment = form.voter_attachment
                     
 
+                    if pan_attachment == None:
+                        pan_attachment = ''
+                    if aadhar_attachment == None:
+                        aadhar_attachment = ''
+                    if dl_attachment == None:
+                        dl_attachment = ''
+                    if passport_attachment == None:
+                        passport_attachment = ''
+                    if voter_attachment == None:
+                        voter_attachment = ''
+
+                    fields = []
+                    fields0 = (pan,pan_attachment)
+                    if (pan and pan_attachment) != '':
+                        fields.append(fields0)
+                    fields1 = (aadhar_card,aadhar_attachment)
+                    if (aadhar_card and aadhar_attachment) != '':
+                        fields.append(fields1)
+                    fields2 = (dl,dl_attachment)
+                    if (dl and dl_attachment) != '':
+                        fields.append(fields2)
+                    fields3 = (passport,passport_attachment)
+                    if (passport and passport_attachment) != '':
+                        fields.append(fields3)
+                    fields4 = (voter_id,voter_attachment)
+                    if (voter_id and voter_attachment) != '':
+                        fields.append(fields4)
+                
                     fields = [pan,aadhar_card, dl, passport, voter_id]
 
                     check = [ val for val in fields ]
@@ -1139,9 +1167,36 @@ def proof(request):
                 voter_attachment = form.cleaned_data['voter_attachment']
                 if request.FILES.get('voter_attachment', ""):
                     form.voter_attachment = request.FILES['voter_attachment']
-      
-                fields = [pan, aadhar_card, dl, passport, voter_id]
+                if pan_attachment == None:
+                    pan_attachment = ''
+                if aadhar_attachment == None:
+                    aadhar_attachment = ''
+                if dl_attachment == None:
+                    dl_attachment = ''
+                if passport_attachment == None:
+                    passport_attachment = ''
+                if voter_attachment == None:
+                    voter_attachment = ''
+
+                fields = []
+                fields0 = (pan,pan_attachment)
+                if (pan and pan_attachment) != '':
+                    fields.append(fields0)
+                fields1 = (aadhar_card,aadhar_attachment)
+                if (aadhar_card and aadhar_attachment) != '':
+                    fields.append(fields1)
+                fields2 = (dl,dl_attachment)
+                if (dl and dl_attachment) != '':
+                    fields.append(fields2)
+                fields3 = (passport,passport_attachment)
+                if (passport and passport_attachment) != '':
+                    fields.append(fields3)
+                fields4 = (voter_id,voter_attachment)
+                if (voter_id and voter_attachment) != '':
+                    fields.append(fields4)
                 
+
+                # fields = [pan,aadhar_card,dl,passport,voter_id,]
                 check = [ val for val in fields if val]
                 
                 if len(check) > 1:

@@ -133,18 +133,17 @@ var validateTwo = function(){
                     processData: false,
                     contentType: false,
                     success: function(data) {
-                        
                         window.location='/user_details/confirm'
-                    },
+                        },
                    error: function( data ){
                      var errors = data.response;
-                    console.log(errors);
-                    }
-      });
-    }});    
+                     console.log(errors);
+                      }
+                  });
+            }});    
      }
-                
-      }
+       }         
+   
 }// end of validate2
 $("#proof_form").submit(function (e) {
 e.preventDefault();
