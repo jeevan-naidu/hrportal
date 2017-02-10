@@ -5,9 +5,7 @@
 
           {% block title_section %}
           <div class="vd_title-section clearfix">
-            <div class="vd_panel-header">
-              <h1>List of candidates</h1>
-               </div>
+            <div class="vd_panel-header">List of candidates</div>
           </div>
   
 <link href="/static/plugins/dataTables/css/dataTables.bootstrap.css" rel="stylesheet" type="text/css">
@@ -18,6 +16,7 @@
                   <div class="panel-heading vd_bg-grey">
                     <h3 class="panel-title">List of Candidates</h3>
                   </div>
+
                   
                 <table class="table table-striped">
                       <thead>
@@ -48,13 +47,41 @@
                         </div>                        
                         </tr>
                       </tbody>
-                      {% endfor %}
-                    </table>
 
+                  <div class="panel-body">
+                    <table class="table table-striped">
+                          <thead style="background: #777;color: #fff">
+                            <tr>
+                              <th>MRF</th>
+                              <th>Name</th>
+                              <th>data</th>
+                            </tr>
+                          </thead>
+    
+
+                         <tbody>
+                      {% for val in lists %}                           
+                            <tr class="even gradeC">
+                              <td>147</td>
+                              <td>{{val.first_name}} {{val.last_name}}</td>
+
+                              <td class="menu-action">
+                               
+<!--                                <a data-original-title="view" data-toggle="tooltip" data-placement="top" class="btn menu-icon vd_bd-green vd_green" onclick="window.open('/print_candidate_information')"> 
+                              <i class="fa fa-eye"></i>  
+    
+                              </a>  -->
+
+                              </td>
+                            </tr>
+
+                      {% endfor %}
+                          </tbody>
+                        </table>
+                  </div>
                   </div>
                  </div>
                 </div>
-               </div>
 
 
 
