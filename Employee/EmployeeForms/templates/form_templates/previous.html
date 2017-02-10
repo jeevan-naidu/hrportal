@@ -199,6 +199,7 @@
                              window.location='/user_details/previous_employment'
                              // return data;
                             }
+
                             // error: function(xhr, status, error) {
                             //   alert(xhr.responseText);
                             // }
@@ -272,10 +273,13 @@
                                    cache: false,
                                    processData: false,
                                    contentType: false,
-                                   success: function( response ) {
+                                   success: function( data ) {
                                       window.location='/user_details/previous_employment'
-                                   }
-
+                                   },
+                                   error: function( data ) {
+                                        var errors = data.response;
+                                        console.log(errors);
+                                      }
                                  });
                                }else{
                                    $.ajax( {
@@ -287,7 +291,11 @@
                                      contentType: false,
                                      success: function( response ) {
                                         window.location='/user_details/proof'
-                                 }
+                                      },
+                                    error: function( data ) {
+                                      var errors = data.response
+                                  
+                                      }
                                });}});
                 
                              });

@@ -1009,26 +1009,12 @@ def proof(request):
         user = request.user
 
         form = ProofForm(request.POST, request.FILES)
-        # if request.FILES.get('pan_attachment', ""):
-        #     if request.FILES['pan_attachment'].name.split(".")[-1] not in AllowedFileTypes:
-        #         context['errors'].append('Attachment : File type not allowed. Please select a valid file type and then submit again')
-        
-        # if request.FILES.get('aadhar_attachment', ""):
-        #     if request.FILES['aadhar_attachment'].name.split(".")[-1] not in AllowedFileTypes:
-        #         context['errors'].append('Attachment : File type not allowed. Please select a valid file type and then submit again')
-        
-        # if request.FILES.get('dl_attachment', ""):
-        #     if request.FILES['dl_attachment'].name.split(".")[-1] not in AllowedFileTypes:
-        #         context['errors'].append('Attachment : File type not allowed. Please select a valid file type and then submit again')
-        
-        # if request.FILES.get('passport_attachment', ""):
-        #     if request.FILES['passport_attachment'].name.split(".")[-1] not in AllowedFileTypes:
-        #         context['errors'].append('Attachment : File type not allowed. Please select a valid file type and then submit again')
-        
-        # if request.FILES.get('voter_attachment', ""):
-        #     if request.FILES['voter_attachment'].name.split(".")[-1] not in AllowedFileTypes:
-        #         context['errors'].append('Attachment : File type not allowed. Please select a valid file type and then submit again')
-        
+        pan_attachment = request.FILES.get('pan_attachment',"")
+        aadhar_attachment = request.FILES.get('aadhar_attachment',"")
+        dl_attachment = request.FILES.get('dl_attachment',"")
+        passport_attachment = request.FILES.get('passport_attachment',"")
+        voter_attachment = request.FILES.get('voter_attachment',"")
+
         if form.is_valid():
             try:
                 if Proof.objects.get(employee=request.user):
@@ -1200,7 +1186,7 @@ def proof(request):
 # @check_honeypot(field_name='desgination')
 @login_required
 def previous_employment(request):
-    #previous_employment form
+    # previous_employment form
 
     if request.method == 'GET':
         context = {"form":""}
@@ -1266,8 +1252,9 @@ def previous_employment(request):
             try:
                 # PreviousEmployment.objects.get(employee=request.user)
                 user = request.user
-                employee = PreviousEmployment.objects.get(employee=request.user)
                 company_name = form.cleaned_data['company_name']
+                employee = PreviousEmployment.objects.get(employee=request.user, company_name=company_name)
+                
                 company_address = form.cleaned_data['company_address']
                 job_type = form.cleaned_data['job_type']
                 employed_from = form.cleaned_data['employed_from']
@@ -1372,10 +1359,14 @@ def previous_employment(request):
             employed_upto_errors = form['employed_upto'].errors
             last_ctc_errors = form['last_ctc'].errors
             reason_for_exit_errors = form['reason_for_exit'].errors
+            ps_attachment_errors = form['ps_attachment'].errors
+            rl_attachment_errors = form['rl_attachment'].errors
+            offer_letter_attachment_errors = form['offer_letter_attachment'].errors
             
             return render(request, 'form_templates/previous.html', { 'form':form, 'company_name_errors':company_name_errors,
             'company_address_errors':company_address_errors,'job_type_errors':job_type_errors,'employed_from_errors':employed_from_errors,
-            'employed_upto_errors':employed_upto_errors,'last_ctc_errors':last_ctc_errors,'reason_for_exit_errors':reason_for_exit_errors})
+            'employed_upto_errors':employed_upto_errors,'last_ctc_errors':last_ctc_errors,'reason_for_exit_errors':reason_for_exit_errors,
+            'ps_attachment_errors':ps_attachment_errors,'rl_attachment_errors':rl_attachment_errors,'offer_letter_attachment_errors':offer_letter_attachment_errors})
 
     user = request.user
     employee = User.objects.get(username=request.user)

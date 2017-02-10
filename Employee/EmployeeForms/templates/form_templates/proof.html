@@ -83,10 +83,7 @@
 
 <script type="text/javascript">
 /* 2 form validation */
-var pan_error_d;
-var pan_att_error_d;
-pan_error_d = {{pan_error_d}}
-pan_att_error_d = {{pan_att_error_d}}
+
 var validateTwo = function(){
   var uploadedCount = 0;
   var fileUploadCount = 0;
@@ -137,7 +134,29 @@ var validateTwo = function(){
                     contentType: false,
                     success: function(data) {
                         
-                        var proof = $(data).find('#proof_form')
+                        window.location='/user_details/confirm'
+                    },
+                   error: function( data ){
+                     var errors = data.response;
+                    console.log(errors);
+                    }
+      });
+    }});    
+     }
+                
+      }
+}// end of validate2
+$("#proof_form").submit(function (e) {
+e.preventDefault();
+validateTwo();
+  });
+$(document).ready(function(){
+  
+})
+</script>
+<!-- End here -->
+{% endblock %}
+ <!-- var proof = $(data).find('#proof_form')
                         var pan_error = pan_error_d
                         var pan_att_error = pan_att_error_d
                         
@@ -166,22 +185,4 @@ var validateTwo = function(){
                                   window.location = '/user_details/confirm'
                                 }
                               });
-                        }
-                        // $("#tab4").html(proof);
-                        }
-      });
-    }});    
-     }
-                
-      }
-}// end of validate2
-$("#proof_form").submit(function (e) {
-e.preventDefault();
-validateTwo();
-  });
-$(document).ready(function(){
-  
-})
-</script>
-<!-- End here -->
-{% endblock %}
+                        } -->

@@ -24,7 +24,7 @@
                               <div class="col-sm-7 controls">
                                 {{form.marital_status}}
                                 {{marital_status_errors}}
-                                <span class="help-inline">Some hint here</span>
+                                
                                 <div class="help-block with-errors"></div>
                               </div>
                             </div>
@@ -34,7 +34,7 @@
                               <div class="col-sm-7 controls">
                                 {{form.wedding_date}}
                                 {{wedding_date_errors}}
-                                <span class="help-inline">Some hint here</span>
+                                
                                 <div class="help-block with-errors"></div>
                               </div>
                             </div>
@@ -44,7 +44,7 @@
                               <div class="col-sm-7 controls">
                                 {{form.spouse_name}}
                                 {{spouse_name_errors}}
-                                <span class="help-inline">Some hint here</span>
+                                
                                 <div class="help-block with-errors"></div>
                               </div>
                             </div>
@@ -54,7 +54,7 @@
                               <div class="col-sm-7 controls">
                                 {{form.no_of_children}}
                                 {{no_of_children_errors}}
-                                <span class="help-inline">Some hint here</span>
+                                
                                 <div class="help-block with-errors"></div>
                               </div>
                             </div>
@@ -64,7 +64,7 @@
                               <div class="col-sm-7 controls">
                                 {{form.mother_name}}
                                 {{mother_name_errors}}
-                                <span class="help-inline">Some hint here</span>
+                                
                                 <div class="help-block with-errors"></div>
                               </div>
                             </div>
@@ -74,7 +74,7 @@
                               <div class="col-sm-3 controls">
                                 {{form.mother_dob}}
                                 {{mother_dob_errors}}
-                                <span class="help-inline">Some hint here</span>
+                                
                                 <div class="help-block with-errors"></div>
                               </div>
                             </div>
@@ -84,7 +84,7 @@
                               <div class="col-sm-7 controls">
                                 {{form.mother_profession}}
                                 {{mother_profession_errors}}
-                                <span class="help-inline">Some hint here</span>
+                                
                                 <div class="help-block with-errors"></div>
                               </div>
                             </div>
@@ -94,7 +94,7 @@
                               <div class="col-sm-7 controls">
                                 {{form.father_name}}
                                 {{father_name_errors}}
-                                <span class="help-inline">Some hint here</span>
+                                
                                 <div class="help-block with-errors"></div>
                               </div>
                             </div>
@@ -106,7 +106,7 @@
                               <div class="col-sm-3 controls">
                                 {{form.father_dob}}
                                 {{father_dob_errors}}
-                                <span class="help-inline">Some hint here</span>
+                                
                                 <div class="help-block with-errors"></div>
                               </div>
                             </div>
@@ -116,7 +116,7 @@
                               <div class="col-sm-7 controls">
                                 {{form.father_profession}}
                                 {{father_profession_errors}}
-                                <span class="help-inline">Some hint here</span>
+                                
                                 <div class="help-block with-errors"></div>
                               </div>
                             </div>
@@ -126,7 +126,7 @@
                               <div class="col-sm-7 controls">
                                 {{form.emergency_phone1}}
                                 {{emergency_phone1_errors}}
-                                <span class="help-inline">Some hint here</span>
+                                <span class="help-inline">Format:9999999999</span>
                                 <div class="help-block with-errors"></div>
                               </div>
                             </div>
@@ -138,7 +138,7 @@
                               <div class="col-sm-7 controls">
                                 {{form.emergency_phone2}}
                                 {{emergency_phone2_errors}}
-                                <span class="help-inline">Some hint here</span>
+                                <span class="help-inline">Format:9999999999</span>
                                 <div class="help-block with-errors"></div>
                               </div>
                             </div>
@@ -148,7 +148,7 @@
                               <div class="col-sm-7 controls">
                                 {{form.child1_name}}
                                 {{child1_name_errors}}
-                                <span class="help-inline">Some hint here</span>
+                                
                                 <div class="help-block with-errors"></div>                                
                               </div>
                             </div>
@@ -158,7 +158,7 @@
                               <div class="col-sm-7 controls">
                                 {{form.child2_name}}
                                 {{child2_name_errors}}
-                                <span class="help-inline">Some hint here</span>
+                                
                                 <div class="help-block with-errors"></div>
 
                               </div>
@@ -194,9 +194,13 @@ $("#family_details_form").submit(function (e) {
                           type: "POST",
                           url: '/user_details/family_details',
                           data: $("#family_details_form").serialize(),
-                          success: function( response ) {
+                          success: function( data ) {
                              window.location='/user_details/education'
                           }
+                          // error: function( data ){
+                          //   var errors = data.response;
+                          //   console.log(errors);
+                          // }
                         });
                       }else{
                           swal("There was some problem with your data")

@@ -284,6 +284,10 @@
                             
                              window.location='/user_details/education'
                              
+                          },
+                          error: function( data ){
+                            var errors = data.response;
+                            console.log(errors);
                           }
                         });
                       }else{
@@ -296,7 +300,11 @@
                             contentType: false,
                             success: function( response ) {
                                window.location='/user_details/previous_employment'
-                        }
+                        },
+                            error: function( data ){
+                                var errors = data.response;
+                                console.log(errors);
+                                }
                       });}});
 
                 //    }
