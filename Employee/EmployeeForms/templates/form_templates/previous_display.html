@@ -35,6 +35,7 @@
                   <div class="col-sm-7 controls">
                     {{form.employed_from}}
                     {{form.employed_from.errors}}
+                    <span class="help-inline">Format:DD/MM/YYYY</span>
                     <div class="help-block with-errors"></div>
 
                   </div>
@@ -44,6 +45,7 @@
                   <div class="col-sm-7 controls">
                     {{form.employed_upto}}
                     {{form.employed_upto.errors}}
+                    <span class="help-inline">Format:DD/MM/YYYY</span>
                     <div class="help-block with-errors"></div>
 
                   </div>
@@ -70,7 +72,7 @@
 
 
                 <div class="form-group">
-                  <label class="col-sm-5 control-label">Attachments for Pay slips<span class="mandatory-field"> *</span></label>
+                  <label class="col-sm-5 control-label">Attachments for Pay slips</label>
                   <div class="col-sm-7 controls">
                     {{form.ps_attachment}}
                     <div class="help-block with-errors"></div>
@@ -87,7 +89,7 @@
                 </div>
 
                 <div class="form-group">
-              <label class="col-sm-5 control-label">Offer letter<span class="mandatory-field"> *</span></label>
+              <label class="col-sm-5 control-label">Offer letter</label>
               <div class="col-sm-7 controls">
                 {{form.offer_letter_attachment}}
                 <div class="help-block with-errors"></div>

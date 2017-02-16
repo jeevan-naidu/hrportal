@@ -68,6 +68,7 @@
         {{form.from_date}}
         {{from_date_errors}}
         {{form.from_date.errors}}
+        <span class="help-inline">Format:MM/DD/YYYY</span>
       <div class="help-block with-errors"></div>
         <span class="input-group-addon" id="datepicker-icon-trigger" data-datepicker="#datepicker-icon"><i class="fa fa-calendar"></i></span> </div>
     </div>
@@ -79,6 +80,7 @@
         {{form.to_date}}
         {{to_date_errors}}
         {{form.to_date.errors}}
+        <span class="help-inline">Format:MM/DD/YYYY</span>
         <div class="help-block with-errors"></div>        
         <span class="input-group-addon" id="datepicker-icon-trigger" data-datepicker="#datepicker-icon"><i class="fa fa-calendar"></i></span> </div>
     </div>
@@ -113,7 +115,7 @@
 
   {{marks_card_attachment}}
   <div class="form-group">
-    <label class="col-sm-5 control-label">Marks Card<span class="mandatory-field"> *</span></label>
+    <label class="col-sm-5 control-label">Marks Card</label>
     <div class="col-sm-7 controls">
       {{form.marks_card_attachment}}
       
@@ -256,6 +258,39 @@
               
           });
 
+            $('#institute,#id_board_university,#id_overall_marks').on('click', function(key) {
+                  
+                  var today = new Date();
+                  var dd = today.getDate();
+                  var mm = today.getMonth()+1; //January is 0!
+                  var yyyy = today.getFullYear();
+
+                  if(dd<10) {
+                      dd='0'+dd
+                  } 
+
+                  if(mm<10) {
+                      mm='0'+mm
+                  } 
+
+                  today = mm+'/'+dd+'/'+yyyy;
+
+                  var from_date = document.getElementById("id_from_date").value;
+                  var to_date = document.getElementById("id_to_date").value;
+
+                  if(from_date >= today){
+                    swal("You cannot fill future date as your education from date!")
+
+                    document.getElementById("id_from_date").value = "";
+                  }
+
+                  if(from_date >= to_date){
+                    swal("your education date has ended before starting!")
+                    document.getElementById("id_from_date").value = "";
+                    document.getElementById("id_to_date").value = "";
+                  }
+
+                });
 
             $("#education_form").submit(function (e) {
                   e.preventDefault();
@@ -312,6 +347,9 @@
                 //   window.location='/user_details/sorry'
                 // }
                     });
+
+
+        
             </script>
 <!-- End here -->
 

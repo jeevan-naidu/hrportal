@@ -97,6 +97,7 @@ class Address(models.Model):
     address2 = models.CharField(verbose_name="Address 2",max_length=200,blank=False)
     city = models.CharField("City", max_length=30, blank=False)
     state = models.CharField("State", max_length=30, blank=False)
+    country = models.CharField("Country", max_length=30, blank=False,default="")
     zipcode = models.CharField("Zip Code", max_length=10, blank=False)
 
     def __unicode__(self):

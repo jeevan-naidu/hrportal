@@ -56,6 +56,7 @@
         {{form.employed_from}}
         {{employed_from_errors}}
         {{form.employed_from.errors}}
+        <span class="help-inline">Format:DD/MM/YYYY</span>
       <div class="help-block with-errors"></div>
         <span class="input-group-addon" id="datepicker-icon-trigger" data-datepicker="#datepicker-icon"><i class="fa fa-calendar"></i></span> </div>
     </div>
@@ -67,6 +68,7 @@
         {{form.employed_upto}}
         {{employed_upto_errors}}
         {{form.employed_upto.errors}}
+        <span class="help-inline">Format:DD/MM/YYYY</span>
         <div class="help-block with-errors"></div>        
         <span class="input-group-addon" id="datepicker-icon-trigger" data-datepicker="#datepicker-icon"><i class="fa fa-calendar"></i></span> </div>
     </div>
@@ -90,7 +92,7 @@
     </div>
   </div>
   <div class="form-group">
-    <label class="col-sm-5 control-label">Pay slips attachments<span class="mandatory-field"> *</span></label>
+    <label class="col-sm-5 control-label">Pay slips attachments</label>
     <div class="col-sm-7 controls">
       {{form.ps_attachment}}
       {{form.ps_attachment.errors}}
@@ -100,7 +102,7 @@
 
   
   <div class="form-group">
-    <label class="col-sm-5 control-label">Relieving letter<span class="mandatory-field"> *</span></label>
+    <label class="col-sm-5 control-label">Relieving letter</label>
     <div class="col-sm-7 controls">
       {{form.rl_attachment}}
       <div class="help-block with-errors"></div>
@@ -108,7 +110,7 @@
   </div>
 
   <div class="form-group">
-    <label class="col-sm-5 control-label">Offer letter<span class="mandatory-field"> *</span></label>
+    <label class="col-sm-5 control-label">Offer letter</label>
     <div class="col-sm-7 controls">
       {{form.offer_letter_attachment}}
       <div class="help-block with-errors"></div>
@@ -252,7 +254,7 @@
                 
             $("#previous_employment_form").submit(function (e) {
                            e.preventDefault();
-                           
+                                      
                            var data = new FormData($('form').get(0));
                            swal({   title: "Do you want to add again?",
                             text: "",
@@ -299,6 +301,43 @@
                                });}});
                 
                              });
+
+            
+                            
+
+                              $("#id_last_ctc,#id_reason_for_exit").click(function (e) {
+                                
+                                  var today = new Date();
+                                  var dd = today.getDate();
+                                  var mm = today.getMonth()+1; //January is 0!
+                                  var yyyy = today.getFullYear();
+
+                                  if(dd<10) {
+                                      dd='0'+dd
+                                  } 
+
+                                  if(mm<10) {
+                                      mm='0'+mm
+                                  } 
+
+                                  today = mm+'/'+dd+'/'+yyyy;
+
+                                  var employed_from = document.getElementById("id_employed_from").value;
+                                  var employed_upto = document.getElementById("id_employed_upto").value;
+
+                                  if(employed_from >= today){
+                                    swal("You cannot fill future date as your education from date!")
+
+                                    document.getElementById("id_employed_from").value = "";
+                                  }
+
+                                  if(employed_from >= employed_upto){
+                                    swal("your education date has ended before starting!")
+                                    document.getElementById("id_employed_from").value = "";
+                                    document.getElementById("id_employed_upto").value = "";
+                                  }
+                              });
+                              
 
                      </script>
 {% endblock %}

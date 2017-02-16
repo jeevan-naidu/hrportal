@@ -23,6 +23,7 @@
                   <label class="col-sm-4 control-label">PAN Card Number<span class="mandatory-field"> *</span></label>
                   <div class="col-sm-3 controls">
                     {{form.pan}}
+                    <span class="help-inline">Format:ABCDE1234F</span>
                     <div><id="id_pan_error">{{pan_error}}</div>
                     {{form.pan_attachment}}
                     <div><id="id_pan_att_error">{{pan_att_error}}</div>
@@ -35,6 +36,7 @@
                   <div class="col-sm-3 controls">
                     {{form.aadhar_card}}
                     {{form.aadhar_attachment}}
+                    <span class="help-inline">Format:123456789012</span>
                     <div class="help-block with-errors"></div>
                   </div>
                 </div>
@@ -53,6 +55,7 @@
                     {{form.passport.errors}}
                     {{form.passport_attachment}}
                     {{form.passport_attachment.errors}}
+                    <span class="help-inline">Format:A1234567</span>
                     <div class="help-block with-errors"></div>
 
                   </div>
@@ -64,6 +67,7 @@
                     {{form.voter_id.errors}}
                     {{form.voter_attachment}}
                     {{form.voter_attachment.errors}}
+                    <span class="help-inline">Format:ABC1234567</span>
                     <div class="help-block with-errors"></div>
                   </div>
                 </div>

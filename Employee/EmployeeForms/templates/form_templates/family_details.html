@@ -74,7 +74,7 @@
                               <div class="col-sm-3 controls">
                                 {{form.mother_dob}}
                                 {{mother_dob_errors}}
-                                
+                                <span class="help-inline">Format:DD/MM/YYYY</span>
                                 <div class="help-block with-errors"></div>
                               </div>
                             </div>
@@ -106,7 +106,7 @@
                               <div class="col-sm-3 controls">
                                 {{form.father_dob}}
                                 {{father_dob_errors}}
-                                
+                                <span class="help-inline">Format:DD/MM/YYYY</span>
                                 <div class="help-block with-errors"></div>
                               </div>
                             </div>
@@ -130,8 +130,6 @@
                                 <div class="help-block with-errors"></div>
                               </div>
                             </div>
-
-                            
 
                             <div class="form-group">
                               <label class="col-sm-4 control-label">Emergency Phone (secondary)<span class="mandatory-field"> *</span></label>
@@ -174,13 +172,14 @@
 
 <script type="text/javascript">
 
+
 $("#family_details_form").submit(function (e) {
   // debugger;
               e.preventDefault();
               // if (document.getElementsByName("child3") == '' ){
                  
                   swal({   title: "Thank you for filling your family details",
-                    text: "Keep your education documents and fill the next form",
+                    text: "",
                     type: "success",
                     showCancelButton: true,
                     confirmButtonColor: "#DD6B55",
@@ -196,11 +195,11 @@ $("#family_details_form").submit(function (e) {
                           data: $("#family_details_form").serialize(),
                           success: function( data ) {
                              window.location='/user_details/education'
+                          },
+                          error: function( data ){
+                            var errors = data.response;
+                            console.log(errors);
                           }
-                          // error: function( data ){
-                          //   var errors = data.response;
-                          //   console.log(errors);
-                          // }
                         });
                       }else{
                           swal("There was some problem with your data")
@@ -212,7 +211,41 @@ $("#family_details_form").submit(function (e) {
 
                     });
 
-      
+      $(".vd_body,#id_father_name,#id_emergency_phone1,#id_emergency_phone2,#mother_profession").click(function(e){
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth()+1; //January is 0!
+            var yyyy = today.getFullYear();
+
+            if(dd<10) {
+                dd='0'+dd
+            } 
+
+            if(mm<10) {
+                mm='0'+mm
+            } 
+
+            today = mm+'/'+dd+'/'+yyyy;
+            // var wedding_date = document.getElementById("id_wedding_date").value;
+            var mother_dob = document.getElementById("id_mother_dob").value;
+            var father_dob = document.getElementById("id_father_dob").value;
+
+            if(mother_dob >= today){
+              swal("You cannot fill future date as mother's birthday!")
+
+              document.getElementById("id_mother_dob").value = "";
+            }
+            // if(id_wedding_date >= today){
+            //   swal("You cannot fill future date as your wedding date!")
+
+            //   document.getElementById("id_wedding_date").value = "";
+            // }
+            if(father_dob >= today){
+              swal("You cannot fill future date as father's birthday!")
+
+              document.getElementById("id_father_dob").value = "";
+            }
+          });
 
 $('select#id_marital_status').on('change' ,function(){
   if($(this).val() == 'MA'){

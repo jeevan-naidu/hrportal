@@ -43,6 +43,7 @@
       <div class="input-group">
         {{form.from_date}}
         {{form.from_date.errors}}
+        <span class="help-inline">Format:DD/MM/YYYY</span>
       <div class="help-block with-errors"></div>
         <span class="input-group-addon" id="datepicker-icon-trigger" data-datepicker="#datepicker-icon"><i class="fa fa-calendar"></i></span> </div>
     </div>
@@ -53,6 +54,7 @@
       <div class="input-group">
         {{form.to_date}}
         {{form.to_date.errors}}
+        <span class="help-inline">Format:DD/MM/YYYY</span>
         <div class="help-block with-errors"></div>        
         <span class="input-group-addon" id="datepicker-icon-trigger" data-datepicker="#datepicker-icon"><i class="fa fa-calendar"></i></span> </div>
     </div>
@@ -75,7 +77,7 @@
   </div>
   
   <div class="form-group">
-    <label class="col-sm-5 control-label">Overall Marks<span class="mandatory-field"> *</span></label>
+    <label class="col-sm-5 control-label">Overall percentage/CPGA<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
       {{form.overall_marks}}
 
@@ -87,7 +89,7 @@
   </div>
 
   <div class="form-group">
-    <label class="col-sm-5 control-label">Overall Marks<span class="mandatory-field"> *</span></label>
+    <label class="col-sm-5 control-label">Overall Marks</label>
     <div class="col-sm-7 controls">
 
 

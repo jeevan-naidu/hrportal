@@ -174,7 +174,7 @@ def user_details(request):
                     'nationality':employee.nationality,'date_of_birth':employee.date_of_birth,'blood_group':employee.blood_group,
                     'land_phone':employee.land_phone,'mobile_phone':employee.mobile_phone,'gender':employee.gender,
                     'address_type':address.address_type,'address1':address.address1,'address2':address.address2,
-                    'city':address.city,'state':address.state,'zipcode':address.zipcode})
+                    'city':address.city,'state':address.state,'country':address.country,'zipcode':address.zipcode})
 
                     context["form"] = form
                     context["lang_lists"] = lang_lists
@@ -188,7 +188,7 @@ def user_details(request):
                         'blood_group':employee.blood_group,'land_phone':employee.land_phone,
                         'mobile_phone':employee.mobile_phone,'gender':employee.gender,'address_type':address.address_type,
                         'address1':address.address1,'address2':address.address2,'city':address.city,'state':address.state,
-                        'zipcode':address.zipcode})
+                        'country':address.country,'zipcode':address.zipcode})
                         context["form"] = form
                         context["lang_lists"] = lang_lists
                         return render(request, "form_templates/user_profile.html", context)
@@ -227,7 +227,7 @@ def user_details(request):
                         'nationality':employee.nationality,'date_of_birth':employee.date_of_birth,'blood_group':employee.blood_group,
                         'land_phone':employee.land_phone,'mobile_phone':employee.mobile_phone,'gender':employee.gender,
                         'address_type':address.address_type,'address1':address.address1,'address2':address.address2,
-                        'city':address.city,'state':address.state,'zipcode':address.zipcode})
+                        'city':address.city,'state':address.state,'country':address.country,'zipcode':address.zipcode})
                         
 
                         context["form"] = form
@@ -242,7 +242,7 @@ def user_details(request):
                         'nationality':employee.nationality,'date_of_birth':employee.date_of_birth,'blood_group':employee.blood_group,
                         'land_phone':employee.land_phone,'mobile_phone':employee.mobile_phone,'gender':employee.gender,
                         'address_type':address.address_type,'address1':address.address1,'address2':address.address2,
-                        'city':address.city,'state':address.state,'zipcode':address.zipcode})
+                        'city':address.city,'state':address.state,'country':address.country,'zipcode':address.zipcode})
                         
                         context["form"] = form
                         context["lang_lists"] = lang_lists
@@ -386,6 +386,7 @@ def user_details(request):
                     address2 = form.cleaned_data['address2']
                     city = form.cleaned_data['city']
                     state = form.cleaned_data['state']
+                    country = form.cleaned_data['country']
                     zipcode = form.cleaned_data['zipcode']
                     
 
@@ -406,6 +407,7 @@ def user_details(request):
                         userdata1.address2=address2
                         userdata1.city=city
                         userdata1.state=state
+                        userdata1.country=country
                         userdata1.zipcode=zipcode
                         # userdata2.language=language
                         # userdata2.speak=speak
@@ -437,6 +439,7 @@ def user_details(request):
                         userdata1.address2=address2
                         userdata1.city=city
                         userdata1.state=state
+                        userdata1.country=country
                         userdata1.zipcode=zipcode
                         try:
                             userdata.save()
@@ -468,6 +471,7 @@ def user_details(request):
                 address2 = form.cleaned_data['address2']
                 city = form.cleaned_data['city']
                 state = form.cleaned_data['state']
+                country = form.cleaned_data['country']
                 zipcode = form.cleaned_data['zipcode']
                 language = form.cleaned_data['language']
                 read = form.cleaned_data['read']
@@ -481,7 +485,7 @@ def user_details(request):
                 mobile_phone=mobile_phone,gender=gender).save()
                 print employee
                 Address(employee=employee, address_type=address_type,address1=address1,address2=address2,
-                    city=city,state=state,zipcode=zipcode).save()
+                    city=city,state=state,country=country,zipcode=zipcode).save()
                 LanguageProficiency(employee=employee, language_known=language,speak=speak,read=read,write=write).save()
 
                 context['form'] = form
@@ -503,13 +507,14 @@ def user_details(request):
             address2_errors = form['address2'].errors
             city_errors = form['city'].errors
             state_errors = form['state'].errors
+            country_errors = form['country'].errors
             zipcode_errors = form['zipcode'].errors
             
             return render(request, 'form_templates/user_profile.html', {'form':form, 'name_pan_errors':name_pan_errors,
             'nationality_errors':nationality_errors,'date_of_birth_errors':date_of_birth_errors,'blood_group_errors':blood_group_errors,
             'land_phone_errors':land_phone_errors,'mobile_phone_errors':mobile_phone_errors,'gender_errors':gender_errors,
             'address_type_errors':address_type_errors,'address1_errors':address1_errors,'address2_errors':address2_errors,
-            'city_errors':city_errors,'state_errors':state_errors,'zipcode_errors':zipcode_errors})
+            'city_errors':city_errors,'state_errors':state_errors,'country_errors':country_errors,'zipcode_errors':zipcode_errors})
 
     return render(request, 'form_templates/family_details.html', context)
 
@@ -540,7 +545,7 @@ def family_details(request):
             return render(request, "form_templates/family_details.html", context)
     
     if request.method == 'POST':
-        # import ipdb; ipdb.set_trace()
+        import ipdb; ipdb.set_trace()
         context = {"form":""}
         user = request.user
         try:
@@ -672,7 +677,6 @@ def education_delete(request):
     # import ipdb; ipdb.set_trace()
     if request.method == 'GET':
 
-        
         user = request.user
         qualification = request.GET.get('qualification', '')
         specialization = request.GET.get('specialization', '')
@@ -682,7 +686,6 @@ def education_delete(request):
         form = EducationForm(request.FILES)
         context["form"] = form
         
-          
         return render(request, "form_templates/education_display.html", context)
         #return HttpResponseRedirect('/user_details/education')
 
@@ -731,8 +734,9 @@ def address_tempo(request):
             address2 = form.cleaned_data['address2']
             city = form.cleaned_data['city']
             state = form.cleaned_data['state']
+            country = form.cleaned_data['country']
             zipcode = form.cleaned_data['zipcode']
-            Address(employee=user, address_type=address_type,address1=address1,address2=address2,city=city,state=state,zipcode=zipcode).save()
+            Address(employee=user, address_type=address_type,address1=address1,address2=address2,city=city,state=state,country=country,zipcode=zipcode).save()
             context["form"] = form
             return render(request, "address_tempo.html", context)
         else:
@@ -757,18 +761,20 @@ def address_copy(request):
         C = request.POST.get('address2')
         d = request.POST.get('city')
         e = request.POST.get('state')
-        f = request.POST.get('zipcode')
+        f = request.POST.get('country')
+        g = request.POST.get('zipcode')
         address = Address.objects.filter(employee=request.user, address_type=a)
         address_type = 'TM'
         address1 = b
         address2 = C
         city = d
         state = e
-        zipcode = f
+        country = f
+        zipcode = g
 
-        Address(employee=user, address_type=address_type,address1=address1,address2=address2,city=city,state=state,zipcode=zipcode).save()
+        Address(employee=user, address_type=address_type,address1=address1,address2=address2,city=city,state=state,country=country,zipcode=zipcode).save()
         context["form"] = form
-        return render(request, "form_templates/user_profile.html", context,{'address_type':address_type,'address1':address1,'address2':address2,'city':city,'state':state,'zipcode':zipcode})
+        return render(request, "form_templates/user_profile.html", context,{'address_type':address_type,'address1':address1,'address2':address2,'city':city,'state':state,'country':country,'zipcode':zipcode})
 
     if request.method=='GET':
         context = {"form":""}
@@ -1090,7 +1096,6 @@ def proof(request):
                             form.voter_attachment = request.FILES['voter_attachment']
                             voter_attachment = form.voter_attachment
                     
-
                     if pan_attachment == None:
                         pan_attachment = ''
                     if aadhar_attachment == None:
@@ -1119,7 +1124,7 @@ def proof(request):
                     if (voter_id and voter_attachment) != '':
                         fields.append(fields4)
                 
-                    fields = [pan,aadhar_card, dl, passport, voter_id]
+                    # fields = [pan,aadhar_card, dl, passport, voter_id]
 
                     check = [ val for val in fields ]
                     if len(check) > 1:
@@ -1167,6 +1172,7 @@ def proof(request):
                 voter_attachment = form.cleaned_data['voter_attachment']
                 if request.FILES.get('voter_attachment', ""):
                     form.voter_attachment = request.FILES['voter_attachment']
+                
                 if pan_attachment == None:
                     pan_attachment = ''
                 if aadhar_attachment == None:
@@ -1291,17 +1297,6 @@ def previous_employment(request):
         ps_attachment = request.FILES.get('ps_attachment',"")
         rl_attachment = request.FILES.get('rl_attachment',"")
         offer_letter_attachment = request.FILES.get('offer_letter_attachment',"")
-        # if request.FILES.get('ps_attachment', ""):
-        #     if request.FILES['ps_attachment'].name.split(".")[-1] not in AllowedFileTypes:
-        #         context['errors'].append('Attachment : File type not allowed. Please select a valid file type and then submit again')
-
-        # if request.FILES.get('rl_attachment', ""):
-        #     if request.FILES['rl_attachment'].name.split(".")[-1] not in AllowedFileTypes:
-        #         context['errors'].append('Attachment : File type not allowed. Please select a valid file type and then submit again')
-
-        # if request.FILES.get('offer_letter_attachment', ""):
-        #     if request.FILES['offer_letter_attachment'].name.split(".")[-1] not in AllowedFileTypes:
-        #         context['errors'].append('Attachment : File type not allowed. Please select a valid file type and then submit again')
         
         if form.is_valid():
             try:
@@ -1482,7 +1477,7 @@ def confirm(request):
                     
                     return render(request,'form_templates/confirm.html', context)
             except UserDetails.DoesNotExist:
-                messages.error(request, 'Please fill all your User profile before confirming')
+                messages.error(request, 'Please fill all your User profile details before confirming')
                 context["form"] = form
                 return render(request,'form_templates/confirm.html', context)
 
@@ -1550,6 +1545,7 @@ def print_candidate_information(request):
             address2 = address.address2
             city = address.city
             state = address.state
+            country = address.country
             zipcode = address.zipcode
         else:
             address_type = {}
@@ -1557,6 +1553,7 @@ def print_candidate_information(request):
             address2 = {}
             city = {}
             state = {}
+            country = {}
             zipcode = {}
           
 
@@ -1567,6 +1564,7 @@ def print_candidate_information(request):
             address2_t = address_t.address2
             city_t = address_t.city
             state_t = address_t.state
+            country_t = address_t.country
             zipcode_t = address_t.zipcode
         else:
             address_type_t = ''
@@ -1574,6 +1572,7 @@ def print_candidate_information(request):
             address2_t = ''
             city_t = ''
             state_t = ''
+            country_t  = ''
             zipcode_t = ''
 
        
@@ -1709,7 +1708,7 @@ def print_candidate_information(request):
             last_ctc = previous.last_ctc
             reason_for_exit = previous.reason_for_exit
 
-            previous_1 = PreviousEmployment.objects.filter(employee=request.user).order_by('-id')[1]
+            previous_1 = PreviousEmployment.objects.filter(employee=request.user).order_by('-id')[0]
             company_name_1 = previous_1.company_name
             company_address_1 = previous_1.company_name
             job_type_1 = previous_1.job_type
@@ -1740,6 +1739,7 @@ def print_candidate_information(request):
             'address2':address2,
             'city':city,
             'state':state,
+            'country':country,
             'zipcode':zipcode,
 
             'address_type_t':address_type_t,
@@ -1747,6 +1747,7 @@ def print_candidate_information(request):
             'address2_t':address2_t,
             'city_t':city_t,
             'state_t':state_t,
+            'country_t':country_t,
             'zipcode_t':zipcode_t,
 
             'education_type':education_type,

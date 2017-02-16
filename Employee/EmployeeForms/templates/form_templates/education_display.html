@@ -1,4 +1,5 @@
 {% load honeypot %}
+
   {% csrf_token %}
   <!-- <div class="form-group">
     <label class="col-sm-2 control-label">Employee</label>
@@ -73,7 +74,7 @@
   </div>
   
   <div class="form-group">
-    <label class="col-sm-5 control-label">Overall Marks<span class="mandatory-field"> *</span></label>
+    <label class="col-sm-5 control-label">Overall percentage/CPGA<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
       {{form.overall_marks}}
       {{form.overall_marks.errors}}
@@ -85,7 +86,7 @@
     <label class="col-sm-5 control-label">Marks Card<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
       {{form.marks_card_attachment}}
-      
+      <div class="bare filestyle"></div>
       <div class="help-block with-errors"></div>
     </div>
   </div>
@@ -97,4 +98,3 @@
         </h3>
 
   </div>
-    

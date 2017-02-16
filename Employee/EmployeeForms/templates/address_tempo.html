@@ -49,21 +49,7 @@
 
 
 <!-- ~~~~sanjay~~~~ -->
-                       {% if messages %}
-
-                                    {% for message in messages %}
-
-                                  <div class="alert alert-danger container" style="margin-top: 25px;width: 410px">
-                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-cross"></i></button>
-                                    <span class="vd_alert-icon"><i class="fa fa-exclamation-circle vd_red"></i></span><strong>{{message}}</strong>
-                                  </div>
-
-
-                                    {% endfor %}
-
-                                {% endif %}
-                    
-
+                       
 
                         <form id="user_details_form" method="post" class="form-horizontal" enctype="multipart/form-data" data-toggle="validator">
 
@@ -147,7 +133,7 @@
                               <label class="col-sm-2 control-label">Address Type<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-7 controls">
                                 {{form.address_type}}
-                                
+                                <span class="help-inline">please fill only temporary address here</span>
                                 <div class="help-block with-errors"></div>
                               </div>
                             </div>
