@@ -22,7 +22,7 @@ from django.contrib.auth.models import User
 from honeypot.decorators import check_honeypot, verify_honeypot_value
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from models import Address, UserDetails, Education, PreviousEmployment, Proof, ConfirmationCode, FamilyDetails, LanguageProficiency,EducationUniversity, EducationSpecialization, EducationInstitute
-from forms import UserDetailsForm, EducationForm, PreviousEmploymentForm, ProofForm, UserRegistrationForm, FamilyDetailsForm
+from forms import UserDetailsForm, EducationForm, PreviousEmploymentForm, ProofForm, UserRegistrationForm, FamilyDetailsForm, AddressForm
 
 AllowedFileTypes = ['jpg', 'csv','png', 'pdf', 'xlsx', 'xls', 'docx', 'doc', 'jpeg', 'eml', 'zip']
 # Create your views here.
@@ -145,7 +145,7 @@ def user_details(request):
         
         context["form"] = form
         
-        # import ipdb; ipdb.set_trace()
+        #import ipdb; ipdb.set_trace()
         user = request.user
         first_name = user.first_name
         last_name = user.last_name
@@ -237,6 +237,7 @@ def user_details(request):
                     except Address.DoesNotExist:
 
                         address = Address.objects.get(employee=request.user, address_type='TM')
+
                         photo = employee.photo
                         form = UserDetailsForm(initial = {'name_pan':employee.name_pan,'photo':employee.photo,
                         'nationality':employee.nationality,'date_of_birth':employee.date_of_birth,'blood_group':employee.blood_group,
@@ -488,6 +489,7 @@ def user_details(request):
                     city=city,state=state,country=country,zipcode=zipcode).save()
                 LanguageProficiency(employee=employee, language_known=language,speak=speak,read=read,write=write).save()
 
+                
                 context['form'] = form
                 return HttpResponseRedirect('/user_details/family_details')
 
@@ -530,7 +532,7 @@ def family_details(request):
             employee = FamilyDetails.objects.get(employee=request.user)
             
             form = FamilyDetailsForm(initial = {'marital_status':employee.marital_status,'wedding_date':employee.wedding_date,
-            'spouse_name':employee.spouse_name,'no_of_children':employee.no_of_children,'mother_name':employee.mother_name,
+            'spouse_name':employee.spouse_name,'spouse_dob':employee.spouse_dob,'spouse_profession':employee.spouse_profession,'no_of_children':employee.no_of_children,'mother_name':employee.mother_name,
             'mother_dob':employee.mother_dob,'mother_profession':employee.mother_profession,'father_name':employee.father_name,
             'father_dob':employee.father_dob,'father_profession':employee.father_profession,'emergency_phone1':employee.emergency_phone1,
             'emergency_phone2':employee.emergency_phone2,'child1_name':employee.child1_name,'child2_name':employee.child2_name})
@@ -566,6 +568,8 @@ def family_details(request):
                     marital_status = form.cleaned_data['marital_status']
                     wedding_date = form.cleaned_data['wedding_date']
                     spouse_name = form.cleaned_data['spouse_name']
+                    spouse_dob = form.cleaned_data['spouse_dob']
+                    spouse_profession = form.cleaned_data['spouse_profession']
                     no_of_children = form.cleaned_data['no_of_children']
                     mother_name = form.cleaned_data['mother_name']
                     mother_dob = form.cleaned_data['mother_dob']
@@ -583,6 +587,8 @@ def family_details(request):
                     userdata.marital_status = marital_status
                     userdata.wedding_date = wedding_date
                     userdata.spouse_name = spouse_name
+                    userdata.spouse_dob = spouse_dob
+                    userdata.spouse_profession = spouse_profession
                     userdata.no_of_children = no_of_children
                     userdata.mother_name = mother_name
                     userdata.mother_profession = mother_profession
@@ -609,6 +615,8 @@ def family_details(request):
                 marital_status = form.cleaned_data['marital_status']
                 wedding_date = form.cleaned_data['wedding_date']
                 spouse_name = form.cleaned_data['spouse_name']
+                spouse_dob = form.cleaned_data['spouse_dob']
+                spouse_profession = form.cleaned_data['spouse_profession']
                 no_of_children = form.cleaned_data['no_of_children']
                 mother_name = form.cleaned_data['mother_name']
                 mother_dob = form.cleaned_data['mother_dob']
@@ -622,7 +630,7 @@ def family_details(request):
                 child2_name = form.cleaned_data['child2_name']
                 
                 FamilyDetails(employee = employee,marital_status=marital_status,wedding_date=wedding_date,spouse_name=spouse_name,
-                    no_of_children=no_of_children,mother_name=mother_name, mother_dob=mother_dob,mother_profession=mother_profession,
+                    spouse_dob=spouse_dob,spouse_profession=spouse_profession,no_of_children=no_of_children,mother_name=mother_name, mother_dob=mother_dob,mother_profession=mother_profession,
                     father_name=father_name,father_profession=father_profession,father_dob=father_dob, emergency_phone1=emergency_phone1,
                     emergency_phone2=emergency_phone2,child1_name=child1_name,child2_name=child2_name).save()
                 print employee
@@ -636,6 +644,8 @@ def family_details(request):
             marital_status_errors = form['marital_status'].errors
             wedding_date_errors = form['wedding_date'].errors
             spouse_name_errors = form['spouse_name'].errors
+            spouse_dob_errors = form['spouse_dob'].errors
+            spouse_profession_errors = form['spouse_profession'].errors
             no_of_children_errors = form['no_of_children'].errors
             mother_name_errors = form['mother_name'].errors
             mother_dob_errors = form['mother_dob'].errors
@@ -649,7 +659,7 @@ def family_details(request):
             child2_name_errors = form['child2_name'].errors
             
             return render(request, 'form_templates/family_details.html', {'form':form, 'marital_status_errors':marital_status_errors,
-            'wedding_date_errors':wedding_date_errors,'spouse_name_errors':spouse_name_errors,'no_of_children_errors':no_of_children_errors,
+            'wedding_date_errors':wedding_date_errors,'spouse_name_errors':spouse_name_errors,'spouse_dob_errors':spouse_dob_errors,'spouse_profession_errors':spouse_profession_errors,'no_of_children_errors':no_of_children_errors,
             'mother_name_errors':mother_name_errors,'mother_dob_errors':mother_dob_errors,'mother_profession_errors':mother_profession_errors,
             'father_name_errors':father_name_errors,'father_dob_errors':father_dob_errors,'father_profession_errors':father_profession_errors,
             'emergency_phone1_errors':emergency_phone1_errors,'emergency_phone2_errors':emergency_phone2_errors,'child1_name_errors':child1_name_errors,
@@ -693,42 +703,21 @@ def address_tempo(request):
     # import ipdb; ipdb.set_trace()
     if request.method=='GET':
         context = {"form":""}
-        form = UserDetailsForm()
+        form = AddressForm()
        
         user = request.user
-        try:
-            employee = UserDetails.objects.get(employee=request.user)
-
-            form = UserDetailsForm(initial = {'name_pan':employee.name_pan,
-            'nationality':employee.nationality,'date_of_birth':employee.date_of_birth,
-            'blood_group':employee.blood_group,'land_phone':employee.land_phone,
-            'mobile_phone':employee.mobile_phone,'gender':employee.gender})
+        context['form'] = form
+        return render(request, "address_tempo.html", context)
         
-            messages.warning(request,"please fill only temporary address here")
-            context["form"] = form
-            return render(request, "address_tempo.html", context)
-        except UserDetails.DoesNotExist:
-            context = {"form":""}
-            form = UserDetailsForm()
-            context["form"] = form
-            return HttpResponseRedirect('/user_details')
-
     if request.method=='POST':
         context = {"form":""}
-        
+        import ipdb; ipdb.set_trace()
         # form = UserDetailsForm(request.POST)  
         user = request.user      
-        employee = UserDetails.objects.get(employee=request.user)
 
-        form = UserDetailsForm(initial = {'name_pan':employee.name_pan,
-        'nationality':employee.nationality,'date_of_birth':employee.date_of_birth,
-        'blood_group':employee.blood_group,'land_phone':employee.land_phone,
-        'mobile_phone':employee.mobile_phone,'gender':employee.gender})
-        context = {"form":""}
-        form = UserDetailsForm(request.POST)
+        form = AddressForm(request.POST)
         
         if form.is_valid():
-            address = Address.objects.get(employee=request.user, address_type='PR')
             address_type = 'TM'
             address1 = form.cleaned_data['address1']
             address2 = form.cleaned_data['address2']
@@ -924,7 +913,7 @@ def education(request):
                 return render(request, 'form_templates/education.html',context)
 
         else:
-            print form.is_valid()
+            
             # import ipdb; ipdb.set_trace()
             # error = context['errors']
             # errors = error[0]
@@ -936,11 +925,14 @@ def education(request):
             institute_errors = form['institute'].errors
             board_university_errors = form['board_university'].errors
             overall_marks_errors = form['overall_marks'].errors
+            # import ipdb; ipdb.set_trace()
+            marks_card_attachment_errors = form['marks_card_attachment'].errors
+            
             # messages.error(request, 'Attachment : File type not allowed. Please select a valid file type and then submit again')
             context = { 'form':form, 'education_type_errors':education_type_errors,
             'qualification_errors':qualification_errors,'specialization_errors':specialization_errors,'overall_marks_errors':overall_marks_errors,
             'from_date_errors':from_date_errors,'to_date_errors':to_date_errors,'institute_errors':institute_errors,
-            'board_university_errors':board_university_errors}
+            'board_university_errors':board_university_errors,'marks_card_attachment_errors':marks_card_attachment_errors}
 
             return render(request, 'form_templates/education.html', context)
 
@@ -1217,7 +1209,7 @@ def proof(request):
                     passport_attachment=passport_attachment,
                     voter_id=voter_id,
                     voter_attachment=voter_attachment).save()
-                    messages.error(request, 'Proof details are added successfully')
+                    
                     context['form'] = form
 
                     return HttpResponseRedirect("/user_details/confirm")

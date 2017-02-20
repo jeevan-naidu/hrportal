@@ -1,101 +1,109 @@
 {% load honeypot %}
-                {% csrf_token %}
-                <div class="form-group">
-                  <label class="col-sm-5 control-label">Company Name</label>
-                  <div id = "id_company_name" class="col-sm-7 controls">
-                    {{form.company_name}}
-                    {{form.company_name.errors}}
-                    <div class="help-block with-errors"></div>
 
-                  </div>
-                </div>
+  {% csrf_token %}
 
-                <div class="form-group">
-                  <label class="col-sm-5 control-label">Company Address</label>
-                  <div class="col-sm-7 controls">
-                    {{form.company_address}}
-                    {{form.company_address.errors}}
-                    <div class="help-block with-errors"></div>
+<div class="form-group">
+    <label class="col-sm-5 control-label">Company Name<span class="mandatory-field"> *</span></label>
+    <div class="col-sm-7 controls">
+      {{form.company_name}}
+      {{company_name_error}}
+      {{form.company_name.errors}}
+      <div class="help-block with-errors"></div>
+    </div>
+  </div>
 
-                  </div>
-                    </div>
+  <div class="form-group">
+    <label class="col-sm-5 control-label">Company Address</label>
+    <div class="col-sm-7 controls">
+      {{form.company_address}}
+      {{company_address_errors}}
+      {{form.company_address.errors}}
+      <div class="help-block with-errors"></div>
+    </div>
+  </div>
 
-                    <div class="form-group">
-                      <label class="col-sm-5 control-label">Job Type</label>
-                      <div class="col-sm-7 controls">
-                        {{form.job_type}}
-                        {{form.job_type.errors}}
-                    <div class="help-block with-errors"></div>
+  <div class="form-group">
+    <label class="col-sm-5 control-label">Job Type</label>
+    <div class="col-sm-7 controls">
+      {{form.job_type}}
+      {{job_type_errors}}
+      {{form.job_type.errors}}
+      <div class="help-block with-errors"></div>
+    </div>
+  </div>
 
-                      </div>
-                        </div>
+  <div class="form-group">
+    <label id ="from_date" class="col-sm-5 control-label">Employed From<span class="mandatory-field"> *</span></label>
+    <div class="col-sm-7 controls">
+      <div class="input-group">
+        {{form.employed_from}}
+        {{employed_from_errors}}
+        {{form.employed_from.errors}}
+        <span class="help-inline">Format:DD/MM/YYYY</span>
+      <div class="help-block with-errors"></div>
+        <span class="input-group-addon" id="datepicker-icon-trigger" data-datepicker="#datepicker-icon"><i class="fa fa-calendar"></i></span> </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label id="to_date" class="col-sm-5 control-label">Employed To<span class="mandatory-field"> *</span></label>
+    <div class="col-sm-7 controls">
+      <div class="input-group">
+        {{form.employed_upto}}
+        {{employed_upto_errors}}
+        {{form.employed_upto.errors}}
+        <span class="help-inline">Format:DD/MM/YYYY</span>
+        <div class="help-block with-errors"></div>        
+        <span class="input-group-addon" id="datepicker-icon-trigger" data-datepicker="#datepicker-icon"><i class="fa fa-calendar"></i></span> </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-5 control-label">Last CTC<span class="mandatory-field"> *</span></label>
+    <div id="institute" class="col-sm-7 controls">
+      {{form.last_ctc}}
+      {{last_ctc_errors}}
+      {{form.last_ctc.errors}}
+      <div class="help-block with-errors"></div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-5 control-label">Reason for Exit<span class="mandatory-field"> *</span></label>
+    <div class="col-sm-7 controls">
+      {{form.reason_for_exit}}
+      {{reason_for_exit_errors}}
+      {{form.board_reason_for_exituniversity.errors}}
+      <div class="help-block with-errors"></div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-5 control-label">Pay slips attachments<span class="mandatory-field"> *</span></label>
+    <div class="col-sm-7 controls">
+      {{form.ps_attachment}}
+      {{form.ps_attachment.errors}}
+      <div class="help-block with-errors"></div>
+    </div>
+  </div>
 
-                <div class="form-group">
-                  <label class="col-sm-5 control-label">Employed From</label>
-                  <div class="col-sm-7 controls">
-                    {{form.employed_from}}
-                    {{form.employed_from.errors}}
-                    <span class="help-inline">Format:DD/MM/YYYY</span>
-                    <div class="help-block with-errors"></div>
+  
+  <div class="form-group">
+    <label class="col-sm-5 control-label">Relieving letter<span class="mandatory-field"> *</span></label>
+    <div class="col-sm-7 controls">
+      {{form.rl_attachment}}
+      <div class="help-block with-errors"></div>
+    </div>
+  </div>
 
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-5 control-label">Employed To</label>
-                  <div class="col-sm-7 controls">
-                    {{form.employed_upto}}
-                    {{form.employed_upto.errors}}
-                    <span class="help-inline">Format:DD/MM/YYYY</span>
-                    <div class="help-block with-errors"></div>
+  <div class="form-group">
+    <label class="col-sm-5 control-label">Offer letter<span class="mandatory-field"> *</span></label>
+    <div class="col-sm-7 controls">
+      {{form.offer_letter_attachment}}
+      <div class="help-block with-errors"></div>
+    </div>
+  </div>
 
-                  </div>
-                </div>
+  
+  
+  <div class="form-group">
 
-                <div class="form-group">
-                  <label class="col-sm-5 control-label">Last CTC</label>
-                  <div class="col-sm-7 controls">
-                    {{form.last_ctc}}
-                    {{form.last_ctc.errors}}
-                    <div class="help-block with-errors"></div>
+        <h3 class="col-sm-12 text-right"><input type="submit" id="submit" class="btn vd_bg-green vd_white" value="Save"/></h3>
 
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-5 control-label">Reason For Exit</label>
-                  <div class="col-sm-7 controls">
-                    {{form.reason_for_exit}}
-                    {{form.reason_for_exit.errors}}
-                    <div class="help-block with-errors"></div>
-
-                  </div>
-                </div>
-
-
-                <div class="form-group">
-                  <label class="col-sm-5 control-label">Attachments for Pay slips</label>
-                  <div class="col-sm-7 controls">
-                    {{form.ps_attachment}}
-                    <div class="help-block with-errors"></div>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label class="col-sm-5 control-label">Attachments for Relieving Letter</label>
-                  <div class="col-sm-7 controls">
-                      {{form.rl_attachment}}
-                      {{form.rl_attachment.errors}}
-                    <div class="help-block with-errors"></div>
-                  </div>
-                </div>
-
-                <div class="form-group">
-              <label class="col-sm-5 control-label">Offer letter</label>
-              <div class="col-sm-7 controls">
-                {{form.offer_letter_attachment}}
-                <div class="help-block with-errors"></div>
-              </div>
-              {% render_honeypot_field "designation" %}
-                <div class="form-group">
-
-                    <h3 class="col-sm-12 text-right"><input type="submit" id="submit" class="btn vd_bg-green vd_white" value="Update"/></h3>
-                </div>
+  </div>

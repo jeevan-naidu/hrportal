@@ -97,7 +97,7 @@ class Address(models.Model):
     address2 = models.CharField(verbose_name="Address 2",max_length=200,blank=False)
     city = models.CharField("City", max_length=30, blank=False)
     state = models.CharField("State", max_length=30, blank=False)
-    country = models.CharField("Country", max_length=30, blank=False,default="")
+    country = models.CharField("Country", max_length=30, blank=False,default="India")
     zipcode = models.CharField("Zip Code", max_length=10, blank=False)
 
     def __unicode__(self):
@@ -149,6 +149,8 @@ class FamilyDetails(models.Model):
     marital_status = models.CharField("Marital Status",max_length=10,choices=MARITAL_CHOICES,blank=True, null=True)
     wedding_date = models.DateField(verbose_name='Wedding Date',null=True,blank=True)
     spouse_name = models.CharField(verbose_name='Spouse Name',max_length=50,null=True,blank=True)
+    spouse_dob = models.DateField(verbose_name='Spouse Name',max_length=50,null=True,blank=True)
+    spouse_profession = models.CharField(verbose_name='Spouse Name',max_length=50,null=True,blank=True)
     no_of_children = models.CharField(verbose_name='Number of Children', max_length=10, null=True, blank=True)
     mother_name = models.CharField(verbose_name='Mother Name',max_length=30, null=False, blank=False)
     mother_dob = models.DateField(verbose_name='Mother Date of Birth',null=True,blank=True)

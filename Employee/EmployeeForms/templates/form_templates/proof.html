@@ -8,16 +8,7 @@
                 <!-- * Any of the 2 proofs with attachments is mandatory -->
                 {% csrf_token %}
                 
-                  {% if messages %}
-
-                    {% for message in messages %}
-
-                  <div class="alert alert-danger">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-cross"></i></button>
-                    <span class="vd_alert-icon"><i class="fa fa-exclamation-circle vd_red"></i></span><strong>{{message}}</strong></div>
-                   {% endfor %}
-                    {% endif %}
-              
+                  
                     
                 <div class="form-group">
                   <label class="col-sm-4 control-label">PAN Card Number<span class="mandatory-field"> *</span></label>
@@ -86,35 +77,7 @@
 
 
 <script type="text/javascript">
-/* 2 form validation */
 
-var validateTwo = function(){
-  var uploadedCount = 0;
-  var fileUploadCount = 0;
-  $('#tab4 .form-group').each(function(){
-    if(($(this).find('input[type="text"]').val() !== '') && ($(this).find('input.bare').val() !== '')){
-          uploadedCount++;
-          console.log(uploadedCount);
-        }
-/*     if ($(this).find('input.bare').val() !== '') {
-          fileUploadCount++;
-          console.log('fileUploadCount is ' + fileUploadCount);
-      } */  
-  })
-  console.log('final uploadedCount is ' + uploadedCount)  ;
-  if(uploadedCount < 3){
-            // debugger;
-      swal({title:"Min 2 proofs with attachments required",
-            type: "error",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "OK!",
-            cancelButtonText: "Cancel",
-            closeOnConfirm: true,
-            closeOnCancel: true
-            })
-      }else{
-        // debugger;
         
             var data = new FormData($('form').get(0));
             swal({   title: "Checking proof details!!",
@@ -137,7 +100,14 @@ var validateTwo = function(){
                     processData: false,
                     contentType: false,
                     success: function(data) {
-                        window.location='/user_details/confirm'
+                            var content = $(data).find("#proof_form").html();
+                            var error = $(data).find(".errorlist").text();
+                            console.log(error)
+                            if(error){
+                              $("#proof_form").html(content)
+                            }else{
+                                window.location='/user_details/confirm'
+                          }
                         },
                    error: function( data ){
                      var errors = data.response;
@@ -148,44 +118,7 @@ var validateTwo = function(){
      }
        }         
    
-}// end of validate2
-$("#proof_form").submit(function (e) {
-e.preventDefault();
-validateTwo();
-  });
-$(document).ready(function(){
-  
-})
+
 </script>
 <!-- End here -->
 {% endblock %}
- <!-- var proof = $(data).find('#proof_form')
-                        var pan_error = pan_error_d
-                        var pan_att_error = pan_att_error_d
-                        
-                        if (pan_error == pan_error_d){
-                          console.log("if1");
-                            $("#tab4").html(proof); 
-                        }
-                        // if (pan_att_error == pan_att_error_d){
-                        //   console.log("if2");
-                        //     $("#tab4").html(proof); 
-                        // }
-                        else{
-                          swal({   title: "Collecting proof details!!",
-                              text: "",
-                              type: "Success",
-                              showCancelButton: true,
-                              confirmButtonColor: "#DD6B55",
-                              confirmButtonText: "OK!",
-                              cancelButtonText: "Cancel",
-                              closeOnConfirm: true,
-                              closeOnCancel: true
-                              },
-                              function(isConfirm) {
-                                if (isConfirm) {
-                                  console.log("else")
-                                  window.location = '/user_details/confirm'
-                                }
-                              });
-                        } -->

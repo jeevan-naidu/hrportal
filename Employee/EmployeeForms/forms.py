@@ -72,7 +72,7 @@ class UserDetailsForm(forms.ModelForm):
 	employee = forms.CharField(required=False)
 	name_pan = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'input-sm form-control width-30',
 		'required': 'True', 'data-error': 'Please enter your first name'}))
-	photo = forms.FileField(required=False, widget = CustomPhotoClearableFileInput)
+	photo = forms.FileField(required=True, widget = CustomPhotoClearableFileInput)
 	photo.widget.attrs = {'class':'bare photostyle', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
 	nationality = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'input-sm form-control width-30','required': 'True'}))
 	date_of_birth = forms.DateField(label="Date of Birth",widget=DateTimePicker(options=dateTimeOption),)
@@ -110,6 +110,21 @@ class UserDetailsForm(forms.ModelForm):
 		model = LanguageProficiency
 		fields = ['language_known','speak','read','write']
 
+class AddressForm(forms.ModelForm):
+
+	address_type = forms.ChoiceField(choices=ADDRESSTYPE_CHOICES, 
+		widget=forms.Select(attrs={'class': 'input-sm form-control width-30','required': 'True'}))
+	address1 = forms.CharField(max_length=200, widget=forms.TextInput(attrs={'class': 'input-sm form-control width-30','required': 'True'}))
+	address2 = forms.CharField(max_length=200, required=False, widget=forms.TextInput(attrs={'class': 'input-sm form-control width-30'}))
+	city = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'input-sm form-control width-30','required': 'True'}))
+	state = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'input-sm form-control width-30','required': 'True'}))
+	country = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'input-sm form-control width-30','required': 'True'}))
+	zipcode = forms.RegexField(max_length=6,required=False, regex=r'^\+?1?\d{5,6}$',widget=forms.TextInput(attrs={'class': 'input-sm form-control width-30','type': 'tel', 'pattern':'^\+?1?\d{5,6}$'}))
+
+	class Meta:
+		model = Address
+		fields = ['address_type', 'address1', 'address2', 'city', 'state', 'country', 'zipcode' ]
+
 
 class FamilyDetailsForm(forms.ModelForm):
 
@@ -118,6 +133,9 @@ class FamilyDetailsForm(forms.ModelForm):
 	wedding_date = forms.DateField(label="Wedding Date", required=False, widget=DateTimePicker(options=dateTimeOption),)
 	wedding_date.widget.attrs = {'class': 'form-control filter_class','readonly':'readonly'}
 	spouse_name = forms.CharField(required=False,max_length=50, widget=forms.TextInput(attrs={'class': 'input-sm width-50 input-mw'}))
+	spouse_dob = forms.DateField(label="Spouse Date of birth", required=False, widget=DateTimePicker(options=dateTimeOption),)
+	spouse_dob.widget.attrs = {'class': 'form-control filter_class','readonly':'readonly'}
+	spouse_profession = forms.CharField(required=False,max_length=50, widget=forms.TextInput(attrs={'class': 'input-sm width-50 input-mw'}))
 	no_of_children = forms.CharField(required=False,max_length=50, widget=forms.TextInput(attrs={'class': 'input-sm width-50 input-mw'}))
 	mother_name = forms.CharField(required=True,max_length=50, widget=forms.TextInput(attrs={'class': 'input-sm width-50 input-mw'}))
 	mother_dob = forms.DateField(label="Mother Date of birth", required=False, widget=DateTimePicker(options=dateTimeOption),)
@@ -136,7 +154,7 @@ class FamilyDetailsForm(forms.ModelForm):
 
 	class Meta:
 		model = FamilyDetails
-		fields = ['marital_status','wedding_date','spouse_name','no_of_children','mother_name','mother_dob','mother_profession',
+		fields = ['marital_status','wedding_date','spouse_name','spouse_dob','spouse_profession','no_of_children','mother_name','mother_dob','mother_profession',
 		'father_name','father_dob','father_profession','emergency_phone1','emergency_phone2','child1_name','child2_name']
 
 class EducationForm(forms.ModelForm):
@@ -152,7 +170,7 @@ class EducationForm(forms.ModelForm):
 	institute = forms.ChoiceField(required=False,choices=INSTITUTE,widget=forms.Select(attrs={'class':'form-control'}))
 	board_university = forms.ChoiceField(required=False,choices=BOARD_UNIVERSITY, widget=forms.Select(attrs={'class':'form-control'}))
 	overall_marks = forms.FloatField(required=True, widget=forms.NumberInput(attrs={'min': '0', 'max': '100','placeholder': 'Marks float','data-error': 'Please enter marks in float and it should be below 100', 'class':'form-control'}))
-	marks_card_attachment = forms.FileField(required=False,widget = CustomClearableFileInput)
+	marks_card_attachment = forms.FileField(required=True,widget = CustomClearableFileInput)
     # Add Bootstrap widgets
 	marks_card_attachment.widget.attrs = {'class':'bare filestyle', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
 
@@ -168,18 +186,18 @@ class PreviousEmploymentForm(forms.ModelForm):
 	company_address = forms.CharField(required=False, max_length=500, widget=forms.TextInput(attrs={'class': 'input-sm form-control'}))
 	job_type = forms.ChoiceField(choices=JOB_TYPE, widget=forms.Select(attrs={'class': 'input-sm form-control','required': 'False'}))
 	employed_from = forms.DateField(label="From date",widget=DateTimePicker(options=dateTimeOption),)
-	employed_from.widget.attrs = {'class': 'form-control filter_class','readonly':'readonly', 'required':'true'}
+	employed_from.widget.attrs = {'class': 'form-control filter_class','readonly':'readonly','required':'true'}
 	employed_upto = forms.DateField(label="From date",widget=DateTimePicker(options=dateTimeOption),)
-	employed_upto.widget.attrs = {'class': 'form-control filter_class','readonly':'readonly' ,'required':'true'}
+	employed_upto.widget.attrs = {'class': 'form-control filter_class','readonly':'readonly','required':'true'}
 	last_ctc = forms.FloatField(required=False, widget=forms.NumberInput(attrs={'placeholder': 'CTC float','data-error': 'Please enter your CTC in float'}))
 	reason_for_exit = forms.CharField(max_length=200, widget=forms.TextInput(attrs={'class': 'input-sm form-control','required': 'False'}))
-	ps_attachment = forms.FileField(required=False, label='Pay slips Attachment',widget = CustomClearableFileInput)
+	ps_attachment = forms.FileField(required=True, label='Pay slips Attachment',widget = CustomClearableFileInput)
     # Add Bootstrap widgets
 	ps_attachment.widget.attrs = {'class':'bare filestyle', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
-	rl_attachment = forms.FileField(label='Relieveing Letter Attachment', required=False,widget = CustomClearableFileInput)
+	rl_attachment = forms.FileField(required=True,label='Relieveing Letter Attachment', widget = CustomClearableFileInput)
     # Add Bootstrap widgets
 	rl_attachment.widget.attrs = {'class':'bare filestyle', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
-	offer_letter_attachment = forms.FileField(label='Offer Letter Attachment', required=False,widget = CustomClearableFileInput)
+	offer_letter_attachment = forms.FileField(required=True,label='Offer Letter Attachment', widget = CustomClearableFileInput)
     # Add Bootstrap widgets
 	offer_letter_attachment.widget.attrs = {'class':'bare filestyle', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
 

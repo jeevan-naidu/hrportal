@@ -7,19 +7,20 @@
   <form id="education_form" enctype="multipart/form-data" method="post" class="form-horizontal col-sm-7" enctype="multipart/form-data" data-toggle="validator">
 
   {% csrf_token %}
+
   {% if messages %}
 
-      {% for message in messages %}
+            {% for message in messages %}
 
-    <div class="alert alert-danger">
-      <button type="button" class="close" data-dismiss="alert" aria-hidden="true</button>
-      <span class="vd_alert-icon"><i class="fa fa-exclamation-circle vd_red"></i></span><strong>{{message}}</strong></div>
+          <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-cross"></i></button>
+             <span class="vd_alert-icon"><i class="fa fa-exclamation-circle vd_red"></i></span><strong>{{message}}</strong></div>
 
-      {% endfor %}
+            {% endfor %}
 
-  {% endif %}
+         {% endif %}
 
-
+         
   <!-- <div class="form-group">
     <label class="col-sm-5 control-label">Employee</label>
     <div class="col-sm-7 controls">
@@ -32,7 +33,7 @@
     <div class="col-sm-7 controls">
       {{form.education_type}}
       {{education_type_errors}}
-      {{form.education_type.errors}}
+      
       <div class="help-block with-errors"></div>
     </div>
   </div>
@@ -42,7 +43,7 @@
     <div class="col-sm-7 controls">
       {{form.qualification}}
       {{qualification_errors}}
-      {{form.qualification.errors}}
+      
       <div class="help-block with-errors"></div>
     </div>
   </div>
@@ -67,7 +68,7 @@
       <div class="input-group">
         {{form.from_date}}
         {{from_date_errors}}
-        {{form.from_date.errors}}
+        
         <span class="help-inline">Format:MM/DD/YYYY</span>
       <div class="help-block with-errors"></div>
         <span class="input-group-addon" id="datepicker-icon-trigger" data-datepicker="#datepicker-icon"><i class="fa fa-calendar"></i></span> </div>
@@ -79,7 +80,7 @@
       <div class="input-group">
         {{form.to_date}}
         {{to_date_errors}}
-        {{form.to_date.errors}}
+        
         <span class="help-inline">Format:MM/DD/YYYY</span>
         <div class="help-block with-errors"></div>        
         <span class="input-group-addon" id="datepicker-icon-trigger" data-datepicker="#datepicker-icon"><i class="fa fa-calendar"></i></span> </div>
@@ -90,7 +91,7 @@
     <div id="institute" class="col-sm-7 controls">
       {{form.institute}}
       {{institute_errors}}
-      {{form.institute.errors}}
+      
       <div class="help-block with-errors"></div>
     </div>
   </div>
@@ -99,7 +100,7 @@
     <div class="col-sm-7 controls">
       {{form.board_university}}
       {{board_university_errors}}
-      {{form.board_university.errors}}
+      
       <div class="help-block with-errors"></div>
     </div>
   </div>
@@ -108,17 +109,17 @@
     <div class="col-sm-7 controls">
       {{form.overall_marks}}
       {{overall_marks_errors}}
-      {{form.overall_marks.errors}}
+      
       <div class="help-block with-errors"></div>
     </div>
   </div>
 
-  {{marks_card_attachment}}
+  
   <div class="form-group">
-    <label class="col-sm-5 control-label">Marks Card</label>
+    <label class="col-sm-5 control-label">Marks Card<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
       {{form.marks_card_attachment}}
-      
+      {{marks_card_attachment_errors}}
       <div class="help-block with-errors"></div>
     </div>
   </div>
@@ -156,8 +157,13 @@
 
 
 {% block form_scripts %}
+            
+               
+            
 
             <script type="text/javascript">
+            var a;
+            a = "{{marks_card_attachment_errors}}"
 
             var theObj = 
 
@@ -248,7 +254,8 @@
                   url : '/user_details/education',
                   data : {'qualification':qualification,'specialization':specialization},
                   success : function(data){
-                   $("#education_form").html(data);
+                    var content = $(data).find("#education_form").html();
+                    $("#education_form").html(content)
                    // return data;
                   }
                   // error: function(xhr, status, error) {
@@ -292,11 +299,13 @@
 
                 });
 
+            
             $("#education_form").submit(function (e) {
                   e.preventDefault();
                   // if (document.getElementsByName("marks") == '' ){
+                  // debugger;
                   var data = new FormData($('form').get(0));
-                  swal({   title: "Do you want to add again?",
+                  swal({ title: "Do you want to add again?",
                     text: "",
                     type: "warning",
                     showCancelButton: true,
@@ -316,9 +325,14 @@
                           processData: false,
                           contentType: false,
                           success: function( data ) {
-                            
-                             window.location='/user_details/education'
-                             
+                             var content = $(data).find("#education_form").html();
+                             var error = $(data).find(".errorlist").text();
+                             console.log(error)
+                             if(error){
+                                $("#education_form").html(content)
+                              }else{
+                                  window.location='/user_details/education'
+                              }
                           },
                           error: function( data ){
                             var errors = data.response;
@@ -333,8 +347,16 @@
                             cache: false,
                             processData: false,
                             contentType: false,
-                            success: function( response ) {
-                               window.location='/user_details/previous_employment'
+                            success: function( data ) {
+                                
+                               var content = $(data).find("#education_form").html();
+                               var error = $(data).find(".errorlist").text();
+                               console.log(error)
+                               if(error){
+                                  $("#education_form").html(content)
+                                }else{
+                                    window.location='/user_details/previous_employment'
+                                }
                         },
                             error: function( data ){
                                 var errors = data.response;
@@ -348,8 +370,6 @@
                 // }
                     });
 
-
-        
             </script>
 <!-- End here -->
 

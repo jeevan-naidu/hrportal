@@ -63,69 +63,7 @@
                           </div>
                         </div> -->
 
-                            <div class="form-group">
-                              <label class="col-sm-2 control-label">Name(as per PAN card)<span class="mandatory-field"> *</span></label>
-                              <div class="col-sm-7 controls">
-                                {{form.name_pan}}
-                                <div class="help-block with-errors"></div>
-                              </div>
-                            </div>
-                            
-
-                            
-
-                            <div class="form-group">
-                              <label class="col-sm-2 control-label">Gender<span class="mandatory-field"> *</span></label>
-                              <div class="col-sm-2 controls">
-                                {{form.gender}}
-                                <div class="help-block with-errors"></div>
-                              </div>
-                            </div>
-
-                            <div class="form-group">
-                              <label class="col-sm-2 control-label">Nationality<span class="mandatory-field"> *</span></label>
-                              <div class="col-sm-7 controls">
-                                {{form.nationality}}
-                                <div class="help-block with-errors"></div>
-                              </div>
-                            </div>
-
-                            
-
-
-                            <div class="form-group">
-                              <label class="col-sm-2 control-label">Date of Birth<span class="mandatory-field"> *</span></label>
-                              <div class="col-sm-7 controls">
-                                {{form.date_of_birth}}
-                                <div class="help-block with-errors"></div>
-                              </div>
-                            </div>
-
-                            <div class="form-group">
-                              <label class="col-sm-2 control-label">Blood Group<span class="mandatory-field"> *</span></label>
-                              <div class="col-sm-2 controls">
-                                {{form.blood_group}}
-                                <div class="help-block with-errors"></div>
-                              </div>
-                            </div>
-
-                            <div class="form-group">
-                              <label class="col-sm-2 control-label">Land Phone</label>
-                              <div class="col-sm-7 controls">
-                                {{form.land_phone}}
-                                <div class="help-block with-errors"></div>
-                              </div>
-                            </div>
-
-                            
-
-                            <div class="form-group">
-                              <label class="col-sm-2 control-label">Mobile Phone<span class="mandatory-field"> *</span></label>
-                              <div class="col-sm-7 controls">
-                                {{form.mobile_phone}}
-                                <div class="help-block with-errors"></div>
-                              </div>
-                            </div>
+                          
 
                             
 
@@ -172,6 +110,14 @@
                             </div>
 
                             <div class="form-group">
+                              <label class="col-sm-2 control-label">Country<span class="mandatory-field"> *</span></label>
+                              <div class="col-sm-7 controls">
+                                {{form.country}}
+                                <div class="help-block with-errors"></div>
+                              </div>
+                            </div>
+
+                            <div class="form-group">
                               <label class="col-sm-2 control-label">Zip Code<span class="mandatory-field"> *</span></label>
                               <div class="col-sm-7 controls">
                                 {{form.zipcode}}
@@ -189,13 +135,6 @@
 
 <!-- ~~~~sanjay~~~~ -->
                             </div><!-- ./tab-pane -->
-
-
-
-
-
-
-
 
                        </div><!-- ./wizard1 ~~~ -->
 
@@ -227,7 +166,11 @@
                           url: '/user_details/address_tempo',
                           data: $("#user_details_form").serialize(),
                           success: function( response ) {
-                             window.location='/user_details/education'
+                             window.location='/user_details'
+                          },
+                          error: function( data ){
+                            var errors = data.response;
+                            console.log(errors);
                           }
                         });
                       }else{

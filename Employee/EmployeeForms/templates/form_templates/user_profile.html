@@ -9,6 +9,7 @@
                         <form id="user_details_form" method="post" class="form-horizontal" enctype="multipart/form-data" data-toggle="validator">
                         {{success}}
                         {% csrf_token %}
+
                           {% if messages %}
 
                                   {% for message in messages %}
@@ -181,7 +182,7 @@
                                 <span class="help-inline">Format:666666</span>
                                 <div class="help-block with-errors"></div>                                
                               <div class="checkbox">
-                                <label><input id="address" type="checkbox" value="">Temporary as permanent address</label>
+                                <label id="address_copy"><input id="address" type="checkbox" value="">Make your permanent as temporary</label>
                                 <label><span id = "temp_address" class="glyphicon glyphicon-plus"></span>Add a new temporary address</label>
                               </div>
                               
@@ -189,20 +190,9 @@
                               </div>
                             </div>
 
-
-
-
-
-
-
-
-
-
 <div id="lang_add" class ="hidden">
                            <div id="table_add0">
                            
-                         
-
 Language : {{form.language}}
 
 Speak : {{form.speak}}
@@ -239,6 +229,21 @@ Write : {{form.write}}
 
 <script type="text/javascript">
 $(window).load(function() {
+  
+  var a = document.getElementById("id_address_type").value;
+  var b = document.getElementById("id_address1").value;
+  var c = document.getElementById("id_address2").value;
+  console.log(a)
+  console.log(b)
+  console.log(c)
+  if(b==""){
+    
+    document.getElementById("address").disabled=true;
+  }
+  if(c==""){
+    document.getElementById("address").disabled=true;
+  }
+
   $('#imageresize').css({ width: '10%' });
 
   var id = {{request.user.id}}
@@ -273,6 +278,11 @@ $(window).load(function() {
             
              $(this).val(this.checked ? 1 : 0);
             });
+
+    $('#id_address1,id_city,id_zipcode').on('keyup', function() {
+      document.getElementById("address").disabled=false;
+    });
+
 
 
    $('#id_address_type').on('change', function() {
@@ -344,9 +354,7 @@ $(window).load(function() {
           });
                 
             $("#user_details_form").submit(function (e) {
-                    
 
-                    
                   e.preventDefault();
                   // if (document.getElementsByName("website") == '' ){
                   var data = new FormData($('form').get(0));
@@ -369,7 +377,14 @@ $(window).load(function() {
                           processData: false,
                           contentType: false,
                           success: function( data ) {
-                             window.location='/user_details/family_details'
+                             var content = $(data).find("#user_details_form").html();
+                             var error = $(data).find(".errorlist").text();
+                             console.log(error)
+                             if(error){
+                                $("#user_details_form").html(content)
+                              }else{
+                                  window.location='/user_details/family_details'
+                              }
                           },
                           error: function( data ){
                             var errors = data.response;
@@ -430,8 +445,25 @@ $(window).load(function() {
 
 });
 
-        
+    // $('#id_address_type').on('change', function() {
+    //     value =  this.value 
+  
+    // // console.log(value);
 
+    //     if (value=='PR'){
+    //         document.getElementById("address_copy").innerHTML = '<input id="address" type="checkbox" value="">Make your permanent as temporary</label>'
+    //         }
+    //       });
+
+    // $('#id_address_type').on('change', function() {
+    //     value =  this.value 
+  
+    // // console.log(value);
+
+    //     if (value=='TM'){
+    //         document.getElementById("address_copy").innerHTML = '<input id="address" type="checkbox" value="">Make your temporary as permanent</label>'
+    //         }
+    //       });
 
 
     $("body").on('click','#remove',function(){
@@ -452,7 +484,7 @@ $("#address").click(function (e) {
                         var e = document.getElementById("id_state").value;
                         var f = document.getElementById("id_country").value;
                         var g = document.getElementById("id_zipcode").value;
-                        
+
                         swal({   title: "Are you sure you want to copy your permanent address as temporary address?",
                           text: "",
                           type: "warning",
@@ -484,8 +516,23 @@ $("#address").click(function (e) {
 
 $("#temp_address").click(function (e) {
                   e.preventDefault();
-                  
-                        window.location='/user_details/address_tempo'
+                  var data = new FormData($('form').get(0));
+                        $.ajax( {
+                          type: "POST",
+                          url: '/user_details',
+                          data: data,
+                          cache: false,
+                          processData: false,
+                          contentType: false,
+                          success: function( data ) {
+                             window.location='/user_details/address_tempo'
+                          },
+                          error: function( data ){
+                            var errors = data.response;
+                            console.log(errors);
+                          }
+                        });
+                        
                       });
 
 

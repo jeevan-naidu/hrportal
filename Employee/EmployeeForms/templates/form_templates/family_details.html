@@ -49,6 +49,26 @@
                               </div>
                             </div>
 
+                            <div class="form-group spouse_dob_form_group">
+                              <label class="col-sm-4 control-label">Spouse Date of birth</label>
+                              <div class="col-sm-3 controls">
+                                {{form.spouse_dob}}
+                                {{spouse_dob_errors}}
+                                <span class="help-inline">Format:DD/MM/YYYY</span>
+                                <div class="help-block with-errors"></div>
+                              </div>
+                            </div>
+
+                            <div class="form-group spouse_profession_form_group">
+                              <label class="col-sm-4 control-label">Spouse Profession</label>
+                              <div class="col-sm-7 controls">
+                                {{form.spouse_profession}}
+                                {{spouse_profession_errors}}
+                                
+                                <div class="help-block with-errors"></div>
+                              </div>
+                            </div>
+
                             <div class="form-group no_of_children_form_group">
                               <label class="col-sm-4 control-label">Number of children</label>
                               <div class="col-sm-7 controls">
@@ -56,6 +76,27 @@
                                 {{no_of_children_errors}}
                                 
                                 <div class="help-block with-errors"></div>
+                              </div>
+                            </div>
+
+                            <div class="form-group child1_name_form_group">
+                              <label class="col-sm-4 control-label">Child1 Name</label>
+                              <div class="col-sm-7 controls">
+                                {{form.child1_name}}
+                                {{child1_name_errors}}
+                                
+                                <div class="help-block with-errors"></div>                                
+                              </div>
+                            </div>
+
+                            <div class="form-group child2_name_form_group">
+                              <label class="col-sm-4 control-label">Child2 Name</label>
+                              <div class="col-sm-7 controls">
+                                {{form.child2_name}}
+                                {{child2_name_errors}}
+                                
+                                <div class="help-block with-errors"></div>
+
                               </div>
                             </div>
 
@@ -141,26 +182,7 @@
                               </div>
                             </div>
 
-                            <div class="form-group child1_name_form_group">
-                              <label class="col-sm-4 control-label">Child1 Name</label>
-                              <div class="col-sm-7 controls">
-                                {{form.child1_name}}
-                                {{child1_name_errors}}
-                                
-                                <div class="help-block with-errors"></div>                                
-                              </div>
-                            </div>
-
-                            <div class="form-group child2_name_form_group">
-                              <label class="col-sm-4 control-label">Child2 Name</label>
-                              <div class="col-sm-7 controls">
-                                {{form.child2_name}}
-                                {{child2_name_errors}}
-                                
-                                <div class="help-block with-errors"></div>
-
-                              </div>
-                            </div>
+                            
                             {% render_honeypot_field "child3" %}
                             <div class="form-group">
                                 <h3 class="col-sm-12 text-right"><input type="submit" id="submit" class="btn vd_bg-green vd_white width-10" value="Save"/></h3>
@@ -194,7 +216,14 @@ $("#family_details_form").submit(function (e) {
                           url: '/user_details/family_details',
                           data: $("#family_details_form").serialize(),
                           success: function( data ) {
-                             window.location='/user_details/education'
+                             var content = $(data).find("#family_details_form").html();
+                             var error = $(data).find(".errorlist").text();
+                             console.log(error)
+                             if(error){
+                                $("#family_details_form").html(content)
+                              }else{
+                                  window.location='/user_details/education'
+                              }
                           },
                           error: function( data ){
                             var errors = data.response;
@@ -253,6 +282,10 @@ $('select#id_marital_status').on('change' ,function(){
     $('#id_wedding_date').attr('required', true);
     $('.spouse_name_form_group').removeClass('hidden');
     $('#id_spouse_name').attr('required', true);
+    $('.spouse_dob_form_group').removeClass('hidden');
+    $('#id_spouse_dob').attr('required', true);
+    $('.spouse_profession_form_group').removeClass('hidden');
+    $('#id_spouse_profession').attr('required', true);
     $('.child1_name_form_group').removeClass('hidden');
     $('#id_child1_name').attr('required', true);
     $('.child2_name_form_group').removeClass('hidden');
@@ -265,6 +298,10 @@ $('select#id_marital_status').on('change' ,function(){
     $('#id_wedding_date').removeAttr('required');
     $('.spouse_name_form_group').addClass('hidden');
     $('#id_spouse_name').removeAttr('required');
+    $('.spouse_dob_form_group').addClass('hidden');
+    $('#id_spouse_dob').removeAttr('required');
+    $('.spouse_profession_form_group').addClass('hidden');
+    $('#id_spouse_profession').removeAttr('required');
     $('.child1_name_form_group').addClass('hidden');
     $('#id_child1_name').removeAttr('required');
     $('.child2_name_form_group').addClass('hidden');
@@ -282,6 +319,10 @@ $(window).load(function(){
     $('#id_wedding_date').attr('required', true);
     $('.spouse_name_form_group').removeClass('hidden');
     $('#id_spouse_name').attr('required', true);
+    $('.spouse_dob_form_group').removeClass('hidden');
+    $('#id_spouse_dob').attr('required', true);
+    $('.spouse_profession_form_group').removeClass('hidden');
+    $('#id_spouse_profession').attr('required', true);
     $('.child1_name_form_group').removeClass('hidden');
     $('#id_child1_name').attr('required', true);
     $('.child2_name_form_group').removeClass('hidden');
@@ -294,6 +335,10 @@ $(window).load(function(){
     $('#id_wedding_date').removeAttr('required');
     $('.spouse_name_form_group').addClass('hidden');
     $('#id_spouse_name').removeAttr('required');
+    $('.spouse_dob_form_group').addClass('hidden');
+    $('#id_spouse_dob').removeAttr('required');
+    $('.spouse_profession_form_group').addClass('hidden');
+    $('#id_spouse_profession').removeAttr('required');
     $('.child1_name_form_group').addClass('hidden');
     $('#id_child1_name').removeAttr('required');
     $('.child2_name_form_group').addClass('hidden');
