@@ -64,7 +64,7 @@ class UserDetailsForm(forms.ModelForm):
 	employee = forms.CharField(required=False)
 	name_pan = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'input-sm form-control width-30',
 		'required': 'True', 'data-error': 'Please enter your first name'}))
-	photo = forms.FileField(required=True, widget = CustomPhotoClearableFileInput)
+	photo = forms.FileField(required=False, widget = CustomPhotoClearableFileInput)
 	photo.widget.attrs = {'class':'bare photostyle', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
 	nationality = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'input-sm form-control width-30','required': 'True'}))
 	date_of_birth = forms.DateField(label="Date of Birth",widget=DateTimePicker(options=dateTimeOption),)
@@ -162,15 +162,14 @@ class EducationForm(forms.ModelForm):
 	institute = forms.ChoiceField(required=False,choices=INSTITUTE,widget=forms.Select(attrs={'class':'form-control'}))
 	board_university = forms.ChoiceField(required=False,choices=BOARD_UNIVERSITY, widget=forms.Select(attrs={'class':'form-control'}))
 	overall_marks = forms.FloatField(required=True, widget=forms.NumberInput(attrs={'min': '0', 'max': '100','placeholder': 'Marks float','data-error': 'Please enter marks in float and it should be below 100', 'class':'form-control'}))
-	marks_card_attachment = forms.FileField(required=True,widget = CustomClearableFileInput)
+	marks_card_attachment = forms.FileField(required=False,widget = CustomClearableFileInput)
     # Add Bootstrap widgets
-	marks_card_attachment.widget.attrs = {'class':'bare filestyle', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
+	marks_card_attachment.widget.attrs = {'class':'bare filestyle', 'data-buttonBefore':'true', 'data-iconName':'icon-span-filestyle glyphicon glyphicon-paperclip'}
 
 	class Meta:
 		model = Education
 		fields = ['education_type','qualification', 'specialization', 'from_date', 'to_date', 'institute', 'board_university', 'overall_marks', 'marks_card_attachment']
 		exclude = ['employee']
-
 
 class PreviousEmploymentForm(forms.ModelForm):
 
@@ -183,13 +182,13 @@ class PreviousEmploymentForm(forms.ModelForm):
 	employed_upto.widget.attrs = {'class': 'form-control filter_class','readonly':'readonly','required':'true'}
 	last_ctc = forms.FloatField(required=False, widget=forms.NumberInput(attrs={'placeholder': 'CTC float','data-error': 'Please enter your CTC in float'}))
 	reason_for_exit = forms.CharField(max_length=200, widget=forms.TextInput(attrs={'class': 'input-sm form-control','required': 'False'}))
-	ps_attachment = forms.FileField(required=True, label='Pay slips Attachment',widget = CustomClearableFileInput)
+	ps_attachment = forms.FileField(required=False, label='Pay slips Attachment',widget = CustomClearableFileInput)
     # Add Bootstrap widgets
-	ps_attachment.widget.attrs = {'class':'bare filestyle', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
-	rl_attachment = forms.FileField(required=True,label='Relieveing Letter Attachment', widget = CustomClearableFileInput)
+	ps_attachment.widget.attrs = {'class':'bare filestyle', 'data-buttonBefore':'false', 'data-iconName':'glyphicon glyphicon-paperclip'}
+	rl_attachment = forms.FileField(required=False,label='Relieveing Letter Attachment', widget = CustomClearableFileInput)
     # Add Bootstrap widgets
-	rl_attachment.widget.attrs = {'class':'bare filestyle', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
-	offer_letter_attachment = forms.FileField(required=True,label='Offer Letter Attachment', widget = CustomClearableFileInput)
+	rl_attachment.widget.attrs = {'class':'bare filestyle', 'data-buttonBefore':'false', 'data-iconName':'glyphicon glyphicon-paperclip'}
+	offer_letter_attachment = forms.FileField(required=False,label='Offer Letter Attachment', widget = CustomClearableFileInput)
     # Add Bootstrap widgets
 	offer_letter_attachment.widget.attrs = {'class':'bare filestyle', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
 
@@ -202,7 +201,7 @@ class ProofForm(forms.ModelForm):
 
 	pan = forms.RegexField(max_length=10,required=True,regex=r'^[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}$',
                     widget=forms.TextInput(attrs={'class': 'input-sm form-control','type': 'tel', 'pattern':'^[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}$'}))
-	pan_attachment = forms.FileField(required=True, label='Pan Attachment',widget = CustomClearableFileInput)
+	pan_attachment = forms.FileField(required=False, label='Pan Attachment',widget = CustomClearableFileInput)
     # Add Bootstrap widgets
 	pan_attachment.widget.attrs = {'class':'bare filestyle', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
 	aadhar_card = forms.RegexField(max_length=12, required=False,regex=r'^[0-9]{12}$',

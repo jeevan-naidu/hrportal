@@ -118,9 +118,9 @@
   <div class="form-group">
     <label class="col-sm-5 control-label">Marks Card<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
-      {{form.marks_card_attachment}}
+      <div id = "imageresize">{{form.marks_card_attachment}}</div>
       {{marks_card_attachment_errors}}
-      <div class="help-block with-errors"></div>
+      <div class="help-block with-errors">
     </div>
   </div>
   {% render_honeypot_field "marks" %}
@@ -162,9 +162,33 @@
             
 
             <script type="text/javascript">
-            var a;
-            a = "{{marks_card_attachment_errors}}"
+              $(window).load(function() {
+              var att = document.getElementById("id_marks_card_attachment").value;
+              if(att==""){
+                document.getElementById("submit").disabled=true;
+              }
+              var len = $('#imageresize').children().size()
+              console.log(len)
 
+              // debugger;
+              // alert("fuvck1")
+              if( len > 1)
+                {
+                  // alert("fuvck")
+                $("#submit").prop( "disabled", false );
+                }
+                else{
+                  // alert("fuvck2")
+                   $('#id_marks_card_attachment').change( function(){
+                    console.log( $(this).val() );
+                    if($(this).val()){
+                  $("#submit").prop( "disabled", false );
+                }
+              });
+                }
+              });
+
+            
             var theObj = 
 
 

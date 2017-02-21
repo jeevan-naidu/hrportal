@@ -4,6 +4,7 @@
 {%block form_content %}
 
 {% load honeypot %}
+<div id="body">
   <form id="previous_employment_form" enctype="multipart/form-data" method="post" class="form-horizontal col-sm-7" enctype="multipart/form-data" data-toggle="validator">
 
   {% csrf_token %}
@@ -24,7 +25,7 @@
     <div class="col-sm-7 controls">
       {{form.company_name}}
       {{company_name_error}}
-      {{form.company_name.errors}}
+      
       <div class="help-block with-errors"></div>
     </div>
   </div>
@@ -34,7 +35,7 @@
     <div class="col-sm-7 controls">
       {{form.company_address}}
       {{company_address_errors}}
-      {{form.company_address.errors}}
+      
       <div class="help-block with-errors"></div>
     </div>
   </div>
@@ -44,7 +45,7 @@
     <div class="col-sm-7 controls">
       {{form.job_type}}
       {{job_type_errors}}
-      {{form.job_type.errors}}
+      
       <div class="help-block with-errors"></div>
     </div>
   </div>
@@ -55,7 +56,7 @@
       <div class="input-group">
         {{form.employed_from}}
         {{employed_from_errors}}
-        {{form.employed_from.errors}}
+        
         <span class="help-inline">Format:DD/MM/YYYY</span>
       <div class="help-block with-errors"></div>
         <span class="input-group-addon" id="datepicker-icon-trigger" data-datepicker="#datepicker-icon"><i class="fa fa-calendar"></i></span> </div>
@@ -67,7 +68,7 @@
       <div class="input-group">
         {{form.employed_upto}}
         {{employed_upto_errors}}
-        {{form.employed_upto.errors}}
+        
         <span class="help-inline">Format:DD/MM/YYYY</span>
         <div class="help-block with-errors"></div>        
         <span class="input-group-addon" id="datepicker-icon-trigger" data-datepicker="#datepicker-icon"><i class="fa fa-calendar"></i></span> </div>
@@ -78,7 +79,7 @@
     <div id="institute" class="col-sm-7 controls">
       {{form.last_ctc}}
       {{last_ctc_errors}}
-      {{form.last_ctc.errors}}
+      
       <div class="help-block with-errors"></div>
     </div>
   </div>
@@ -94,7 +95,7 @@
   <div class="form-group">
     <label class="col-sm-5 control-label">Pay slips attachments<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
-      {{form.ps_attachment}}
+      <div id="imageresize">{{form.ps_attachment}}</div>
       {{ps_attachment_errors}}
       <div class="help-block with-errors"></div>
     </div>
@@ -104,7 +105,7 @@
   <div class="form-group">
     <label class="col-sm-5 control-label">Relieving letter<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
-      {{form.rl_attachment}}
+      <div id="imageresize1">{{form.rl_attachment}}</div>
       {{rl_attachment_errors}}
       <div class="help-block with-errors"></div>
     </div>
@@ -113,21 +114,19 @@
   <div class="form-group">
     <label class="col-sm-5 control-label">Offer letter<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
-      {{form.offer_letter_attachment}}
+      <div id="imageresize2">{{form.offer_letter_attachment}}</div>
       {{offer_letter_attachment_errors}}
       <div class="help-block with-errors"></div>
     </div>
   </div>
 
-  
-  
   <div class="form-group">
 
         <h3 class="col-sm-12 text-right"><input type="submit" id="submit" class="btn vd_bg-green vd_white" value="Save"/></h3>
 
   </div>
 </form>
-
+</div>
 
 <div id="user-list" class="col-sm-5">
 <!--   <input type="button" id="vivek1" class="btn vd_bg-green vd_white width-10" value="vivek1"/>
@@ -153,9 +152,78 @@
             
 {% block form_scripts %}
             <script type="text/javascript">
+              $(window).load(function() {
+              var att = document.getElementById("id_ps_attachment").value;
+              if(att==""){
+                document.getElementById("submit").disabled=true;
+              }
+              var len = $('#imageresize').children().size()
+              console.log(len)
 
+              // debugger;
+              // alert("fuvck1")
+              if( len > 1)
+                {
+                  // alert("fuvck")
+                $("#submit").prop( "disabled", false );
+                }
+                else{
+                  // alert("fuvck2")
+                   $('#id_ps_attachment').change( function(){
+                    console.log( $(this).val() );
+                    if($(this).val()){
+                  $("#submit").prop( "disabled", false );
+                }
+              });
+                }
+                var att = document.getElementById("id_rl_attachment").value;
+              if(att==""){
+                document.getElementById("submit").disabled=true;
+              }
+              var len = $('#imageresize1').children().size()
+              console.log(len)
+
+              // debugger;
+              // alert("fuvck1")
+              if( len > 1)
+                {
+                  // alert("fuvck")
+                $("#submit").prop( "disabled", false );
+                }
+                else{
+                  // alert("fuvck2")
+                   $('#id_rl_attachment').change( function(){
+                    console.log( $(this).val() );
+                    if($(this).val()){
+                  $("#submit").prop( "disabled", false );
+                }
+              });
+                }
+                var att = document.getElementById("id_offer_letter_attachment").value;
+              if(att==""){
+                document.getElementById("submit").disabled=true;
+              }
+              var len = $('#imageresize2').children().size()
+              console.log(len)
+
+              // debugger;
+              // alert("fuvck1")
+              if( len > 1)
+                {
+                  // alert("fuvck")
+                $("#submit").prop( "disabled", false );
+                }
+                else{
+                  // alert("fuvck2")
+                   $('#id_offer_letter_attachment').change( function(){
+                    console.log( $(this).val() );
+                    if($(this).val()){
+                  $("#submit").prop( "disabled", false );
+                }
+              });
+                }
+              });
             var theObj = 
-
 
                             {
               {%for val in employment_list%}
@@ -211,17 +279,15 @@
                 
                             var theObj = 
 
-
                             {
               {%for val in employment_list%}
                               "{{val.company_name}}":{
-                                            "company_name": "{{val.company_name}}"
+                                            "company_name": "{{val.company_name}}",
+                                            
                                               },    
               {%endfor%}   
                             }
-
-
-                     
+  
             $('.content-list li').click(function(){
               // e.preventDefault();
               // debugger;
@@ -232,8 +298,9 @@
               for (var key in theObj[the_id_key]) {
                 console.log(theObj[the_id_key]['company_name']);
                 var company_name = theObj[the_id_key]['company_name'];
+                
               }
-              
+               // alert(ps_attachment)
                 $.ajax({
                   type: "GET",
                   url : '/user_details/previous_employment',
@@ -249,14 +316,10 @@
                 });
               
           });
-                  // error: function(xhr, status, error) {
-                  //   alert(xhr.responseText);
-                  // }
-                
+                 
             $("#previous_employment_form").submit(function (e) {
                            e.preventDefault();
-                        
-                           
+                       
                            var data = new FormData($('form').get(0));
                            swal({   title: "Do you want to add again?",
                             text: "",
@@ -318,9 +381,6 @@
                 
                              });
 
-            
-                            
-
                               $("#id_last_ctc,#id_reason_for_exit").click(function (e) {
                                 
                                   var today = new Date();
@@ -354,6 +414,6 @@
                                   }
                               });
                               
-                             
+
                      </script>
 {% endblock %}
