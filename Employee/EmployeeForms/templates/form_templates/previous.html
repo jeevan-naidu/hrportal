@@ -95,7 +95,7 @@
     <label class="col-sm-5 control-label">Pay slips attachments<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
       {{form.ps_attachment}}
-      {{form.ps_attachment.errors}}
+      {{ps_attachment_errors}}
       <div class="help-block with-errors"></div>
     </div>
   </div>
@@ -105,6 +105,7 @@
     <label class="col-sm-5 control-label">Relieving letter<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
       {{form.rl_attachment}}
+      {{rl_attachment_errors}}
       <div class="help-block with-errors"></div>
     </div>
   </div>
@@ -113,6 +114,7 @@
     <label class="col-sm-5 control-label">Offer letter<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
       {{form.offer_letter_attachment}}
+      {{offer_letter_attachment_errors}}
       <div class="help-block with-errors"></div>
     </div>
   </div>
@@ -240,7 +242,8 @@
                   url : '/user_details/previous_employment',
                   data : {'company_name':company_name},
                   success : function(data){
-                   $("#previous_employment_form").html(data);
+                   var content = $(data).find("#previous_employment_form").html();
+                    $("#previous_employment_form").html(content)
                    // return data;
                   }
                   // error: function(xhr, status, error) {

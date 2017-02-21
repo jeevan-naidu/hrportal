@@ -287,12 +287,12 @@ $('select#id_marital_status').on('change' ,function(){
     $('.spouse_profession_form_group').removeClass('hidden');
     $('#id_spouse_profession').attr('required', true);
     $('.child1_name_form_group').removeClass('hidden');
-    $('#id_child1_name').attr('required', true);
+    // $('#id_child1_name').attr('required', true);
     $('.child2_name_form_group').removeClass('hidden');
-    $('#id_child2_name').attr('required', true);
+    // $('#id_child2_name').attr('required', true);
     
     $('.no_of_children_form_group').removeClass('hidden');
-    $('#id_child2_name').attr('required', true);
+    // $('#id_child2_name').attr('required', true);
   }else if($(this).val() !== 'MA'){
     $('.wedding_date_form_group').addClass('hidden');
     $('#id_wedding_date').removeAttr('required');

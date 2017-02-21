@@ -1,8 +1,25 @@
+{% extends 'form_master.html' %}
+{% block siteTitle %}Previous Employment Details{% endblock %}
+
+{%block form_content %}
+
 {% load honeypot %}
+  <form id="previous_employment_form" enctype="multipart/form-data" method="post" class="form-horizontal col-sm-7" enctype="multipart/form-data" data-toggle="validator">
 
   {% csrf_token %}
+  {% if messages %}
 
-<div class="form-group">
+            {% for message in messages %}
+
+          <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-cross"></i></button>
+             <span class="vd_alert-icon"><i class="fa fa-exclamation-circle vd_red"></i></span><strong>{{message}}</strong></div>
+
+            {% endfor %}
+
+         {% endif %}
+
+  <div class="form-group">
     <label class="col-sm-5 control-label">Company Name<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
       {{form.company_name}}
@@ -70,7 +87,7 @@
     <div class="col-sm-7 controls">
       {{form.reason_for_exit}}
       {{reason_for_exit_errors}}
-      {{form.board_reason_for_exituniversity.errors}}
+      
       <div class="help-block with-errors"></div>
     </div>
   </div>
@@ -78,7 +95,7 @@
     <label class="col-sm-5 control-label">Pay slips attachments<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
       {{form.ps_attachment}}
-      {{form.ps_attachment.errors}}
+      {{ps_attachment_errors}}
       <div class="help-block with-errors"></div>
     </div>
   </div>
@@ -88,6 +105,7 @@
     <label class="col-sm-5 control-label">Relieving letter<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
       {{form.rl_attachment}}
+      {{rl_attachment_errors}}
       <div class="help-block with-errors"></div>
     </div>
   </div>
@@ -96,6 +114,7 @@
     <label class="col-sm-5 control-label">Offer letter<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
       {{form.offer_letter_attachment}}
+      {{offer_letter_attachment_errors}}
       <div class="help-block with-errors"></div>
     </div>
   </div>
@@ -107,3 +126,236 @@
         <h3 class="col-sm-12 text-right"><input type="submit" id="submit" class="btn vd_bg-green vd_white" value="Save"/></h3>
 
   </div>
+</form>
+
+
+<div id="user-list" class="col-sm-5">
+<!--   <input type="button" id="vivek1" class="btn vd_bg-green vd_white width-10" value="vivek1"/>
+  <input type="button" id="vivek2" class="btn vd_bg-green vd_white width-10" value="vivek2"/> -->
+
+  <div class="content-list the-previous">
+      <ul class="list-wrapper">
+      {% for val in employment_list %}
+        <li id="{{val.company_name}}"> 
+          <div class="menu-text pull-left">{{val.company_name}}</div>
+          
+        </li>
+        <div class="menu-icon vd_red pull-right"><i id ="{{val.company_name}}" class="glyphicon glyphicon-trash"></i></div>
+       {% endfor %}
+
+      </ul>
+    </div><!-- ./ content-list -->
+
+  </div><!-- ./ user-list -->
+
+{% endblock %}
+
+            
+{% block form_scripts %}
+            <script type="text/javascript">
+
+            
+
+
+            var theObj = 
+
+
+                            {
+              {%for val in employment_list%}
+                              "{{val.company_name}}":{
+                                            "company_name": "{{val.company_name}}"
+                                              },    
+              {%endfor%}   
+                            }
+
+
+                     
+            $('.content-list i').click(function(){
+              // e.preventDefault();
+              // debugger;
+              var company_name;
+              var the_id_key = $(this).attr('id');
+              console.log(the_id_key);
+              // Object Iteration
+              for (var key in theObj[the_id_key]) {
+                console.log(theObj[the_id_key]['company_name']);
+                var company_name = theObj[the_id_key]['company_name'];
+              }
+
+              swal({   title: "Are you sure you want to delete?",
+                    text: "",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Yes",
+                    cancelButtonText: "No",
+                    closeOnConfirm: true,
+                    closeOnCancel: true
+                    },
+                    function(isConfirm) {
+                      if (isConfirm) {
+              
+                          $.ajax({
+                            type: "GET",
+                            url : '/user_details/previous_delete',
+                            data : {'company_name':company_name},
+                            success : function(data){
+                              
+                             window.location='/user_details/previous_employment'
+                             // return data;
+                            }
+
+                            // error: function(xhr, status, error) {
+                            //   alert(xhr.responseText);
+                            // }
+                          });
+              }}); 
+          });
+                
+                            var theObj = 
+
+
+                            {
+              {%for val in employment_list%}
+                              "{{val.company_name}}":{
+                                            "company_name": "{{val.company_name}}"
+                                              },    
+              {%endfor%}   
+                            }
+
+
+                     
+            $('.content-list li').click(function(){
+              // e.preventDefault();
+              // debugger;
+              var company_name;
+              var the_id_key = $(this).attr('id');
+              console.log(the_id_key);
+              // Object Iteration
+              for (var key in theObj[the_id_key]) {
+                console.log(theObj[the_id_key]['company_name']);
+                var company_name = theObj[the_id_key]['company_name'];
+              }
+              
+                $.ajax({
+                  type: "GET",
+                  url : '/user_details/previous_employment',
+                  data : {'company_name':company_name},
+                  success : function(data){
+                   $("#previous_employment_form").html(data);
+                   // return data;
+                  }
+                  // error: function(xhr, status, error) {
+                  //   alert(xhr.responseText);
+                  // }
+                });
+              
+          });
+                  // error: function(xhr, status, error) {
+                  //   alert(xhr.responseText);
+                  // }
+                
+            $("#previous_employment_form").submit(function (e) {
+                           e.preventDefault();
+                        
+                           
+                           var data = new FormData($('form').get(0));
+                           swal({   title: "Do you want to add again?",
+                            text: "",
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "Save and fill again!",
+                            cancelButtonText: "Save and continue to next tab",
+                            closeOnConfirm: true,
+                            closeOnCancel: true
+                            },
+                             function(isConfirm) {
+                               if (isConfirm) {
+                                 $.ajax( {
+                                   type: "POST",
+                                   url: '/user_details/previous_employment',
+                                   data: data,
+                                   cache: false,
+                                   processData: false,
+                                   contentType: false,
+                                   success: function( data ) {
+                                      var content = $(data).find("#previous_employment_form").html();
+                                      var error = $(data).find(".errorlist").text();
+                                      console.log(error)
+                                      if(error){
+                                        $("#previous_employment_form").html(content)
+                                      }else{
+                                          window.location='/user_details/previous_employment'
+                                    }
+                                   },
+                                   error: function( data ) {
+                                        var errors = data.response;
+                                        console.log(errors);
+                                      }
+                                 });
+                               }else{
+                                   $.ajax( {
+                                     type: "POST",
+                                     url: '/user_details/previous_employment',
+                                     data: data,
+                                     cache: false,
+                                     processData: false,
+                                     contentType: false,
+                                     success: function( response ) {
+                                             var content = $(data).find("#previous_employment_form").html();
+                                             var error = $(data).find(".errorlist").text();
+                                             console.log(error)
+                                             if(error){
+                                                $("#previous_employment_form").html(content)
+                                              }else{
+                                                  window.location='/user_details/proof'
+                                              }
+                                      },
+                                    error: function( data ) {
+                                      var errors = data.response
+                                      console.log(errors);
+                                      }
+                               });}});
+                
+                             });
+
+            
+                            
+
+                              $("#id_last_ctc,#id_reason_for_exit").click(function (e) {
+                                
+                                  var today = new Date();
+                                  var dd = today.getDate();
+                                  var mm = today.getMonth()+1; //January is 0!
+                                  var yyyy = today.getFullYear();
+
+                                  if(dd<10) {
+                                      dd='0'+dd
+                                  } 
+
+                                  if(mm<10) {
+                                      mm='0'+mm
+                                  } 
+
+                                  today = mm+'/'+dd+'/'+yyyy;
+
+                                  var employed_from = document.getElementById("id_employed_from").value;
+                                  var employed_upto = document.getElementById("id_employed_upto").value;
+
+                                  if(employed_from >= today){
+                                    swal("You cannot fill future date as your education from date!")
+
+                                    document.getElementById("id_employed_from").value = "";
+                                  }
+
+                                  if(employed_from >= employed_upto){
+                                    swal("your education date has ended before starting!")
+                                    document.getElementById("id_employed_from").value = "";
+                                    document.getElementById("id_employed_upto").value = "";
+                                  }
+                              });
+                              
+
+                     </script>
+{% endblock %}

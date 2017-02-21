@@ -44,6 +44,21 @@ jQuery(document).ready(function($){
 				}
 				});
 
+
+				var PhotoExtension = ['jpg', 'png','jpeg'];
+				$('.photostyle').bind('change', function() {
+				if (this.files[0].size > 1000000) {
+					alert("File size greater than 1MB not allowed");
+					$('.photostyle').val('')
+				}
+				else
+				{
+					if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+                    alert("Allowed file types : "+PhotoExtension.join(', '));
+										$('.photostyle').val('')
+                }
+				}
+				});
 				
 
 	// Function Calls

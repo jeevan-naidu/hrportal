@@ -7,7 +7,7 @@ from django.contrib.auth.forms import UserCreationForm
 from bootstrap3_datetime.widgets import DateTimePicker
 from django.utils.safestring import mark_safe
 from django.core.validators import MaxValueValidator
-from django.forms.widgets import ClearableFileInput, CheckboxInput
+from django.forms.widgets import ClearableFileInput, CheckboxInput, FileInput
 from django.utils.html import escape, conditional_escape
 from django.utils.encoding import force_unicode
 from django.utils.safestring import mark_safe
@@ -22,20 +22,12 @@ BOARD_UNIVERSITY = (('','........'),) + tuple([(dep['board_university'], dep['bo
 
 class CustomPhotoClearableFileInput(ClearableFileInput):
     template_with_initial = (
-       	
-        
-        '<a href="%(initial_url)s"><img src="%(initial_url)s"></a>'
-         '%(input)s' 
-
+        '%(input)s''<a href="%(initial_url)s"><img src="%(initial_url)s"></a>'
     )
 
 class CustomClearableFileInput(ClearableFileInput):
     template_with_initial = (
-       	
-        
-        '<a href="%(initial_url)s">%(initial_url)s</a>'
-         '%(input)s' 
-
+           	'%(input)s<a href="%(initial_url)s">%(initial_url)s</a>'    	
     )
 
 class UserRegistrationForm(UserCreationForm):
@@ -210,7 +202,7 @@ class ProofForm(forms.ModelForm):
 
 	pan = forms.RegexField(max_length=10,required=True,regex=r'^[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}$',
                     widget=forms.TextInput(attrs={'class': 'input-sm form-control','type': 'tel', 'pattern':'^[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}$'}))
-	pan_attachment = forms.FileField(required=False, label='Pan Attachment',widget = CustomClearableFileInput)
+	pan_attachment = forms.FileField(required=True, label='Pan Attachment',widget = CustomClearableFileInput)
     # Add Bootstrap widgets
 	pan_attachment.widget.attrs = {'class':'bare filestyle', 'data-buttonBefore':'true', 'data-iconName':'glyphicon glyphicon-paperclip'}
 	aadhar_card = forms.RegexField(max_length=12, required=False,regex=r'^[0-9]{12}$',

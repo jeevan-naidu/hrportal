@@ -28,6 +28,8 @@
     </div>
   </div> -->
 
+
+
 <div class="form-group">
     <label class="col-sm-5 control-label">Education Type<span class="mandatory-field"> *</span></label>
     <div class="col-sm-7 controls">
@@ -130,7 +132,13 @@
         <h3 class="col-sm-12 text-right"><input type="submit" id="submit" class="btn vd_bg-green vd_white" value="Save"/></h3>
 
   </div>
-
+    {% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <p> {{ error }} </p>
+        {% endfor %}
+    {% endfor %}
+{% endif %}
 </form>
 
 <div id="user-list" class="col-sm-5">
