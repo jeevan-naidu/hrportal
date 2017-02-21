@@ -353,9 +353,6 @@ def user_details(request):
             user = request.user
         form = UserDetailsForm(request.POST, request.FILES)
         photo = request.FILES.get('photo',"")
-        if request.FILES.get('photo', ""):
-            if request.FILES['photo'].name.split(".")[-1] not in AllowedFileTypes:
-                context['errors'].append('Attachment : File type not allowed. Please select a valid file type and then submit again')
         
         if form.is_valid():
             try:
@@ -1296,9 +1293,10 @@ def previous_employment(request):
         context = {"form":""}
         company_name = request.POST.get('company_name', '')
         employee = PreviousEmployment.objects.get(employee=request.user, company_name=company_name)
-        ps_attachment = employee.ps_attachment
-        rl_attachment = employee.rl_attachment
-        offer_letter_attachment = employee.offer_letter_attachment
+        form = PreviousEmploymentForm(initial = {'company_name':employee.company_name,'company_address':employee.company_address,
+        'job_type':employee.job_type,'employed_from':employee.employed_from,'employed_upto':employee.employed_upto,
+        'last_ctc':employee.last_ctc,'reason_for_exit':employee.reason_for_exit,'ps_attachment':employee.ps_attachment,
+        'rl_attachment':employee.rl_attachment,'offer_letter_attachment':employee.offer_letter_attachment})
         
         if form.is_valid():
             try:
@@ -1313,7 +1311,7 @@ def previous_employment(request):
                 employed_upto = form.cleaned_data['employed_upto']
                 last_ctc = form.cleaned_data['last_ctc']
                 reason_for_exit = form.cleaned_data['reason_for_exit']
-                ps_attachment = employee.ps_attachment
+                form.cleaned_data['ps_attachment'] = ps_attachment
                 # ps_attachment_old = employee.ps_attachment
                 # if ps_attachment_old == '':
                 #     ps_attachment = form.cleaned_data['ps_attachment']
@@ -1325,7 +1323,7 @@ def previous_employment(request):
                 #     if request.FILES.get('ps_attachment', ""):
                 #         form.ps_attachment = request.FILES['ps_attachment']
                 #         ps_attachment = form.ps_attachment
-                rl_attachment = employee.rl_attachment
+                form.cleaned_data['rl_attachment'] = rl_attachment
                 # rl_attachment_old = employee.rl_attachment
                 # if rl_attachment_old == '':
                 #     rl_attachment = form.cleaned_data['rl_attachment']
@@ -1337,7 +1335,7 @@ def previous_employment(request):
                 #     if request.FILES.get('rl_attachment', ""):
                 #         form.rl_attachment = request.FILES['rl_attachment']
                 #         rl_attachment = form.rl_attachment
-                offer_letter_attachment = employee.offer_letter_attachment
+                form.cleaned_data['offer_letter_attachment'] = offer_letter_attachment
                 
                 # offer_letter_attachment_old = employee.offer_letter_attachment
                 # if offer_letter_attachment_old == '':
