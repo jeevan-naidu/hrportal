@@ -26,6 +26,7 @@ from forms import UserDetailsForm, EducationForm, PreviousEmploymentForm, ProofF
 
 AllowedFileTypes = ['jpg', 'csv','png', 'pdf', 'xlsx', 'xls', 'docx', 'doc', 'jpeg', 'eml', 'zip']
 # Create your views here.
+
 def EmployeeWelcome(request):
     return render(request, 'welcome.html',{})
 
@@ -1842,7 +1843,14 @@ def print_candidate_information(request):
     return render(request, 'print.html',context)
 
 def finish(request):
-    # import ipdb; ipdb.set_trace()
+    
+    username = request.user.username
+    username = User.objects.get(username=username)
+    last_login = username.last_login
+    
+    title = "Done"
+    content = "Hi " + username.username + " Thanks for filling all your details. You can take the print out of your forms and submit it on your joining date."
+    send_mail(title, content, 'myansrsource@ansrsource.com', [username.email], fail_silently=False)
     if request.method == 'GET':
 
         if UserDetails.objects.filter(employee=request.user) != '':
