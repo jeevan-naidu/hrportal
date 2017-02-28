@@ -3,103 +3,64 @@
 {% block pageTitle %}Candidate Overview{% endblock %}
 {% block pageSubTitle %}The list of candidate with the essential details{% endblock %}
 
-          {% block title_section %}
-          <div class="vd_title-section clearfix">
-            <div class="vd_panel-header">List of candidates</div>
-          </div>
-  
+          {% block content %}
+
 <link href="/static/plugins/dataTables/css/dataTables.bootstrap.css" rel="stylesheet" type="text/css">
+
+
 
             <div class="row">
               <div class="col-md-12">
                 <div class="panel widget">
                   <div class="panel-heading vd_bg-grey">
-                    <h3 class="panel-title">List of Candidates</h3>
+                    <h3 class="panel-title">Form list</h3>
                   </div>
+                  <div class="panel-body">
 
-                  
-                <table class="table table-striped">
-                      <thead>
+
+
+                    <table class="table table-striped" id="data-tables">
+                      <thead style="background: #333;color: #fff">
                         <tr>
-                          <th>MRF</th>
-                          <th>Name</th>
-                          <th>data</th>
+                          <th>S.No</th>
+                          <th>Candidate</th>
+                          <th>Misc. Field</th>
                         </tr>
                       </thead>
-
+                      <tbody>
                   {% for val in lists %}
-            
-                    <div class="panel-body">
-                     <tbody>
-                       
-                        <tr class="even gradeC">
-                          <td>147</td>
-                          <td id="data">{{val.first_name}} {{val.last_name}}</td>
-
-                         <!-- <div id="data"> <td class="menu-action">
-                           
-                           <a data-original-title="view" data-toggle="tooltip" data-placement="top" class="btn menu-icon vd_bd-green vd_green" onclick="window.open('/print_candidate_information')"> 
-                          <i class="fa fa-eye"></i>  
-
-                          </a>  -->
-                          
-                          </td>
-                        </div>                        
+                        <tr>
+                          <td>{{ forloop.counter }}</td>
+                          <td>{{val.first_name}} {{val.last_name}}</td>
+                          <td></td>
                         </tr>
-                      </tbody>
+                  {% endfor %}
 
-                  <div class="panel-body">
-                    <table class="table table-striped">
-                          <thead style="background: #777;color: #fff">
-                            <tr>
-                              <th>MRF</th>
-                              <th>Name</th>
-                              <th>data</th>
-                            </tr>
-                          </thead>
+                   </tbody>
+          </table>
+
+
+
+
+
+
+
+
+
+
+
     
-
-                         <tbody>
-                      {% for val in lists %}                           
-                            <tr class="even gradeC">
-                              <td>147</td>
-                              <td>{{val.first_name}} {{val.last_name}}</td>
-
-                              <td class="menu-action">
-                               
-<!--                                <a data-original-title="view" data-toggle="tooltip" data-placement="top" class="btn menu-icon vd_bd-green vd_green" onclick="window.open('/print_candidate_information')"> 
-                              <i class="fa fa-eye"></i>  
-    
-                              </a>  -->
-
-                              </td>
-                            </tr>
-
-                      {% endfor %}
-                          </tbody>
-                        </table>
-                  </div>
-                  </div>
-                 </div>
-                </div>
-
+      </div>
+    </div>
+  </div>
+</div>
 
 
 <script type="text/javascript" src="/static/plugins/dataTables/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/static/js/dataTables.bootstrap.js"></script>
 
 
-<!-- <script type="text/javascript">
-	
-$(document).ready(function(){
 
-        $('#data-tables').dataTable({
-          searching: false,
-          scrollCollapse: true
-        });
-
-})// ./dom.ready
-</script> -->
 
 
 <script type="text/javascript">
